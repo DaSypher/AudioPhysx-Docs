@@ -11,15 +11,17 @@ The current native source contains **24 nodes**. They are divided by the job the
 
 Understanding the difference between these groups is important. A playback node needs an event and usually some Wave Assets. A DSP processor needs an existing audio stream and physical or authored parameters. A control utility may have no audio pins at all because it decides which event passes or what number to use elsewhere. The pages are written to make those responsibilities clear before listing pin names.
 
-## Navigate by what you are building
+## Find the nodes you need
 
-[!card layout="compact" title="Playback" text="Random, shuffle-bag, layered, sequenced, distance- and material-based players, held RPM effects, and flybys."](playback-nodes/README.md)
+The four categories expand directly in the **left sidebar**. Select a node to open its full explanation, five-step setup guide, stereo routing instructions, and expandable pin reference. There are no separate category-note pages to click through.
 
-[!card layout="compact" title="Acoustics" text="Selected acoustic routes, transmission through materials, directionality, impacts and early reflections."](acoustics-nodes/README.md)
+**Playback** handles Wave Asset playback, variation and timing. Start with [Random Wave Player](playback-nodes/random-wave-player.md) for one-shot variation, [Random Sequence](playback-nodes/random-sequence-wave-player.md) for multi-stage events, or [Start Loop End](playback-nodes/start-loop-end.md) for RPM-controlled firing and held actions.
 
-[!card layout="compact" title="Propagation" text="Travel-time delay, dynamic motion, Doppler ratio and atmospheric absorption."](propagation-nodes/README.md)
+**Acoustics** changes the character of an existing sound using world information or authored controls. Try [Material Transmission](acoustics-nodes/material-transmission.md) to create a blocked-sound effect, or [Acoustic Paths](acoustics-nodes/acoustic-paths.md) for a selected path's delay and frequency-band losses.
 
-[!card layout="compact" title="QoL" text="Smooth values, limit and randomize triggers, switch distance branches, and fold stereo to mono."](qol-nodes/README.md)
+**Propagation** concerns travel time, source movement and absorption through air. [Distance Delay](propagation-nodes/distance-delay.md) works with latched travel-time delays; [Dynamic Propagation](propagation-nodes/dynamic-propagation.md) responds to moving sources.
+
+**QoL** streamlines control logic and conversion. [Trigger Cooldown](qol-nodes/trigger-cooldown.md) limits rapid events, [Float Smoother](qol-nodes/float-smoother.md) softens parameter changes, and [Stereo to Mono](qol-nodes/stereo-to-mono.md) folds stereo down for a mono signal path.
 
 ## How to read the reference pages
 
@@ -28,4 +30,4 @@ Each node begins with a practical explanation of the problem it solves. You will
 The stereo convention is consistent across the audio processors: the input is typically `In Left` and `In Right`, and the output is `Out Left` and `Out Right`. Wave Players generally supply `Out Left` and `Out Right`. Control-only nodes are not artificially given audio channels. `AP: Stereo to Mono` deliberately outputs `Out Mono` because that is the point of the converter. If you are migrating an older MetaSound, see [stereo routing and migration](../getting-started/stereo-routing.md) before saving the revised graph.
 
 
-**Prefer a worked example?** Open [Node tutorials and screenshots](node-tutorials.md), then expand a category in the sidebar. Each node has its own page and a five-step basic graph.
+**Want a complete walkthrough?** [Build your first MetaSound](../getting-started/first-metasound.md), then expand any node category in the sidebar. Every node has a dedicated five-step guide.
