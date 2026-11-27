@@ -37,7 +37,6 @@
 
 ### Acoustics
 
-- [Acoustics: why does a place change the sound?](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/readme.md): A recording played through a loudspeaker should not sound identical in every physical situation. It may be blocked by a door, travel around an opening, lose high-frequency detail when the source faces away, or produce an initial set of room reflections.
 - [AP: Acoustic Paths](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/acoustic-paths.md): AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source
 - [AP: Material Transmission](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/material-transmission.md): AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source
 - [AP: Source Directivity](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/source-directivity.md): AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source

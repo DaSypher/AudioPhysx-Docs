@@ -40,9 +40,6 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/</loc>
-  </url>
-  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics/</loc>
   </url>
   <url>
@@ -121,9 +118,6 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/acoustic-paths/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/material-transmission/</loc>
-  </url>
-  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot/</loc>
   </url>
   <url>
@@ -133,13 +127,16 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/projectile-flyby/</loc>
   </url>
   <url>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/material-transmission/</loc>
+  </url>
+  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/source-directivity/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/impact-dynamics/</loc>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/acoustic-obstruction/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/acoustic-obstruction/</loc>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/impact-dynamics/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/early-reflections/</loc>
