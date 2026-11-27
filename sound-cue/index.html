@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Sound Cue support — planned</title>
-    <meta name="title" content="Sound Cue support — planned">
-    <meta name="description" content="AudioPhysx currently focuses its native node library on MetaSounds. Sound Cue QoL additions are part of the proposed commercial roadmap, but no custom USoundNode implementation is included in the reviewed development baseline.">
+    <title>Sound Cue support is planned, not shipped</title>
+    <meta name="title" content="Sound Cue support is planned, not shipped">
+    <meta name="description" content="The source used for this edition implements MetaSound nodes and Blueprint integration helpers. It does not include a finished custom USoundNode library for Unreal Sound Cues, so the documentation must not market Sound Cue extensions as currently available.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/sound-cue/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/sound-cue/">
-    <meta property="og:title" content="Sound Cue support — planned">
-    <meta property="og:description" content="AudioPhysx currently focuses its native node library on MetaSounds. Sound Cue QoL additions are part of the proposed commercial roadmap, but no custom USoundNode implementation is included in the reviewed development baseline.">
+    <meta property="og:title" content="Sound Cue support is planned, not shipped">
+    <meta property="og:description" content="The source used for this edition implements MetaSound nodes and Blueprint integration helpers. It does not include a finished custom USoundNode library for Unreal Sound Cues, so the documentation must not market Sound Cue extensions as currently available.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/sound-cue/">
-    <meta name="twitter:title" content="Sound Cue support — planned">
-    <meta name="twitter:description" content="AudioPhysx currently focuses its native node library on MetaSounds. Sound Cue QoL additions are part of the proposed commercial roadmap, but no custom USoundNode implementation is included in the reviewed development baseline.">
+    <meta name="twitter:title" content="Sound Cue support is planned, not shipped">
+    <meta name="twitter:description" content="The source used for this edition implements MetaSound nodes and Blueprint integration helpers. It does not include a finished custom USoundNode library for Unreal Sound Cues, so the documentation must not market Sound Cue extensions as currently available.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/sound-cue/readme.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,30 +134,10 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="sound-cue-support--planned">Sound Cue support — planned</h1>
-<p>AudioPhysx currently focuses its native node library on <strong>MetaSounds</strong>. Sound Cue QoL additions are part of the proposed commercial roadmap, but <strong>no custom <code translate="no" v-pre>USoundNode</code> implementation is included in the reviewed development baseline</strong>.</p>
-<h2 id="why-consider-sound-cue-extensions">Why consider Sound Cue extensions?</h2>
-<p>Sound Cues already contain useful random, modulation, switching and concatenation facilities. A new AudioPhysx node should only be added when it removes substantial graph complexity or improves everyday authoring. Building a second copy of every MetaSound DSP node would add maintenance cost without offering Sound Cue users much benefit.</p>
-<p>The first possible additions are a <strong>Smart Random</strong> control with cohesive selection and repeat behaviour, and a <strong>Random Sequence</strong> that keeps stages in order but chooses variations at each stage. These are concepts, not shipped features.</p>
-<div class="flex mb-6">
-    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-info"></div>
-    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
-        <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-info" width="22" height="22" viewBox="0 0 24 24" role="presentation">
-                <g fill="currentColor"><g>
-                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
-                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
-                    <path fill="none" d="M0 0h24v24H0z"></path>
-                </g></g>
-            </svg>
-        </div>
-        <div class="pr-5 ml-3 w-full">
-            <h5>Feature availability</h5>
-<p>Do not assume the Sound Cue examples described here are available in the current plugin. The navigation and documentation will be updated when an implementation has passed runtime and packaged-build testing.</p>
-        </div>
-    </div>
-</div>
-<p>In the meantime, use the <a href="../metasound/playback/">MetaSound Playback tools</a> for the equivalent audio workflows, or Unreal&#x27;s built-in Sound Cue nodes where appropriate.</p>
+<h1 id="sound-cue-support-is-planned-not-shipped">Sound Cue support is planned, not shipped</h1>
+<p>The source used for this edition implements MetaSound nodes and Blueprint integration helpers. It does not include a finished custom <code translate="no" v-pre>USoundNode</code> library for Unreal Sound Cues, so the documentation must not market Sound Cue extensions as currently available.</p>
+<p>Sound Cue work may still be valuable, particularly where a focused Smart Random or Random Sequence utility would remove repetitive authoring. It should be approached as a quality-of-life project rather than an attempt to rebuild every MetaSound DSP effect in the older Sound Cue format. New Sound Cue node pages should only be published after their source exists and the behaviour passes Editor and packaged-game testing.</p>
+<p>Until then, continue using the verified native Sound Cue facilities that Unreal provides and AudioPhysx&#x27;s existing <a href="../metasound/playback/">MetaSound playback nodes</a> where those are appropriate to the game.</p>
 
                 
                 <!-- Required only on API pages -->

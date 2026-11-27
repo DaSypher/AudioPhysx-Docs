@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Impact Dynamics</title>
     <meta name="title" content="AP: Impact Dynamics">
-    <meta name="description" content="MetaSound · AudioPhysx / Acoustics">
+    <meta name="description" content="AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/impact-dynamics/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/impact-dynamics/">
     <meta property="og:title" content="AP: Impact Dynamics">
-    <meta property="og:description" content="MetaSound · AudioPhysx / Acoustics">
+    <meta property="og:description" content="AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/impact-dynamics/">
     <meta name="twitter:title" content="AP: Impact Dynamics">
-    <meta name="twitter:description" content="MetaSound · AudioPhysx / Acoustics">
+    <meta name="twitter:description" content="AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/impact-dynamics.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,68 +135,42 @@
 
                 <!-- Page content  -->
 <h1 id="ap-impact-dynamics">AP: Impact Dynamics</h1>
-<p><strong>MetaSound · AudioPhysx / Acoustics</strong></p>
-<p>Make one impact recording react to whether the hit was gentle or forceful.</p>
+<p><strong>AudioPhysx / Acoustics</strong> · Unreal Engine 5.8.4 development source</p>
+<p>Use one impact recording more expressively by changing its attack and colour according to how hard the impact was.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-impact-dynamics.png -->
-<h2 id="what-actually-happens">What actually happens</h2>
-<p>An impact is more than a volume change. Soft contacts tend to have gentler transients, while harder contacts can sound brighter and more aggressive. This node uses an <code translate="no" v-pre>Impact</code> trigger and a normalized strength value to drive impact-time gain, filtering and transient emphasis around the input recording.</p>
-<p>It is a <strong>sound-shaping</strong> node, not a collision detector. Supply the actual impact event and, if desired, calculate its strength through an existing AudioPhysx Blueprint helper.</p>
-<h2 id="hear-it-in-a-game">Hear it in a game</h2>
-<p>Use one moderately strong metal knock recording. Audition it with an impact strength near the soft end and then near the hard end. Adjust the soft/hard gain and cutoff controls until one source asset provides useful expressive variation.</p>
-<h2 id="build-a-working-graph">Build a working graph</h2>
-<doc-steps>
-   <doc-step id="provide-the-impact-sound" step-number="1">
-      <template #title>Provide the impact sound</template>
-<p>Connect the existing impact audio to <code translate="no" v-pre>Audio In</code>.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="drive-strength-and-impact-event" step-number="2">
-      <template #title>Drive strength and impact event</template>
-<p>Trigger <code translate="no" v-pre>Impact</code> at the event and supply a normalized <code translate="no" v-pre>Impact Strength</code> control.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="shape-the-transient" step-number="3">
-      <template #title>Shape the transient</template>
-<p>Tune <code translate="no" v-pre>Soft Gain</code>, <code translate="no" v-pre>Hard Gain</code>, <code translate="no" v-pre>Soft Cutoff (Hz)</code> and <code translate="no" v-pre>Hard Cutoff (Hz)</code>, adding transient boost only where the recording benefits.</p>
-   </doc-step>
-</doc-steps>
-<h2 id="the-controls-that-matter">The controls that matter</h2>
-<p><code translate="no" v-pre>Soft Gain</code> and <code translate="no" v-pre>Hard Gain</code> describe level shaping at the two strength extremes. <code translate="no" v-pre>Soft Cutoff (Hz)</code> and <code translate="no" v-pre>Hard Cutoff (Hz)</code> control the filter range. <code translate="no" v-pre>Transient Boost</code> and <code translate="no" v-pre>Transient Time (ms)</code> affect attack emphasis over a short window.</p>
-<h2 id="what-the-node-outputs">What the node outputs</h2>
+<h2 id="understanding-the-behaviour">Understanding the behaviour</h2>
+<p>Impact Dynamics takes an existing stereo audio recording plus an <code translate="no" v-pre>Impact</code> trigger and an <code translate="no" v-pre>Impact Strength</code> control in the 0–1 range. It uses the strength to interpolate between soft and hard gain/filter settings, with an additional transient enhancement for stronger events. This can make a single usable asset feel gentler for a light contact and brighter or more aggressive for a forceful collision.</p>
+<p>It does <strong>not</strong> detect a collision or compute collision impulse inside the audio thread. Your game, animation, trace or Blueprint helper decides that an impact occurred and provides a meaningful strength value. The node then shapes the audio. Both channels are processed independently, preserving the stereo source while applying the same intended impact strength.</p>
+<p>Imagine a character dropping a small tool onto a wooden surface. A very light contact may need a soft, muted tap; a much stronger drop can need a brighter transient and greater level. Rather than importing dozens of almost identical strength variations, you can use a few recordings with dynamics that follow the gameplay&#x27;s impact-strength signal.</p>
+<p>This becomes particularly valuable for many small environmental interactions. It should still be driven by plausible events: setting the strength to 1 on every minor collision can make an otherwise natural scene sound exaggerated and exhausting.</p>
+<h2 id="building-and-controlling-the-sound">Building and controlling the sound</h2>
+<p>Connect your stereo impact recording to <code translate="no" v-pre>In Left</code> and <code translate="no" v-pre>In Right</code>, trigger its player and the Impact Dynamics <code translate="no" v-pre>Impact</code> event together, and set <code translate="no" v-pre>Impact Strength</code> appropriately. Begin with audible but moderate differences between <code translate="no" v-pre>Soft Gain</code> / <code translate="no" v-pre>Hard Gain</code> and between <code translate="no" v-pre>Soft Cutoff (Hz)</code> / <code translate="no" v-pre>Hard Cutoff (Hz)</code>. Audition at several strength values instead of testing only the extremes.</p>
+<p>The output includes <code translate="no" v-pre>Applied Strength</code>, which exposes the clamped value used by the processor. That makes it useful for checking whether gameplay is sending valid input and whether the strength normalization behaves as you expect.</p>
+<p><code translate="no" v-pre>Soft Gain</code> and <code translate="no" v-pre>Hard Gain</code> are <strong>linear gain controls</strong>, while the cutoff inputs are in hertz. <code translate="no" v-pre>Transient Boost</code> adds attack emphasis, with <code translate="no" v-pre>Transient Time (ms)</code> determining how long that emphasis lasts. Excessive transient gain can create sharp peaks and clipping, especially when multiple impacts overlap. A normalized strength represents an authored mapping from gameplay force, not a universal physical unit such as newtons.</p>
+<p><strong>Practical limitations.</strong> A strong impact can consist of several physical stages—first contact, material resonance and secondary movement—so dynamics processing cannot replace all variation in source recordings. Use a good base sound, and consider Layered Wave Player or material-based selection when a change in physical material is more important than a change in force. Profile simultaneous impacts in a dense scene before raising every node&#x27;s transient enhancement.</p>
+<doc-panel id="exact-input-and-output-pins" collapsed>
+    <template #title>Exact input and output pins</template>
+<p><strong>Inputs from the current C++ node definition</strong></p>
 <ul>
-<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Impact-shaped mono audio.</li>
-<li><strong><code translate="no" v-pre>Applied Strength</code></strong> · Float — Clamped strength used by this operator.</li>
+<li><strong><code translate="no" v-pre>In Left</code></strong> — <em>Audio buffer</em>. Stereo audio from the impact Wave Player.</li>
+<li><strong><code translate="no" v-pre>In Right</code></strong> — <em>Audio buffer</em>. Right audio channel to process.</li>
+<li><strong><code translate="no" v-pre>Impact</code></strong> — <em>Trigger</em>. Restart the transient when playback starts.</li>
+<li><strong><code translate="no" v-pre>Impact Strength</code></strong> — <em>Float</em>. Normalized impact strength, 0 to 1.</li>
+<li><strong><code translate="no" v-pre>Soft Gain</code></strong> — <em>Float</em>. Linear gain at impact strength 0.</li>
+<li><strong><code translate="no" v-pre>Hard Gain</code></strong> — <em>Float</em>. Linear gain at impact strength 1.</li>
+<li><strong><code translate="no" v-pre>Soft Cutoff (Hz)</code></strong> — <em>Float</em>. Low-pass cutoff for gentle impacts.</li>
+<li><strong><code translate="no" v-pre>Hard Cutoff (Hz)</code></strong> — <em>Float</em>. Low-pass cutoff for strong impacts.</li>
+<li><strong><code translate="no" v-pre>Transient Boost</code></strong> — <em>Float</em>. Extra attack gain applied to harder hits.</li>
+<li><strong><code translate="no" v-pre>Transient Time (ms)</code></strong> — <em>Float</em>. Duration of the attack enhancement.</li>
 </ul>
-<h2 id="things-to-watch-for">Things to watch for</h2>
+<p><strong>Outputs from the current C++ node definition</strong></p>
 <ul>
-<li>A noisy or inaccurate strength value can make the same asset change character unpredictably; smooth or normalize the driving gameplay value if needed.</li>
-<li>Too much transient boost can sound clicky or harsh. Audition at realistic game levels.</li>
-</ul>
-<doc-panel id="full-input-reference" collapsed>
-    <template #title>Full input reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Audio In</code></strong> · <em>Audio (mono)</em> — Mono audio from the impact Wave Player.</li>
-<li><strong><code translate="no" v-pre>Impact</code></strong> · <em>Trigger</em> — Restart the transient when playback starts.</li>
-<li><strong><code translate="no" v-pre>Impact Strength</code></strong> · <em>Float</em> — Normalized impact strength, 0 to 1.</li>
-<li><strong><code translate="no" v-pre>Soft Gain</code></strong> · <em>Float</em> — Linear gain at impact strength 0.</li>
-<li><strong><code translate="no" v-pre>Hard Gain</code></strong> · <em>Float</em> — Linear gain at impact strength 1.</li>
-<li><strong><code translate="no" v-pre>Soft Cutoff (Hz)</code></strong> · <em>Float</em> — Low-pass cutoff for gentle impacts.</li>
-<li><strong><code translate="no" v-pre>Hard Cutoff (Hz)</code></strong> · <em>Float</em> — Low-pass cutoff for strong impacts.</li>
-<li><strong><code translate="no" v-pre>Transient Boost</code></strong> · <em>Float</em> — Extra attack gain applied to harder hits.</li>
-<li><strong><code translate="no" v-pre>Transient Time (ms)</code></strong> · <em>Float</em> — Duration of the attack enhancement.</li>
+<li><strong><code translate="no" v-pre>Out Left</code></strong> — <em>Audio buffer</em>. Impact-shaped stereo audio.</li>
+<li><strong><code translate="no" v-pre>Out Right</code></strong> — <em>Audio buffer</em>. Right audio channel after processing.</li>
+<li><strong><code translate="no" v-pre>Applied Strength</code></strong> — <em>Float</em>. Clamped strength used by this operator.</li>
 </ul>
 </doc-panel>
-<doc-panel id="full-output-reference" collapsed>
-    <template #title>Full output reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Impact-shaped mono audio.</li>
-<li><strong><code translate="no" v-pre>Applied Strength</code></strong> · Float — Clamped strength used by this operator.</li>
-</ul>
-</doc-panel>
-<h2 id="continue-learning">Continue learning</h2>
-<p><a href="../../../../blueprint/playback-helpers/">Blueprint playback helpers</a> describes available game-side audio and impact utilities. Also see the <a href="../../../acoustics/">Acoustics overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
+<p><strong>Related:</strong> <a href="../../../../examples/material-footsteps/">Material-dependent footsteps</a> for a related event-driven workflow.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -204,27 +178,6 @@
             </div>
             <footer id="retype-content-footer" class="clear-both">
             
-                <nav id="retype-nextprev" class="print:hidden flex mt-14">
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/acoustics/early-reflections/">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                            <span>
-                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">AP: Early Reflections</span>
-                            </span>
-                        </a>
-                    </div>
-            
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/acoustics/material-transmission/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">AP: Material Transmission</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
-                    </div>
-                </nav>
             </footer>
         </main>
 

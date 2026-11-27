@@ -1,38 +1,21 @@
-# Footsteps that match the ground
+# Material-dependent footsteps
 
-**Goal:** Make a footstep choose the correct texture—stone, grass, metal or another material—based on what the player actually stepped on.
+**Primary AudioPhysx tools:** AP: Surface or PhysMat Wave Player
 
-AudioPhysx does **not** automatically perform the footstep trace inside the Wave Player. Your character, animation system or Blueprint sends the surface identifier. The player then selects a recording pool for that surface.
+A good example is a listening experiment, not just a screenshot of connected pins. This exercise explains what content to prepare, which signals the graph needs, and what result you should listen for before increasing complexity.
 
-## Choose how to identify a material
+## Prepare the recording and context
 
-+++ Surface type
+Start with two clearly different ground types, such as stone and grass, and prepare several footstep recordings for each. The character's animation or gameplay system supplies the foot-contact timing; AudioPhysx is responsible for choosing an appropriate recording after the ground has been identified. Do not debug the Wave Player before verifying that your trace returns the expected surface identifier.
 
-Use [AP: Surface Wave Player](../metasound/nodes/playback/surface-wave-player.md) when Unreal's physical-surface type is enough. It is useful for broadly defined categories such as grass, gravel or metal.
+## Assemble the MetaSound and test it
 
-The node's dynamic surface routes may depend on AudioPhysx project settings. Configure those **before** authoring a large number of graphs.
+For broad categories, configure Surface Audio routes and use Surface Wave Player with the `Hit Surface Type` integer. For specific Physical Material assets, use PhysMat Wave Player with the exact `Hit PhysMat Path`. In either case, assign a default recording pool for unmatched material information, then connect `Play`, `Out Left` and `Out Right`. Walk over both known materials and an intentionally unmapped surface while printing the gameplay result.
 
-+++ Exact Physical Material
+## Judge the result in a game
 
-Use [AP: PhysMat Wave Player](../metasound/nodes/playback/physmat-wave-player.md) when multiple surfaces share a type but still need distinct sound choices. It compares the full Physical Material asset path rather than just a category number.
+Surface type and Physical Material path represent different levels of detail; pick the one your game actually uses. A stereo recording may be suitable as part of a designed close-up effect, but a character's footstep as a small point source is also a good candidate for a final Stereo to Mono downmix. Listen in the game's actual spatialization environment rather than assuming one format will always be better.
 
-+++
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
 
-## Build the footstep event
-
->>> 1. Collect the surface information
-At the foot contact moment, trace or otherwise identify the Physical Material of the ground. Confirm the gameplay query returns material information as intended.
-
->>> 2. Send the correct identifier
-Use the surface type for Surface Wave Player, or the exact material asset path for PhysMat Wave Player. Supply it before firing `Play`.
-
->>> 3. Provide variations and a fallback
-Assign multiple Wave Assets for each surface and fill default recordings for unknown or unmapped surfaces.
-
->>> 4. Test movement over two surfaces
-Walk across the boundary while watching the returned material data. Confirm the recordings follow the ground and that unmatched materials fall back sensibly.
->>>
-
-## Make it sound believable
-
-A good footstep system also depends on **which recording is chosen and when**. Keep variation within a surface coherent, align transients so feet land on time, and avoid overloading the node with sounds for every gameplay state. Movement speed and footwear can be handled by additional routing if needed.
+[Browse the full node reference](../metasound/README.md) for exact control types and limitations.

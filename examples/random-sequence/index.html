@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>One action, several random stages</title>
-    <meta name="title" content="One action, several random stages">
-    <meta name="description" content="Goal: Keep the order of a sound effect recognizable while allowing its individual details to change.">
+    <title>Multi-stage variation</title>
+    <meta name="title" content="Multi-stage variation">
+    <meta name="description" content="Primary AudioPhysx tools: AP: Random Sequence Wave Player">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/random-sequence/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/random-sequence/">
-    <meta property="og:title" content="One action, several random stages">
-    <meta property="og:description" content="Goal: Keep the order of a sound effect recognizable while allowing its individual details to change.">
+    <meta property="og:title" content="Multi-stage variation">
+    <meta property="og:description" content="Primary AudioPhysx tools: AP: Random Sequence Wave Player">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/random-sequence/">
-    <meta name="twitter:title" content="One action, several random stages">
-    <meta name="twitter:description" content="Goal: Keep the order of a sound effect recognizable while allowing its individual details to change.">
+    <meta name="twitter:title" content="Multi-stage variation">
+    <meta name="twitter:description" content="Primary AudioPhysx tools: AP: Random Sequence Wave Player">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/random-sequence.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,33 +134,18 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="one-action-several-random-stages">One action, several random stages</h1>
-<p><strong>Goal:</strong> Keep the order of a sound effect recognizable while allowing its individual details to change.</p>
-<p>Imagine a mechanical device that opens, performs an action, then closes. A random single-sound player cannot enforce that three-stage structure; a fixed sequence can, but it sounds the same every time. <a href="../../metasound/nodes/playback/random-sequence-wave-player/">AP: Random Sequence Wave Player</a> combines both ideas.</p>
-<h2 id="prepare-three-arrays">Prepare three arrays</h2>
-<p>Create one array of opening clicks, one of mechanical middle actions and one of ending clunks. Each array can contain multiple takes, but keep each array specific to its stage.</p>
-<h2 id="build-the-sequence">Build the sequence</h2>
-<doc-steps>
-   <doc-step id="add-and-expand-the-node" step-number="1">
-      <template #title>Add and expand the node</template>
-<p>Create a mono Source, add <code translate="no" v-pre>AP: Random Sequence Wave Player</code> and expand the <code translate="no" v-pre>Sequence Steps</code> group to three stages.</p>
-   </doc-step>
-   <doc-step id="assign-an-array-to-each-stage" step-number="2">
-      <template #title>Assign an array to each stage</template>
-<p>Connect the opening array to stage one, mechanism array to stage two, and ending array to stage three.</p>
-   </doc-step>
-   <doc-step id="start-it-with-one-event" step-number="3">
-      <template #title>Start it with one event</template>
-<p>Connect <code translate="no" v-pre>Play</code> and <code translate="no" v-pre>Out Mono</code>. Use <code translate="no" v-pre>On Finished</code> if this effect should end the Source when the third recording finishes.</p>
-   </doc-step>
-   <doc-step id="audition-several-passes" step-number="4">
-      <template #title>Audition several passes</template>
-<p>The recordings within each stage should vary, but the opening, middle and ending should always follow one another in that order.</p>
-   </doc-step>
-</doc-steps>
+<h1 id="multi-stage-variation">Multi-stage variation</h1>
+<p><strong>Primary AudioPhysx tools:</strong> AP: Random Sequence Wave Player</p>
+<p>A good example is a listening experiment, not just a screenshot of connected pins. This exercise explains what content to prepare, which signals the graph needs, and what result you should listen for before increasing complexity.</p>
+<h2 id="prepare-the-recording-and-context">Prepare the recording and context</h2>
+<p>Imagine a powered door that makes three recognizably ordered sounds: a button or access click, the motor moving, and a final latch. Record several alternatives for each distinct phase. Store all opening clicks in one array, all motor variations in a second, and all closing clunks in a third. Keeping the arrays semantically separate is more important than their exact size.</p>
+<h2 id="assemble-the-metasound-and-test-it">Assemble the MetaSound and test it</h2>
+<p>Create a stereo Source with Random Sequence Wave Player and expand it to three array steps. Connect the arrays in the desired order, route <code translate="no" v-pre>Play</code> from one interaction trigger, then connect both stereo audio outputs. With <code translate="no" v-pre>Loop Sequence</code> disabled, <code translate="no" v-pre>On Finished</code> can end the Source after the last phase. Trigger the action repeatedly and listen to how the selected recordings change without changing the overall structure.</p>
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-random-sequence.png -->
-<h2 id="why-there-are-no-delay-pins">Why there are no delay pins</h2>
-<p>This is a <strong>completion-driven</strong> sequencer. The next stage starts when the current recording ends. If you make the middle clip longer, the final stage happens later automatically. For simultaneous layers, choose a Layered Wave Player instead.</p>
+<h2 id="judge-the-result-in-a-game">Judge the result in a game</h2>
+<p>The player waits for the chosen recording in one phase to finish before beginning the next. That makes this much easier to maintain than a chain of hard-coded delays when you replace assets later. If you actually need multiple stages to sound at once, use Layered Wave Player instead; that is a mixing problem, not a sequencing problem.</p>
+<p>A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source&#x27;s channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the <a href="../../metasound/nodes/qol/stereo-to-mono/">Stereo to Mono</a> version as well as the full stereo path.</p>
+<p><a href="../../metasound/">Browse the full node reference</a> for exact control types and limitations.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -227,6 +212,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Multi-stage sound variation", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/examples/random-sequence.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Multi-stage variation", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/examples/random-sequence.md" }</script>
 </body>
 </html>

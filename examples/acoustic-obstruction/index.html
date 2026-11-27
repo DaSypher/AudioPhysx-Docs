@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Make a sound believable behind a wall</title>
-    <meta name="title" content="Make a sound believable behind a wall">
-    <meta name="description" content="Goal: Have a mono sound change its tone and apparent arrival when the path between source and listener becomes obstructed.">
+    <title>Sound behind a wall</title>
+    <meta name="title" content="Sound behind a wall">
+    <meta name="description" content="Primary AudioPhysx tools: AP: Material Transmission or Acoustic Paths">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/acoustic-obstruction/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/acoustic-obstruction/">
-    <meta property="og:title" content="Make a sound believable behind a wall">
-    <meta property="og:description" content="Goal: Have a mono sound change its tone and apparent arrival when the path between source and listener becomes obstructed.">
+    <meta property="og:title" content="Sound behind a wall">
+    <meta property="og:description" content="Primary AudioPhysx tools: AP: Material Transmission or Acoustic Paths">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/acoustic-obstruction/">
-    <meta name="twitter:title" content="Make a sound believable behind a wall">
-    <meta name="twitter:description" content="Goal: Have a mono sound change its tone and apparent arrival when the path between source and listener becomes obstructed.">
+    <meta name="twitter:title" content="Sound behind a wall">
+    <meta name="twitter:description" content="Primary AudioPhysx tools: AP: Material Transmission or Acoustic Paths">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/acoustic-obstruction.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,43 +134,18 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="make-a-sound-believable-behind-a-wall">Make a sound believable behind a wall</h1>
-<p><strong>Goal:</strong> Have a mono sound change its tone and apparent arrival when the path between source and listener becomes obstructed.</p>
-<p>A hard on/off mute is rarely convincing. Even when an object blocks line of sight, some sound can transmit through the barrier or reach the listener by another route. AudioPhysx gives you two levels of control depending on whether the game already has acoustic path data.</p>
-<h2 id="choose-an-approach">Choose an approach</h2>
-<doc-tabs>
-<doc-tab v-cloak id="simple-authored-transmission">
-<template #title>Simple authored transmission</template>
-<p>Use <a href="../../metasound/nodes/acoustics/material-transmission/">AP: Material Transmission</a> when you can provide an <code translate="no" v-pre>Obstructed</code> Boolean plus designer-authored frequency losses. This is the easiest demonstration: toggle one state and hear a darker, quieter sound.</p>
-</doc-tab>
-<doc-tab v-cloak id="world-selected-route">
-<template #title>World-selected route</template>
-<p>Use <a href="../../metasound/nodes/acoustics/acoustic-paths/">AP: Acoustic Paths</a> when the Blueprint/world solver supplies a four-value selected-route array. It can represent delay and three-band loss for the preferred direct or around-obstacle route.</p>
-</doc-tab>
-</doc-tabs>
-<h2 id="build-a-controlled-listening-test">Build a controlled listening test</h2>
-<doc-steps>
-   <doc-step id="choose-a-clear-source" step-number="1">
-      <template #title>Choose a clear source</template>
-<p>A spoken phrase or a short repeated impact with some high-frequency content makes obstruction changes easy to hear.</p>
-   </doc-step>
-   <doc-step id="establish-the-unobstructed-reference" step-number="2">
-      <template #title>Establish the unobstructed reference</template>
-<p>Play it in an open path with no extra obstruction treatment. Adjust your game attenuation separately if necessary.</p>
-   </doc-step>
-   <doc-step id="apply-one-obstruction-method" step-number="3">
-      <template #title>Apply one obstruction method</template>
-<p>Wire the appropriate node and its controls. Compare clear and blocked values, keeping the recording itself unchanged.</p>
-   </doc-step>
-   <doc-step id="check-completion" step-number="4">
-      <template #title>Check completion</template>
-<p>If the selected processor can delay the audio, use its completion output so the tail isn&#x27;t cut off when the original Wave Player finishes.</p>
-   </doc-step>
-</doc-steps>
+<h1 id="sound-behind-a-wall">Sound behind a wall</h1>
+<p><strong>Primary AudioPhysx tools:</strong> AP: Material Transmission or Acoustic Paths</p>
+<p>A good example is a listening experiment, not just a screenshot of connected pins. This exercise explains what content to prepare, which signals the graph needs, and what result you should listen for before increasing complexity.</p>
+<h2 id="prepare-the-recording-and-context">Prepare the recording and context</h2>
+<p>Use a short, bright source such as speech, a hand clap or a mechanical impact. A strong high-frequency component makes it easier to hear what the obstruction processor changes. Put the source behind a simple wall and establish a clear listening reference before adding effects. When the recording is already very dull, it may be difficult to hear the difference between correct transmission and an ineffective setup.</p>
+<h2 id="assemble-the-metasound-and-test-it">Assemble the MetaSound and test it</h2>
+<p>For the simplest comparison, use Material Transmission with a controlled <code translate="no" v-pre>Obstructed</code> Boolean and set the high-band loss larger than the low-band loss. Connect <code translate="no" v-pre>In Left</code> and <code translate="no" v-pre>In Right</code>, then the processed stereo outputs. For world-selected path processing, first print the route from the acoustic Blueprint query and feed its four-value Float Array into Acoustic Paths. Pass the upstream completion trigger into <code translate="no" v-pre>Source Finished</code> so delayed audio is not cut off.</p>
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-acoustic-obstruction.png -->
-<h2 id="listen-critically">Listen critically</h2>
-<p>If the obstructed version sounds like someone turned the volume down but left all the sharp high frequencies untouched, it probably needs more spectral coloration. If it becomes completely dull, examine whether you&#x27;re applying both Unreal occlusion and full-strength AudioPhysx transmission loss.</p>
-<p><a href="../../blueprint/acoustic-paths/">Acoustic path queries</a></p>
+<h2 id="judge-the-result-in-a-game">Judge the result in a game</h2>
+<p>The blocked version should generally become quieter and less bright while still sounding like the same source. If it is overly muffled, check whether Unreal&#x27;s native occlusion is also active. If the effect appears too late, check the path delay and the amount of delay buffering reserved by the node. A world-derived path model is only as reliable as its collision data and query settings.</p>
+<p>A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source&#x27;s channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the <a href="../../metasound/nodes/qol/stereo-to-mono/">Stereo to Mono</a> version as well as the full stereo path.</p>
+<p><a href="../../metasound/">Browse the full node reference</a> for exact control types and limitations.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -184,7 +159,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Projectile near miss</span>
+                                <span class="block mt-1">Projectile near-​miss audio</span>
                             </span>
                         </a>
                     </div>
@@ -193,7 +168,7 @@
                         <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../support/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Support and reference</span>
+                                <span class="block mt-1">Support &amp; release notes</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>
@@ -237,6 +212,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Acoustic obstruction", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/examples/acoustic-obstruction.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Sound behind a wall", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/examples/acoustic-obstruction.md" }</script>
 </body>
 </html>

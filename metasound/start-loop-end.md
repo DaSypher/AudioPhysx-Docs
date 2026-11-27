@@ -1,5 +1,3 @@
-# Start Loop End Player
+# Start Loop End
 
-Intro, sustained middle and release, including an optional RPM-based firing mode.
-
-[Open the full reference](nodes/playback/start-loop-end.md)
+The detailed reference is now available at **[Start Loop End](nodes/playback/start-loop-end.md)**, including full behaviour, stereo wiring, practical examples and exact source-derived inputs and outputs.

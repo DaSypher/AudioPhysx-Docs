@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>QoL — small controls that clean up large graphs</title>
-    <meta name="title" content="QoL — small controls that clean up large graphs">
-    <meta name="description" content="These nodes deal mainly with events and numbers, not audio samples. Their purpose is to replace common branches, random checks and smoothing networks that would otherwise appear in every MetaSound.">
+    <title>QoL: fewer repeated control graphs</title>
+    <meta name="title" content="QoL: fewer repeated control graphs">
+    <meta name="description" content="Not everything in AudioPhysx needs to process audio samples. Many MetaSounds become difficult to maintain because the same housekeeping logic is rebuilt">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol/">
@@ -22,28 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol/">
-    <meta property="og:title" content="QoL — small controls that clean up large graphs">
-    <meta property="og:description" content="These nodes deal mainly with events and numbers, not audio samples. Their purpose is to replace common branches, random checks and smoothing networks that would otherwise appear in every MetaSound.">
+    <meta property="og:title" content="QoL: fewer repeated control graphs">
+    <meta property="og:description" content="Not everything in AudioPhysx needs to process audio samples. Many MetaSounds become difficult to maintain because the same housekeeping logic is rebuilt">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol/">
-    <meta name="twitter:title" content="QoL — small controls that clean up large graphs">
-    <meta name="twitter:description" content="These nodes deal mainly with events and numbers, not audio samples. Their purpose is to replace common branches, random checks and smoothing networks that would otherwise appear in every MetaSound.">
+    <meta name="twitter:title" content="QoL: fewer repeated control graphs">
+    <meta name="twitter:description" content="Not everything in AudioPhysx needs to process audio samples. Many MetaSounds become difficult to maintain because the same housekeeping logic is rebuilt">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
-    <script id="mermaid-js" data-cfasync="false" src="../../resources/js/mermaid.js?v=4.6.0" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,18 +134,11 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="qol--small-controls-that-clean-up-large-graphs">QoL — small controls that clean up large graphs</h1>
-<p>These nodes deal mainly with <strong>events and numbers</strong>, not audio samples. Their purpose is to replace common branches, random checks and smoothing networks that would otherwise appear in every MetaSound.</p>
-<p><strong><a href="../nodes/qol/trigger-cooldown/">Trigger Cooldown</a></strong> prevents rapid bursts from turning into dozens of audible events. <strong><a href="../nodes/qol/trigger-probability/">Trigger Probability</a></strong> lets an event through at a configurable chance. Use them on optional rattles, contact ticks and other sounds that should not happen every time.</p>
-<p><strong><a href="../nodes/qol/float-smoother/">Float Smoother</a></strong> prevents block-rate control values from stepping abruptly. This is useful for engine load, filtering and environmental controls.</p>
-<p><strong><a href="../nodes/qol/distance-switch/">Distance Switch (Dynamic)</a></strong> routes a trigger to one distance band. It is a branching tool, whereas Distance Wave Player actually decodes recordings selected by distance.</p>
-<h2 id="a-useful-pattern">A useful pattern</h2>
-<div class="overflow-hidden mb-6 py-4 dark:px-5 dark:bg-white rounded-md"><pre translate="no" class="mermaid w-full">flowchart LR
-    A[Gameplay event] --&gt; B[Trigger Cooldown]
-    B --&gt; C[Trigger Probability]
-    C --&gt; D[Optional Foley player]</pre></div>
-<p>The cooldown controls <em>frequency</em>, the probability controls <em>whether the optional detail happens</em>, and the player handles the recording. You can remove either control if it adds no value to the result.</p>
-<p><a href="../nodes/qol/">Browse the QoL reference</a></p>
+<h1 id="qol-fewer-repeated-control-graphs">QoL: fewer repeated control graphs</h1>
+<p>Not everything in AudioPhysx needs to process audio samples. Many MetaSounds become difficult to maintain because the same housekeeping logic is rebuilt repeatedly: a trigger should only pass every few hundred milliseconds, an occasional detail should only fire sometimes, or a filter parameter should move smoothly instead of jumping between values. The QoL nodes solve those narrow problems and can be connected to any suitable playback or processing chain.</p>
+<p><a href="../nodes/qol/trigger-cooldown/">Trigger Cooldown</a> limits how often an event can pass. <a href="../nodes/qol/trigger-probability/">Trigger Probability</a> accepts some events at a specified chance. <a href="../nodes/qol/float-smoother/">Float Smoother</a> conditions a block-rate numeric value using rise and fall response. <a href="../nodes/qol/distance-switch/">Distance Switch</a> routes a trigger into the appropriate distance band instead of embedding several nested branch nodes in every MetaSound. All four are intentionally control-only; they do not need stereo outputs.</p>
+<p>The new <a href="../nodes/qol/stereo-to-mono/">Stereo to Mono</a> is the exception. It accepts <code translate="no" v-pre>In Left</code> and <code translate="no" v-pre>In Right</code> and emits <code translate="no" v-pre>Out Mono</code> using a conservative average. This is useful because the other AudioPhysx audio nodes are stereo by default. If the end of a graph needs a mono audio buffer, you can explicitly place the converter there rather than giving up stereo content in the first Wave Player.</p>
+<p>A good QoL graph should remain easy to read. For example, a gameplay event might pass through a short cooldown and then a probability gate before triggering an optional mechanical rattle. Each control has one job. Overusing them can conceal a gameplay bug just as easily as it can clean up an audio graph, so test the underlying events before adding complicated gating logic.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -213,6 +205,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "QoL", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: true, hasMath: false, tocDepth: 23, "md": "/metasound/qol.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "QoL", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/metasound/qol.md" }</script>
 </body>
 </html>

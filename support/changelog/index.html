@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Version history</title>
-    <meta name="title" content="Version history">
-    <meta name="description" content="The documentation was expanded into a practical learning site, including individual explanations for the existing MetaSound nodes, Blueprint guides, example workflows and a screenshot plan.">
+    <title>Development and documentation history</title>
+    <meta name="title" content="Development and documentation history">
+    <meta name="description" content="Stereo documentation revision — 27 November 2026. The site now describes 24 current native MetaSound nodes, including the new AP: Stereo to Mono converter. References use the updated In Left, In Right, Out Left and Out Right audio paths where present.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/support/changelog/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/support/changelog/">
-    <meta property="og:title" content="Version history">
-    <meta property="og:description" content="The documentation was expanded into a practical learning site, including individual explanations for the existing MetaSound nodes, Blueprint guides, example workflows and a screenshot plan.">
+    <meta property="og:title" content="Development and documentation history">
+    <meta property="og:description" content="Stereo documentation revision — 27 November 2026. The site now describes 24 current native MetaSound nodes, including the new AP: Stereo to Mono converter. References use the updated In Left, In Right, Out Left and Out Right audio paths where present.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/support/changelog/">
-    <meta name="twitter:title" content="Version history">
-    <meta name="twitter:description" content="The documentation was expanded into a practical learning site, including individual explanations for the existing MetaSound nodes, Blueprint guides, example workflows and a screenshot plan.">
+    <meta name="twitter:title" content="Development and documentation history">
+    <meta name="twitter:description" content="Stereo documentation revision — 27 November 2026. The site now describes 24 current native MetaSound nodes, including the new AP: Stereo to Mono converter. References use the updated In Left, In Right, Out Left and Out Right audio paths where present.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/support/changelog.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,12 +134,10 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="version-history">Version history</h1>
-<h2 id="development-documentation-refresh--27-november-2026">Development documentation refresh — 27 November 2026</h2>
-<p>The documentation was expanded into a practical learning site, including individual explanations for the existing MetaSound nodes, Blueprint guides, example workflows and a screenshot plan. This is a <strong>documentation change</strong>, not a new plugin release.</p>
-<h2 id="ue-584-development-baseline">UE 5.8.4 development baseline</h2>
-<p>The reviewed code contains the native MetaSound library across Playback, Acoustics, Propagation and QoL; a shared Wave Player adapter; the Start Loop End RPM extension; the flyby gameplay and playback system; and acoustic world/model helpers.</p>
-<p>This baseline is not a published <strong>AudioPhysx v1.0</strong> support claim. When the Fab release is tested, it should receive its own version number, supported-engine matrix, known issues and date.</p>
+<h1 id="development-and-documentation-history">Development and documentation history</h1>
+<p><strong>Stereo documentation revision — 27 November 2026.</strong> The site now describes 24 current native MetaSound nodes, including the new <code translate="no" v-pre>AP: Stereo to Mono</code> converter. References use the updated <code translate="no" v-pre>In Left</code>, <code translate="no" v-pre>In Right</code>, <code translate="no" v-pre>Out Left</code> and <code translate="no" v-pre>Out Right</code> audio paths where present. The prose has been rewritten to explain behaviour, game-audio applications and practical limitations in full paragraphs rather than relying on repetitive tables or isolated pin labels. An accompanying visual stylesheet reduces oversized headings and adds restrained AudioPhysx blue/teal accents.</p>
+<p><strong>Previous playback development.</strong> The plugin source includes a shared Wave Player backend adapter, specialized selection and sequencing players, material-aware playback, projectile flybys and acoustic routing helpers. Start Loop End includes RPM-based scheduling as well as its older completion-based middle mode.</p>
+<p>This entry records the source and documentation basis. It is <strong>not</strong> a claim that a Fab v1.0 package has been submitted, validated for Shipping or released. When a commercial package exists, it should receive an explicit version number, release date, supported-engine matrix and meaningful change notes based on that actual binary/source archive.</p>
 
                 
                 <!-- Required only on API pages -->

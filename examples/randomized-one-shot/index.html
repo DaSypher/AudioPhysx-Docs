@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>A one-shot that doesn&#39;t sound identical every time</title>
-    <meta name="title" content="A one-shot that doesn't sound identical every time">
-    <meta name="description" content="Goal: Make footsteps, impacts or small interactions feel less repetitive by varying the recording instead of triggering one identical file on every event.">
+    <title>Randomized one-shots</title>
+    <meta name="title" content="Randomized one-shots">
+    <meta name="description" content="Primary AudioPhysx tools: AP: Random Wave Player">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot/">
-    <meta property="og:title" content="A one-shot that doesn't sound identical every time">
-    <meta property="og:description" content="Goal: Make footsteps, impacts or small interactions feel less repetitive by varying the recording instead of triggering one identical file on every event.">
+    <meta property="og:title" content="Randomized one-shots">
+    <meta property="og:description" content="Primary AudioPhysx tools: AP: Random Wave Player">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot/">
-    <meta name="twitter:title" content="A one-shot that doesn't sound identical every time">
-    <meta name="twitter:description" content="Goal: Make footsteps, impacts or small interactions feel less repetitive by varying the recording instead of triggering one identical file on every event.">
+    <meta name="twitter:title" content="Randomized one-shots">
+    <meta name="twitter:description" content="Primary AudioPhysx tools: AP: Random Wave Player">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,32 +134,18 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="a-one-shot-that-doesnt-sound-identical-every-time">A one-shot that doesn&#x27;t sound identical every time</h1>
-<p><strong>Goal:</strong> Make footsteps, impacts or small interactions feel less repetitive by varying the recording instead of triggering one identical file on every event.</p>
-<h2 id="prepare-the-sound">Prepare the sound</h2>
-<p>Import four or five takes of the <strong>same type of event</strong>. For example, several small metal knocks. Trim obvious leading silence, match the perceived loudness where practical and keep them in a single Wave Asset Array.</p>
-<h2 id="wire-the-metasound">Wire the MetaSound</h2>
-<doc-steps>
-   <doc-step id="add-the-player" step-number="1">
-      <template #title>Add the player</template>
-<p>Create a mono MetaSound Source and add <a href="../../metasound/nodes/playback/random-wave-player/">AP: Random Wave Player</a>.</p>
-   </doc-step>
-   <doc-step id="give-it-alternatives" step-number="2">
-      <template #title>Give it alternatives</template>
-<p>Connect your Wave Asset Array to <code translate="no" v-pre>Waves</code>, then connect <code translate="no" v-pre>Play</code> from the desired trigger event.</p>
-   </doc-step>
-   <doc-step id="listen-to-repeated-events" step-number="3">
-      <template #title>Listen to repeated events</template>
-<p>Connect <code translate="no" v-pre>Out Mono</code> to the Source output, enable <code translate="no" v-pre>No Immediate Repeat</code> if desired and audition repeated starts.</p>
-   </doc-step>
-   <doc-step id="stress-test-the-event" step-number="4">
-      <template #title>Stress-test the event</template>
-<p>Trigger faster than one recording can finish. Check <code translate="no" v-pre>Max Voices</code> and decide how much overlapping sound the game needs.</p>
-   </doc-step>
-</doc-steps>
+<h1 id="randomized-one-shots">Randomized one-shots</h1>
+<p><strong>Primary AudioPhysx tools:</strong> AP: Random Wave Player</p>
+<p>A good example is a listening experiment, not just a screenshot of connected pins. This exercise explains what content to prepare, which signals the graph needs, and what result you should listen for before increasing complexity.</p>
+<h2 id="prepare-the-recording-and-context">Prepare the recording and context</h2>
+<p>Use several recordings of one physical event, such as a handful of metal objects being moved or several punches on the same surface. Import the files as Wave Assets and trim them so their transients begin consistently. Aim for roughly similar perceived level; the player can choose a recording but cannot magically make radically different source edits sound like one cohesive event.</p>
+<h2 id="assemble-the-metasound-and-test-it">Assemble the MetaSound and test it</h2>
+<p>Add a Random Wave Player to a stereo Source and connect the recording array to <code translate="no" v-pre>Waves</code>. Connect the event trigger to <code translate="no" v-pre>Play</code>, then route <code translate="no" v-pre>Out Left</code> and <code translate="no" v-pre>Out Right</code> to the stereo output. Enable <code translate="no" v-pre>No Immediate Repeat</code> when you have multiple valid takes and want to reduce consecutive identical choices. Choose a <code translate="no" v-pre>Max Voices</code> setting appropriate to the likely overlap and listen to a rapid burst of triggers, not just one click.</p>
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-randomized-one-shot.png -->
-<h2 id="what-to-listen-for">What to listen for</h2>
-<p>A convincing variation player should sound <strong>natural</strong>, not simply more random. If one take is much louder than the others, listeners may notice the level jump more than they appreciate the variety. If you need each variation to be heard within a cycle, try the <a href="../../metasound/nodes/playback/shuffle-bag-wave-player/">Shuffle-Bag Wave Player</a>.</p>
+<h2 id="judge-the-result-in-a-game">Judge the result in a game</h2>
+<p>You should hear the same kind of event with subtle natural differences. If one take leaps out of the mix or contains a long tail that conflicts with the next event, correct the source asset or reduce overlap deliberately. For a strictly positioned sound, try converting the completed stereo result to mono before spatialization and compare the two presentations.</p>
+<p>A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source&#x27;s channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the <a href="../../metasound/nodes/qol/stereo-to-mono/">Stereo to Mono</a> version as well as the full stereo path.</p>
+<p><a href="../../metasound/">Browse the full node reference</a> for exact control types and limitations.</p>
 
                 
                 <!-- Required only on API pages -->

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>Troubleshooting AudioPhysx</title>
     <meta name="title" content="Troubleshooting AudioPhysx">
-    <meta name="description" content="When something goes wrong, isolate the system in this order: can Unreal play the asset? → does the MetaSound receive a trigger? → does the node output audio?">
+    <meta name="description" content="When an effect does not behave as expected, debug from the outside in. First verify Unreal can play the chosen recording. Then verify the MetaSound receives its starting trigger.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/support/troubleshooting/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/support/troubleshooting/">
     <meta property="og:title" content="Troubleshooting AudioPhysx">
-    <meta property="og:description" content="When something goes wrong, isolate the system in this order: can Unreal play the asset? → does the MetaSound receive a trigger? → does the node output audio?">
+    <meta property="og:description" content="When an effect does not behave as expected, debug from the outside in. First verify Unreal can play the chosen recording. Then verify the MetaSound receives its starting trigger.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/support/troubleshooting/">
     <meta name="twitter:title" content="Troubleshooting AudioPhysx">
-    <meta name="twitter:description" content="When something goes wrong, isolate the system in this order: can Unreal play the asset? → does the MetaSound receive a trigger? → does the node output audio?">
+    <meta name="twitter:description" content="When an effect does not behave as expected, debug from the outside in. First verify Unreal can play the chosen recording. Then verify the MetaSound receives its starting trigger.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/support/troubleshooting.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,36 +135,20 @@
 
                 <!-- Page content  -->
 <h1 id="troubleshooting-audiophysx">Troubleshooting AudioPhysx</h1>
-<p>When something goes wrong, isolate the system in this order: <strong>can Unreal play the asset? → does the MetaSound receive a trigger? → does the node output audio? → are world parameters correct?</strong> Debugging each layer separately is usually faster than changing every setting at once.</p>
-<h2 id="i-cant-find-any-audiophysx-nodes">I can&#x27;t find any AudioPhysx nodes</h2>
-<p>Open <strong>Edit → Plugins</strong> and verify AudioPhysx is enabled. Restart the Editor after plugin activation or a native rebuild. In a MetaSound Source, search <code translate="no" v-pre>AP:</code> and inspect the AudioPhysx categories.</p>
-<p>For source builds, confirm the full plugin directory includes the <code translate="no" v-pre>.uplugin</code> descriptor and that its C++ module actually compiled for your installed engine version. Copying a standalone <code translate="no" v-pre>Source</code> folder is not equivalent to installing a complete code plugin.</p>
-<h2 id="my-wave-player-is-silent">My Wave Player is silent</h2>
-<p>Start with a simple mono MetaSound Source and <strong>one known-good Wave Asset</strong>. Connect <code translate="no" v-pre>Play</code> and <code translate="no" v-pre>Out Mono</code> before adding other processing. Check that the array is not empty and that the recording imports and auditions normally in Unreal.</p>
-<p>If the sound plays in a simple Source but disappears in your game, examine attenuation, concurrency and world-space source position. If it stops when you add an acoustic effect, inspect that effect&#x27;s input values and the completion routing.</p>
-<h2 id="the-sequence-plays-only-the-first-recording">The sequence plays only the first recording</h2>
-<p>For a fixed or random sequence, make sure later slots contain playable Wave Assets and are genuinely part of the expandable group. The next sound should follow playback completion, not a manually connected delay. Check whether an early Source-level <code translate="no" v-pre>On Finished</code> is terminating the graph.</p>
-<h2 id="start-loop-end-never-ends">Start Loop End never ends</h2>
-<p>A held sequence is expected to keep its middle phase active while firing. <strong><code translate="no" v-pre>Stop Firing</code> is required</strong> to request the end phase. <code translate="no" v-pre>Immediate Release</code> controls whether active recordings fade promptly or finish first. At positive RPM values, overlapping middle voices can remain audible after the release request when immediate release is disabled.</p>
-<h2 id="flyby-doesnt-trigger">Flyby doesn&#x27;t trigger</h2>
-<p>Print the result from <code translate="no" v-pre>AP: Calculate Flyby</code> before requesting playback. Check that the shot path passes within <code translate="no" v-pre>AudibleRadiusM</code>, that path positions are in Unreal world units, and that speed is supplied in metres per second.</p>
-<p>If geometry is accepted but audio remains silent, verify the five named external Float inputs in the flyby MetaSound and whether its <code translate="no" v-pre>On Play</code> reaches the Wave Player.</p>
-<h2 id="the-acoustic-path-sounds-too-dark-or-delayed">The acoustic path sounds too dark or delayed</h2>
-<p>Inspect the four selected-route values: <strong>delay ms, low loss dB, mid loss dB, high loss dB</strong>. Check that Unreal occlusion or air absorption is not doubling the effect, and confirm the requested delay is within the node&#x27;s allocated capacity.</p>
-<h2 id="my-dynamic-pins-changed">My dynamic pins changed</h2>
-<p>When you edit the enabled surface-route list, <code translate="no" v-pre>AP: Surface Wave Player</code> may expose a different pin layout. Back up the affected MetaSounds, restart after changing settings, and inspect connections before resaving. For an ordinary expandable group, verify the authored group instance count remains correct.</p>
-<h2 id="c-errors-after-a-source-update">C++ errors after a source update</h2>
-<p>Read the <strong>first compiler error</strong>, not only the final build summary. Close the Editor, disable Live Coding and make sure you have not kept two versions of the same node <code translate="no" v-pre>.cpp</code> under different names. If generated reflection files are stale, remove the plugin&#x27;s <code translate="no" v-pre>Binaries</code> and <code translate="no" v-pre>Intermediate</code> directories before regenerating/rebuilding.</p>
-<h2 id="the-editor-works-but-a-packaged-game-doesnt">The Editor works but a packaged game doesn&#x27;t</h2>
-<p>A clean Editor build is not proof of a working Shipping build. Check that assets were cooked, the runtime module loads, all references are included, and any optional audio system or config used by the graph is available at runtime. Begin with a packaged <strong>Development</strong> build for useful logging, then verify the same behaviour in <strong>Shipping</strong>.</p>
-<h2 id="what-to-include-in-a-useful-bug-report">What to include in a useful bug report</h2>
-<ul>
-<li>Exact Unreal Engine version, plugin version, operating system and build configuration.</li>
-<li>Which MetaSound node or Blueprint helper failed.</li>
-<li>A minimal graph or path setup with reproducible inputs.</li>
-<li>Expected result, actual result and first relevant log message.</li>
-</ul>
-<p><a href="../../getting-started/requirements/">Requirements</a> · <a href="../compatibility/">Compatibility</a></p>
+<p>When an effect does not behave as expected, debug from the outside in. First verify Unreal can play the chosen recording. Then verify the MetaSound receives its starting trigger. Next confirm the expected Left and Right audio buffers reach the Source output. Only after this works should you investigate acoustic path data, material configuration, voice limits or the extra DSP stages in the chain. That process may feel slower than changing settings randomly, but it usually identifies the real problem with fewer false fixes.</p>
+<h2 id="missing-nodes-silence-or-incorrect-audio-layout">Missing nodes, silence or incorrect audio layout</h2>
+<p>If the AudioPhysx nodes do not appear in the palette, check <strong>Edit → Plugins</strong> and confirm that the correct native module loaded. After replacing source files, close Unreal Editor, disable Live Coding and rebuild for the intended engine version. A duplicate <code translate="no" v-pre>.cpp</code> file or a stale binary from an older plugin version can make registration confusing even if the project appears to launch normally.</p>
+<p>If a node is present but silent, use one known-good Wave Asset and a simple Source. Make sure the requested array actually contains playable recordings, <code translate="no" v-pre>Play</code> reaches the correct input and both <code translate="no" v-pre>Out Left</code> and <code translate="no" v-pre>Out Right</code> are connected as intended. The stereo upgrade may leave older saved graphs with missing or stale mono connections. A Source set to Stereo needs the correct output channel routing; a Source deliberately set to Mono needs an explicit Stereo to Mono path when using AudioPhysx&#x27;s stereo outputs.</p>
+<p>If a player offers <code translate="no" v-pre>On Rejected</code>, observe it while testing. It can distinguish a failed start request from an audible voice that happens to be attenuated or spatialized out of hearing range. Check the Selected Index and active-voice diagnostics where those are provided.</p>
+<h2 id="playback-timing-and-completion">Playback timing and completion</h2>
+<p>Sequence Wave Player advances after one recording actually finishes. Random Sequence makes a new selection at each stage and follows the same completion-driven timing. Start Loop End is different: its positive RPM setting starts middle shots at scheduled intervals and waits for <code translate="no" v-pre>Stop Firing</code> before entering its ending phase. If you never supply that release event, it is not expected to finish like an ordinary one-shot.</p>
+<p>A downstream Acoustic Paths or Early Reflections node may continue to produce audio after the original Wave Player finishes. Pass the player&#x27;s <code translate="no" v-pre>On Finished</code> to <code translate="no" v-pre>Source Finished</code> on the processor and use the processor&#x27;s own completion output where appropriate. Otherwise a Source-level completion connection can kill the final delayed samples. Conversely, do not automatically assume explicit <code translate="no" v-pre>Stop</code> emits a natural-completion trigger; the detailed node pages explain cancellation behaviour.</p>
+<h2 id="incorrect-physics-material-or-environment-behaviour">Incorrect physics, material or environment behaviour</h2>
+<p>If PhysMat Wave Player always uses the fallback pool, print the <strong>exact Physical Material asset path</strong> coming from the hit result. If Surface Wave Player selects the wrong pool, check the <code translate="no" v-pre>EPhysicalSurface</code> integer and the configured route list. Changes to surface-specific routes can alter dynamic pins, so back up and inspect affected MetaSound assets after changing those settings.</p>
+<p>If flyby playback does not happen, call <code translate="no" v-pre>AP: Calculate Flyby</code> and inspect <code translate="no" v-pre>bAudible</code>, closest distance and shock state before scheduling audio. The path endpoints use Unreal world coordinates, while the audible radius and speed inputs use metres and metres per second. If Acoustic Paths sounds too dark or delayed, inspect the selected four-value route array and make sure its order is delay, low loss, mid loss, high loss. Do not assume a well-functioning filter can correct wrong world data.</p>
+<h2 id="editor-works-but-packaged-game-does-not">Editor works but packaged game does not</h2>
+<p>A successful Editor compile or MetaSound preview is not complete runtime verification. Test a clean installation in a new project and package Development and Shipping configurations for each platform you intend to claim. Verify cooked Wave Assets, module loading, engine API compatibility and audio-device behaviour with the exact commercial distribution rather than a development folder that may contain extra files.</p>
+<p>When asking for help, share a minimal graph with the relevant pin connections and the first meaningful log error. Keep personal project paths, account details and client or private data out of public issue reports.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -178,7 +162,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Support and reference</span>
+                                <span class="block mt-1">Support &amp; release notes</span>
                             </span>
                         </a>
                     </div>

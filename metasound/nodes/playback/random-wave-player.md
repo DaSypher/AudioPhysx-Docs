@@ -1,65 +1,48 @@
 # AP: Random Wave Player
 
-**MetaSound · AudioPhysx / Playback**
+**AudioPhysx / Playback** · Unreal Engine 5.8.4 development source
 
-Play a random recording from an array whenever an event occurs, with optional variation and multiple simultaneous voices.
+A reliable starting point for any event that should sound familiar without replaying precisely the same recording every time.
 
-## What actually happens
+## Understanding the behaviour
 
-This is the everyday alternative to placing a Random Get and Wave Player chain in every graph. The node chooses a playable Wave Asset from `Waves` on each `Play`, then sends the decoded audio to one mono output.
+The Random Wave Player takes a collection of Wave Assets and makes a selection whenever `Play` is triggered. Once the selection is accepted, that recording plays through the node's stereo output. Unlike a graph built from separate random-number, asset-switch and Wave Player elements, selection and concurrent playback are handled together. The node also exposes whether a requested start was rejected, which is useful when you are debugging empty arrays or reaching a voice limit.
 
-For events that can happen in quick succession, the configured voice capacity allows recordings to overlap. `No Immediate Repeat` is useful when a small sound library would otherwise make identical successive takes too obvious.
+Stereo matters particularly if the source recording contains actual left/right differences. The player now mixes its active voices into independent `Out Left` and `Out Right` buffers, rather than collapsing recordings to a single channel. If this is a tightly positioned 3D footstep, you may still choose to downmix at the end of the graph; the point is that no early stage forces you to discard stereo material.
 
-## Hear it in a game
+Consider a character handling a set of loose metal objects. You might have six recordings of a similar small impact, each with slightly different rhythm and resonance. Randomly choosing between them prevents a short repeated animation from sounding machine-generated. For a weapon or collision system, the same node can respond to closely spaced triggers while older recordings are still ringing out, up to the configured voice limit.
 
-Use five short stone-impact recordings and connect a gameplay impact trigger to `Play`. Trigger them repeatedly at different intervals. You should hear variation in the selected recordings rather than a perfectly identical impact each time.
+A collection of recordings should sound like a family. Random selection does not automatically equalize their loudness or remove poorly trimmed silence. Prepare the Wave Assets so the listener notices physical variation rather than inconsistent editing.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Prepare the variation pool
-Supply several recordings of the same *kind* of event to `Waves`.
->>>
+Create a stereo MetaSound Source and add `AP: Random Wave Player`. Supply several recordings to `Waves`, connect `On Play` or your own event to `Play`, and connect `Out Left` and `Out Right` to the corresponding Source outputs. Begin with a modest `Max Voices` setting, trigger the node repeatedly, and listen for overlap. If the Source is intentionally mono, route the two outputs into `AP: Stereo to Mono` first.
 
->>> 2. Connect the gameplay trigger
-Trigger `Play` when that event happens; connect `Out Mono` to the output.
->>>
+When `No Immediate Repeat` is enabled, the node attempts to avoid selecting the previous recording when there is more than one valid option. `Selected Index` makes it easy to confirm that selection is working even when the recordings happen to sound similar.
 
->>> 3. Test overlapping events
-Set `Max Voices` for the expected overlap and test `No Immediate Repeat` with at least two valid choices.
->>>
+`Pitch Shift (st)` alters playback pitch in semitones; positive values are higher, negative values lower. This is a playback-rate-style change, so consider how it affects perceived duration and naturalness. `Max Voices` limits how many recordings may exist simultaneously. `On Finished` indicates natural completion of the final active voice, whereas `On Rejected` identifies an unsuccessful start request rather than playing a replacement silence. These are event outputs, not audio buffers.
 
-## The controls that matter
+**Practical limitations.** For performance, avoid setting voice capacity arbitrarily high on effects triggered dozens of times per frame. More active voices mean more decoding and mixing work. Audition realistic bursts in a packaged Development build and verify that the sound still follows the gameplay event when the pool is busy. A single long ambient recording would generally be better served by a normal Unreal playback workflow than a constantly retriggered random one-shot player.
 
-`Pitch Shift (st)` changes playback pitch in **semitones**; for orientation, +12 semitones is one octave and −12 is one octave down. `Max Voices` is a capacity limit, not a guarantee that every incoming trigger will be heard under load. `Stop` is for stopping the active playback rather than selecting another sound.
+==- Exact input and output pins
 
-## Outputs and completion
+**Inputs from the current C++ node definition**
 
-- **`Out Mono`** · Audio (mono) — Mixed mono output from active voices.
-- **`On Finished`** · Trigger — Triggered when the final active voice  finishes naturally.
-- **`On Rejected`** · Trigger — Triggered when playback cannot start.
-- **`Selected Index`** · Integer — Index of the most recently accepted wave,  or -1 for a rejected selection.
+- **`Play`** — *Trigger*. Select one random valid Wave Asset and play it.
+- **`Stop`** — *Trigger*. Stop all active wave playback.
+- **`Waves`** — *Wave Asset Array*. Array of Wave Assets to randomly select from.
+- **`No Immediate Repeat`** — *Boolean*. Prevent consecutive selections of the same  wave when alternatives are available.
+- **`Pitch Shift (st)`** — *Float*. Playback pitch adjustment in semitones.  Also changes playback duration.
+- **`Max Voices`** — *Integer*. Maximum number of overlapping recordings,  from 1 to 16.
 
-## Things to watch for
+**Outputs from the current C++ node definition**
 
-- Recordings should be edited to comparable perceived loudness first. Randomization will not normalize badly mismatched takes.
-- Check what happens at the maximum simultaneous-voice setting in an actual combat or destruction scene.
+- **`Out Left`** — *Audio buffer*. Left channel of the active-voice stereo mix.
+- **`Out Right`** — *Audio buffer*. Right channel of the stereo playback mix.
+- **`On Finished`** — *Trigger*. Triggered when the final active voice  finishes naturally.
+- **`On Rejected`** — *Trigger*. Triggered when playback cannot start.
+- **`Selected Index`** — *Integer*. Index of the most recently accepted wave,  or -1 for a rejected selection.
 
-==- Full input reference
-- **`Play`** · *Trigger* — Select one random valid Wave Asset and play it.
-- **`Stop`** · *Trigger* — Stop all active wave playback.
-- **`Waves`** · *Wave Asset Array* — Array of Wave Assets to randomly select from.
-- **`No Immediate Repeat`** · *Boolean* — Prevent consecutive selections of the same  wave when alternatives are available.
-- **`Pitch Shift (st)`** · *Float* — Playback pitch adjustment in semitones.  Also changes playback duration.
-- **`Max Voices`** · *Integer* — Maximum number of overlapping recordings,  from 1 to 16.
 ===
 
-==- Full output reference
-- **`Out Mono`** · Audio (mono) — Mixed mono output from active voices.
-- **`On Finished`** · Trigger — Triggered when the final active voice  finishes naturally.
-- **`On Rejected`** · Trigger — Triggered when playback cannot start.
-- **`Selected Index`** · Integer — Index of the most recently accepted wave,  or -1 for a rejected selection.
-===
-
-## Continue learning
-
-[Shuffle-Bag Wave Player](shuffle-bag-wave-player.md) is a better choice when repeated picks should be distributed across all supplied variations. Also see the [Playback overview](../../playback.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Shuffle-Bag Wave Player](shuffle-bag-wave-player.md) if you want a selection history rather than an unrestricted random draw.

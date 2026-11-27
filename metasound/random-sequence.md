@@ -1,5 +1,3 @@
-# Random Sequence Wave Player
+# Random Sequence
 
-Each expandable stage contains an array. One variation plays fully before the next stage begins.
-
-[Open the full reference](nodes/playback/random-sequence-wave-player.md)
+The detailed reference is now available at **[Random Sequence](nodes/playback/random-sequence-wave-player.md)**, including full behaviour, stereo wiring, practical examples and exact source-derived inputs and outputs.

@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Start creating with AudioPhysx</title>
-    <meta name="title" content="Start creating with AudioPhysx">
-    <meta name="description" content="You do not need to understand sound propagation or C++ before getting value from AudioPhysx. Begin with a simple Wave Player and add complexity only when the sound actually calls for it.">
+    <title>Getting started with AudioPhysx</title>
+    <meta name="title" content="Getting started with AudioPhysx">
+    <meta name="description" content="The fastest way to understand AudioPhysx is to make one sound work end to end before building a complicated acoustic system. You can begin with an ordinary imported recording, one trigger and a stereo MetaSound Source.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/">
-    <meta property="og:title" content="Start creating with AudioPhysx">
-    <meta property="og:description" content="You do not need to understand sound propagation or C++ before getting value from AudioPhysx. Begin with a simple Wave Player and add complexity only when the sound actually calls for it.">
+    <meta property="og:title" content="Getting started with AudioPhysx">
+    <meta property="og:description" content="The fastest way to understand AudioPhysx is to make one sound work end to end before building a complicated acoustic system. You can begin with an ordinary imported recording, one trigger and a stereo MetaSound Source.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/">
-    <meta name="twitter:title" content="Start creating with AudioPhysx">
-    <meta name="twitter:description" content="You do not need to understand sound propagation or C++ before getting value from AudioPhysx. Begin with a simple Wave Player and add complexity only when the sound actually calls for it.">
+    <meta name="twitter:title" content="Getting started with AudioPhysx">
+    <meta name="twitter:description" content="The fastest way to understand AudioPhysx is to make one sound work end to end before building a complicated acoustic system. You can begin with an ordinary imported recording, one trigger and a stereo MetaSound Source.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/readme.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,33 +134,15 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="start-creating-with-audiophysx">Start creating with AudioPhysx</h1>
-<p>You do not need to understand sound propagation or C++ before getting value from AudioPhysx. Begin with a simple Wave Player and add complexity only when the sound actually calls for it.</p>
-<h2 id="your-first-15-minutes">Your first 15 minutes</h2>
-<doc-steps>
-   <doc-step id="understand-the-basics" step-number="1">
-      <template #title>Understand the basics</template>
-<p>Read <a href="requirements/">Requirements and terminology</a>. Learn the difference between a Wave Asset, trigger and audio output, and why Unreal distances are often in centimetres.</p>
-   </doc-step>
-   <doc-step id="install-and-confirm-the-plugin" step-number="2">
-      <template #title>Install and confirm the plugin</template>
-<p>Follow <a href="installation/">Installation</a>, then check that the <code translate="no" v-pre>AudioPhysx</code> categories appear in the MetaSound node search.</p>
-   </doc-step>
-   <doc-step id="build-one-complete-sound" step-number="3">
-      <template #title>Build one complete sound</template>
-<p>Use <a href="first-metasound/">Your first MetaSound</a> to connect three recordings to <strong>AP: Sequence Wave Player</strong>.</p>
-   </doc-step>
-   <doc-step id="understand-completion" step-number="4">
-      <template #title>Understand completion</template>
-<p>Read <a href="signals-and-completion/">Signals and completion</a>. It explains why an audio source can finish before a delayed reflection or propagation tail has ended.</p>
-   </doc-step>
-   <doc-step id="troubleshoot-with-a-checklist" step-number="5">
-      <template #title>Troubleshoot with a checklist</template>
-<p>Keep the <a href="checklist/">Setup checklist</a> open when testing your own MetaSounds.</p>
-   </doc-step>
-</doc-steps>
+<h1 id="getting-started-with-audiophysx">Getting started with AudioPhysx</h1>
+<p>The fastest way to understand AudioPhysx is to make one sound work end to end before building a complicated acoustic system. You can begin with an ordinary imported recording, one trigger and a stereo MetaSound Source. Once the basic signal flows correctly, it becomes much easier to understand why a material-aware player, propagation processor or world-query component is useful.</p>
+<p>This documentation uses the <strong>current stereo C++ source</strong> as its contract. An older MetaSound graph may still have <code translate="no" v-pre>Out Mono</code> pins from a previous version of the plugin; those assets should be backed up and migrated deliberately rather than resaved as soon as Unreal refreshes their nodes.</p>
+<h2 id="a-practical-learning-order">A practical learning order</h2>
+<p><strong>Begin with <a href="installation/">installation</a>.</strong> Confirm that the AudioPhysx plugin loads and the node categories appear in the MetaSound editor. Then read <a href="requirements/">requirements and terminology</a> for the difference between Wave Assets, audio buffers, control values and triggers. These distinctions prevent many silent-graph problems later.</p>
+<p><strong>Build <a href="first-metasound/">your first MetaSound</a>.</strong> The tutorial uses Sequence Wave Player because it demonstrates how playback timing and completion work without needing gameplay path queries or project-wide acoustic settings. After that, the <a href="stereo-routing/">stereo routing guide</a> explains how to keep Left and Right channels or fold them down to mono for appropriate 3D sources.</p>
+<p><strong>Add game integration when the sound needs it.</strong> The Blueprint section explains how to obtain the physical material from a hit, submit a projectile path, and query a selected acoustic route. These calculations are useful, but they should not be made prerequisites for a simple random or layered sound effect.</p>
+<p>If something does not play, use the <a href="checklist/">setup checklist</a> and <a href="../support/troubleshooting/">troubleshooting</a>. It is usually faster to isolate one missing Wave Asset or trigger than to adjust ten unrelated DSP settings.</p>
 <!-- IMAGE SLOT: docs/static/images/setup/node-search.png -->
-<p>Once that works, try a <a href="../examples/randomized-one-shot/">randomized one-shot</a> or <a href="../examples/automatic-weapon/">RPM-controlled weapon</a>. Both reuse the same fundamentals.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -183,7 +165,7 @@
                         <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../getting-started/requirements/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Requirements &amp; terminology</span>
+                                <span class="block mt-1">Requirements &amp; terms</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>

@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Automatic weapon sound with RPM</title>
-    <meta name="title" content="Automatic weapon sound with RPM">
-    <meta name="description" content="Goal: Start a weapon with an attack recording, repeat variable shot bodies at an actual firing rate, and play a proper release tail when the player lets go of the trigger.">
+    <title>Automatic weapon with RPM</title>
+    <meta name="title" content="Automatic weapon with RPM">
+    <meta name="description" content="Primary AudioPhysx tools: AP: Start Loop End Player">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/automatic-weapon/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/automatic-weapon/">
-    <meta property="og:title" content="Automatic weapon sound with RPM">
-    <meta property="og:description" content="Goal: Start a weapon with an attack recording, repeat variable shot bodies at an actual firing rate, and play a proper release tail when the player lets go of the trigger.">
+    <meta property="og:title" content="Automatic weapon with RPM">
+    <meta property="og:description" content="Primary AudioPhysx tools: AP: Start Loop End Player">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/automatic-weapon/">
-    <meta name="twitter:title" content="Automatic weapon sound with RPM">
-    <meta name="twitter:description" content="Goal: Start a weapon with an attack recording, repeat variable shot bodies at an actual firing rate, and play a proper release tail when the player lets go of the trigger.">
+    <meta name="twitter:title" content="Automatic weapon with RPM">
+    <meta name="twitter:description" content="Primary AudioPhysx tools: AP: Start Loop End Player">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/automatic-weapon.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,55 +134,18 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="automatic-weapon-sound-with-rpm">Automatic weapon sound with RPM</h1>
-<p><strong>Goal:</strong> Start a weapon with an attack recording, repeat variable shot bodies at an actual firing rate, and play a proper release tail when the player lets go of the trigger.</p>
-<p>The important improvement over a simple sequential player is that a shot recording might last longer than the interval between rounds. <strong>RPM controls when the next shot begins</strong>, not how quickly the current recording must finish.</p>
-<h2 id="prepare-three-kinds-of-recording">Prepare three kinds of recording</h2>
-<p><strong>Start Waves</strong> should contain the distinctive attack or mechanism sound when the weapon first fires. <strong>Loop Waves</strong> holds your repeatable middle gunshot variations. <strong>End Waves</strong> contains the release, stopping mechanism or tail used after firing stops.</p>
-<h2 id="connect-it">Connect it</h2>
-<doc-steps>
-   <doc-step id="add-start-loop-end-player" step-number="1">
-      <template #title>Add Start Loop End Player</template>
-<p>Create a mono MetaSound Source and add <a href="../../metasound/nodes/playback/start-loop-end/">AP: Start Loop End Player</a>.</p>
-   </doc-step>
-   <doc-step id="assign-the-wave-arrays" step-number="2">
-      <template #title>Assign the wave arrays</template>
-<p>Fill <code translate="no" v-pre>Start Waves</code>, <code translate="no" v-pre>Loop Waves</code> and <code translate="no" v-pre>End Waves</code>. Use multiple middle takes to prevent the same shot being selected endlessly.</p>
-   </doc-step>
-   <doc-step id="set-a-firing-rate" step-number="3">
-      <template #title>Set a firing rate</template>
-<p>Set <code translate="no" v-pre>RPM</code> to 600 for a nominal <strong>100 ms interval</strong> between middle-shot starts. Positive RPM values are distinct from the <code translate="no" v-pre>RPM = 0</code> completion-driven mode.</p>
-   </doc-step>
-   <doc-step id="wire-the-controls" step-number="4">
-      <template #title>Wire the controls</template>
-<p>Send the weapon pressed event to <code translate="no" v-pre>Start Firing</code> and the released event to <code translate="no" v-pre>Stop Firing</code>. Connect <code translate="no" v-pre>Out Mono</code> to the graph output and completion as appropriate.</p>
-   </doc-step>
-   <doc-step id="test-both-release-options" step-number="5">
-      <template #title>Test both release options</template>
-<p>With <code translate="no" v-pre>Immediate Release</code> enabled, active shots fade and the end begins promptly. With it disabled, active audio gets time to complete first.</p>
-   </doc-step>
-</doc-steps>
+<h1 id="automatic-weapon-with-rpm">Automatic weapon with RPM</h1>
+<p><strong>Primary AudioPhysx tools:</strong> AP: Start Loop End Player</p>
+<p>A good example is a listening experiment, not just a screenshot of connected pins. This exercise explains what content to prepare, which signals the graph needs, and what result you should listen for before increasing complexity.</p>
+<h2 id="prepare-the-recording-and-context">Prepare the recording and context</h2>
+<p>Collect a short introductory attack or weapon mechanism, several main gunshot variations and one or more release/tail recordings. Keep the main recordings in a consistent tonal family. A gunshot that rings for 250 ms does <strong>not</strong> need to be cut to 100 ms just because the weapon fires at 600 rounds per minute; the scheduler is designed to let the recordings overlap.</p>
+<h2 id="assemble-the-metasound-and-test-it">Assemble the MetaSound and test it</h2>
+<p>Create a stereo Source and add Start Loop End Player. Fill <code translate="no" v-pre>Start Waves</code>, <code translate="no" v-pre>Loop Waves</code> and <code translate="no" v-pre>End Waves</code>. Route gameplay press to <code translate="no" v-pre>Start Firing</code> and release to <code translate="no" v-pre>Stop Firing</code>, then connect Left/Right audio and final completion. Set <code translate="no" v-pre>RPM</code> to 600 and audition a sustained hold: once the introductory recording finishes, middle shots should be scheduled roughly every 100 ms. Test <code translate="no" v-pre>Immediate Release</code> both on and off to hear whether active shots fade quickly or finish before the ending begins.</p>
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-automatic-weapon.png -->
-<h2 id="what-to-listen-for">What to listen for</h2>
-<p>At 600 RPM, a new middle recording should start approximately every tenth of a second once the intro has finished, even when an individual recording is longer. Releasing the weapon should prevent new middle shots and lead into an ending. Because the node has a <strong>twelve-voice middle pool</strong>, very long samples at high RPM can exhaust the available voices; new shot starts may then be skipped rather than cutting earlier recordings off.</p>
-<div class="flex mb-6">
-    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
-    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
-        <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-warning" width="22" height="22" viewBox="0 0 24 24" role="presentation">
-                <g fill="currentColor"><g>
-                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
-                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
-                </g></g>
-            </svg>
-        </div>
-        <div class="pr-5 ml-3 w-full">
-            <h5>Held audio needs a release event</h5>
-<p>If your gameplay only sends <code translate="no" v-pre>Start Firing</code> and never sends <code translate="no" v-pre>Stop Firing</code>, the source may remain in the active middle state. This is a gameplay trigger contract, not a playback bug.</p>
-        </div>
-    </div>
-</div>
-<p><a href="../../metasound/nodes/playback/start-loop-end/">Detailed player reference</a></p>
+<h2 id="judge-the-result-in-a-game">Judge the result in a game</h2>
+<p>A convincing automatic weapon should communicate a stable firing rhythm while allowing individual shot bodies and tails to overlap. The source has a bounded twelve-voice middle pool, so extremely high RPM plus long clips can saturate it and cause new scheduled shots to be skipped. If the event never finishes, check that <code translate="no" v-pre>Stop Firing</code> actually arrives; a missing release event is not an audio-decoder problem.</p>
+<p>A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source&#x27;s channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the <a href="../../metasound/nodes/qol/stereo-to-mono/">Stereo to Mono</a> version as well as the full stereo path.</p>
+<p><a href="../../metasound/">Browse the full node reference</a> for exact control types and limitations.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -205,7 +168,7 @@
                         <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../examples/random-sequence/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Multi-​stage sound variation</span>
+                                <span class="block mt-1">Multi-​stage variation</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>

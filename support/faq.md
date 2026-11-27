@@ -1,37 +1,17 @@
 # Frequently asked questions
 
-## Is AudioPhysx a replacement for MetaSounds or Unreal Audio?
+**Why make all the audio nodes stereo?** The previous mono-first design forced information out of a stereo recording before a sound designer had decided whether that information was useful. The updated Wave Players and DSP processors preserve Left and Right channels, making it possible to author wider layered effects and process stereo ambience without an early downmix. This is a signal-path capability, not a requirement that every positional world sound remain stereo. A small point-source effect may still be better downmixed before Unreal spatialization.
 
-No. It provides additional C++ nodes and Blueprint integration for the existing Unreal audio pipeline. You still use MetaSound Sources, the mixer, spatialization, Sound Attenuation and concurrency features as appropriate for your game.
+**Does Stereo to Mono destroy stereo information?** Yes, deliberately. It produces one mono signal by averaging the channels, `0.5 × (Left + Right)`. That avoids the simple level increase from adding two identical channels, but opposite-polarity content may cancel. It also cannot restore any original stereo image after the fold-down. Use it near the end of the graph when that format is appropriate, and listen to the result.
 
-## Why are so many outputs mono?
+**Why do some AudioPhysx nodes still have no Left and Right outputs?** Trigger Cooldown, Trigger Probability, Float Smoother, Dynamic Distance Switch and Doppler Ratio are controls or event processors, not audio renderers. A trigger or single pitch ratio does not become a two-channel sound just because a nearby Wave Player is stereo. Their outputs remain correctly typed for the data they represent.
 
-Mono is a practical source format for many spatial game sounds. It lets Unreal handle the source's 3D positioning and means an acoustic processor can work on one clearly defined signal. It does not mean every sound in your game must be mono.
+**Does AudioPhysx replace MetaSounds or Unreal spatialization?** No. It adds focused native tools to the existing Unreal audio pipeline. Source layouts, attenuation, concurrency and spatialization remain important. AudioPhysx helps decide which recording to play, what effect to apply and how game information reaches that processing.
 
-## Does it generate all realistic audio procedurally?
+**Do the acoustic nodes perform a fully accurate world simulation?** No. They combine physically inspired calculations with practical perceptual approximations. For example, Early Reflections creates synthetic taps rather than measuring every real surface, and the flyby solver uses a simplified constant-speed path. Reliable results depend on good recording content, geometry data, material values and informed mixing decisions.
 
-No. Many nodes play or transform your own recordings. The physically inspired processors model particular behaviours such as attenuation, delay, directionality or early reflections; they are not a complete acoustic simulation of the game world.
+**Do I need Chaos?** The flyby system can evaluate supplied projectile path segments without building a special Chaos rigid-body simulation. Acoustic queries rely on world geometry and collision information, but they are not themselves a requirement to run Chaos physics for every sound event.
 
-## Do I need Chaos physics?
+**Can AudioPhysx be used with Sound Cues?** The native node set inspected for this edition is a MetaSound library, with Blueprint helpers available for sound assets. Dedicated custom Sound Cue QoL nodes are planned but **not** included in the reviewed source. Unreal's own Sound Cues remain available separately.
 
-No. The flyby functions operate on supplied projectile path segments and speed. Acoustic path helpers can use ordinary world queries and level components. You may integrate them with a Chaos-driven game, but Chaos is not required for the core workflows described here.
-
-## What's the difference between Surface and PhysMat playback?
-
-Surface Wave Player chooses from a category such as a physical-surface type. PhysMat Wave Player can distinguish specific Physical Material asset paths. Use the broader category when the sound should be shared across several surfaces, and the exact path when you need a more detailed selection.
-
-## Why doesn't `Stop` always fire `On Finished`?
-
-`Stop` can mean an explicit cancellation. Natural completion means the recording has actually ended. Some nodes distinguish those two behaviours so gameplay can tell the difference. Read the particular player's reference before wiring Source completion.
-
-## Can I use a Sound Cue instead of MetaSound?
-
-Unreal's native Sound Cues can still be used wherever your workflow calls for them. AudioPhysx's **custom Sound Cue QoL nodes are planned**, not included in the reviewed development source. Current native node references are MetaSound-focused.
-
-## Will the plugin work in UE6 without updates?
-
-No UE6 compatibility has been verified or promised. Native code plugins depend on engine APIs, and some current AudioPhysx player and dynamic-interface implementations use APIs with compatibility risks. Follow the [published support matrix](compatibility.md) for the specific product version you intend to use.
-
-## Are acoustic material numbers scientifically measured?
-
-Not by default. AudioPhysx offers authored and simplified modelling choices. Material values must be selected meaningfully for the game, and a convincing result is not the same thing as a validated laboratory measurement.
+**Will this automatically work with Unreal Engine 6?** No UE6 support is verified or promised. The playback system still uses some Unreal-internal APIs behind a private adapter, and changes in future engine versions may require plugin updates. The [compatibility matrix](compatibility.md) should be updated only after testing the actual submitted package.

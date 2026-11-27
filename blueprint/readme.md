@@ -1,21 +1,19 @@
-# Connecting game events to audio
+# Bringing game-world information into audio
 
-MetaSound processes audio, but it does not automatically know where the player is standing, what material a bullet passed, or whether a source is behind a wall. AudioPhysx provides Blueprint-facing functions and components so you can feed that information into the sound graph.
+MetaSound processes audio and audio-rate events, but it does not automatically know where a projectile travelled, what wall is between a source and listener, or which Physical Material was returned by a collision query. AudioPhysx uses Blueprint-accessible helpers, world subsystems and Actor components to provide that information without moving world-geometry work onto the audio rendering thread.
 
-The division is intentional: **world queries and gameplay events run outside the audio rendering loop**, while the MetaSound node uses the resulting values to select or process a sound. You don't need to use every integration feature to benefit from the Playback nodes.
+The recommended process is to **verify the game data before processing the sound**. If an acoustic filter seems wrong, print the obstruction flag or selected path. If a material player chooses the fallback recordings, print the material identifier from the hit result. If a flyby never plays, first check whether the path passed within the audible radius. This separates gameplay setup problems from decoding and DSP issues.
 
-## Pick a workflow
+## Choose the integration you need
 
-[!card layout="compact" title="Projectile flyby" text="Check a path near the listener and play a whizz or crack at the appropriate time."](flyby.md)
+[!card layout="compact" title="Projectile flybys" text="Build a near-miss path calculation and connect it to the stereo Flyby Wave Player."](flyby.md)
 
-[!card layout="compact" title="Playback helpers" text="Play world-aware sounds, manage registered audio components and environment values."](playback-helpers.md)
+[!card layout="compact" title="Physical sound playback" text="Play sound at world positions, use hit results and register persistent audio components."](playback-helpers.md)
 
-[!card layout="compact" title="Acoustic path queries" text="Evaluate a direct or around-obstacle route and drive acoustic processing."](acoustic-paths.md)
+[!card layout="compact" title="Acoustic path queries" text="Understand clear, obstructed and around-obstacle routes before passing compact data into MetaSound."](acoustic-paths.md)
 
-[!card layout="compact" title="Level components" text="Emitters, barriers, portals and the physics/audio bridge."](components.md)
+[!card layout="compact" title="Scene components" text="Set up emitters, barriers, portals and the bridge between scene state and sound."](components.md)
 
-[!card layout="compact" title="Acoustic materials and settings" text="What physical parameters mean, how they feed models, and where budgets are configured."](materials-and-settings.md)
+[!card layout="compact" title="Materials and performance" text="Understand Acoustic Physical Materials, thickness, transmission loss and world query budgets."](materials-and-settings.md)
 
-## Before wiring complex systems
-
-Start by printing the Blueprint's distance, material or route result. Confirm it changes as expected in your level **before** spending time debugging the MetaSound. This keeps gameplay-data problems separate from audio-rendering problems.
+The stereo conversion does not require a new Blueprint API: these helpers still supply **sound assets and control data**, while the internal MetaSound graph now connects Left and Right audio buffers. Refer to [stereo routing](../getting-started/stereo-routing.md) when authoring the Source itself.

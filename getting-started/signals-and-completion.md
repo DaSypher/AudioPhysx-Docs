@@ -1,37 +1,17 @@
-# Signals, events and the end of a sound
+# Triggers, audio buffers and completion
 
-Many AudioPhysx graph problems aren't about decoding audio; they're about confusing **an event**, **an audio stream**, and **a lifecycle signal**. Understanding these three concepts will make every node easier to use.
+A MetaSound graph contains different kinds of wires because it describes both **events** and **continuous sound**. `Play`, `Stop`, `Reset` and `On Finished` are triggers that represent moments. `Out Left`, `Out Right`, `In Left` and `In Right` carry the audio sample buffers. A Float such as `Distance (cm)` or `Impact Strength` describes a changing control value but does not itself produce sound.
 
-## Triggers mark moments in time
+Confusing these responsibilities is a common reason for nodes that appear to work individually but produce silence inside a larger graph. For example, a Wave Player can receive Play and load a valid sample without any audible result if its audio outputs are not connected to the Source. Conversely, an acoustic processor can have both audio channels connected but remain in the wrong state if the required material, route or obstruction input never updates.
 
-`Play` means *start now*. `Stop` generally cancels playback. `Stop Firing` means *the held action has ended—play the release phase*. These commands are intentionally different. For example, the Start Loop End Player should normally receive a `Stop Firing` event so it can play the outro.
+## Stopping and finishing are different events
 
-## Audio buffers continue between triggers
+A sound may finish naturally after rendering its final sample, or it may be explicitly cancelled by gameplay. Many AudioPhysx players reserve `On Finished` for natural completion. For that reason, pressing `Stop` should not be assumed to fire the same trigger as the end of the recording. `Stop Firing` on Start Loop End has another meaning: it requests the **release phase** and allows the ending to play.
 
-Once a recording is started, the MetaSound audio output carries samples every audio-processing block. A trigger pin is **not** a wire containing the sound. A separate `Out Mono` or `Audio` pin carries that sample stream.
+Downstream processors introduce another consideration. A Wave Player may finish its original recording while Acoustic Paths is still delivering delayed samples or Early Reflections still has audible taps. In such a graph, the processor's `Source Finished` input can receive the player's completion signal, and the processor's own `On Finished` can indicate when the extended audible tail is complete. Ending the MetaSound Source too early cuts off that processing.
 
-## Completion belongs to the last audible stage
+## Keep the signal layout explicit
 
-Consider this chain:
+When routing the current stereo nodes, move each channel through the intended Left and Right path. The two channels carry separate audio buffer data; duplicating the Left buffer into both inputs is not equivalent to preserving a stereo recording. When you intentionally choose a mono Source, make the fold-down explicit with Stereo to Mono rather than relying on ambiguous routing or connecting a stereo pin into a mono-only input.
 
-```mermaid
-flowchart LR
-    A[Wave Player] --> B[Early Reflections]
-    B --> C[Source output]
-    A -.Source Finished.-> B
-    B -.On Finished.-> D[MetaSound completion]
-```
-
-The original Wave Player can finish before the reflection taps have died away. If its `On Finished` directly ends the MetaSound Source, the reflection tail may be cut short. Route completion through the processor responsible for the last audible tail when it provides completion signals.
-
-Similarly, **stopping intentionally** is not necessarily the same as **finishing naturally**. Don't assume every `Stop` will emit `On Finished`; check the particular player's documentation.
-
-## Dynamic input groups
-
-Some AudioPhysx nodes let you add more Wave slots, step arrays or distance ranges. The graph's pin layout is therefore part of the authored asset. Changing global Surface Audio routes can also change generated pins for [Surface Wave Player](../metasound/nodes/playback/surface-wave-player.md). Back up and inspect affected graphs after those settings change.
-
-!!!warning Important for gameplay
-A Source that loops forever should not be wired as though it has a natural ending after one recording. For held interactions, decide separately which event begins the sound, which event releases it, and what really marks the end of the audible result.
-!!!
-
-[Next: Choose the right player](../metasound/playback.md)
+Some nodes have **expandable pin groups** for waves, steps or distance bands. These are part of the authored graph layout. Surface Wave Player can additionally generate pins from project settings. If an interface changes, check the actual pins and connections before saving migrated assets.

@@ -1,54 +1,29 @@
 # Troubleshooting AudioPhysx
 
-When something goes wrong, isolate the system in this order: **can Unreal play the asset? → does the MetaSound receive a trigger? → does the node output audio? → are world parameters correct?** Debugging each layer separately is usually faster than changing every setting at once.
+When an effect does not behave as expected, debug from the outside in. First verify Unreal can play the chosen recording. Then verify the MetaSound receives its starting trigger. Next confirm the expected Left and Right audio buffers reach the Source output. Only after this works should you investigate acoustic path data, material configuration, voice limits or the extra DSP stages in the chain. That process may feel slower than changing settings randomly, but it usually identifies the real problem with fewer false fixes.
 
-## I can't find any AudioPhysx nodes
+## Missing nodes, silence or incorrect audio layout
 
-Open **Edit → Plugins** and verify AudioPhysx is enabled. Restart the Editor after plugin activation or a native rebuild. In a MetaSound Source, search `AP:` and inspect the AudioPhysx categories.
+If the AudioPhysx nodes do not appear in the palette, check **Edit → Plugins** and confirm that the correct native module loaded. After replacing source files, close Unreal Editor, disable Live Coding and rebuild for the intended engine version. A duplicate `.cpp` file or a stale binary from an older plugin version can make registration confusing even if the project appears to launch normally.
 
-For source builds, confirm the full plugin directory includes the `.uplugin` descriptor and that its C++ module actually compiled for your installed engine version. Copying a standalone `Source` folder is not equivalent to installing a complete code plugin.
+If a node is present but silent, use one known-good Wave Asset and a simple Source. Make sure the requested array actually contains playable recordings, `Play` reaches the correct input and both `Out Left` and `Out Right` are connected as intended. The stereo upgrade may leave older saved graphs with missing or stale mono connections. A Source set to Stereo needs the correct output channel routing; a Source deliberately set to Mono needs an explicit Stereo to Mono path when using AudioPhysx's stereo outputs.
 
-## My Wave Player is silent
+If a player offers `On Rejected`, observe it while testing. It can distinguish a failed start request from an audible voice that happens to be attenuated or spatialized out of hearing range. Check the Selected Index and active-voice diagnostics where those are provided.
 
-Start with a simple mono MetaSound Source and **one known-good Wave Asset**. Connect `Play` and `Out Mono` before adding other processing. Check that the array is not empty and that the recording imports and auditions normally in Unreal.
+## Playback timing and completion
 
-If the sound plays in a simple Source but disappears in your game, examine attenuation, concurrency and world-space source position. If it stops when you add an acoustic effect, inspect that effect's input values and the completion routing.
+Sequence Wave Player advances after one recording actually finishes. Random Sequence makes a new selection at each stage and follows the same completion-driven timing. Start Loop End is different: its positive RPM setting starts middle shots at scheduled intervals and waits for `Stop Firing` before entering its ending phase. If you never supply that release event, it is not expected to finish like an ordinary one-shot.
 
-## The sequence plays only the first recording
+A downstream Acoustic Paths or Early Reflections node may continue to produce audio after the original Wave Player finishes. Pass the player's `On Finished` to `Source Finished` on the processor and use the processor's own completion output where appropriate. Otherwise a Source-level completion connection can kill the final delayed samples. Conversely, do not automatically assume explicit `Stop` emits a natural-completion trigger; the detailed node pages explain cancellation behaviour.
 
-For a fixed or random sequence, make sure later slots contain playable Wave Assets and are genuinely part of the expandable group. The next sound should follow playback completion, not a manually connected delay. Check whether an early Source-level `On Finished` is terminating the graph.
+## Incorrect physics, material or environment behaviour
 
-## Start Loop End never ends
+If PhysMat Wave Player always uses the fallback pool, print the **exact Physical Material asset path** coming from the hit result. If Surface Wave Player selects the wrong pool, check the `EPhysicalSurface` integer and the configured route list. Changes to surface-specific routes can alter dynamic pins, so back up and inspect affected MetaSound assets after changing those settings.
 
-A held sequence is expected to keep its middle phase active while firing. **`Stop Firing` is required** to request the end phase. `Immediate Release` controls whether active recordings fade promptly or finish first. At positive RPM values, overlapping middle voices can remain audible after the release request when immediate release is disabled.
+If flyby playback does not happen, call `AP: Calculate Flyby` and inspect `bAudible`, closest distance and shock state before scheduling audio. The path endpoints use Unreal world coordinates, while the audible radius and speed inputs use metres and metres per second. If Acoustic Paths sounds too dark or delayed, inspect the selected four-value route array and make sure its order is delay, low loss, mid loss, high loss. Do not assume a well-functioning filter can correct wrong world data.
 
-## Flyby doesn't trigger
+## Editor works but packaged game does not
 
-Print the result from `AP: Calculate Flyby` before requesting playback. Check that the shot path passes within `AudibleRadiusM`, that path positions are in Unreal world units, and that speed is supplied in metres per second.
+A successful Editor compile or MetaSound preview is not complete runtime verification. Test a clean installation in a new project and package Development and Shipping configurations for each platform you intend to claim. Verify cooked Wave Assets, module loading, engine API compatibility and audio-device behaviour with the exact commercial distribution rather than a development folder that may contain extra files.
 
-If geometry is accepted but audio remains silent, verify the five named external Float inputs in the flyby MetaSound and whether its `On Play` reaches the Wave Player.
-
-## The acoustic path sounds too dark or delayed
-
-Inspect the four selected-route values: **delay ms, low loss dB, mid loss dB, high loss dB**. Check that Unreal occlusion or air absorption is not doubling the effect, and confirm the requested delay is within the node's allocated capacity.
-
-## My dynamic pins changed
-
-When you edit the enabled surface-route list, `AP: Surface Wave Player` may expose a different pin layout. Back up the affected MetaSounds, restart after changing settings, and inspect connections before resaving. For an ordinary expandable group, verify the authored group instance count remains correct.
-
-## C++ errors after a source update
-
-Read the **first compiler error**, not only the final build summary. Close the Editor, disable Live Coding and make sure you have not kept two versions of the same node `.cpp` under different names. If generated reflection files are stale, remove the plugin's `Binaries` and `Intermediate` directories before regenerating/rebuilding.
-
-## The Editor works but a packaged game doesn't
-
-A clean Editor build is not proof of a working Shipping build. Check that assets were cooked, the runtime module loads, all references are included, and any optional audio system or config used by the graph is available at runtime. Begin with a packaged **Development** build for useful logging, then verify the same behaviour in **Shipping**.
-
-## What to include in a useful bug report
-
-- Exact Unreal Engine version, plugin version, operating system and build configuration.
-- Which MetaSound node or Blueprint helper failed.
-- A minimal graph or path setup with reproducible inputs.
-- Expected result, actual result and first relevant log message.
-
-[Requirements](../getting-started/requirements.md) · [Compatibility](compatibility.md)
+When asking for help, share a minimal graph with the relevant pin connections and the first meaningful log error. Keep personal project paths, account details and client or private data out of public issue reports.

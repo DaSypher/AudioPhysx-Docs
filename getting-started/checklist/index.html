@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Quick setup checklist</title>
-    <meta name="title" content="Quick setup checklist">
-    <meta name="description" content="Use this before assuming a node is broken. It catches the most common installation, routing and completion mistakes.">
+    <title>A practical setup checklist</title>
+    <meta name="title" content="A practical setup checklist">
+    <meta name="description" content="Most silent or incorrect AudioPhysx graphs can be diagnosed by working from the simplest part of the chain outward. First make sure a known-good Wave Asset plays through a basic stereo Source with the correct Out Left and Out Right wiring.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/checklist/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/checklist/">
-    <meta property="og:title" content="Quick setup checklist">
-    <meta property="og:description" content="Use this before assuming a node is broken. It catches the most common installation, routing and completion mistakes.">
+    <meta property="og:title" content="A practical setup checklist">
+    <meta property="og:description" content="Most silent or incorrect AudioPhysx graphs can be diagnosed by working from the simplest part of the chain outward. First make sure a known-good Wave Asset plays through a basic stereo Source with the correct Out Left and Out Right wiring.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/checklist/">
-    <meta name="twitter:title" content="Quick setup checklist">
-    <meta name="twitter:description" content="Use this before assuming a node is broken. It catches the most common installation, routing and completion mistakes.">
+    <meta name="twitter:title" content="A practical setup checklist">
+    <meta name="twitter:description" content="Most silent or incorrect AudioPhysx graphs can be diagnosed by working from the simplest part of the chain outward. First make sure a known-good Wave Asset plays through a basic stereo Source with the correct Out Left and Out Right wiring.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/checklist.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,35 +134,12 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="quick-setup-checklist">Quick setup checklist</h1>
-<p>Use this before assuming a node is broken. It catches the most common installation, routing and completion mistakes.</p>
-<h2 id="can-the-sound-start">Can the sound start?</h2>
-<ul class="contains-task-list">
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> The AudioPhysx plugin is enabled and the node appears in MetaSound search.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Every required Wave Asset is imported and playable on its own.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> The correct trigger reaches the node (<code translate="no" v-pre>Play</code> versus <code translate="no" v-pre>Start Firing</code>, for example).</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code translate="no" v-pre>Out Mono</code> reaches the active MetaSound output, and the Source is actually being auditioned or played.</li>
-</ul>
-<h2 id="can-the-sound-finish-correctly">Can the sound finish correctly?</h2>
-<ul class="contains-task-list">
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> A repeating player has a valid stop/release trigger when appropriate.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> The <code translate="no" v-pre>On Finished</code> connection doesn&#x27;t cut off downstream effects such as early reflections.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Voice limits and retriggering make sense under rapid gameplay events.</li>
-</ul>
-<h2 id="does-the-world-data-make-sense">Does the world data make sense?</h2>
-<ul class="contains-task-list">
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Distances are converted correctly between centimetres and metres.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Material paths and surface types match the configured routes.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Dynamic input group sizes still match the intended graph.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> World-based Blueprint helpers have a valid world/listener/audio environment.</li>
-</ul>
-<h2 id="before-releasing-a-game">Before releasing a game</h2>
-<ul class="contains-task-list">
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test standalone playback, then package a Development build.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Verify cooked audio assets and Shipping behaviour.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Repeat the test with missing/empty arrays and rapid triggers.</li>
-</ul>
-<p><a href="../../support/troubleshooting/">Troubleshooting guide</a></p>
+<h1 id="a-practical-setup-checklist">A practical setup checklist</h1>
+<p>Most silent or incorrect AudioPhysx graphs can be diagnosed by working from the simplest part of the chain outward. First make sure a known-good Wave Asset plays through a basic stereo Source with the correct <code translate="no" v-pre>Out Left</code> and <code translate="no" v-pre>Out Right</code> wiring. Only then connect random selection, material routing, time delay or a world acoustic parameter. This separates an asset/import problem from a source-graph problem and from an acoustic-world problem.</p>
+<p><strong>When audio is silent</strong>, check that the correct start trigger actually reaches the node, that the relevant recording arrays contain playable assets, and that you have connected the outputs to an active MetaSound Source. For players that can reject a request, inspect <code translate="no" v-pre>On Rejected</code> or an index output before assuming Unreal audio itself is failing.</p>
+<p><strong>When timing is wrong</strong>, distinguish a completion-driven sequence from RPM scheduling. Sequence Wave Player advances only when the current recording finishes. Start Loop End with positive RPM starts middle shots by a fixed interval and needs <code translate="no" v-pre>Stop Firing</code> to enter the release phase. An extra Distance Delay or Acoustic Paths stage can delay the audible output even after the original playback has begun.</p>
+<p><strong>When world-driven sound is wrong</strong>, print the source-listener distance, physical material, obstruction result or selected acoustic route. Check units carefully: centimetres, metres and metres per second are used for different controls. A perfectly functioning filter cannot make an incorrect material path or invalid world trace meaningful.</p>
+<p><strong>Before shipping</strong>, test the exact plugin package in a clean project and compare Editor preview with packaged Development and Shipping audio. Include stereo and mono recordings, empty arrays, rapid retriggering and more than one simultaneously active sound. A clean Editor build is important, but it does not prove all runtime platform behaviour.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -176,7 +153,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Signals and completion</span>
+                                <span class="block mt-1">Triggers and completion</span>
                             </span>
                         </a>
                     </div>

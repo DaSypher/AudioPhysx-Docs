@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Playback reference</title>
-    <meta name="title" content="Playback reference">
-    <meta name="description" content="These players turn Wave Assets into varied, sequenced, layered or world-sensitive audio.">
+    <title>Playback nodes</title>
+    <meta name="title" content="Playback nodes">
+    <meta name="description" content="This category is where AudioPhysx decides which recordings should play, how they are ordered, and whether several recordings should be heard">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/">
-    <meta property="og:title" content="Playback reference">
-    <meta property="og:description" content="These players turn Wave Assets into varied, sequenced, layered or world-sensitive audio.">
+    <meta property="og:title" content="Playback nodes">
+    <meta property="og:description" content="This category is where AudioPhysx decides which recordings should play, how they are ordered, and whether several recordings should be heard">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/">
-    <meta name="twitter:title" content="Playback reference">
-    <meta name="twitter:description" content="These players turn Wave Assets into varied, sequenced, layered or world-sensitive audio.">
+    <meta name="twitter:title" content="Playback nodes">
+    <meta name="twitter:description" content="This category is where AudioPhysx decides which recordings should play, how they are ordered, and whether several recordings should be heard">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/readme.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,29 +134,19 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="playback-reference">Playback reference</h1>
-<p>These players turn Wave Assets into varied, sequenced, layered or world-sensitive audio.</p>
-<h3 id="ap-distance-wave-player"><a href="distance-wave-player/">AP: Distance Wave Player</a></h3>
-<p>Choose a recording collection based on how far the sound source is from the listener.</p>
-<h3 id="ap-flyby-wave-player"><a href="flyby-wave-player/">AP: Flyby Wave Player</a></h3>
-<p>Turn a projectile near-miss result into an audible whizz and optional ballistic crack.</p>
-<h3 id="ap-layered-wave-player"><a href="layered-wave-player/">AP: Layered Wave Player</a></h3>
-<p>Build one composite effect from several recordings that start together or at different offsets.</p>
-<h3 id="ap-physmat-wave-player"><a href="physmat-wave-player/">AP: PhysMat Wave Player</a></h3>
-<p>Route playback using an exact Unreal Physical Material asset path, with a fallback when nothing matches.</p>
-<h3 id="ap-random-sequence-wave-player"><a href="random-sequence-wave-player/">AP: Random Sequence Wave Player</a></h3>
-<p>Keep the stages of an action in order, but randomly vary the recording played at each stage.</p>
-<h3 id="ap-random-wave-player"><a href="random-wave-player/">AP: Random Wave Player</a></h3>
-<p>Play a random recording from an array whenever an event occurs, with optional variation and multiple simultaneous voices.</p>
-<h3 id="ap-sequence-wave-player"><a href="sequence-wave-player/">AP: Sequence Wave Player</a></h3>
-<p>Build a fixed sequence of recordings without timing it by hand. Each playable wave starts after the one before it finishes.</p>
-<h3 id="ap-shuffle-bag-wave-player"><a href="shuffle-bag-wave-player/">AP: Shuffle-Bag Wave Player</a></h3>
-<p>Choose variations without repeatedly favoring the same few recordings, with weights and an explicit bag reset.</p>
-<h3 id="ap-start-loop-end-player"><a href="start-loop-end/">AP: Start Loop End Player</a></h3>
-<p>Play an opening sound, sustain a repeatable middle section, and finish with a proper release when the action ends.</p>
-<h3 id="ap-surface-wave-player"><a href="surface-wave-player/">AP: Surface Wave Player</a></h3>
-<p>Add the player to a MetaSound and connect the exposed surface-specific arrays as well as <code translate="no" v-pre>Default Waves</code>.</p>
-<p><a href="../../playback/">Back to Playback overview</a></p>
+<h1 id="playback-nodes">Playback nodes</h1>
+<p>This category is where AudioPhysx decides which recordings should play, how they are ordered, and whether several recordings should be heard simultaneously. The ten Wave Player nodes all expose stereo audio output, so you can keep an authored stereo recording intact until your Source needs to be downmixed for a particular spatialization policy.</p>
+<p><strong><a href="random-wave-player/">AP: Random Wave Player</a></strong> — A reliable starting point for any event that should sound familiar without replaying precisely the same recording every time.</p>
+<p><strong><a href="shuffle-bag-wave-player/">AP: Shuffle-Bag Wave Player</a></strong> — Variation selection that deliberately uses a bag of eligible recordings instead of always making an unrestricted random choice.</p>
+<p><strong><a href="sequence-wave-player/">AP: Sequence Wave Player</a></strong> — Play several recordings one after another, using the recordings themselves to determine when each step should advance.</p>
+<p><strong><a href="random-sequence-wave-player/">AP: Random Sequence Wave Player</a></strong> — A predictable beginning, middle and end—but with fresh recording choices inside every stage.</p>
+<p><strong><a href="layered-wave-player/">AP: Layered Wave Player</a></strong> — Combine several recordings into a single composite sound while controlling the level, pitch and onset of each layer.</p>
+<p><strong><a href="start-loop-end/">AP: Start Loop End Player</a></strong> — One sound can have a meaningful start, a repeating body, and a release that only plays when the action ends.</p>
+<p><strong><a href="distance-wave-player/">AP: Distance Wave Player</a></strong> — Choose a different recorded perspective at different distances, rather than relying on volume attenuation alone.</p>
+<p><strong><a href="physmat-wave-player/">AP: PhysMat Wave Player</a></strong> — Choose impact or interaction recordings using the exact Physical Material asset involved in the event.</p>
+<p><strong><a href="surface-wave-player/">AP: Surface Wave Player</a></strong> — Use Unreal physical surface types to select footstep, impact or interaction variations through one MetaSound player.</p>
+<p><strong><a href="flyby-wave-player/">AP: Flyby Wave Player</a></strong> — Turn a near-miss calculation into an audible projectile whizz, with an optional ballistic-crack layer.</p>
+<p>For a broader explanation, return to the <a href="../../playback/">Playback overview</a>.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -164,27 +154,6 @@
             </div>
             <footer id="retype-content-footer" class="clear-both">
             
-                <nav id="retype-nextprev" class="print:hidden flex mt-14">
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../metasound/nodes/acoustics/source-directivity/">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                            <span>
-                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">AP: Source Directivity</span>
-                            </span>
-                        </a>
-                    </div>
-            
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../metasound/nodes/playback/distance-wave-player/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">AP: Distance Wave Player</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
-                    </div>
-                </nav>
             </footer>
         </main>
 

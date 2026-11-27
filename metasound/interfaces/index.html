@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Passing world data into MetaSound</title>
-    <meta name="title" content="Passing world data into MetaSound">
-    <meta name="description" content="A Wave Player can play a recording with only a trigger, but an acoustic processor needs to know something about the world: distance, material, obstruction, source direction or environment.">
+    <title>Interfaces and external audio parameters</title>
+    <meta name="title" content="Interfaces and external audio parameters">
+    <meta name="description" content="AudioPhysx separates gameplay-side world queries from audio rendering. One consequence is that some MetaSound inputs are fed by named parameters or registered interfaces rather than being authored independently in each graph.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/interfaces/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/interfaces/">
-    <meta property="og:title" content="Passing world data into MetaSound">
-    <meta property="og:description" content="A Wave Player can play a recording with only a trigger, but an acoustic processor needs to know something about the world: distance, material, obstruction, source direction or environment.">
+    <meta property="og:title" content="Interfaces and external audio parameters">
+    <meta property="og:description" content="AudioPhysx separates gameplay-side world queries from audio rendering. One consequence is that some MetaSound inputs are fed by named parameters or registered interfaces rather than being authored independently in each graph.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/interfaces/">
-    <meta name="twitter:title" content="Passing world data into MetaSound">
-    <meta name="twitter:description" content="A Wave Player can play a recording with only a trigger, but an acoustic processor needs to know something about the world: distance, material, obstruction, source direction or environment.">
+    <meta name="twitter:title" content="Interfaces and external audio parameters">
+    <meta name="twitter:description" content="AudioPhysx separates gameplay-side world queries from audio rendering. One consequence is that some MetaSound inputs are fed by named parameters or registered interfaces rather than being authored independently in each graph.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/interfaces.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,37 +134,17 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="passing-world-data-into-metasound">Passing world data into MetaSound</h1>
-<p>A Wave Player can play a recording with only a trigger, but an acoustic processor needs to know something about the world: distance, material, obstruction, source direction or environment. AudioPhysx has interfaces and parameter names that link those game-side calculations to a MetaSound graph.</p>
-<h2 id="the-selected-acoustic-route">The selected acoustic route</h2>
-<p>The current source uses one compact Float Array named <strong><code translate="no" v-pre>AP.AcousticRoute.Selected</code></strong>. Its four values are ordered as follows:</p>
-<div id="the-selected-acoustic-route-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-none"><code v-pre class="language-none">[delay in ms, low-band loss in dB, mid-band loss in dB, high-band loss in dB]</code></pre>
+<h1 id="interfaces-and-external-audio-parameters">Interfaces and external audio parameters</h1>
+<p>AudioPhysx separates gameplay-side world queries from audio rendering. One consequence is that some MetaSound inputs are fed by named parameters or registered interfaces rather than being authored independently in each graph. These names and data types are <strong>contracts</strong>. They should not be approximated by creating visually similar inputs with arbitrary spelling.</p>
+<h2 id="the-compact-selected-acoustic-route">The compact selected acoustic route</h2>
+<p>The current source includes a selected-route Float Array named <code translate="no" v-pre>AP.AcousticRoute.Selected</code>. It is intended for the <a href="../nodes/acoustics/acoustic-paths/">Acoustic Paths</a> processor, and the values must follow the same order as the source-side contract:</p>
+<div id="the-compact-selected-acoustic-route-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">[delay ms, low loss dB, mid loss dB, high loss dB]</code></pre>
 </doc-codeblock></div>
-<p>The game-world solver decides which route to use. <a href="../nodes/acoustics/acoustic-paths/">AP: Acoustic Paths</a> reads that selected route and renders the corresponding delayed and filtered mono audio. This avoids connecting several unrelated route controls and accidentally using values from different world updates.</p>
+<p>The world path solver decides whether direct or around-obstacle sound should be selected; the MetaSound processor applies the corresponding delay and three-band loss. Keeping the route together in one array reduces the possibility that the delay comes from a different query update than the spectral losses. The convenience does make the ordering more important, so verify the exact array before trying to correct an unexpected filter result.</p>
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-acoustic-interface.png -->
-<h2 id="why-order-and-units-matter">Why order and units matter</h2>
-<p>If you swap the low- and high-loss values, the filter could make the source sound brighter when the material should muffle it. If you pass seconds as milliseconds, a travel delay can be wrong by a factor of a thousand. Treat the array as a <strong>data contract</strong>, not a bag of arbitrary floats.</p>
-<h2 id="other-named-parameters">Other named parameters</h2>
-<p>The source also contains propagation, atmosphere, transmission and impact parameters. These are registered by AudioPhysx&#x27;s native interfaces and world/Blueprint helpers. Prefer the exact pins and interface versions supplied by the installed plugin over manually recreating near-identical parameters with different names.</p>
-<p>The standalone flyby subsystem supplies five named Float parameters, listed on the <a href="../../blueprint/flyby/">Flyby Blueprint guide</a>. Those must be exposed with matching names so the world helper can populate them before playback.</p>
-<div class="flex mb-6">
-    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
-    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
-        <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-warning" width="22" height="22" viewBox="0 0 24 24" role="presentation">
-                <g fill="currentColor"><g>
-                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
-                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
-                </g></g>
-            </svg>
-        </div>
-        <div class="pr-5 ml-3 w-full">
-            <h5>Existing graph compatibility</h5>
-<p>When changing engine or plugin versions, inspect a saved graph&#x27;s generated MetaSound inputs <strong>before resaving it</strong>, especially if interface versions or surface-route settings changed. A graph can compile but listen to the wrong input if names or types no longer match.</p>
-        </div>
-    </div>
-</div>
+<p>Other AudioPhysx systems expose atmosphere, transmission, impact and propagation values through their current interfaces. Where an installed build supplies those interfaces, use the actual registered names and types. Do not construct an independent parameter solely from an old screenshot if the current interface has changed. MetaSound asset interface migrations and configurable surface-route changes can affect how saved graphs reconnect.</p>
+<p>The flyby subsystem has a separate set of five named Float inputs beginning with <code translate="no" v-pre>AP.Flyby.</code>. Those are documented on the <a href="../../blueprint/flyby/">Flyby Blueprint page</a>. All such interfaces carry <strong>control values or triggers</strong>: they do not change the fact that the audio processors themselves now carry stereo Left and Right buffers.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -184,10 +164,10 @@
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../metasound/nodes/acoustics/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../blueprint/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Acoustics node reference</span>
+                                <span class="block mt-1">Blueprint integration</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>

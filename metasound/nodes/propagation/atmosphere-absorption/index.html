@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Atmosphere Absorption</title>
     <meta name="title" content="AP: Atmosphere Absorption">
-    <meta name="description" content="MetaSound · AudioPhysx / Propagation">
+    <meta name="description" content="AudioPhysx / Propagation · Unreal Engine 5.8.4 development source">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/atmosphere-absorption/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/atmosphere-absorption/">
     <meta property="og:title" content="AP: Atmosphere Absorption">
-    <meta property="og:description" content="MetaSound · AudioPhysx / Propagation">
+    <meta property="og:description" content="AudioPhysx / Propagation · Unreal Engine 5.8.4 development source">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/atmosphere-absorption/">
     <meta name="twitter:title" content="AP: Atmosphere Absorption">
-    <meta name="twitter:description" content="MetaSound · AudioPhysx / Propagation">
+    <meta name="twitter:description" content="AudioPhysx / Propagation · Unreal Engine 5.8.4 development source">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/atmosphere-absorption.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,62 +135,37 @@
 
                 <!-- Page content  -->
 <h1 id="ap-atmosphere-absorption">AP: Atmosphere Absorption</h1>
-<p><strong>MetaSound · AudioPhysx / Propagation</strong></p>
-<p>Make distant sound lose some of its brightness as it travels through air.</p>
+<p><strong>AudioPhysx / Propagation</strong> · Unreal Engine 5.8.4 development source</p>
+<p>Make distant audio gradually lose some of its high-frequency definition as it travels through air.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-atmosphere-absorption.png -->
-<h2 id="what-actually-happens">What actually happens</h2>
-<p>Air tends to reduce high-frequency content over distance, and the amount depends on conditions such as temperature, humidity and pressure. This node applies an approximate distance-and-atmosphere-dependent spectral loss to the mono signal.</p>
-<p>Unlike standard distance attenuation, the goal is not just to reduce overall volume but to change the tonal balance. A distant sharp recording can become less brittle and more subdued.</p>
-<h2 id="hear-it-in-a-game">Hear it in a game</h2>
-<p>Play a short crisp impact while increasing <code translate="no" v-pre>Distance (cm)</code> from near to far. Then change humidity and temperature to hear how the approximate frequency response changes. Compare against a reference recording rather than relying only on extreme parameter settings.</p>
-<h2 id="build-a-working-graph">Build a working graph</h2>
-<doc-steps>
-   <doc-step id="feed-mono-audio" step-number="1">
-      <template #title>Feed mono audio</template>
-<p>Route mono audio into <code translate="no" v-pre>Audio</code>.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="provide-atmospheric-conditions" step-number="2">
-      <template #title>Provide atmospheric conditions</template>
-<p>Provide <code translate="no" v-pre>Distance (cm)</code>; use the project’s current environmental values when available.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="compare-near-and-far-tone" step-number="3">
-      <template #title>Compare near and far tone</template>
-<p>Tune the result while comparing direct sound against already-enabled Unreal air absorption.</p>
-   </doc-step>
-</doc-steps>
-<h2 id="the-controls-that-matter">The controls that matter</h2>
-<p><code translate="no" v-pre>Temperature (C)</code> is degrees Celsius, <code translate="no" v-pre>Humidity (%)</code> is relative humidity, and <code translate="no" v-pre>Pressure (kPa)</code> is kilopascals. <code translate="no" v-pre>Distance (cm)</code> is in Unreal centimetres and drives how much the atmospheric model affects the sound.</p>
-<h2 id="what-the-node-outputs">What the node outputs</h2>
+<h2 id="understanding-the-behaviour">Understanding the behaviour</h2>
+<p>Air transmission can change the character of a sound even when no wall or other obstacle exists between source and listener. Atmosphere Absorption uses travelled distance together with temperature, humidity and pressure to estimate frequency-dependent losses. The audible goal is a controlled reduction in brightness as the path grows longer, rather than simply moving the volume slider down.</p>
+<p>The stereo version accepts <code translate="no" v-pre>In Left</code> and <code translate="no" v-pre>In Right</code> and produces <code translate="no" v-pre>Out Left</code> and <code translate="no" v-pre>Out Right</code>. Each channel is processed using its own audio history while the environmental controls remain shared. That means stereo ambience or an authored wide sound can retain its left/right differences through the frequency shaping.</p>
+<p>Try a short crisp impact or a mechanical sound with noticeable high-frequency content. Compare a near distance with a much larger one, leaving the Wave Asset unchanged. At a longer path, you should expect the very bright content to be less pronounced. You can then adjust the atmospheric conditions and hear how the approximate absorption model responds.</p>
+<p>In a game, this effect can complement distance-recording choices. A distant weapon tail is not just a close gunshot made quieter, so use appropriate source material as well as DSP when the perspective change matters.</p>
+<h2 id="building-and-controlling-the-sound">Building and controlling the sound</h2>
+<p>Connect stereo audio to the two input buffers and provide <code translate="no" v-pre>Distance (cm)</code> from gameplay or the AudioPhysx world system. Use the environment values you intend for the scene, beginning with standard conditions rather than extreme laboratory inputs. Feed the two outputs to a stereo Source or a later stereo processor. The node is an audio processor and does not produce a completion trigger on its own.</p>
+<p>Audition the source first without absorption, then with a moderate distance and eventually a very long distance. If the result becomes unnaturally muffled early, inspect whether Unreal&#x27;s own air-absorption attenuation is also enabled.</p>
+<p><code translate="no" v-pre>Temperature (C)</code> uses degrees Celsius; <code translate="no" v-pre>Humidity (%)</code> is relative humidity; <code translate="no" v-pre>Pressure (kPa)</code> is kilopascals. <code translate="no" v-pre>Distance (cm)</code> is the travelled path length in Unreal centimetres. These units are not interchangeable with the flyby system&#x27;s metre-based closest approach, and a wrong distance conversion can make any physically inspired model appear dramatically incorrect.</p>
+<p><strong>Practical limitations.</strong> The model is an approximation for believable game-audio behaviour, not a laboratory-calibrated prediction for every atmospheric condition. It also does not simulate rain, terrain, wind scattering or barrier transmission. Tune it in context, using a real output device and a varied set of recordings, rather than choosing a very dark result solely because it sounds dramatic on one sharp test sample.</p>
+<doc-panel id="exact-input-and-output-pins" collapsed>
+    <template #title>Exact input and output pins</template>
+<p><strong>Inputs from the current C++ node definition</strong></p>
 <ul>
-<li><strong><code translate="no" v-pre>Audio</code></strong> · Audio (mono) — Audio after atmospheric absorption.</li>
+<li><strong><code translate="no" v-pre>In Left</code></strong> — <em>Audio buffer</em>. Left channel of the stereo audio input.</li>
+<li><strong><code translate="no" v-pre>In Right</code></strong> — <em>Audio buffer</em>. Right audio channel to process.</li>
+<li><strong><code translate="no" v-pre>Distance (cm)</code></strong> — <em>Float</em>. Distance travelled by sound in centimetres.</li>
+<li><strong><code translate="no" v-pre>Temperature (C)</code></strong> — <em>Float</em>. Air temperature in degrees Celsius; default 20.</li>
+<li><strong><code translate="no" v-pre>Humidity (%)</code></strong> — <em>Float</em>. Relative humidity from 0 to 100; default 50.</li>
+<li><strong><code translate="no" v-pre>Pressure (kPa)</code></strong> — <em>Float</em>. Atmospheric pressure in kilopascals; default 101.325.</li>
 </ul>
-<h2 id="things-to-watch-for">Things to watch for</h2>
+<p><strong>Outputs from the current C++ node definition</strong></p>
 <ul>
-<li>This is an approximate game-audio model, not a laboratory-calibrated propagation solver.</li>
-<li>If Unreal attenuation settings already perform air absorption, the two effects may make the source unnecessarily dark.</li>
-</ul>
-<doc-panel id="full-input-reference" collapsed>
-    <template #title>Full input reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Audio</code></strong> · <em>Audio (mono)</em> — Mono input audio.</li>
-<li><strong><code translate="no" v-pre>Distance (cm)</code></strong> · <em>Float</em> — Distance travelled by sound in centimetres.</li>
-<li><strong><code translate="no" v-pre>Temperature (C)</code></strong> · <em>Float</em> — Air temperature in degrees Celsius; default 20.</li>
-<li><strong><code translate="no" v-pre>Humidity (%)</code></strong> · <em>Float</em> — Relative humidity from 0 to 100; default 50.</li>
-<li><strong><code translate="no" v-pre>Pressure (kPa)</code></strong> · <em>Float</em> — Atmospheric pressure in kilopascals; default 101.325.</li>
+<li><strong><code translate="no" v-pre>Out Left</code></strong> — <em>Audio buffer</em>. Audio after atmospheric absorption.</li>
+<li><strong><code translate="no" v-pre>Out Right</code></strong> — <em>Audio buffer</em>. Right audio channel after processing.</li>
 </ul>
 </doc-panel>
-<doc-panel id="full-output-reference" collapsed>
-    <template #title>Full output reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Audio</code></strong> · Audio (mono) — Audio after atmospheric absorption.</li>
-</ul>
-</doc-panel>
-<h2 id="continue-learning">Continue learning</h2>
-<p><a href="../../acoustics/material-transmission/">Material Transmission</a> changes spectral content because of barriers instead of air. Also see the <a href="../../../propagation/">Propagation overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
+<p><strong>Related:</strong> <a href="../../acoustics/material-transmission/">Material Transmission</a> when a wall or barrier, rather than air, is the main source of spectral loss.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -198,27 +173,6 @@
             </div>
             <footer id="retype-content-footer" class="clear-both">
             
-                <nav id="retype-nextprev" class="print:hidden flex mt-14">
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/propagation/">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                            <span>
-                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Propagation node reference</span>
-                            </span>
-                        </a>
-                    </div>
-            
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/propagation/distance-delay/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">AP: Distance Delay</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
-                    </div>
-                </nav>
             </footer>
         </main>
 

@@ -1,5 +1,3 @@
-# Flyby player
+# Flyby Wave Player
 
-The Wave Player reference covers whizz/crack playback; the Blueprint guide covers path evaluation and scheduling.
-
-[Open the full reference](nodes/playback/flyby-wave-player.md)
+The detailed reference is now available at **[Flyby Wave Player](nodes/playback/flyby-wave-player.md)**, including full behaviour, stereo wiring, practical examples and exact source-derived inputs and outputs.

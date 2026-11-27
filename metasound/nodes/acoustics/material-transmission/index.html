@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Material Transmission</title>
     <meta name="title" content="AP: Material Transmission">
-    <meta name="description" content="MetaSound · AudioPhysx / Acoustics">
+    <meta name="description" content="AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/material-transmission/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/material-transmission/">
     <meta property="og:title" content="AP: Material Transmission">
-    <meta property="og:description" content="MetaSound · AudioPhysx / Acoustics">
+    <meta property="og:description" content="AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/material-transmission/">
     <meta name="twitter:title" content="AP: Material Transmission">
-    <meta name="twitter:description" content="MetaSound · AudioPhysx / Acoustics">
+    <meta name="twitter:description" content="AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/material-transmission.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,66 +135,41 @@
 
                 <!-- Page content  -->
 <h1 id="ap-material-transmission">AP: Material Transmission</h1>
-<p><strong>MetaSound · AudioPhysx / Acoustics</strong></p>
-<p>Colour and attenuate sound when a source is behind a material or barrier.</p>
+<p><strong>AudioPhysx / Acoustics</strong> · Unreal Engine 5.8.4 development source</p>
+<p>Give an obstructed sound a believable tonal change rather than making it merely quieter.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-material-transmission.png -->
-<h2 id="what-actually-happens">What actually happens</h2>
-<p>An obstructing material often reduces high frequencies more than lows. Rather than muting a source, this node uses authored low-band and high-band attenuation, a crossover and thickness-related controls to shape the sound that passes through a barrier.</p>
-<p>The node needs an external <code translate="no" v-pre>Obstructed</code> state and material information. It does not perform collision traces itself; it makes a mono signal respond to data supplied by your game.</p>
-<h2 id="hear-it-in-a-game">Hear it in a game</h2>
-<p>Take a voice or a door slam. Toggle <code translate="no" v-pre>Obstructed</code> while adjusting <code translate="no" v-pre>Low Loss (dB)</code> and <code translate="no" v-pre>High Loss (dB)</code>. A barrier with much greater high-frequency loss should sound duller and more distant than an open path.</p>
-<h2 id="build-a-working-graph">Build a working graph</h2>
-<doc-steps>
-   <doc-step id="connect-the-dry-source" step-number="1">
-      <template #title>Connect the dry source</template>
-<p>Insert the node after a mono playback source.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="supply-obstruction-and-losses" step-number="2">
-      <template #title>Supply obstruction and losses</template>
-<p>Feed a Boolean into <code translate="no" v-pre>Obstructed</code>, and start with authored band losses that create a clear contrast.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="tune-material-coloration" step-number="3">
-      <template #title>Tune material coloration</template>
-<p>Adjust thickness, crossover, leakage and smoothing only after the unblocked/blocked transition behaves as expected.</p>
-   </doc-step>
-</doc-steps>
-<h2 id="the-controls-that-matter">The controls that matter</h2>
-<p><code translate="no" v-pre>Thickness (cm)</code> and <code translate="no" v-pre>Reference Thickness (cm)</code> provide a thickness context for the model. <code translate="no" v-pre>Low Loss (dB)</code> and <code translate="no" v-pre>High Loss (dB)</code> set the band attenuation in decibels. <code translate="no" v-pre>Crossover (Hz)</code> determines where the low/high shaping transitions. <code translate="no" v-pre>Leakage (%)</code> allows some unfiltered content to bleed through; <code translate="no" v-pre>Smoothing (ms)</code> prevents hard switching.</p>
-<h2 id="what-the-node-outputs">What the node outputs</h2>
+<h2 id="understanding-the-behaviour">Understanding the behaviour</h2>
+<p>Sound transmitted through a door, wall or panel often loses more high-frequency detail than low-frequency weight. Material Transmission takes stereo audio and an externally supplied <code translate="no" v-pre>Obstructed</code> Boolean, then applies a frequency-shaped loss model whose low/high loss values describe the material. Thickness and reference thickness provide a way to scale that treatment with the geometry represented by your game data.</p>
+<p>The node is a DSP processor, not a raycaster. It cannot know that a wall exists unless a Blueprint, component or world path calculation supplies the obstruction state. Left and Right inputs are processed with separate filter histories so differences in a stereo recording are not forcibly collapsed. The broad obstruction amount, however, is controlled by the same material inputs for both channels.</p>
+<p>Try a metal door between the player and a nearby machine. The unobstructed version should contain clear clicks and bright mechanical texture. When the door closes, a filtered version might retain some low rumble but lose much of the sharp top end. A small amount of leakage can preserve an audible sense that the machine is still present, especially if you have deliberately designed a thin or imperfect barrier.</p>
+<p>This sounds more convincing than a volume-only change because the tonal balance communicates the idea of an intervening object. It can also communicate the quality of the material: a lighter partition and a heavy sealed wall should not have identical transmitted spectra.</p>
+<h2 id="building-and-controlling-the-sound">Building and controlling the sound</h2>
+<p>Start with a simple stereo Wave Player and connect its two channels to <code translate="no" v-pre>In Left</code> and <code translate="no" v-pre>In Right</code>. Expose <code translate="no" v-pre>Obstructed</code> as a Boolean or feed it from your gameplay trace. Set modest <code translate="no" v-pre>Low Loss (dB)</code> and larger <code translate="no" v-pre>High Loss (dB)</code> values, then switch the state while the source loops. Add thickness scaling and leakage only after you can hear the basic blocked/unblocked distinction.</p>
+<p>If the result is too abrupt when a door opens or closes, increase <code translate="no" v-pre>Smoothing (ms)</code> until the change is audible but not clicky. Keep the final Source output stereo when preserving the recording&#x27;s width is important; downmix only as part of an intentional spatialization strategy.</p>
+<p><code translate="no" v-pre>Thickness (cm)</code> describes the authored obstacle thickness. <code translate="no" v-pre>Reference Thickness (cm)</code> tells the model what thickness corresponds to the supplied loss values. <code translate="no" v-pre>Crossover (Hz)</code> is the approximate division between the lower- and higher-frequency treatment. <code translate="no" v-pre>Leakage (%)</code> blends some unobstructed audio back into the filtered signal; large values can undermine the impression of a solid barrier. <code translate="no" v-pre>Smoothing (ms)</code> controls how quickly the attenuation changes rather than how long a sound travels.</p>
+<p><strong>Practical limitations.</strong> This is not a substitute for a measured transmission-loss spectrum, and it does not independently simulate flanking paths or diffraction around corners. If Acoustic Paths already applies three-band route loss, decide whether an extra Material Transmission stage adds meaningful information or simply applies the same attenuation twice. Listen to a range of recordings before committing one loss preset to every sound category.</p>
+<doc-panel id="exact-input-and-output-pins" collapsed>
+    <template #title>Exact input and output pins</template>
+<p><strong>Inputs from the current C++ node definition</strong></p>
 <ul>
-<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mono audio after transmission filtering.</li>
+<li><strong><code translate="no" v-pre>In Left</code></strong> — <em>Audio buffer</em>. Left channel of the stereo source audio.</li>
+<li><strong><code translate="no" v-pre>In Right</code></strong> — <em>Audio buffer</em>. Right audio channel to process.</li>
+<li><strong><code translate="no" v-pre>Obstructed</code></strong> — <em>Boolean</em>. True when the sound path is obstructed.</li>
+<li><strong><code translate="no" v-pre>Thickness (cm)</code></strong> — <em>Float</em>. Assigned obstacle thickness in centimetres.</li>
+<li><strong><code translate="no" v-pre>Reference Thickness (cm)</code></strong> — <em>Float</em>. Thickness at which the specified losses apply.</li>
+<li><strong><code translate="no" v-pre>Low Loss (dB)</code></strong> — <em>Float</em>. Low-band transmission loss at reference thickness.</li>
+<li><strong><code translate="no" v-pre>High Loss (dB)</code></strong> — <em>Float</em>. High-band transmission loss at reference thickness.</li>
+<li><strong><code translate="no" v-pre>Crossover (Hz)</code></strong> — <em>Float</em>. Approximate low/high frequency division.</li>
+<li><strong><code translate="no" v-pre>Leakage (%)</code></strong> — <em>Float</em>. Fraction of unobstructed audio mixed back in.</li>
+<li><strong><code translate="no" v-pre>Smoothing (ms)</code></strong> — <em>Float</em>. Smoothing time for changing transmission gains.</li>
 </ul>
-<h2 id="things-to-watch-for">Things to watch for</h2>
+<p><strong>Outputs from the current C++ node definition</strong></p>
 <ul>
-<li>Avoid double-obstructing the same sound. If an Acoustic Paths node already applies path losses, choose a deliberate combination rather than summing two full-strength filters.</li>
-<li>This is approximate transmission coloration, not a substitute for measured transmission-loss data for a particular wall.</li>
-</ul>
-<doc-panel id="full-input-reference" collapsed>
-    <template #title>Full input reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Audio</code></strong> · <em>Audio (mono)</em> — Mono source audio.</li>
-<li><strong><code translate="no" v-pre>Obstructed</code></strong> · <em>Boolean</em> — True when the sound path is obstructed.</li>
-<li><strong><code translate="no" v-pre>Thickness (cm)</code></strong> · <em>Float</em> — Assigned obstacle thickness in centimetres.</li>
-<li><strong><code translate="no" v-pre>Reference Thickness (cm)</code></strong> · <em>Float</em> — Thickness at which the specified losses apply.</li>
-<li><strong><code translate="no" v-pre>Low Loss (dB)</code></strong> · <em>Float</em> — Low-band transmission loss at reference thickness.</li>
-<li><strong><code translate="no" v-pre>High Loss (dB)</code></strong> · <em>Float</em> — High-band transmission loss at reference thickness.</li>
-<li><strong><code translate="no" v-pre>Crossover (Hz)</code></strong> · <em>Float</em> — Approximate low/high frequency division.</li>
-<li><strong><code translate="no" v-pre>Leakage (%)</code></strong> · <em>Float</em> — Fraction of unobstructed audio mixed back in.</li>
-<li><strong><code translate="no" v-pre>Smoothing (ms)</code></strong> · <em>Float</em> — Smoothing time for changing transmission gains.</li>
+<li><strong><code translate="no" v-pre>Out Left</code></strong> — <em>Audio buffer</em>. Stereo audio after transmission filtering.</li>
+<li><strong><code translate="no" v-pre>Out Right</code></strong> — <em>Audio buffer</em>. Right audio channel after processing.</li>
 </ul>
 </doc-panel>
-<doc-panel id="full-output-reference" collapsed>
-    <template #title>Full output reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mono audio after transmission filtering.</li>
-</ul>
-</doc-panel>
-<h2 id="continue-learning">Continue learning</h2>
-<p><a href="../../../../examples/acoustic-obstruction/">Acoustic obstruction recipe</a> offers two different ways to build a blocked-sound demonstration. Also see the <a href="../../../acoustics/">Acoustics overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
+<p><strong>Related:</strong> <a href="../acoustic-paths/">Acoustic Paths</a> when the route and delay should come from the world solver.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -202,27 +177,6 @@
             </div>
             <footer id="retype-content-footer" class="clear-both">
             
-                <nav id="retype-nextprev" class="print:hidden flex mt-14">
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/acoustics/impact-dynamics/">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                            <span>
-                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">AP: Impact Dynamics</span>
-                            </span>
-                        </a>
-                    </div>
-            
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/acoustics/source-directivity/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">AP: Source Directivity</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
-                    </div>
-                </nav>
             </footer>
         </main>
 

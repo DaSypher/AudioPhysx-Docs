@@ -1,60 +1,43 @@
 # AP: Trigger Cooldown
 
-**MetaSound · AudioPhysx / Qol**
+**AudioPhysx / QoL** · Unreal Engine 5.8.4 development source
 
-Reject rapid repeated trigger events until a chosen minimum interval has elapsed.
+Prevent bursts of nearly simultaneous gameplay events from becoming a wall of repeated sound.
 
-## What actually happens
+## Understanding the behaviour
 
-Collision, interaction and animation systems often produce more triggers than a sound designer wants to hear. This node lets an input trigger through, then holds off additional events for a configurable period.
+A collision system, animation notify or gameplay event can generate more triggers than the player should hear. Trigger Cooldown accepts an incoming event, then blocks further events for a chosen amount of time. The ones that pass are emitted from `On Passed`; rejected events can be observed through `On Rejected`. Both outputs are triggers, and the underlying signal remains sample-addressed within the audio block.
 
-The purpose is practical: avoid six identical scrape clicks caused by one contact, or a machine noise retriggering faster than it can be perceived.
+The node does not render audio and therefore has no stereo or mono channels. Its purpose is to control which requests reach a Wave Player. The remaining cooldown is exposed as a Float so you can inspect or further condition the behaviour.
 
-## Hear it in a game
+Imagine a rigid object scraping across a surface. The gameplay collision system may report several small contacts in rapid succession, but triggering a sharp hit sound for every one can sound like machine-gun chatter. A modest cooldown allows the first event to be heard while suppressing immediate duplicates. The same idea works for interface clicks, cloth impacts and repeated small environmental rattles.
 
-Send repeated footstep events to `In` with a modest `Cooldown (ms)`. Observe which events reach `On Passed` and which are rejected. Then set `Cooldown (ms)` to zero to compare unrestricted behaviour.
+This is not always appropriate for actual automatic gunfire: if every shot is meaningful, rejecting deliberately scheduled shots could damage weapon timing.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Connect the trigger
-Connect a source trigger to `In`.
->>>
+Place the node between the original event and your playback node. Connect the event to `In`, set `Cooldown (ms)`, and connect `On Passed` to the target player's `Play`. To diagnose a missing sound, route `On Rejected` to a debug trigger or another temporary diagnostic graph. Use `Reset` when you intentionally want to abandon the current cooldown, for example when a new distinct interaction begins.
 
->>> 2. Choose a minimum interval
-Choose `Cooldown (ms)` for the event you want to limit.
->>>
+Compare a high-frequency burst with and without the cooldown. The accepted events should remain properly timed; they are not queued to play later after the cooldown has passed.
 
->>> 3. Route the accepted events
-Use `On Passed` to start playback; optionally inspect rejected events when debugging. `Reset` clears the cooldown state.
->>>
+`Cooldown (ms)` sets the minimum interval between accepted triggers, with zero intended to pass all events. `Remaining (ms)` reports the remaining cooldown at the end of an audio block. `Reset` clears the cooldown state and affects subsequent admission decisions. None of these outputs should be wired to an audio buffer pin: they are control/event signals.
 
-## The controls that matter
+**Practical limitations.** Treat the cooldown as an intentional sound-design constraint, not a workaround for a fundamentally broken collision event producer. Too long a cooldown can make legitimate footsteps or rapid actions disappear. If the event producer is accidentally firing twice because of duplicated animation notifies, correct that first rather than hiding every symptom with a very long lockout.
 
-`Cooldown (ms)` is the minimum allowed interval between accepted events. `Reset` makes the next event eligible according to the implementation’s state. This does not modify audio; it only routes triggers.
+==- Exact input and output pins
 
-## What the node outputs
+**Inputs from the current C++ node definition**
 
-- **`On Passed`** · Trigger — Triggers allowed through at the original sample frame.
-- **`On Rejected`** · Trigger — Triggers blocked by the cooldown at the original sample frame.
-- **`Remaining (ms)`** · Float — Cooldown remaining at the end of this audio block. Block-rate Float.
+- **`In`** — *Trigger*. Triggers to rate-limit.
+- **`Reset`** — *Trigger*. Clear the cooldown; simultaneous In triggers may pass.
+- **`Cooldown (ms)`** — *Float*. Minimum time between accepted triggers. Zero passes all triggers.
 
-## Things to watch for
+**Outputs from the current C++ node definition**
 
-- A cooldown that is too long may hide valid rapid events, particularly for automatic weapons.
-- When gameplay timing matters, test the actual trigger producer; adding a cooldown does not correct a broken animation/event schedule.
+- **`On Passed`** — *Trigger*. Triggers allowed through at the original sample frame.
+- **`On Rejected`** — *Trigger*. Triggers blocked by the cooldown at the original sample frame.
+- **`Remaining (ms)`** — *Float*. Cooldown remaining at the end of this audio block. Block-rate Float.
 
-==- Full input reference
-- **`In`** · *Trigger* — Triggers to rate-limit.
-- **`Reset`** · *Trigger* — Clear the cooldown; simultaneous In triggers may pass.
-- **`Cooldown (ms)`** · *Float* — Minimum time between accepted triggers. Zero passes all triggers.
 ===
 
-==- Full output reference
-- **`On Passed`** · Trigger — Triggers allowed through at the original sample frame.
-- **`On Rejected`** · Trigger — Triggers blocked by the cooldown at the original sample frame.
-- **`Remaining (ms)`** · Float — Cooldown remaining at the end of this audio block. Block-rate Float.
-===
-
-## Continue learning
-
-[Trigger Probability](trigger-probability.md) is for random admission rather than minimum spacing. Also see the [Qol overview](../../qol.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Trigger Probability](trigger-probability.md) for occasional events rather than minimum time separation.

@@ -1,27 +1,15 @@
-# Representing an acoustic scene
+# Representing the acoustic scene
 
-AudioPhysx has components that connect real game objects to the acoustic model. You don't need all of them for ordinary playback. They're most useful when you want source-to-listener obstruction or around-opening behaviour to react to the level.
+AudioPhysx includes optional components that associate sounds, physical obstacles and openings with real level objects. They are designed to let a managed acoustic system reason about where a sound begins and what it passes through. You do **not** need to attach all these components to use Random Wave Player or other ordinary playback nodes.
 
-## The emitter: where the sound begins
+**`UAPSpatialAudioEmitterComponent`** represents a managed source with a sound asset, optional attenuation asset and obstruction-trace behaviour. It is a practical starting point for a sound that stays in the world while the listener or emitter moves. **`UAPAcousticBarrierComponent`** associates an acoustic material, a target primitive and optional thickness override with level geometry. The geometry and collision still have to be configured correctly, because the component cannot measure useful thickness from an object that the relevant trace never intersects.
 
-`UAPSpatialAudioEmitterComponent` represents a managed sound source with its audio and optional attenuation behaviour. It can participate in obstruction updates, allowing the sound to react as the listener and environment change.
+**`UAPAcousticPortalComponent`** represents a possible passage with extra low, mid and high frequency losses, which the around-path system can consider when enabled and available. It should not be mistaken for a full portal-based reverb engine. **`UAPPhysicsBridgeComponent`** provides another link between game-side state and audio parameters for supported physics/environment workflows; it is not required for a simple standalone Wave Player.
 
-## The barrier: what blocks the sound
+## A reproducible test room
 
-`UAPAcousticBarrierComponent` associates thickness and acoustic material information with a primitive. Its model is more descriptive than treating a wall as simply “blocked or clear.” The associated geometry and collision still have to be set up correctly in the map.
+Create two simple spaces connected by a doorway, place one looping source in the first room, and put the listener in the second. Begin with no obstruction, then add a wall primitive with a valid Acoustic Barrier component and suitable collision. Use the Blueprint path query to inspect whether the wall is recognized. Only after the direct path works should you add the Portal near the opening and look for around-path candidates.
 
-## The portal: where an alternate path may exist
+The test should be as controlled as possible. Do not begin with a complex production level containing hundreds of intersecting meshes and several overlapping emitters. A small map makes it clear whether a change in sound comes from barrier properties, path selection, a manually authored filter or Unreal's normal attenuation.
 
-`UAPAcousticPortalComponent` represents an opening or passage with extra frequency-band loss. An around-path candidate can use it when the world path solver supports that route. This is **not** a full room impulse-response or reverberation bake.
-
-## The bridge: exposing additional state
-
-`UAPPhysicsBridgeComponent` connects movement, transmission and environment-related information to audio. The exact configuration depends on the emitter and game system; this is not a requirement for simple Wave Player nodes.
-
-## A useful test map
-
-Build two simple rooms, a doorway and one looping source. Add an acoustic barrier to a relevant primitive and a portal near the opening. Move the listener between clear line of sight, obstructed position and doorway. Inspect the [path query result](acoustic-paths.md) before adjusting how the MetaSound renders it.
-
-!!!tip Performance is part of the design
-Acoustic tracing is scheduled and budgeted. Begin with just one emitter, then profile how the subsystem scales with your expected number of active sources rather than enabling high-frequency traces on everything.
-!!!
+Since the world system operates on scheduled updates and query budgets, you should also profile a realistic count of active sources. A feature can sound convincing in a room with one emitter and still require careful update limits to perform acceptably in a dense game environment.

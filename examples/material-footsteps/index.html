@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Footsteps that match the ground</title>
-    <meta name="title" content="Footsteps that match the ground">
-    <meta name="description" content="Goal: Make a footstep choose the correct texture—stone, grass, metal or another material—based on what the player actually stepped on.">
+    <title>Material-dependent footsteps</title>
+    <meta name="title" content="Material-dependent footsteps">
+    <meta name="description" content="Primary AudioPhysx tools: AP: Surface or PhysMat Wave Player">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/material-footsteps/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/material-footsteps/">
-    <meta property="og:title" content="Footsteps that match the ground">
-    <meta property="og:description" content="Goal: Make a footstep choose the correct texture—stone, grass, metal or another material—based on what the player actually stepped on.">
+    <meta property="og:title" content="Material-dependent footsteps">
+    <meta property="og:description" content="Primary AudioPhysx tools: AP: Surface or PhysMat Wave Player">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/material-footsteps/">
-    <meta name="twitter:title" content="Footsteps that match the ground">
-    <meta name="twitter:description" content="Goal: Make a footstep choose the correct texture—stone, grass, metal or another material—based on what the player actually stepped on.">
+    <meta name="twitter:title" content="Material-dependent footsteps">
+    <meta name="twitter:description" content="Primary AudioPhysx tools: AP: Surface or PhysMat Wave Player">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/material-footsteps.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,43 +134,18 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="footsteps-that-match-the-ground">Footsteps that match the ground</h1>
-<p><strong>Goal:</strong> Make a footstep choose the correct texture—stone, grass, metal or another material—based on what the player actually stepped on.</p>
-<p>AudioPhysx does <strong>not</strong> automatically perform the footstep trace inside the Wave Player. Your character, animation system or Blueprint sends the surface identifier. The player then selects a recording pool for that surface.</p>
-<h2 id="choose-how-to-identify-a-material">Choose how to identify a material</h2>
-<doc-tabs>
-<doc-tab v-cloak id="surface-type">
-<template #title>Surface type</template>
-<p>Use <a href="../../metasound/nodes/playback/surface-wave-player/">AP: Surface Wave Player</a> when Unreal&#x27;s physical-surface type is enough. It is useful for broadly defined categories such as grass, gravel or metal.</p>
-<p>The node&#x27;s dynamic surface routes may depend on AudioPhysx project settings. Configure those <strong>before</strong> authoring a large number of graphs.</p>
-</doc-tab>
-<doc-tab v-cloak id="exact-physical-material">
-<template #title>Exact Physical Material</template>
-<p>Use <a href="../../metasound/nodes/playback/physmat-wave-player/">AP: PhysMat Wave Player</a> when multiple surfaces share a type but still need distinct sound choices. It compares the full Physical Material asset path rather than just a category number.</p>
-</doc-tab>
-</doc-tabs>
-<h2 id="build-the-footstep-event">Build the footstep event</h2>
-<doc-steps>
-   <doc-step id="collect-the-surface-information" step-number="1">
-      <template #title>Collect the surface information</template>
-<p>At the foot contact moment, trace or otherwise identify the Physical Material of the ground. Confirm the gameplay query returns material information as intended.</p>
-   </doc-step>
-   <doc-step id="send-the-correct-identifier" step-number="2">
-      <template #title>Send the correct identifier</template>
-<p>Use the surface type for Surface Wave Player, or the exact material asset path for PhysMat Wave Player. Supply it before firing <code translate="no" v-pre>Play</code>.</p>
-   </doc-step>
-   <doc-step id="provide-variations-and-a-fallback" step-number="3">
-      <template #title>Provide variations and a fallback</template>
-<p>Assign multiple Wave Assets for each surface and fill default recordings for unknown or unmapped surfaces.</p>
-   </doc-step>
-   <doc-step id="test-movement-over-two-surfaces" step-number="4">
-      <template #title>Test movement over two surfaces</template>
-<p>Walk across the boundary while watching the returned material data. Confirm the recordings follow the ground and that unmatched materials fall back sensibly.</p>
-   </doc-step>
-</doc-steps>
+<h1 id="material-dependent-footsteps">Material-dependent footsteps</h1>
+<p><strong>Primary AudioPhysx tools:</strong> AP: Surface or PhysMat Wave Player</p>
+<p>A good example is a listening experiment, not just a screenshot of connected pins. This exercise explains what content to prepare, which signals the graph needs, and what result you should listen for before increasing complexity.</p>
+<h2 id="prepare-the-recording-and-context">Prepare the recording and context</h2>
+<p>Start with two clearly different ground types, such as stone and grass, and prepare several footstep recordings for each. The character&#x27;s animation or gameplay system supplies the foot-contact timing; AudioPhysx is responsible for choosing an appropriate recording after the ground has been identified. Do not debug the Wave Player before verifying that your trace returns the expected surface identifier.</p>
+<h2 id="assemble-the-metasound-and-test-it">Assemble the MetaSound and test it</h2>
+<p>For broad categories, configure Surface Audio routes and use Surface Wave Player with the <code translate="no" v-pre>Hit Surface Type</code> integer. For specific Physical Material assets, use PhysMat Wave Player with the exact <code translate="no" v-pre>Hit PhysMat Path</code>. In either case, assign a default recording pool for unmatched material information, then connect <code translate="no" v-pre>Play</code>, <code translate="no" v-pre>Out Left</code> and <code translate="no" v-pre>Out Right</code>. Walk over both known materials and an intentionally unmapped surface while printing the gameplay result.</p>
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-material-footsteps.png -->
-<h2 id="make-it-sound-believable">Make it sound believable</h2>
-<p>A good footstep system also depends on <strong>which recording is chosen and when</strong>. Keep variation within a surface coherent, align transients so feet land on time, and avoid overloading the node with sounds for every gameplay state. Movement speed and footwear can be handled by additional routing if needed.</p>
+<h2 id="judge-the-result-in-a-game">Judge the result in a game</h2>
+<p>Surface type and Physical Material path represent different levels of detail; pick the one your game actually uses. A stereo recording may be suitable as part of a designed close-up effect, but a character&#x27;s footstep as a small point source is also a good candidate for a final Stereo to Mono downmix. Listen in the game&#x27;s actual spatialization environment rather than assuming one format will always be better.</p>
+<p>A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source&#x27;s channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the <a href="../../metasound/nodes/qol/stereo-to-mono/">Stereo to Mono</a> version as well as the full stereo path.</p>
+<p><a href="../../metasound/">Browse the full node reference</a> for exact control types and limitations.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -184,7 +159,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Multi-​stage sound variation</span>
+                                <span class="block mt-1">Multi-​stage variation</span>
                             </span>
                         </a>
                     </div>
@@ -193,7 +168,7 @@
                         <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../examples/projectile-flyby/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Projectile near miss</span>
+                                <span class="block mt-1">Projectile near-​miss audio</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>

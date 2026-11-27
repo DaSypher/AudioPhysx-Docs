@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Layered Wave Player</title>
     <meta name="title" content="AP: Layered Wave Player">
-    <meta name="description" content="MetaSound · AudioPhysx / Playback">
+    <meta name="description" content="AudioPhysx / Playback · Unreal Engine 5.8.4 development source">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/layered-wave-player/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/layered-wave-player/">
     <meta property="og:title" content="AP: Layered Wave Player">
-    <meta property="og:description" content="MetaSound · AudioPhysx / Playback">
+    <meta property="og:description" content="AudioPhysx / Playback · Unreal Engine 5.8.4 development source">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/layered-wave-player/">
     <meta name="twitter:title" content="AP: Layered Wave Player">
-    <meta name="twitter:description" content="MetaSound · AudioPhysx / Playback">
+    <meta name="twitter:description" content="AudioPhysx / Playback · Unreal Engine 5.8.4 development source">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/layered-wave-player.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,70 +135,41 @@
 
                 <!-- Page content  -->
 <h1 id="ap-layered-wave-player">AP: Layered Wave Player</h1>
-<p><strong>MetaSound · AudioPhysx / Playback</strong></p>
-<p>Build one composite effect from several recordings that start together or at different offsets.</p>
+<p><strong>AudioPhysx / Playback</strong> · Unreal Engine 5.8.4 development source</p>
+<p>Combine several recordings into a single composite sound while controlling the level, pitch and onset of each layer.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-layered-wave-player.png -->
-<h2 id="what-actually-happens">What actually happens</h2>
-<p>Some sounds are easier to construct from separate layers: an attack transient, a low-frequency body, and a mechanical detail. This player starts the configured layers as one event and combines them into a mono output.</p>
-<p><code translate="no" v-pre>Layer Gains (dB)</code>, <code translate="no" v-pre>Layer Pitch (st)</code> and <code translate="no" v-pre>Layer Delays (ms)</code> are <strong>arrays aligned by index</strong> to <code translate="no" v-pre>Layer Waves</code>. That lets one layer be softer, another pitched differently, and a third delayed slightly without needing separate Wave Player nodes.</p>
-<h2 id="hear-it-in-a-game">Hear it in a game</h2>
-<p>For a heavy door, use a short handle click, a low mechanical movement, and a latch close. Adjust the layer delays until the action feels physically coordinated instead of sounding like three unrelated recordings.</p>
-<h2 id="build-a-working-graph">Build a working graph</h2>
-<doc-steps>
-   <doc-step id="choose-the-layers" step-number="1">
-      <template #title>Choose the layers</template>
-<p>Populate <code translate="no" v-pre>Layer Waves</code> with the recordings that should form one compound event.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="align-per-layer-controls" step-number="2">
-      <template #title>Align per-layer controls</template>
-<p>Create optional gain, pitch and delay arrays in the <strong>same order</strong> as the wave array.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="trigger-the-combined-effect" step-number="3">
-      <template #title>Trigger the combined effect</template>
-<p>Connect <code translate="no" v-pre>Play</code> and <code translate="no" v-pre>Out Mono</code>, then increase <code translate="no" v-pre>Max Voices</code> only if multiple compound events should overlap.</p>
-   </doc-step>
-</doc-steps>
-<h2 id="the-controls-that-matter">The controls that matter</h2>
-<p><code translate="no" v-pre>Layer Delays (ms)</code> offsets the start of a particular layer; it does not represent the total sound duration. <code translate="no" v-pre>Layer Gains (dB)</code> trims individual contributions. <code translate="no" v-pre>Layer Pitch (st)</code> shifts an individual layer in semitones. <code translate="no" v-pre>Max Voices</code> limits concurrent playback capacity.</p>
-<h2 id="outputs-and-completion">Outputs and completion</h2>
+<h2 id="understanding-the-behaviour">Understanding the behaviour</h2>
+<p>Many complex game sounds are deliberately built from layers: a sharp transient that establishes the attack, a low-frequency body that provides weight, and a mechanical or environmental texture that identifies the object. Layered Wave Player starts those recordings as one stack and mixes them into stereo output. Each layer has its own recording, optional gain, optional pitch offset and optional start delay.</p>
+<p>The controls use aligned arrays: the value at index 2 in <code translate="no" v-pre>Layer Gains (dB)</code> belongs to the Wave Asset at index 2 in <code translate="no" v-pre>Layer Waves</code>. Missing optional array values default to the documented neutral values. Separate left/right audio buffers mean layered stereo recordings remain stereo rather than being mixed into a single common channel.</p>
+<p>Think of an energy weapon: a short bright crack, a low synthesized pulse and a delayed resonance tail. Rather than pre-rendering every possible combination, you can author three independent recordings and control their balance in the MetaSound. The third layer may begin a few milliseconds later to make the source feel heavier without pretending that every recorded element started at the exact same instant.</p>
+<p>The same approach is useful for mechanical impacts, doors, or cinematic effects, although it should not be applied to every tiny event simply because layering is available.</p>
+<h2 id="building-and-controlling-the-sound">Building and controlling the sound</h2>
+<p>Populate <code translate="no" v-pre>Layer Waves</code> in a clear order and, if needed, add matching entries to <code translate="no" v-pre>Layer Gains (dB)</code>, <code translate="no" v-pre>Layer Pitch (st)</code> and <code translate="no" v-pre>Layer Delays (ms)</code>. The current implementation allows up to eight configured layers. Trigger <code translate="no" v-pre>Play</code> once and connect <code translate="no" v-pre>Out Left</code> / <code translate="no" v-pre>Out Right</code> to the Source. Start with zero gain offsets and zero delays so you can hear the natural edit points, then adjust one layer at a time.</p>
+<p>The node treats one stack as a coordinated event. If it cannot reserve sufficient voices for an eligible stack, it can reject the request rather than partially starting only some layers. <code translate="no" v-pre>Active Layers</code> helps diagnose how much of the voice budget is currently occupied.</p>
+<p><code translate="no" v-pre>Layer Gains (dB)</code> are per-layer trims, not master volume. <code translate="no" v-pre>Layer Pitch (st)</code> uses semitone offsets, and <code translate="no" v-pre>Layer Delays (ms)</code> shifts the start time of each layer by up to the configured supported range. <code translate="no" v-pre>Max Voices</code> is the total voice budget across currently playing stacks, not the number of possible layer slots. <code translate="no" v-pre>On Rejected</code> reports a stack that could not start; <code translate="no" v-pre>On Finished</code> indicates natural completion after the final active layer.</p>
+<p><strong>Practical limitations.</strong> Stereo layering creates more opportunities for phase and loudness problems. Two low-frequency recordings with different timing may reinforce or cancel each other unpredictably. Use realistic game volumes, inspect peaks, and try the final output both in stereo and downmixed to mono, particularly if the effect will be spatialized as a single point in the world.</p>
+<doc-panel id="exact-input-and-output-pins" collapsed>
+    <template #title>Exact input and output pins</template>
+<p><strong>Inputs from the current C++ node definition</strong></p>
 <ul>
-<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mono mix of all active layers.</li>
-<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Last layer of all active stacks finished naturally.</li>
-<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — No playable layers or insufficient free voices for the entire stack.</li>
-<li><strong><code translate="no" v-pre>Active Layers</code></strong> · Integer — Number of active or pending layers.</li>
+<li><strong><code translate="no" v-pre>Play</code></strong> — <em>Trigger</em>. Start the valid layers as one atomic stack.</li>
+<li><strong><code translate="no" v-pre>Stop</code></strong> — <em>Trigger</em>. Stop all stacks. Does not fire On Finished.</li>
+<li><strong><code translate="no" v-pre>Layer Waves</code></strong> — <em>Wave Asset Array</em>. Wave Asset array: indices 0 to 7, one sound per layer.</li>
+<li><strong><code translate="no" v-pre>Layer Gains (dB)</code></strong> — <em>FFloatArray</em>. Optional per-layer gains, aligned with Layer Waves. Missing values = 0 dB.</li>
+<li><strong><code translate="no" v-pre>Layer Pitch (st)</code></strong> — <em>FFloatArray</em>. Optional per-layer playback-rate pitch offsets in semitones. Missing = 0.</li>
+<li><strong><code translate="no" v-pre>Layer Delays (ms)</code></strong> — <em>FFloatArray</em>. Optional per-layer onset delay, 0 to 2000 ms. Missing = 0.</li>
+<li><strong><code translate="no" v-pre>Max Voices</code></strong> — <em>Integer</em>. Maximum simultaneous individual layers across all stacks, 1 to 32.</li>
 </ul>
-<h2 id="things-to-watch-for">Things to watch for</h2>
+<p><strong>Outputs from the current C++ node definition</strong></p>
 <ul>
-<li>Do not assume different recordings are transient-aligned. Inspect the samples and compensate for leading silence where necessary.</li>
-<li>A large number of loud layers can clip when added together. Gain-stage the components before increasing the final output.</li>
-</ul>
-<doc-panel id="full-input-reference" collapsed>
-    <template #title>Full input reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Play</code></strong> · <em>Trigger</em> — Start the valid layers as one atomic stack.</li>
-<li><strong><code translate="no" v-pre>Stop</code></strong> · <em>Trigger</em> — Stop all stacks. Does not fire On Finished.</li>
-<li><strong><code translate="no" v-pre>Layer Waves</code></strong> · <em>Wave Asset Array</em> — Wave Asset array: indices 0 to 7, one sound per layer.</li>
-<li><strong><code translate="no" v-pre>Layer Gains (dB)</code></strong> · <em>Float Array</em> — Optional per-layer gains, aligned with Layer Waves. Missing values = 0 dB.</li>
-<li><strong><code translate="no" v-pre>Layer Pitch (st)</code></strong> · <em>Float Array</em> — Optional per-layer playback-rate pitch offsets in semitones. Missing = 0.</li>
-<li><strong><code translate="no" v-pre>Layer Delays (ms)</code></strong> · <em>Float Array</em> — Optional per-layer onset delay, 0 to 2000 ms. Missing = 0.</li>
-<li><strong><code translate="no" v-pre>Max Voices</code></strong> · <em>Integer</em> — Maximum simultaneous individual layers across all stacks, 1 to 32.</li>
+<li><strong><code translate="no" v-pre>Out Left</code></strong> — <em>Audio buffer</em>. Left-channel mix of all active layers.</li>
+<li><strong><code translate="no" v-pre>Out Right</code></strong> — <em>Audio buffer</em>. Right channel of the stereo playback mix.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> — <em>Trigger</em>. Last layer of all active stacks finished naturally.</li>
+<li><strong><code translate="no" v-pre>On Rejected</code></strong> — <em>Trigger</em>. No playable layers or insufficient free voices for the entire stack.</li>
+<li><strong><code translate="no" v-pre>Active Layers</code></strong> — <em>Integer</em>. Number of active or pending layers.</li>
 </ul>
 </doc-panel>
-<doc-panel id="full-output-reference" collapsed>
-    <template #title>Full output reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mono mix of all active layers.</li>
-<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Last layer of all active stacks finished naturally.</li>
-<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — No playable layers or insufficient free voices for the entire stack.</li>
-<li><strong><code translate="no" v-pre>Active Layers</code></strong> · Integer — Number of active or pending layers.</li>
-</ul>
-</doc-panel>
-<h2 id="continue-learning">Continue learning</h2>
-<p><a href="../random-sequence-wave-player/">Random Sequence</a> plays <em>one after another</em>, not as simultaneous layers. Also see the <a href="../../../playback/">Playback overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
+<p><strong>Related:</strong> <a href="../../qol/stereo-to-mono/">Stereo to Mono</a> when the finished effect must feed a mono Source.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -206,27 +177,6 @@
             </div>
             <footer id="retype-content-footer" class="clear-both">
             
-                <nav id="retype-nextprev" class="print:hidden flex mt-14">
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/playback/flyby-wave-player/">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                            <span>
-                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">AP: Flyby Wave Player</span>
-                            </span>
-                        </a>
-                    </div>
-            
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/playback/physmat-wave-player/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">AP: Phys​Mat Wave Player</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
-                    </div>
-                </nav>
             </footer>
         </main>
 

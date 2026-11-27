@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>Frequently asked questions</title>
     <meta name="title" content="Frequently asked questions">
-    <meta name="description" content="No. It provides additional C++ nodes and Blueprint integration for the existing Unreal audio pipeline. You still use MetaSound Sources, the mixer, spatialization, Sound Attenuation and concurrency features as appropriate for your game.">
+    <meta name="description" content="Why make all the audio nodes stereo? The previous mono-first design forced information out of a stereo recording before a sound designer had decided whether that information was useful.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/support/faq/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/support/faq/">
     <meta property="og:title" content="Frequently asked questions">
-    <meta property="og:description" content="No. It provides additional C++ nodes and Blueprint integration for the existing Unreal audio pipeline. You still use MetaSound Sources, the mixer, spatialization, Sound Attenuation and concurrency features as appropriate for your game.">
+    <meta property="og:description" content="Why make all the audio nodes stereo? The previous mono-first design forced information out of a stereo recording before a sound designer had decided whether that information was useful.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/support/faq/">
     <meta name="twitter:title" content="Frequently asked questions">
-    <meta name="twitter:description" content="No. It provides additional C++ nodes and Blueprint integration for the existing Unreal audio pipeline. You still use MetaSound Sources, the mixer, spatialization, Sound Attenuation and concurrency features as appropriate for your game.">
+    <meta name="twitter:description" content="Why make all the audio nodes stereo? The previous mono-first design forced information out of a stereo recording before a sound designer had decided whether that information was useful.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/support/faq.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,24 +135,14 @@
 
                 <!-- Page content  -->
 <h1 id="frequently-asked-questions">Frequently asked questions</h1>
-<h2 id="is-audiophysx-a-replacement-for-metasounds-or-unreal-audio">Is AudioPhysx a replacement for MetaSounds or Unreal Audio?</h2>
-<p>No. It provides additional C++ nodes and Blueprint integration for the existing Unreal audio pipeline. You still use MetaSound Sources, the mixer, spatialization, Sound Attenuation and concurrency features as appropriate for your game.</p>
-<h2 id="why-are-so-many-outputs-mono">Why are so many outputs mono?</h2>
-<p>Mono is a practical source format for many spatial game sounds. It lets Unreal handle the source&#x27;s 3D positioning and means an acoustic processor can work on one clearly defined signal. It does not mean every sound in your game must be mono.</p>
-<h2 id="does-it-generate-all-realistic-audio-procedurally">Does it generate all realistic audio procedurally?</h2>
-<p>No. Many nodes play or transform your own recordings. The physically inspired processors model particular behaviours such as attenuation, delay, directionality or early reflections; they are not a complete acoustic simulation of the game world.</p>
-<h2 id="do-i-need-chaos-physics">Do I need Chaos physics?</h2>
-<p>No. The flyby functions operate on supplied projectile path segments and speed. Acoustic path helpers can use ordinary world queries and level components. You may integrate them with a Chaos-driven game, but Chaos is not required for the core workflows described here.</p>
-<h2 id="whats-the-difference-between-surface-and-physmat-playback">What&#x27;s the difference between Surface and PhysMat playback?</h2>
-<p>Surface Wave Player chooses from a category such as a physical-surface type. PhysMat Wave Player can distinguish specific Physical Material asset paths. Use the broader category when the sound should be shared across several surfaces, and the exact path when you need a more detailed selection.</p>
-<h2 id="why-doesnt-stop-always-fire-on-finished">Why doesn&#x27;t <code translate="no" v-pre>Stop</code> always fire <code translate="no" v-pre>On Finished</code>?</h2>
-<p><code translate="no" v-pre>Stop</code> can mean an explicit cancellation. Natural completion means the recording has actually ended. Some nodes distinguish those two behaviours so gameplay can tell the difference. Read the particular player&#x27;s reference before wiring Source completion.</p>
-<h2 id="can-i-use-a-sound-cue-instead-of-metasound">Can I use a Sound Cue instead of MetaSound?</h2>
-<p>Unreal&#x27;s native Sound Cues can still be used wherever your workflow calls for them. AudioPhysx&#x27;s <strong>custom Sound Cue QoL nodes are planned</strong>, not included in the reviewed development source. Current native node references are MetaSound-focused.</p>
-<h2 id="will-the-plugin-work-in-ue6-without-updates">Will the plugin work in UE6 without updates?</h2>
-<p>No UE6 compatibility has been verified or promised. Native code plugins depend on engine APIs, and some current AudioPhysx player and dynamic-interface implementations use APIs with compatibility risks. Follow the <a href="../compatibility/">published support matrix</a> for the specific product version you intend to use.</p>
-<h2 id="are-acoustic-material-numbers-scientifically-measured">Are acoustic material numbers scientifically measured?</h2>
-<p>Not by default. AudioPhysx offers authored and simplified modelling choices. Material values must be selected meaningfully for the game, and a convincing result is not the same thing as a validated laboratory measurement.</p>
+<p><strong>Why make all the audio nodes stereo?</strong> The previous mono-first design forced information out of a stereo recording before a sound designer had decided whether that information was useful. The updated Wave Players and DSP processors preserve Left and Right channels, making it possible to author wider layered effects and process stereo ambience without an early downmix. This is a signal-path capability, not a requirement that every positional world sound remain stereo. A small point-source effect may still be better downmixed before Unreal spatialization.</p>
+<p><strong>Does Stereo to Mono destroy stereo information?</strong> Yes, deliberately. It produces one mono signal by averaging the channels, <code translate="no" v-pre>0.5 × (Left + Right)</code>. That avoids the simple level increase from adding two identical channels, but opposite-polarity content may cancel. It also cannot restore any original stereo image after the fold-down. Use it near the end of the graph when that format is appropriate, and listen to the result.</p>
+<p><strong>Why do some AudioPhysx nodes still have no Left and Right outputs?</strong> Trigger Cooldown, Trigger Probability, Float Smoother, Dynamic Distance Switch and Doppler Ratio are controls or event processors, not audio renderers. A trigger or single pitch ratio does not become a two-channel sound just because a nearby Wave Player is stereo. Their outputs remain correctly typed for the data they represent.</p>
+<p><strong>Does AudioPhysx replace MetaSounds or Unreal spatialization?</strong> No. It adds focused native tools to the existing Unreal audio pipeline. Source layouts, attenuation, concurrency and spatialization remain important. AudioPhysx helps decide which recording to play, what effect to apply and how game information reaches that processing.</p>
+<p><strong>Do the acoustic nodes perform a fully accurate world simulation?</strong> No. They combine physically inspired calculations with practical perceptual approximations. For example, Early Reflections creates synthetic taps rather than measuring every real surface, and the flyby solver uses a simplified constant-speed path. Reliable results depend on good recording content, geometry data, material values and informed mixing decisions.</p>
+<p><strong>Do I need Chaos?</strong> The flyby system can evaluate supplied projectile path segments without building a special Chaos rigid-body simulation. Acoustic queries rely on world geometry and collision information, but they are not themselves a requirement to run Chaos physics for every sound event.</p>
+<p><strong>Can AudioPhysx be used with Sound Cues?</strong> The native node set inspected for this edition is a MetaSound library, with Blueprint helpers available for sound assets. Dedicated custom Sound Cue QoL nodes are planned but <strong>not</strong> included in the reviewed source. Unreal&#x27;s own Sound Cues remain available separately.</p>
+<p><strong>Will this automatically work with Unreal Engine 6?</strong> No UE6 support is verified or promised. The playback system still uses some Unreal-internal APIs behind a private adapter, and changes in future engine versions may require plugin updates. The <a href="../compatibility/">compatibility matrix</a> should be updated only after testing the actual submitted package.</p>
 
                 
                 <!-- Required only on API pages -->

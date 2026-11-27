@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Float Smoother</title>
     <meta name="title" content="AP: Float Smoother">
-    <meta name="description" content="MetaSound · AudioPhysx / Qol">
+    <meta name="description" content="AudioPhysx / QoL · Unreal Engine 5.8.4 development source">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/float-smoother/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/float-smoother/">
     <meta property="og:title" content="AP: Float Smoother">
-    <meta property="og:description" content="MetaSound · AudioPhysx / Qol">
+    <meta property="og:description" content="AudioPhysx / QoL · Unreal Engine 5.8.4 development source">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/float-smoother/">
     <meta name="twitter:title" content="AP: Float Smoother">
-    <meta name="twitter:description" content="MetaSound · AudioPhysx / Qol">
+    <meta name="twitter:description" content="AudioPhysx / QoL · Unreal Engine 5.8.4 development source">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/float-smoother.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,61 +135,34 @@
 
                 <!-- Page content  -->
 <h1 id="ap-float-smoother">AP: Float Smoother</h1>
-<p><strong>MetaSound · AudioPhysx / Qol</strong></p>
-<p>Prevent sudden gameplay value changes from producing audible jumps in volume, filtering or other controls.</p>
+<p><strong>AudioPhysx / QoL</strong> · Unreal Engine 5.8.4 development source</p>
+<p>Turn abrupt control changes into more natural transitions without adding an audio filter to the signal.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-float-smoother.png -->
-<h2 id="what-actually-happens">What actually happens</h2>
-<p>A MetaSound Float input may change in discrete blocks even when the game value is continuous. Feeding those updates directly into a filter or mix control can create stepping. Float Smoother gradually approaches a target using separate rise and fall responses.</p>
-<p>It operates at <strong>control/block rate</strong>, so think of it as a parameter-conditioning tool, not an audio-waveform filter.</p>
-<h2 id="hear-it-in-a-game">Hear it in a game</h2>
-<p>Connect a changing engine-load value to <code translate="no" v-pre>Target</code>. Give increasing values a short <code translate="no" v-pre>Rise (ms)</code> and decreasing values a longer <code translate="no" v-pre>Fall (ms)</code> so the motor reacts quickly to throttle but relaxes more slowly.</p>
-<h2 id="build-a-working-graph">Build a working graph</h2>
-<doc-steps>
-   <doc-step id="connect-the-target-value" step-number="1">
-      <template #title>Connect the target value</template>
-<p>Connect the changing Float to <code translate="no" v-pre>Target</code>.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="set-rise-and-fall-response" step-number="2">
-      <template #title>Set rise and fall response</template>
-<p>Set independent <code translate="no" v-pre>Rise (ms)</code> and <code translate="no" v-pre>Fall (ms)</code> values. Start with modest values and judge them by ear.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="route-the-smoothed-control" step-number="3">
-      <template #title>Route the smoothed control</template>
-<p>Use <code translate="no" v-pre>Smoothed</code> wherever a downstream node expects the stabilized control. Use <code translate="no" v-pre>Snap</code> when a level or state change should happen immediately.</p>
-   </doc-step>
-</doc-steps>
-<h2 id="the-controls-that-matter">The controls that matter</h2>
-<p><code translate="no" v-pre>Rise (ms)</code> and <code translate="no" v-pre>Fall (ms)</code> are smoothing time constants rather than fixed delays. Zero snaps immediately in the corresponding direction. <code translate="no" v-pre>Snap</code> overrides the gradual transition for the current target.</p>
-<h2 id="what-the-node-outputs">What the node outputs</h2>
+<h2 id="understanding-the-behaviour">Understanding the behaviour</h2>
+<p>Gameplay often updates a value less frequently than MetaSound renders samples. If a value jumps suddenly from low to high and feeds a gain or cutoff control, the audible effect can step harshly. Float Smoother responds to the current <code translate="no" v-pre>Target</code> over time, with separate <strong>rise</strong> and <strong>fall</strong> time constants. This makes it possible to react quickly to increasing values but more gently to decreasing values, or vice versa.</p>
+<p>The node operates on Float controls once per audio block. It is intentionally not an audio-bearing stereo node: <code translate="no" v-pre>Smoothed</code> represents one number, not a left/right waveform. There is no benefit in manufacturing two channels for a shared control value.</p>
+<p>An engine-load parameter is a useful example. Throttle input may jump suddenly when a key is pressed, but the perceived engine response should rise over a short period and fall more gradually on release. A smoother can prevent the filter cutoff or gain from snapping between unrelated sonic states. You can make the same choice for obstruction amount, room wetness, mechanical tension and other slowly changing controls.</p>
+<p>Smoothing can improve believability, but too much smoothing makes sound feel disconnected from gameplay. The right times depend on the event.</p>
+<h2 id="building-and-controlling-the-sound">Building and controlling the sound</h2>
+<p>Connect the changing parameter to <code translate="no" v-pre>Target</code> and route <code translate="no" v-pre>Smoothed</code> to the downstream gain, cutoff, modulation or other Float input. Start with a short rise and a longer fall, then audition a sharp target change. Use <code translate="no" v-pre>Snap</code> when you need the output to move immediately to the current target, such as after a teleport or an intentional reset.</p>
+<p>Keep your graph simple by using one Smoother before several consumers when they should all respond to the same conditioned value. Avoid creating independent smoothers for the same source unless they genuinely need different time responses.</p>
+<p><code translate="no" v-pre>Rise (ms)</code> applies when the target is above the current output; <code translate="no" v-pre>Fall (ms)</code> applies when it is below. A zero time in a direction snaps immediately. <code translate="no" v-pre>Snap</code> overrides the smoothing state for that block. Because <code translate="no" v-pre>Smoothed</code> is block-rate, it should not be used as though it were a full audio-rate oscillating signal.</p>
+<p><strong>Practical limitations.</strong> When a sound crackles after parameter updates, identify whether the discontinuity is in a numeric control or in audio samples. This node helps the former; it cannot repair a damaged recording or replace a de-clicking DSP stage. Test rapidly moving values and scene resets to ensure the response does not lag behind meaningful gameplay state changes.</p>
+<doc-panel id="exact-input-and-output-pins" collapsed>
+    <template #title>Exact input and output pins</template>
+<p><strong>Inputs from the current C++ node definition</strong></p>
 <ul>
-<li><strong><code translate="no" v-pre>Smoothed</code></strong> · Float — Rise/fall smoothed Float control signal (block-rate).</li>
+<li><strong><code translate="no" v-pre>Target</code></strong> — <em>Float</em>. Float value to smooth. Sampled once per audio block.</li>
+<li><strong><code translate="no" v-pre>Rise (ms)</code></strong> — <em>Float</em>. Exponential time constant for increasing values. Zero snaps immediately.</li>
+<li><strong><code translate="no" v-pre>Fall (ms)</code></strong> — <em>Float</em>. Exponential time constant for decreasing values. Zero snaps immediately.</li>
+<li><strong><code translate="no" v-pre>Snap</code></strong> — <em>Trigger</em>. Immediately set the output to Target in this block (block-rate behaviour).</li>
 </ul>
-<h2 id="things-to-watch-for">Things to watch for</h2>
+<p><strong>Outputs from the current C++ node definition</strong></p>
 <ul>
-<li>A very long rise or fall time can make responsive effects feel disconnected from gameplay.</li>
-<li>Because the output is block-rate, it should not be mistaken for sample-by-sample modulation of an audio buffer.</li>
-</ul>
-<doc-panel id="full-input-reference" collapsed>
-    <template #title>Full input reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Target</code></strong> · <em>Float</em> — Float value to smooth. Sampled once per audio block.</li>
-<li><strong><code translate="no" v-pre>Rise (ms)</code></strong> · <em>Float</em> — Exponential time constant for increasing values. Zero snaps immediately.</li>
-<li><strong><code translate="no" v-pre>Fall (ms)</code></strong> · <em>Float</em> — Exponential time constant for decreasing values. Zero snaps immediately.</li>
-<li><strong><code translate="no" v-pre>Snap</code></strong> · <em>Trigger</em> — Immediately set the output to Target in this block (block-rate behaviour).</li>
+<li><strong><code translate="no" v-pre>Smoothed</code></strong> — <em>Float</em>. Rise/fall smoothed Float control signal (block-rate).</li>
 </ul>
 </doc-panel>
-<doc-panel id="full-output-reference" collapsed>
-    <template #title>Full output reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Smoothed</code></strong> · Float — Rise/fall smoothed Float control signal (block-rate).</li>
-</ul>
-</doc-panel>
-<h2 id="continue-learning">Continue learning</h2>
-<p><a href="../trigger-cooldown/">Trigger Cooldown</a> controls event frequency rather than the smoothness of numeric values. Also see the <a href="../../../qol/">Qol overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
+<p><strong>Related:</strong> <a href="../trigger-cooldown/">Trigger Cooldown</a> for limiting event frequency instead of numeric changes.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -197,27 +170,6 @@
             </div>
             <footer id="retype-content-footer" class="clear-both">
             
-                <nav id="retype-nextprev" class="print:hidden flex mt-14">
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/qol/distance-switch/">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                            <span>
-                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">AP: Distance Switch (Dynamic)</span>
-                            </span>
-                        </a>
-                    </div>
-            
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/qol/trigger-cooldown/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">AP: Trigger Cooldown</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
-                    </div>
-                </nav>
             </footer>
         </main>
 

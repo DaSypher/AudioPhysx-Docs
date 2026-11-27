@@ -1,27 +1,17 @@
-# Passing world data into MetaSound
+# Interfaces and external audio parameters
 
-A Wave Player can play a recording with only a trigger, but an acoustic processor needs to know something about the world: distance, material, obstruction, source direction or environment. AudioPhysx has interfaces and parameter names that link those game-side calculations to a MetaSound graph.
+AudioPhysx separates gameplay-side world queries from audio rendering. One consequence is that some MetaSound inputs are fed by named parameters or registered interfaces rather than being authored independently in each graph. These names and data types are **contracts**. They should not be approximated by creating visually similar inputs with arbitrary spelling.
 
-## The selected acoustic route
+## The compact selected acoustic route
 
-The current source uses one compact Float Array named **`AP.AcousticRoute.Selected`**. Its four values are ordered as follows:
+The current source includes a selected-route Float Array named `AP.AcousticRoute.Selected`. It is intended for the [Acoustic Paths](nodes/acoustics/acoustic-paths.md) processor, and the values must follow the same order as the source-side contract:
 
 ```text
-[delay in ms, low-band loss in dB, mid-band loss in dB, high-band loss in dB]
+[delay ms, low loss dB, mid loss dB, high loss dB]
 ```
 
-The game-world solver decides which route to use. [AP: Acoustic Paths](nodes/acoustics/acoustic-paths.md) reads that selected route and renders the corresponding delayed and filtered mono audio. This avoids connecting several unrelated route controls and accidentally using values from different world updates.
+The world path solver decides whether direct or around-obstacle sound should be selected; the MetaSound processor applies the corresponding delay and three-band loss. Keeping the route together in one array reduces the possibility that the delay comes from a different query update than the spectral losses. The convenience does make the ordering more important, so verify the exact array before trying to correct an unexpected filter result.
 
-## Why order and units matter
+Other AudioPhysx systems expose atmosphere, transmission, impact and propagation values through their current interfaces. Where an installed build supplies those interfaces, use the actual registered names and types. Do not construct an independent parameter solely from an old screenshot if the current interface has changed. MetaSound asset interface migrations and configurable surface-route changes can affect how saved graphs reconnect.
 
-If you swap the low- and high-loss values, the filter could make the source sound brighter when the material should muffle it. If you pass seconds as milliseconds, a travel delay can be wrong by a factor of a thousand. Treat the array as a **data contract**, not a bag of arbitrary floats.
-
-## Other named parameters
-
-The source also contains propagation, atmosphere, transmission and impact parameters. These are registered by AudioPhysx's native interfaces and world/Blueprint helpers. Prefer the exact pins and interface versions supplied by the installed plugin over manually recreating near-identical parameters with different names.
-
-The standalone flyby subsystem supplies five named Float parameters, listed on the [Flyby Blueprint guide](../blueprint/flyby.md). Those must be exposed with matching names so the world helper can populate them before playback.
-
-!!!warning Existing graph compatibility
-When changing engine or plugin versions, inspect a saved graph's generated MetaSound inputs **before resaving it**, especially if interface versions or surface-route settings changed. A graph can compile but listen to the wrong input if names or types no longer match.
-!!!
+The flyby subsystem has a separate set of five named Float inputs beginning with `AP.Flyby.`. Those are documented on the [Flyby Blueprint page](../blueprint/flyby.md). All such interfaces carry **control values or triggers**: they do not change the fact that the audio processors themselves now carry stereo Left and Right buffers.

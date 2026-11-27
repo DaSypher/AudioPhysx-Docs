@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Trigger Cooldown</title>
     <meta name="title" content="AP: Trigger Cooldown">
-    <meta name="description" content="MetaSound · AudioPhysx / Qol">
+    <meta name="description" content="AudioPhysx / QoL · Unreal Engine 5.8.4 development source">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/trigger-cooldown/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/trigger-cooldown/">
     <meta property="og:title" content="AP: Trigger Cooldown">
-    <meta property="og:description" content="MetaSound · AudioPhysx / Qol">
+    <meta property="og:description" content="AudioPhysx / QoL · Unreal Engine 5.8.4 development source">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/trigger-cooldown/">
     <meta name="twitter:title" content="AP: Trigger Cooldown">
-    <meta name="twitter:description" content="MetaSound · AudioPhysx / Qol">
+    <meta name="twitter:description" content="AudioPhysx / QoL · Unreal Engine 5.8.4 development source">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/trigger-cooldown.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,64 +135,35 @@
 
                 <!-- Page content  -->
 <h1 id="ap-trigger-cooldown">AP: Trigger Cooldown</h1>
-<p><strong>MetaSound · AudioPhysx / Qol</strong></p>
-<p>Reject rapid repeated trigger events until a chosen minimum interval has elapsed.</p>
+<p><strong>AudioPhysx / QoL</strong> · Unreal Engine 5.8.4 development source</p>
+<p>Prevent bursts of nearly simultaneous gameplay events from becoming a wall of repeated sound.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-trigger-cooldown.png -->
-<h2 id="what-actually-happens">What actually happens</h2>
-<p>Collision, interaction and animation systems often produce more triggers than a sound designer wants to hear. This node lets an input trigger through, then holds off additional events for a configurable period.</p>
-<p>The purpose is practical: avoid six identical scrape clicks caused by one contact, or a machine noise retriggering faster than it can be perceived.</p>
-<h2 id="hear-it-in-a-game">Hear it in a game</h2>
-<p>Send repeated footstep events to <code translate="no" v-pre>In</code> with a modest <code translate="no" v-pre>Cooldown (ms)</code>. Observe which events reach <code translate="no" v-pre>On Passed</code> and which are rejected. Then set <code translate="no" v-pre>Cooldown (ms)</code> to zero to compare unrestricted behaviour.</p>
-<h2 id="build-a-working-graph">Build a working graph</h2>
-<doc-steps>
-   <doc-step id="connect-the-trigger" step-number="1">
-      <template #title>Connect the trigger</template>
-<p>Connect a source trigger to <code translate="no" v-pre>In</code>.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="choose-a-minimum-interval" step-number="2">
-      <template #title>Choose a minimum interval</template>
-<p>Choose <code translate="no" v-pre>Cooldown (ms)</code> for the event you want to limit.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="route-the-accepted-events" step-number="3">
-      <template #title>Route the accepted events</template>
-<p>Use <code translate="no" v-pre>On Passed</code> to start playback; optionally inspect rejected events when debugging. <code translate="no" v-pre>Reset</code> clears the cooldown state.</p>
-   </doc-step>
-</doc-steps>
-<h2 id="the-controls-that-matter">The controls that matter</h2>
-<p><code translate="no" v-pre>Cooldown (ms)</code> is the minimum allowed interval between accepted events. <code translate="no" v-pre>Reset</code> makes the next event eligible according to the implementation’s state. This does not modify audio; it only routes triggers.</p>
-<h2 id="what-the-node-outputs">What the node outputs</h2>
+<h2 id="understanding-the-behaviour">Understanding the behaviour</h2>
+<p>A collision system, animation notify or gameplay event can generate more triggers than the player should hear. Trigger Cooldown accepts an incoming event, then blocks further events for a chosen amount of time. The ones that pass are emitted from <code translate="no" v-pre>On Passed</code>; rejected events can be observed through <code translate="no" v-pre>On Rejected</code>. Both outputs are triggers, and the underlying signal remains sample-addressed within the audio block.</p>
+<p>The node does not render audio and therefore has no stereo or mono channels. Its purpose is to control which requests reach a Wave Player. The remaining cooldown is exposed as a Float so you can inspect or further condition the behaviour.</p>
+<p>Imagine a rigid object scraping across a surface. The gameplay collision system may report several small contacts in rapid succession, but triggering a sharp hit sound for every one can sound like machine-gun chatter. A modest cooldown allows the first event to be heard while suppressing immediate duplicates. The same idea works for interface clicks, cloth impacts and repeated small environmental rattles.</p>
+<p>This is not always appropriate for actual automatic gunfire: if every shot is meaningful, rejecting deliberately scheduled shots could damage weapon timing.</p>
+<h2 id="building-and-controlling-the-sound">Building and controlling the sound</h2>
+<p>Place the node between the original event and your playback node. Connect the event to <code translate="no" v-pre>In</code>, set <code translate="no" v-pre>Cooldown (ms)</code>, and connect <code translate="no" v-pre>On Passed</code> to the target player&#x27;s <code translate="no" v-pre>Play</code>. To diagnose a missing sound, route <code translate="no" v-pre>On Rejected</code> to a debug trigger or another temporary diagnostic graph. Use <code translate="no" v-pre>Reset</code> when you intentionally want to abandon the current cooldown, for example when a new distinct interaction begins.</p>
+<p>Compare a high-frequency burst with and without the cooldown. The accepted events should remain properly timed; they are not queued to play later after the cooldown has passed.</p>
+<p><code translate="no" v-pre>Cooldown (ms)</code> sets the minimum interval between accepted triggers, with zero intended to pass all events. <code translate="no" v-pre>Remaining (ms)</code> reports the remaining cooldown at the end of an audio block. <code translate="no" v-pre>Reset</code> clears the cooldown state and affects subsequent admission decisions. None of these outputs should be wired to an audio buffer pin: they are control/event signals.</p>
+<p><strong>Practical limitations.</strong> Treat the cooldown as an intentional sound-design constraint, not a workaround for a fundamentally broken collision event producer. Too long a cooldown can make legitimate footsteps or rapid actions disappear. If the event producer is accidentally firing twice because of duplicated animation notifies, correct that first rather than hiding every symptom with a very long lockout.</p>
+<doc-panel id="exact-input-and-output-pins" collapsed>
+    <template #title>Exact input and output pins</template>
+<p><strong>Inputs from the current C++ node definition</strong></p>
 <ul>
-<li><strong><code translate="no" v-pre>On Passed</code></strong> · Trigger — Triggers allowed through at the original sample frame.</li>
-<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — Triggers blocked by the cooldown at the original sample frame.</li>
-<li><strong><code translate="no" v-pre>Remaining (ms)</code></strong> · Float — Cooldown remaining at the end of this audio block. Block-rate Float.</li>
+<li><strong><code translate="no" v-pre>In</code></strong> — <em>Trigger</em>. Triggers to rate-limit.</li>
+<li><strong><code translate="no" v-pre>Reset</code></strong> — <em>Trigger</em>. Clear the cooldown; simultaneous In triggers may pass.</li>
+<li><strong><code translate="no" v-pre>Cooldown (ms)</code></strong> — <em>Float</em>. Minimum time between accepted triggers. Zero passes all triggers.</li>
 </ul>
-<h2 id="things-to-watch-for">Things to watch for</h2>
+<p><strong>Outputs from the current C++ node definition</strong></p>
 <ul>
-<li>A cooldown that is too long may hide valid rapid events, particularly for automatic weapons.</li>
-<li>When gameplay timing matters, test the actual trigger producer; adding a cooldown does not correct a broken animation/event schedule.</li>
-</ul>
-<doc-panel id="full-input-reference" collapsed>
-    <template #title>Full input reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>In</code></strong> · <em>Trigger</em> — Triggers to rate-limit.</li>
-<li><strong><code translate="no" v-pre>Reset</code></strong> · <em>Trigger</em> — Clear the cooldown; simultaneous In triggers may pass.</li>
-<li><strong><code translate="no" v-pre>Cooldown (ms)</code></strong> · <em>Float</em> — Minimum time between accepted triggers. Zero passes all triggers.</li>
+<li><strong><code translate="no" v-pre>On Passed</code></strong> — <em>Trigger</em>. Triggers allowed through at the original sample frame.</li>
+<li><strong><code translate="no" v-pre>On Rejected</code></strong> — <em>Trigger</em>. Triggers blocked by the cooldown at the original sample frame.</li>
+<li><strong><code translate="no" v-pre>Remaining (ms)</code></strong> — <em>Float</em>. Cooldown remaining at the end of this audio block. Block-rate Float.</li>
 </ul>
 </doc-panel>
-<doc-panel id="full-output-reference" collapsed>
-    <template #title>Full output reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>On Passed</code></strong> · Trigger — Triggers allowed through at the original sample frame.</li>
-<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — Triggers blocked by the cooldown at the original sample frame.</li>
-<li><strong><code translate="no" v-pre>Remaining (ms)</code></strong> · Float — Cooldown remaining at the end of this audio block. Block-rate Float.</li>
-</ul>
-</doc-panel>
-<h2 id="continue-learning">Continue learning</h2>
-<p><a href="../trigger-probability/">Trigger Probability</a> is for random admission rather than minimum spacing. Also see the <a href="../../../qol/">Qol overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
+<p><strong>Related:</strong> <a href="../trigger-probability/">Trigger Probability</a> for occasional events rather than minimum time separation.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -200,27 +171,6 @@
             </div>
             <footer id="retype-content-footer" class="clear-both">
             
-                <nav id="retype-nextprev" class="print:hidden flex mt-14">
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/qol/float-smoother/">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                            <span>
-                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">AP: Float Smoother</span>
-                            </span>
-                        </a>
-                    </div>
-            
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/qol/trigger-probability/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">AP: Trigger Probability</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
-                    </div>
-                </nav>
             </footer>
         </main>
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Random Sequence Wave Player</title>
     <meta name="title" content="AP: Random Sequence Wave Player">
-    <meta name="description" content="MetaSound · AudioPhysx / Playback">
+    <meta name="description" content="AudioPhysx / Playback · Unreal Engine 5.8.4 development source">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-sequence-wave-player/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-sequence-wave-player/">
     <meta property="og:title" content="AP: Random Sequence Wave Player">
-    <meta property="og:description" content="MetaSound · AudioPhysx / Playback">
+    <meta property="og:description" content="AudioPhysx / Playback · Unreal Engine 5.8.4 development source">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-sequence-wave-player/">
     <meta name="twitter:title" content="AP: Random Sequence Wave Player">
-    <meta name="twitter:description" content="MetaSound · AudioPhysx / Playback">
+    <meta name="twitter:description" content="AudioPhysx / Playback · Unreal Engine 5.8.4 development source">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-sequence-wave-player.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,63 +135,36 @@
 
                 <!-- Page content  -->
 <h1 id="ap-random-sequence-wave-player">AP: Random Sequence Wave Player</h1>
-<p><strong>MetaSound · AudioPhysx / Playback</strong></p>
-<p>Keep the stages of an action in order, but randomly vary the recording played at each stage.</p>
+<p><strong>AudioPhysx / Playback</strong> · Unreal Engine 5.8.4 development source</p>
+<p>A predictable beginning, middle and end—but with fresh recording choices inside every stage.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-random-sequence-wave-player.png -->
-<h2 id="what-actually-happens">What actually happens</h2>
-<p>Each expandable <strong>Sequence Steps</strong> input is a <strong>Wave Asset Array</strong>, not a single file. On reaching a step, the player chooses one valid member of that array and plays it to completion. It then moves on to the next step and selects again there.</p>
-<p>The step order stays predictable, but the details change each time: a lock might always click, turn, and release, without sounding like the exact same three recordings on every use. Previous selections are tracked per step to reduce immediate repetition when alternatives are available.</p>
-<h2 id="hear-it-in-a-game">Hear it in a game</h2>
-<p>Create three arrays: <code translate="no" v-pre>Open</code> clicks, <code translate="no" v-pre>Mechanism</code> rotations, and <code translate="no" v-pre>Close</code> clunks. Put at least two variations in each. The three stages should always happen in the same order, but the chosen recordings should change over repeated plays.</p>
-<h2 id="build-a-working-graph">Build a working graph</h2>
-<doc-steps>
-   <doc-step id="add-the-sequence-stages" step-number="1">
-      <template #title>Add the sequence stages</template>
-<p>Add the node to a mono MetaSound Source and expand <code translate="no" v-pre>Sequence Steps</code> to the number of stages.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="fill-each-stage-with-variations" step-number="2">
-      <template #title>Fill each stage with variations</template>
-<p>For each <code translate="no" v-pre>Waves</code> slot, create an array containing recordings for <em>that stage only</em>. Do not mix opening and closing recordings in the same array.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="connect-and-test-the-complete-action" step-number="3">
-      <template #title>Connect and test the complete action</template>
-<p>Connect <code translate="no" v-pre>Play</code>, <code translate="no" v-pre>Out Mono</code>, and optionally <code translate="no" v-pre>On Finished</code>. Enable <code translate="no" v-pre>Loop Sequence</code> only if the entire multi-stage action should repeat.</p>
-   </doc-step>
-</doc-steps>
-<h2 id="the-controls-that-matter">The controls that matter</h2>
-<p><code translate="no" v-pre>Loop Sequence</code> starts again at step one after the last valid step. <code translate="no" v-pre>Stop</code> cancels the current pass. The contents of the arrays determine the durations; there is no manual per-step delay or global RPM.</p>
-<h2 id="outputs-and-completion">Outputs and completion</h2>
+<h2 id="understanding-the-behaviour">Understanding the behaviour</h2>
+<p>Random Sequence combines two ideas: ordered playback and random variation. Each expandable step receives a <strong>Wave Asset Array</strong>, not one Wave Asset. When the player reaches a step, it selects a playable member of that array, plays it to completion, and then advances to the next step. The number of stages and the recordings inside each stage are two separate design decisions.</p>
+<p>This lets you build recognizably structured events without every repetition sounding identical. Because the outputs are now <code translate="no" v-pre>Out Left</code> and <code translate="no" v-pre>Out Right</code>, both the chosen recording and the change from one stage to another can retain genuine stereo content. The selection is made when a stage begins; it is not a continuous shuffle of a playing recording.</p>
+<p>Consider opening a sci-fi container. You always want an authorization beep, a motor action and a seal release, but you recorded several different beeps, motor passes and sealing noises. Three ordered arrays give you the same functional sequence every time while avoiding the exact same combination of sounds on every interaction.</p>
+<p>This works particularly well for repeated gameplay interactions where the timing depends on the actual recordings. You do not need to enter the motor duration anywhere in the graph: the next phase follows playback completion.</p>
+<h2 id="building-and-controlling-the-sound">Building and controlling the sound</h2>
+<p>Add the player to a stereo MetaSound Source. Expand the sequence-step group to three steps and give each <code translate="no" v-pre>Waves</code> input an array appropriate to that stage. Connect the starting trigger to <code translate="no" v-pre>Play</code> and the stereo channels to the Source output. Keep <code translate="no" v-pre>Loop Sequence</code> disabled for a one-shot action, then check that <code translate="no" v-pre>On Finished</code> occurs after the last chosen clip completes.</p>
+<p>For a useful test, create arrays with distinct recordings of different lengths. Trigger the action several times and check that it always visits all available stages in the intended order. Empty or unplayable step entries are handled by the player&#x27;s fallback/skip logic, so missing content can shorten the audible result.</p>
+<p><code translate="no" v-pre>Loop Sequence</code> repeats the whole collection of stages, not just the last recording. <code translate="no" v-pre>Stop</code> immediately stops the action without emitting the natural-completion trigger. The node&#x27;s previous-selection tracking can reduce obvious immediate repetition when there are multiple valid members; it is not intended as a guaranteed shuffle-bag cycle.</p>
+<p><strong>Practical limitations.</strong> Make sure each array contains recordings belonging to the same functional stage. A long release sample accidentally placed in the middle-stage array will delay the final stage by its full length. Likewise, the node cannot automatically synchronize a mechanically meaningful animation; it schedules <strong>audio</strong> by audio completion, so gameplay effects that must coincide with particular subevents may still require event markers or explicit triggers.</p>
+<doc-panel id="exact-input-and-output-pins" collapsed>
+    <template #title>Exact input and output pins</template>
+<p><strong>Inputs from the current C++ node definition</strong></p>
 <ul>
-<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Audio from the current step.</li>
-<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Fires after all playable steps finish.</li>
+<li><strong><code translate="no" v-pre>Play</code></strong> — <em>Trigger</em>. Start the sequence. Play again to restart.</li>
+<li><strong><code translate="no" v-pre>Stop</code></strong> — <em>Trigger</em>. Stop immediately without On Finished.</li>
+<li><strong><code translate="no" v-pre>Loop Sequence</code></strong> — <em>Boolean</em>. Restart after the final recording.</li>
+<li><strong><code translate="no" v-pre>Waves</code></strong> — <em>Wave Asset Array</em>. A Wave Asset Array for this expandable step.</li>
 </ul>
-<h2 id="things-to-watch-for">Things to watch for</h2>
+<p><strong>Outputs from the current C++ node definition</strong></p>
 <ul>
-<li>A step with no valid assets is skipped, which can make the audible sequence shorter than the number of configured steps.</li>
-<li>Random selection is not the same as shuffle-bag exhaustion. Use Shuffle-Bag when you want to hear every variation before a cycle repeats.</li>
-</ul>
-<doc-panel id="full-input-reference" collapsed>
-    <template #title>Full input reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Play</code></strong> · <em>Trigger</em> — Start the sequence. Play again to restart.</li>
-<li><strong><code translate="no" v-pre>Stop</code></strong> · <em>Trigger</em> — Stop immediately without On Finished.</li>
-<li><strong><code translate="no" v-pre>Loop Sequence</code></strong> · <em>Boolean</em> — Restart after the final recording.</li>
-<li><strong><code translate="no" v-pre>Waves</code></strong> · <em>Wave Asset Array</em> — A Wave Asset Array for this expandable step.</li>
+<li><strong><code translate="no" v-pre>Out Left</code></strong> — <em>Audio buffer</em>. Audio from the current step.</li>
+<li><strong><code translate="no" v-pre>Out Right</code></strong> — <em>Audio buffer</em>. Right channel of the stereo playback mix.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> — <em>Trigger</em>. Fires after all playable steps finish.</li>
 </ul>
 </doc-panel>
-<doc-panel id="full-output-reference" collapsed>
-    <template #title>Full output reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Audio from the current step.</li>
-<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Fires after all playable steps finish.</li>
-</ul>
-</doc-panel>
-<h2 id="continue-learning">Continue learning</h2>
-<p><a href="../sequence-wave-player/">Sequence Wave Player</a> is the simpler fixed-recording alternative. Also see the <a href="../../../playback/">Playback overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
+<p><strong>Related:</strong> <a href="../sequence-wave-player/">Sequence Wave Player</a> for a fixed sequence without per-stage randomness.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -199,27 +172,6 @@
             </div>
             <footer id="retype-content-footer" class="clear-both">
             
-                <nav id="retype-nextprev" class="print:hidden flex mt-14">
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/playback/physmat-wave-player/">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                            <span>
-                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">AP: Phys​Mat Wave Player</span>
-                            </span>
-                        </a>
-                    </div>
-            
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/playback/random-wave-player/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">AP: Random Wave Player</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
-                    </div>
-                </nav>
             </footer>
         </main>
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Source Directivity</title>
     <meta name="title" content="AP: Source Directivity">
-    <meta name="description" content="MetaSound · AudioPhysx / Acoustics">
+    <meta name="description" content="AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/source-directivity/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/source-directivity/">
     <meta property="og:title" content="AP: Source Directivity">
-    <meta property="og:description" content="MetaSound · AudioPhysx / Acoustics">
+    <meta property="og:description" content="AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/source-directivity/">
     <meta name="twitter:title" content="AP: Source Directivity">
-    <meta name="twitter:description" content="MetaSound · AudioPhysx / Acoustics">
+    <meta name="twitter:description" content="AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/source-directivity.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,64 +135,39 @@
 
                 <!-- Page content  -->
 <h1 id="ap-source-directivity">AP: Source Directivity</h1>
-<p><strong>MetaSound · AudioPhysx / Acoustics</strong></p>
-<p>Make a sound change as you move around the front, side and rear of its emitter.</p>
+<p><strong>AudioPhysx / Acoustics</strong> · Unreal Engine 5.8.4 development source</p>
+<p>Make the source sound different when the listener stands in front of it, beside it, or behind it.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-source-directivity.png -->
-<h2 id="what-actually-happens">What actually happens</h2>
-<p>A speaker, exhaust or human voice does not radiate identically in every direction. The node receives an angle between source orientation and the listener and uses it to shape both loudness and spectral content.</p>
-<p>It separates broad rear attenuation from lower-frequency directivity. That matters because bass energy tends to remain more omnidirectional than high-frequency detail in many real sources; the node gives you an accessible way to suggest that effect.</p>
-<h2 id="hear-it-in-a-game">Hear it in a game</h2>
-<p>Put a radio or machine in a test level and walk around it. Feed the changing listener-relative angle into the MetaSound. Listen for the brightness and loudness changing between the front and the back without a sudden on/off switch.</p>
-<h2 id="build-a-working-graph">Build a working graph</h2>
-<doc-steps>
-   <doc-step id="connect-audio" step-number="1">
-      <template #title>Connect audio</template>
-<p>Connect the mono recording to <code translate="no" v-pre>Audio</code>.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="provide-source-listener-orientation" step-number="2">
-      <template #title>Provide source-listener orientation</template>
-<p>Supply <code translate="no" v-pre>Angle (deg)</code> from the game or acoustic parameter system, making sure the angle convention matches the source orientation.</p>
-   </doc-step>
-</doc-steps>
-<doc-steps>
-   <doc-step id="tune-front-and-rear-tone" step-number="3">
-      <template #title>Tune front and rear tone</template>
-<p>Adjust <code translate="no" v-pre>Directivity (%)</code> and <code translate="no" v-pre>Rear Attenuation (dB)</code>, then add low-frequency shaping and smoothing.</p>
-   </doc-step>
-</doc-steps>
-<h2 id="the-controls-that-matter">The controls that matter</h2>
-<p><code translate="no" v-pre>Directivity (%)</code> is the overall directional strength. <code translate="no" v-pre>Rear Attenuation (dB)</code> is the rear-facing loss. <code translate="no" v-pre>Low Frequency Directivity (%)</code> lets bass react less aggressively. <code translate="no" v-pre>Crossover (Hz)</code> defines the spectral transition and <code translate="no" v-pre>Smoothing (ms)</code> prevents angular movement from sounding stepped.</p>
-<h2 id="what-the-node-outputs">What the node outputs</h2>
+<h2 id="understanding-the-behaviour">Understanding the behaviour</h2>
+<p>Many sound sources radiate unevenly. A voice tends to carry more clarity in front of the speaker, while the rear of a device may attenuate sharp detail without fully eliminating its low-frequency body. Source Directivity receives stereo audio and a listener-relative <code translate="no" v-pre>Angle (deg)</code>, then shapes the output according to the authored directivity strength, rear attenuation and frequency division.</p>
+<p>The input angle must come from the game or another world-audio parameter system. The DSP node is not a position tracker, and it cannot deduce a source Actor&#x27;s forward vector from the waveform. By retaining separate filter histories for Left and Right, the processing stage preserves stereo differences while applying a common source-orientation response.</p>
+<p>Place a portable radio or loud mechanical generator in a test room. Walk around it in a circle with a steady recording playing. The front should have more presence while the rear sounds comparatively subdued. If you rotate the emitter itself, the apparent bright/dark pattern should rotate with it rather than being permanently aligned to the level.</p>
+<p>This provides a useful layer of realism for sources with a meaningful forward-facing axis. It is less useful for a small spherical point source that should radiate almost equally in all directions.</p>
+<h2 id="building-and-controlling-the-sound">Building and controlling the sound</h2>
+<p>Connect a stereo Source or Wave Player to <code translate="no" v-pre>In Left</code> and <code translate="no" v-pre>In Right</code>, then supply the angle between the emitter&#x27;s facing direction and the listener direction to <code translate="no" v-pre>Angle (deg)</code>. Begin with a low <code translate="no" v-pre>Directivity (%)</code> value and compare 0, 90 and 180 degree situations. Increase <code translate="no" v-pre>Rear Attenuation (dB)</code> gradually rather than trying an extreme value first.</p>
+<p>Tune <code translate="no" v-pre>Low Frequency Directivity (%)</code> separately from the overall directional strength. If bass seems to disappear when the listener walks behind the source, make the low-frequency treatment less aggressive. Use <code translate="no" v-pre>Smoothing (ms)</code> to reduce stepping when the input angle is updated at game-thread intervals.</p>
+<p><code translate="no" v-pre>Angle (deg)</code> controls the facing relationship, <code translate="no" v-pre>Directivity (%)</code> controls how pronounced the effect is, and <code translate="no" v-pre>Rear Attenuation (dB)</code> sets a maximum rear loss. <code translate="no" v-pre>Crossover (Hz)</code> separates the low and high frequency approximations. The node does not implement 3D panning by itself; Unreal&#x27;s spatializer and attenuation system are still responsible for placing the sound in the world.</p>
+<p><strong>Practical limitations.</strong> Carefully check the source-forward convention and whether your game returns a signed or unsigned angle. A value that always describes absolute separation can be correct for a symmetric forward/back model, but a miscomputed vector can reverse the effect. Also avoid stacking this with another strong directivity configuration in the same Source without comparing the combined result.</p>
+<doc-panel id="exact-input-and-output-pins" collapsed>
+    <template #title>Exact input and output pins</template>
+<p><strong>Inputs from the current C++ node definition</strong></p>
 <ul>
-<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mono audio after directional filtering.</li>
+<li><strong><code translate="no" v-pre>In Left</code></strong> — <em>Audio buffer</em>. Left channel of the stereo audio input.</li>
+<li><strong><code translate="no" v-pre>In Right</code></strong> — <em>Audio buffer</em>. Right audio channel to process.</li>
+<li><strong><code translate="no" v-pre>Angle (deg)</code></strong> — <em>Float</em>. Angle from the source forward direction  to the listener. 0 is front, 180 is rear.</li>
+<li><strong><code translate="no" v-pre>Directivity (%)</code></strong> — <em>Float</em>. Directivity strength, 0 to 100 percent.</li>
+<li><strong><code translate="no" v-pre>Rear Attenuation (dB)</code></strong> — <em>Float</em>. Maximum high-frequency attenuation at 180 degrees.</li>
+<li><strong><code translate="no" v-pre>Low Frequency Directivity (%)</code></strong> — <em>Float</em>. Fraction of high-frequency attenuation  applied to the lower frequencies.</li>
+<li><strong><code translate="no" v-pre>Crossover (Hz)</code></strong> — <em>Float</em>. Approximate low/high frequency division.</li>
+<li><strong><code translate="no" v-pre>Smoothing (ms)</code></strong> — <em>Float</em>. Smooth changes in directional attenuation.</li>
 </ul>
-<h2 id="things-to-watch-for">Things to watch for</h2>
+<p><strong>Outputs from the current C++ node definition</strong></p>
 <ul>
-<li>If Unreal spatialization or a separate directivity attenuation model is already active, check the combined result rather than applying both at full strength.</li>
-<li>The node expects orientation data; it cannot derive a source facing direction from a mono audio buffer.</li>
-</ul>
-<doc-panel id="full-input-reference" collapsed>
-    <template #title>Full input reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Audio</code></strong> · <em>Audio (mono)</em> — Mono input audio.</li>
-<li><strong><code translate="no" v-pre>Angle (deg)</code></strong> · <em>Float</em> — Angle from the source forward direction  to the listener. 0 is front, 180 is rear.</li>
-<li><strong><code translate="no" v-pre>Directivity (%)</code></strong> · <em>Float</em> — Directivity strength, 0 to 100 percent.</li>
-<li><strong><code translate="no" v-pre>Rear Attenuation (dB)</code></strong> · <em>Float</em> — Maximum high-frequency attenuation at 180 degrees.</li>
-<li><strong><code translate="no" v-pre>Low Frequency Directivity (%)</code></strong> · <em>Float</em> — Fraction of high-frequency attenuation  applied to the lower frequencies.</li>
-<li><strong><code translate="no" v-pre>Crossover (Hz)</code></strong> · <em>Float</em> — Approximate low/high frequency division.</li>
-<li><strong><code translate="no" v-pre>Smoothing (ms)</code></strong> · <em>Float</em> — Smooth changes in directional attenuation.</li>
+<li><strong><code translate="no" v-pre>Out Left</code></strong> — <em>Audio buffer</em>. Stereo audio after directional filtering.</li>
+<li><strong><code translate="no" v-pre>Out Right</code></strong> — <em>Audio buffer</em>. Right audio channel after processing.</li>
 </ul>
 </doc-panel>
-<doc-panel id="full-output-reference" collapsed>
-    <template #title>Full output reference</template>
-<ul>
-<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mono audio after directional filtering.</li>
-</ul>
-</doc-panel>
-<h2 id="continue-learning">Continue learning</h2>
-<p><a href="../../propagation/doppler-ratio/">Doppler Ratio</a> addresses radial motion rather than facing direction. Also see the <a href="../../../acoustics/">Acoustics overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
+<p><strong>Related:</strong> <a href="../../propagation/doppler-ratio/">Doppler Ratio</a> for motion-induced pitch controls rather than facing direction.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -200,27 +175,6 @@
             </div>
             <footer id="retype-content-footer" class="clear-both">
             
-                <nav id="retype-nextprev" class="print:hidden flex mt-14">
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/acoustics/material-transmission/">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                            <span>
-                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">AP: Material Transmission</span>
-                            </span>
-                        </a>
-                    </div>
-            
-                    <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/playback/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Playback node reference</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
-                    </div>
-                </nav>
             </footer>
         </main>
 

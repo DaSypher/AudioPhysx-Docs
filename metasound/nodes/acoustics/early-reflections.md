@@ -1,66 +1,48 @@
 # AP: Early Reflections
 
-**MetaSound · AudioPhysx / Acoustics**
+**AudioPhysx / Acoustics** · Unreal Engine 5.8.4 development source
 
-Add a handful of short delayed copies that suggest nearby surfaces without simulating a complete room impulse response.
+Add short, synthetic reflection taps that suggest nearby boundaries without running a full room simulation.
 
-## What actually happens
+## Understanding the behaviour
 
-Early reflections are the first distinct sound returns from nearby surfaces: what you hear just after a clap in a small room. This node creates an approximate reflection pattern from a room-size control and the speed of sound, mixing it with the direct input.
+Early reflections are some of the first distinct returns you hear after a short sound strikes surfaces in a space. A hand clap in a small room has a different initial tail from the same clap outdoors. This node creates a compact group of synthetic delayed reflections from a room-size estimate, sound speed and damping settings, mixing them with the dry stereo signal.
 
-It is a deliberate lightweight acoustic model. It helps make a dry recording feel placed in a space, but it does not trace walls or replace a full reverb for long late tails.
+The reflected channels have independent state. This matters because a stereo recording can contain meaningful differences that should survive an effect, even though the same approximate room settings are applied to both sides. The node is **not** tracing the precise room geometry or generating an impulse response from your level. It deliberately offers a fast, editable suggestion of near-field reflections.
 
-## Hear it in a game
+Try a dry finger snap, short metal hit or rifle report. Increase the Wet Level gradually and listen for small delayed arrivals after the direct sound. A larger Room Size should suggest a broader spacing of early returns, while stronger HF Damping makes those returns less bright. The goal is to help locate a sound in an environment without creating a long, washed-out reverb tail.
 
-Play a hand clap or short gunshot through the node. Increase `Wet Level` slowly and vary `Room Size (m)`. Listen for the change from close, tight taps to a broader room impression without turning the signal into a long reverb wash.
+If your game already uses a global late reverb, early reflections can complement it—provided the timing and balance are intentional. Two sets of strong reflections from separate systems can sound unnaturally busy.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Add audio input
-Connect an existing mono sound to `Audio In`.
->>>
+Connect stereo audio to `In Left` and `In Right`, and feed the upstream Wave Player's `On Finished` into `Source Finished`. Then connect the resulting stereo output to the Source and use this node's `On Finished` when it represents the last audible stage in the graph. The completion routing ensures the Source can remain alive long enough to render the reflection taps after the dry recording ends.
 
->>> 2. Choose a room response
-Provide `Room Size (m)`, `Dry Level`, `Wet Level`, and `HF Damping` suitable for your test space.
->>>
+Begin with a short sample and a relatively low Wet Level. Move Room Size and HF Damping one control at a time. If you start with a complex ambient recording, it can be difficult to tell whether the node's taps are contributing anything meaningful.
 
->>> 3. Preserve the audible tail
-Connect upstream completion to `Source Finished` and route this node’s `On Finished` onward so reflection tails are not cut off.
->>>
+`Room Size (m)` is an authored scale, and `Speed of Sound (m/s)` controls the conversion into travel time. `Dry Level` and `Wet Level` are level controls for the direct signal and reflection taps. `HF Damping` reduces the higher-frequency content of the reflections. `On Finished` follows the last reflection tail rather than simply echoing the dry player's completion at the same instant.
 
-## The controls that matter
+**Practical limitations.** Treat the output as a convincing approximation, not a source of exact reflection arrival times for every wall in a real space. Highly reflective settings can add clutter and strong peaks; test with mono fold-down and normal game mix levels. If your purpose is sound transmission *around an obstacle* rather than room echo, Acoustic Paths is the more relevant processing tool.
 
-`Dry Level` controls the unchanged direct recording and `Wet Level` controls the generated reflection contribution. `HF Damping` reduces higher-frequency energy in the reflections. `Speed of Sound (m/s)` influences the modeled travel timing.
+==- Exact input and output pins
 
-## Outputs and completion
+**Inputs from the current C++ node definition**
 
-- **`Out Mono`** · Audio (mono) — Original sound plus early reflections.
-- **`On Finished`** · Trigger — Fires after the last reflection tail.
+- **`In Left`** — *Audio buffer*. Stereo signal to reflect.
+- **`In Right`** — *Audio buffer*. Right audio channel to process.
+- **`Source Finished`** — *Trigger*. Connect the Wave Player's On Finished output.
+- **`Room Size (m)`** — *Float*. Controls four synthetic extra reflection  path lengths. Does not trace geometry.
+- **`Speed of Sound (m/s)`** — *Float*. Propagation speed for reflection delays.
+- **`Dry Level`** — *Float*. Level of the original sound.
+- **`Wet Level`** — *Float*. Level of the reflection taps.
+- **`HF Damping`** — *Float*. Higher values remove more high frequencies  from reflections.
 
-!!!tip About finishing sounds
-A trigger that indicates a source has finished is not always the end of **everything audible**. If you add propagation, early reflections or another tail-generating processor downstream, route completion through that final processor before ending your MetaSound Source.
-!!!
+**Outputs from the current C++ node definition**
 
-## Things to watch for
+- **`Out Left`** — *Audio buffer*. Original sound plus early reflections.
+- **`Out Right`** — *Audio buffer*. Right audio channel after processing.
+- **`On Finished`** — *Trigger*. Fires after the last reflection tail.
 
-- Two separate early-reflection or reverb systems can create an over-wet result; compare with Unreal’s room-effect setup.
-- Room Size is a useful design control, not a claim that the node has reconstructed the real map geometry.
-
-==- Full input reference
-- **`Audio In`** · *Audio (mono)* — Mono signal to reflect.
-- **`Source Finished`** · *Trigger* — Connect the Wave Player's On Finished output.
-- **`Room Size (m)`** · *Float* — Controls four synthetic extra reflection  path lengths. Does not trace geometry.
-- **`Speed of Sound (m/s)`** · *Float* — Propagation speed for reflection delays.
-- **`Dry Level`** · *Float* — Level of the original sound.
-- **`Wet Level`** · *Float* — Level of the reflection taps.
-- **`HF Damping`** · *Float* — Higher values remove more high frequencies  from reflections.
 ===
 
-==- Full output reference
-- **`Out Mono`** · Audio (mono) — Original sound plus early reflections.
-- **`On Finished`** · Trigger — Fires after the last reflection tail.
-===
-
-## Continue learning
-
-[Acoustic Paths](acoustic-paths.md) is intended for world-derived path loss and propagation delay, rather than local room taps. Also see the [Acoustics overview](../../acoustics.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Acoustic Paths](acoustic-paths.md) for selected travel routes rather than artificial room taps.

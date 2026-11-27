@@ -1,74 +1,33 @@
-# Make game audio respond to the world
+# AudioPhysx — audio that reacts to the world
 
-**AudioPhysx** brings purposeful playback tools, physically inspired audio processing and world-aware Blueprint helpers into Unreal Engine. Build sound that reacts to distance, materials, motion and player actions—without turning every MetaSound into a maze of wiring.
+**A MetaSound and Blueprint toolkit for responsive, carefully designed Unreal Engine audio.** AudioPhysx brings together flexible sample players, physically inspired processing, propagation tools and control utilities so you can make sounds respond to distance, material, movement and gameplay events without duplicating the same large node graph everywhere.
 
-!!!info Documentation status
-These pages describe the **UE 5.8.4 development baseline** of AudioPhysx. The final Fab package, supported platforms and Shipping-build test results are still being prepared. See [Compatibility](support/compatibility.md) for verified versus pending items.
+The plugin is designed around an important distinction: the game provides **what happened and where**, while the audio graph decides **which recording is appropriate and how it should sound**. Sometimes the best solution is a believable physical approximation; sometimes it is a deliberate, well-authored variation of a recording. The two approaches can work together.
+
+!!!info Development documentation
+The pages describe the newly uploaded **UE 5.8.4 stereo source**, including the RPM-enabled Start Loop End Player and the new Stereo to Mono converter. These are source-verified interfaces, not proof that every node has been compiled and tested in a packaged Shipping build. See [compatibility](support/compatibility.md) before making release claims.
 !!!
 
-## Choose your starting point
+## Choose where to begin
 
-||| I'm new to AudioPhysx
+[!card layout="compact" title="Get started" text="Install AudioPhysx, understand the signals and build your first MetaSound."](getting-started/README.md)
 
-**Get your first sound playing.** Install the plugin, create a MetaSound Source and build a three-part sound sequence. No C++ or acoustic setup is needed.
+[!card layout="compact" title="Find a MetaSound node" text="Explore the playback, acoustics, propagation and QoL tools, with full source-derived pin references."](metasound/README.md)
 
-[!card layout="compact" title="Start from the beginning" text="Installation, basic terminology and your first playable graph."](getting-started/README.md)
+[!card layout="compact" title="Connect a game system" text="Learn the Blueprint side: projectile paths, acoustic queries, emitters and materials."](blueprint/README.md)
 
-||| I'm designing game audio
+[!card layout="compact" title="Build a practical example" text="Follow real sound-design recipes for gunfire, layered sound, flybys and obstruction."](examples/README.md)
 
-**Find the right tool for the job.** Choose between variation, sequences, distance-aware playback, acoustic effects and trigger utilities.
+## What makes the workflow different?
 
-[!card layout="compact" title="Explore MetaSound nodes" text="Descriptions, setup guides and complete pin references."](metasound/README.md)
+**Playback tools** handle the details that become repetitive in ordinary graphs: non-identical one-shots, shuffle-bag history, fixed and random sequences, synchronized layers, physical-material routing and held actions with proper endings. For example, the Start Loop End Player can schedule overlapping gunshot variations from a real RPM value while preserving a release tail when the player stops firing.
 
-||| I'm integrating a game system
+**Acoustic tools** take meaningful data from the world and transform the sound rather than guessing geometry from audio samples. Material Transmission filters sound that passes through barriers; Acoustic Paths renders one world-selected route; Early Reflections adds a lightweight sense of local space; Source Directivity can make the front of a speaker sound different from its rear. Each tool has its own purpose and limitations, explained in its reference page.
 
-**Connect the world to sound.** Use Blueprint functions for projectile flybys, physical-material interaction and acoustic paths.
+**Stereo is now a first-class signal path.** The playback and stereo DSP nodes provide `Out Left` and `Out Right`, preserving genuine channel differences. If the final sound should become a mono point-source emitter, `AP: Stereo to Mono` performs an explicit fold-down. The format decision belongs to the sound designer rather than being forced by every intermediate node. [Read the stereo guide](getting-started/stereo-routing.md).
 
-[!card layout="compact" title="Blueprint integration" text="World data, parameters and example workflows."](blueprint/README.md)
+## How to get a convincing result
 
-|||
+Start with good source recordings and one clear goal. Choose a player that solves the required event timing, then add only processing that supplies a distinct audible benefit. A distance-based selection, a Doppler effect and a wall-transmission filter are three different tools; none automatically fixes an inaccurate listener position or a poorly edited Wave Asset. AudioPhysx aims to make these decisions approachable without pretending that every source must use every processor.
 
-## What can you build?
-
-### Variation that does not sound repetitive
-
-Instead of always replaying one clip, use randomized or shuffle-bag selection, optionally with controlled overlap. Or design a multi-stage action where each stage picks one of several recordings. AudioPhysx handles the playback logic; you focus on selecting good assets.
-
-[Explore playback tools](metasound/playback.md)
-
-### Automatic fire and held interactions
-
-A held weapon, motor or energy effect has a beginning, a sustained middle and an ending. **Start Loop End Player** handles those phases, and its optional RPM mode lets middle shots overlap at a fixed firing rate independent of recording length.
-
-[Build an RPM-driven weapon sound](examples/automatic-weapon.md)
-
-### Sound travelling through a space
-
-A source behind a wall should not sound identical to an unobstructed source with reduced volume. AudioPhysx includes building blocks for transmission loss, directional character, atmospheric absorption, delay and approximated room reflections. It combines modelled behaviour with authored controls, rather than claiming to solve every acoustic detail of a level.
-
-[Understand acoustic processing](metasound/acoustics.md)
-
-### Projectile near misses
-
-Supply the path of a projectile. The flyby integration can evaluate whether it passed near the listener and schedule a whizz and, when appropriate, a crack layer. It does not require Chaos rigid-body simulation.
-
-[Follow the flyby tutorial](examples/projectile-flyby.md)
-
-## How the pieces fit together
-
-```mermaid
-flowchart LR
-    A[Gameplay or Blueprint] --> B[Parameters and events]
-    B --> C[AudioPhysx MetaSound nodes]
-    C --> D[Unreal audio output]
-```
-
-**Gameplay** decides *what happened* and supplies any world context. **AudioPhysx** decides *which recording to play or how to process it*. **Unreal's audio engine** still handles the broader source playback and spatialization environment.
-
-!!!tip A good first project
-Try the [three-sound sequence tutorial](getting-started/first-metasound.md) before wiring acoustic materials or projectile paths. You'll learn what AudioPhysx inputs and completion triggers mean in the smallest possible graph.
-!!!
-
----
-
-[Browse all nodes](metasound/README.md) · [Try example recipes](examples/README.md) · [Troubleshooting](support/troubleshooting.md)
+For a first exercise, follow [your first MetaSound](getting-started/first-metasound.md). If you already know MetaSounds, go straight to the [node library](metasound/README.md). You can also browse [examples](examples/README.md) or check [troubleshooting](support/troubleshooting.md) when an installed graph does not behave as expected.

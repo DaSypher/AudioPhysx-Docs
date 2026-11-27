@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Installing AudioPhysx</title>
-    <meta name="title" content="Installing AudioPhysx">
-    <meta name="description" content="The exact steps depend on whether you're using a Fab-distributed plugin or a source checkout. Choose the relevant path below. In either case, the first goal is to see the AudioPhysx node categories in the MetaSound editor.">
+    <title>Installing the plugin</title>
+    <meta name="title" content="Installing the plugin">
+    <meta name="description" content="AudioPhysx can be installed either as a finished, compatible Fab code plugin or from a complete source distribution. This guide describes both approaches, but the current documentation package does not contain or redistribute the paid plugin source.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/installation/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/installation/">
-    <meta property="og:title" content="Installing AudioPhysx">
-    <meta property="og:description" content="The exact steps depend on whether you're using a Fab-distributed plugin or a source checkout. Choose the relevant path below. In either case, the first goal is to see the AudioPhysx node categories in the MetaSound editor.">
+    <meta property="og:title" content="Installing the plugin">
+    <meta property="og:description" content="AudioPhysx can be installed either as a finished, compatible Fab code plugin or from a complete source distribution. This guide describes both approaches, but the current documentation package does not contain or redistribute the paid plugin source.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/installation/">
-    <meta name="twitter:title" content="Installing AudioPhysx">
-    <meta name="twitter:description" content="The exact steps depend on whether you're using a Fab-distributed plugin or a source checkout. Choose the relevant path below. In either case, the first goal is to see the AudioPhysx node categories in the MetaSound editor.">
+    <meta name="twitter:title" content="Installing the plugin">
+    <meta name="twitter:description" content="AudioPhysx can be installed either as a finished, compatible Fab code plugin or from a complete source distribution. This guide describes both approaches, but the current documentation package does not contain or redistribute the paid plugin source.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/installation.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,43 +134,17 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="installing-audiophysx">Installing AudioPhysx</h1>
-<p>The exact steps depend on whether you&#x27;re using a <strong>Fab-distributed plugin</strong> or a <strong>source checkout</strong>. Choose the relevant path below. In either case, the first goal is to see the AudioPhysx node categories in the MetaSound editor.</p>
-<doc-tabs>
-<doc-tab v-cloak id="fab--launcher-installation">
-<template #title>Fab / launcher installation</template>
-<p>When the commercial package is available for your verified engine version, install it through the Fab/Epic workflow, open your project and enable <strong>AudioPhysx</strong> under <strong>Edit → Plugins</strong> if it is not enabled already. Restart Unreal when prompted.</p>
-<p>The final Fab delivery workflow has <strong>not been validated</strong> for this development documentation. Use the supported-engine list published with the actual product package.</p>
-</doc-tab>
-<doc-tab v-cloak id="source-checkout">
-<template #title>Source checkout</template>
-<doc-steps>
-   <doc-step id="close-unreal-and-disable-live-coding" step-number="1">
-      <template #title>Close Unreal and disable Live Coding</template>
-<p>A running editor can hold previously compiled module DLLs and generated build state.</p>
-   </doc-step>
-   <doc-step id="install-the-complete-plugin" step-number="2">
-      <template #title>Install the complete plugin</template>
-<p>Copy the full <code translate="no" v-pre>AudioPhysx</code> plugin directory—<strong>including its <code translate="no" v-pre>.uplugin</code> descriptor</strong>—into <code translate="no" v-pre>YourProject/Plugins/AudioPhysx/</code>.</p>
-   </doc-step>
-   <doc-step id="build-the-editor-target" step-number="3">
-      <template #title>Build the Editor target</template>
-<p>Regenerate project files if required, then build the project Editor target with the Unreal-compatible toolchain.</p>
-   </doc-step>
-   <doc-step id="reopen-the-project" step-number="4">
-      <template #title>Reopen the project</template>
-<p>Enable the plugin if prompted, restart if necessary, and open a MetaSound Source to search for <code translate="no" v-pre>AP:</code>.</p>
-   </doc-step>
-</doc-steps>
-</doc-tab>
-</doc-tabs>
+<h1 id="installing-the-plugin">Installing the plugin</h1>
+<p>AudioPhysx can be installed either as a finished, compatible Fab code plugin or from a complete source distribution. This guide describes both approaches, but the current documentation package does not contain or redistribute the paid plugin source. In particular, a ZIP containing only <code translate="no" v-pre>Source/</code> is not by itself a distributable Unreal plugin: the descriptor and any required build configuration still need to be present.</p>
+<h2 id="install-and-verify">Install and verify</h2>
+<p><strong>If you have the Fab package</strong>, follow the supported Unreal/Fab installation flow for a verified engine version. Open your project, go to <strong>Edit → Plugins</strong> and confirm that AudioPhysx is enabled. Restart the Editor when prompted. The exact Launcher/Fab steps should be checked with the final released package, as the commercial installation has not been independently tested during this documentation task.</p>
+<p><strong>If you have the source distribution</strong>, close Unreal Editor and disable Live Coding. Place the complete plugin directory—including <code translate="no" v-pre>AudioPhysx.uplugin</code> and the <code translate="no" v-pre>Source</code> folder—under <code translate="no" v-pre>YourProject/Plugins/AudioPhysx/</code>. Regenerate project files if necessary, compile the Editor target with the appropriate toolchain, and reopen the project. Do not mix old and new implementations of a node: duplicate registration functions and stale generated headers can cause misleading linker or startup errors.</p>
 <!-- IMAGE SLOT: docs/static/images/setup/plugin-enabled.png -->
-<h2 id="confirm-it-works">Confirm it works</h2>
-<p>Create a mono MetaSound Source and search the add-node menu for <strong>AP: Sequence Wave Player</strong> under <code translate="no" v-pre>AudioPhysx → Playback</code>. If it appears, continue with <a href="../first-metasound/">Your first MetaSound</a>. A successful plugin listing in the Plugins browser alone does not prove every audio node can play correctly.</p>
-<h2 id="if-the-nodes-are-missing">If the nodes are missing</h2>
-<p>A missing node may mean the plugin was not enabled, the compiled module failed to load, or an old editor session is still open. For a source build, pay attention to the <strong>first</strong> compiler error rather than secondary failures. If reflected headers or generated build outputs are stale, close Unreal and clean the plugin&#x27;s <code translate="no" v-pre>Binaries</code> and <code translate="no" v-pre>Intermediate</code> directories before regenerating and rebuilding.</p>
-<p>Do not merge two source versions that contain the same node under different filenames; duplicate MetaSound registration can produce linker or runtime registration problems.</p>
-<p><a href="../../support/troubleshooting/">Read build troubleshooting</a></p>
+<p><strong>Check the result in a MetaSound Source.</strong> Create a stereo MetaSound Source and search for <code translate="no" v-pre>AP: Random Wave Player</code> or <code translate="no" v-pre>AudioPhysx</code> in the node palette. Confirm the Wave Player has <code translate="no" v-pre>Out Left</code> and <code translate="no" v-pre>Out Right</code> pins, and confirm that <code translate="no" v-pre>AP: Stereo to Mono</code> is available in QoL. This is a useful sanity check that the current stereo build, rather than an older mono DLL, has loaded.</p>
+<p>If the plugin appears in the Plugins window but nodes are unavailable, inspect the Editor startup log and the first meaningful build or MetaSound registration message. A successful checkbox state does not prove the module has loaded its native nodes correctly. If you need to clear old build outputs, close the Editor before removing generated <code translate="no" v-pre>Binaries</code> and <code translate="no" v-pre>Intermediate</code> for a clean source rebuild.</p>
+<h2 id="avoid-damaging-existing-metasounds">Avoid damaging existing MetaSounds</h2>
+<p>A major part of this update changes audio pins from mono to stereo. Back up existing MetaSound assets before refreshing or replacing their AudioPhysx nodes. When you first open an older asset, check every input and output connection rather than assuming Unreal automatically transforms a single mono connection into two independent stereo connections.</p>
+<p>New graphs are simplest to author as stereo from the beginning. For world emitters that should remain mono, connect the player or final DSP stage to <a href="../stereo-routing/">AP: Stereo to Mono</a> immediately before the Source&#x27;s mono output. Test the finished graph in the Editor, then in a packaged Development build before relying on it in shipping content.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -184,7 +158,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Requirements &amp; terminology</span>
+                                <span class="block mt-1">Requirements &amp; terms</span>
                             </span>
                         </a>
                     </div>
@@ -193,7 +167,7 @@
                         <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../getting-started/first-metasound/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Your first Meta​Sound</span>
+                                <span class="block mt-1">First Meta​Sound</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>

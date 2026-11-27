@@ -1,15 +1,7 @@
-# Sound Cue support — planned
+# Sound Cue support is planned, not shipped
 
-AudioPhysx currently focuses its native node library on **MetaSounds**. Sound Cue QoL additions are part of the proposed commercial roadmap, but **no custom `USoundNode` implementation is included in the reviewed development baseline**.
+The source used for this edition implements MetaSound nodes and Blueprint integration helpers. It does not include a finished custom `USoundNode` library for Unreal Sound Cues, so the documentation must not market Sound Cue extensions as currently available.
 
-## Why consider Sound Cue extensions?
+Sound Cue work may still be valuable, particularly where a focused Smart Random or Random Sequence utility would remove repetitive authoring. It should be approached as a quality-of-life project rather than an attempt to rebuild every MetaSound DSP effect in the older Sound Cue format. New Sound Cue node pages should only be published after their source exists and the behaviour passes Editor and packaged-game testing.
 
-Sound Cues already contain useful random, modulation, switching and concatenation facilities. A new AudioPhysx node should only be added when it removes substantial graph complexity or improves everyday authoring. Building a second copy of every MetaSound DSP node would add maintenance cost without offering Sound Cue users much benefit.
-
-The first possible additions are a **Smart Random** control with cohesive selection and repeat behaviour, and a **Random Sequence** that keeps stages in order but chooses variations at each stage. These are concepts, not shipped features.
-
-!!!info Feature availability
-Do not assume the Sound Cue examples described here are available in the current plugin. The navigation and documentation will be updated when an implementation has passed runtime and packaged-build testing.
-!!!
-
-In the meantime, use the [MetaSound Playback tools](../metasound/playback.md) for the equivalent audio workflows, or Unreal's built-in Sound Cue nodes where appropriate.
+Until then, continue using the verified native Sound Cue facilities that Unreal provides and AudioPhysx's existing [MetaSound playback nodes](../metasound/playback.md) where those are appropriate to the game.

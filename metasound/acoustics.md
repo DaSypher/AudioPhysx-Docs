@@ -1,25 +1,11 @@
-# Acoustics — change the character of sound
+# Acoustics: why does a place change the sound?
 
-These nodes are for effects that can make the **same recording** behave differently in different spaces, behind different materials or at different listener positions. They are useful where another random recording is not enough.
+A recording played through a loudspeaker should not sound identical in every physical situation. It may be blocked by a door, travel around an opening, lose high-frequency detail when the source faces away, or produce an initial set of room reflections. AudioPhysx separates these phenomena into focused processing nodes so you can build only the behaviour needed by a particular sound.
 
-## Sound passing through a barrier
+[Material Transmission](nodes/acoustics/material-transmission.md) uses an externally supplied obstruction state and material losses to colour a sound through a barrier. [Acoustic Paths](nodes/acoustics/acoustic-paths.md) takes a **world-selected** route and applies its delay plus low/mid/high frequency losses. The two nodes can sound similar in some situations, but one is an authored material-filter approach and the other is a route-driven processor. Applying both at full strength without a reason can make a source much darker than intended.
 
-[Material Transmission](nodes/acoustics/material-transmission.md) uses an obstruction state and frequency-dependent losses to produce a muffled, transmitted sound. Use it for a simple, authored blocked/unblocked effect. [Acoustic Paths](nodes/acoustics/acoustic-paths.md) instead consumes the selected route from the world solver, including route delay and three-band loss.
+[Early Reflections](nodes/acoustics/early-reflections.md) is meant to suggest the first short returns from nearby surfaces. It is not the same as pathing through a doorway and is not a complete acoustic room solve. [Source Directivity](nodes/acoustics/source-directivity.md) changes the signal with the listener-relative angle, allowing a front-facing emitter to sound more present than when heard from behind. [Impact Dynamics](nodes/acoustics/impact-dynamics.md) shapes transients according to an externally supplied impact strength; it is a DSP stage, not a collision detector.
 
-## Sound arriving in a space
+Every one of these processors now accepts Left and Right audio inputs and emits Left and Right audio outputs. The world/material controls remain shared where that makes physical sense, while channel-specific filter or delay history is kept separate. That lets an effect treat stereo content without reducing it prematurely to one channel. If you later want a mono positional emitter, convert at the end of the relevant chain.
 
-[Early Reflections](nodes/acoustics/early-reflections.md) suggests the first short echoes from nearby surfaces. It uses a lightweight model controlled by room size and damping, not real-time geometric reconstruction.
-
-## Where the source faces
-
-[Source Directivity](nodes/acoustics/source-directivity.md) shapes loudness and brightness as the listener moves from a source's front to its rear. It needs source-listener orientation information from the game.
-
-## How strongly something is hit
-
-[Impact Dynamics](nodes/acoustics/impact-dynamics.md) turns an impact event plus a strength value into filtered and transient-shaped playback. It is an audio processor, not an impact detector.
-
-!!!warning Avoid accidental double-processing
-Unreal attenuation and other environmental effects can also apply occlusion, air absorption and directivity. Compare the complete signal path before stacking several strong filters.
-!!!
-
-[Browse the Acoustics reference](nodes/acoustics/README.md) · [Try the obstruction recipe](../examples/acoustic-obstruction.md)
+The realism comes from the input data as much as the signal processing. Before adjusting the filter or reflection wetness, verify that the game is sending the correct obstruction, angle, material or impact strength. [Blueprint acoustic integration](../blueprint/README.md) describes where these values come from.

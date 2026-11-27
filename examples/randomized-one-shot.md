@@ -1,26 +1,21 @@
-# A one-shot that doesn't sound identical every time
+# Randomized one-shots
 
-**Goal:** Make footsteps, impacts or small interactions feel less repetitive by varying the recording instead of triggering one identical file on every event.
+**Primary AudioPhysx tools:** AP: Random Wave Player
 
-## Prepare the sound
+A good example is a listening experiment, not just a screenshot of connected pins. This exercise explains what content to prepare, which signals the graph needs, and what result you should listen for before increasing complexity.
 
-Import four or five takes of the **same type of event**. For example, several small metal knocks. Trim obvious leading silence, match the perceived loudness where practical and keep them in a single Wave Asset Array.
+## Prepare the recording and context
 
-## Wire the MetaSound
+Use several recordings of one physical event, such as a handful of metal objects being moved or several punches on the same surface. Import the files as Wave Assets and trim them so their transients begin consistently. Aim for roughly similar perceived level; the player can choose a recording but cannot magically make radically different source edits sound like one cohesive event.
 
->>> 1. Add the player
-Create a mono MetaSound Source and add [AP: Random Wave Player](../metasound/nodes/playback/random-wave-player.md).
+## Assemble the MetaSound and test it
 
->>> 2. Give it alternatives
-Connect your Wave Asset Array to `Waves`, then connect `Play` from the desired trigger event.
+Add a Random Wave Player to a stereo Source and connect the recording array to `Waves`. Connect the event trigger to `Play`, then route `Out Left` and `Out Right` to the stereo output. Enable `No Immediate Repeat` when you have multiple valid takes and want to reduce consecutive identical choices. Choose a `Max Voices` setting appropriate to the likely overlap and listen to a rapid burst of triggers, not just one click.
 
->>> 3. Listen to repeated events
-Connect `Out Mono` to the Source output, enable `No Immediate Repeat` if desired and audition repeated starts.
+## Judge the result in a game
 
->>> 4. Stress-test the event
-Trigger faster than one recording can finish. Check `Max Voices` and decide how much overlapping sound the game needs.
->>>
+You should hear the same kind of event with subtle natural differences. If one take leaps out of the mix or contains a long tail that conflicts with the next event, correct the source asset or reduce overlap deliberately. For a strictly positioned sound, try converting the completed stereo result to mono before spatialization and compare the two presentations.
 
-## What to listen for
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
 
-A convincing variation player should sound **natural**, not simply more random. If one take is much louder than the others, listeners may notice the level jump more than they appreciate the variety. If you need each variation to be heard within a cycle, try the [Shuffle-Bag Wave Player](../metasound/nodes/playback/shuffle-bag-wave-player.md).
+[Browse the full node reference](../metasound/README.md) for exact control types and limitations.

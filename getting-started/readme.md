@@ -1,23 +1,15 @@
-# Start creating with AudioPhysx
+# Getting started with AudioPhysx
 
-You do not need to understand sound propagation or C++ before getting value from AudioPhysx. Begin with a simple Wave Player and add complexity only when the sound actually calls for it.
+The fastest way to understand AudioPhysx is to make one sound work end to end before building a complicated acoustic system. You can begin with an ordinary imported recording, one trigger and a stereo MetaSound Source. Once the basic signal flows correctly, it becomes much easier to understand why a material-aware player, propagation processor or world-query component is useful.
 
-## Your first 15 minutes
+This documentation uses the **current stereo C++ source** as its contract. An older MetaSound graph may still have `Out Mono` pins from a previous version of the plugin; those assets should be backed up and migrated deliberately rather than resaved as soon as Unreal refreshes their nodes.
 
->>> 1. Understand the basics
-Read [Requirements and terminology](requirements.md). Learn the difference between a Wave Asset, trigger and audio output, and why Unreal distances are often in centimetres.
+## A practical learning order
 
->>> 2. Install and confirm the plugin
-Follow [Installation](installation.md), then check that the `AudioPhysx` categories appear in the MetaSound node search.
+**Begin with [installation](installation.md).** Confirm that the AudioPhysx plugin loads and the node categories appear in the MetaSound editor. Then read [requirements and terminology](requirements.md) for the difference between Wave Assets, audio buffers, control values and triggers. These distinctions prevent many silent-graph problems later.
 
->>> 3. Build one complete sound
-Use [Your first MetaSound](first-metasound.md) to connect three recordings to **AP: Sequence Wave Player**.
+**Build [your first MetaSound](first-metasound.md).** The tutorial uses Sequence Wave Player because it demonstrates how playback timing and completion work without needing gameplay path queries or project-wide acoustic settings. After that, the [stereo routing guide](stereo-routing.md) explains how to keep Left and Right channels or fold them down to mono for appropriate 3D sources.
 
->>> 4. Understand completion
-Read [Signals and completion](signals-and-completion.md). It explains why an audio source can finish before a delayed reflection or propagation tail has ended.
+**Add game integration when the sound needs it.** The Blueprint section explains how to obtain the physical material from a hit, submit a projectile path, and query a selected acoustic route. These calculations are useful, but they should not be made prerequisites for a simple random or layered sound effect.
 
->>> 5. Troubleshoot with a checklist
-Keep the [Setup checklist](checklist.md) open when testing your own MetaSounds.
->>>
-
-Once that works, try a [randomized one-shot](../examples/randomized-one-shot.md) or [RPM-controlled weapon](../examples/automatic-weapon.md). Both reuse the same fundamentals.
+If something does not play, use the [setup checklist](checklist.md) and [troubleshooting](../support/troubleshooting.md). It is usually faster to isolate one missing Wave Asset or trigger than to adjust ten unrelated DSP settings.

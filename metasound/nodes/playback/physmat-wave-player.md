@@ -1,66 +1,50 @@
 # AP: PhysMat Wave Player
 
-**MetaSound · AudioPhysx / Playback**
+**AudioPhysx / Playback** · Unreal Engine 5.8.4 development source
 
-Route playback using an exact Unreal Physical Material asset path, with a fallback when nothing matches.
+Choose impact or interaction recordings using the exact Physical Material asset involved in the event.
 
-## What actually happens
+## Understanding the behaviour
 
-Surface type alone may be too coarse. Multiple Physical Materials can share a broad category but require different sounds. This player accepts `Hit PhysMat Path` and compares it against configured material routes, selecting a variation from the matching pool.
+Physical Materials can distinguish surfaces more precisely than a broad surface category. PhysMat Wave Player accepts a string path identifying the hit Physical Material and compares it to the configured route entries. When it finds a match, it selects from the associated Wave Asset Array; otherwise, it can use `Default Waves`. This is a sound-selection mechanism, not a world trace. Your gameplay or Blueprint system is responsible for obtaining the correct hit result and material identity.
 
-The player also has default recordings. That matters commercially: a missing or newly introduced material should be handled gracefully rather than requiring a new branch in every MetaSound.
+The node now renders its selected recording in stereo. That means a stereo-captured surface impact can preserve channel differences through the player, even if you later choose to downmix it for a mono, spatialized world emitter.
 
-## Hear it in a game
+Suppose two metal objects share the game's general metal category: a thin sheet and a heavy steel plate. You may want a lightweight, bright rattle for the sheet and a dense ringing impact for the plate. Assign those objects different Physical Materials, configure the paths, and let the player select a different pool for each.
 
-Imagine two surfaces both categorized as metal: a thin steel sheet and a heavy steel plate. Give them distinct Physical Materials and different impact recordings. Supply the actual asset path so the player can distinguish them.
+A reasonable fallback is important in a large project. New levels and assets may introduce materials that were never explicitly mapped; supplying `Default Waves` prevents those legitimate interactions from becoming silent.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Define Physical Material routes
-Define Physical Material routes using the plugin’s supported configuration and confirm the path strings are accurate.
->>>
+Set up the material route configuration with the exact Physical Material asset paths and corresponding arrays. In your gameplay logic, obtain the Physical Material from the trace or hit information and supply its asset path as `Hit PhysMat Path`. Then trigger `Play` and connect `Out Left`/`Out Right` to the Source. Use one known matching material and one deliberately unmapped material in your first test.
 
->>> 2. Provide reliable fallback sounds
-Assign recordings for each route and populate `Default Waves` as a fallback.
->>>
+The route entries have their own `Volume` values. The default pool has `Default Volume`, so you can balance the fallback separately. `Max Voices` and `No Immediate Repeat` make frequent footstep or impact requests more manageable.
 
->>> 3. Send the asset path and Play
-Send the exact `Hit PhysMat Path` and trigger `Play`; test a valid configured path and an intentionally unmatched path.
->>>
+An asset path is not merely the friendly display name shown in the Content Browser. Moving or renaming Physical Material assets can invalidate old paths. `On Rejected` indicates a playback request that could not start, while `On Finished` indicates the final naturally completing voice. Test what your trace returns rather than assuming a visual material assignment automatically identifies the relevant Physical Material.
 
-## The controls that matter
+**Practical limitations.** If your game only needs the coarse `EPhysicalSurface` value, Surface Wave Player may be simpler. If it needs more detailed wall transmission properties, use the separate Acoustic Physical Material model; exact-path playback routing is not equivalent to computing acoustic transmission.
 
-`Hit PhysMat Path` is an **asset path**, not the display name of a material in Content Browser. `Waves` and `Volume` correspond to authored route entries. `Default Volume` applies to fallback recordings. `Max Voices` and `No Immediate Repeat` control overlapping playback and repetition.
+==- Exact input and output pins
 
-## Outputs and completion
+**Inputs from the current C++ node definition**
 
-- **`Out Mono`** · Audio (mono) — Mixed mono audio output.
-- **`On Finished`** · Trigger — Fires when the final voice ends naturally.
-- **`On Rejected`** · Trigger — Fires when a requested voice cannot start.
+- **`Play`** — *Trigger*. Choose and play one recording.
+- **`Stop`** — *Trigger*. Stop all active voices.
+- **`Hit PhysMat Path`** — *String*. Exact Physical Material asset path.
+- **`Default Waves`** — *Wave Asset Array*. Wave Asset array used when no route matches.
+- **`Default Volume`** — *Float*. Linear gain of fallback recordings.
+- **`No Immediate Repeat`** — *Boolean*. Avoid repeating the previous recording  when alternatives are available.
+- **`Max Voices`** — *Integer*. Maximum overlapping recordings.
+- **`Waves`** — *Wave Asset Array*. Wave Asset array for this material.
+- **`Volume`** — *Float*. Linear volume for this material.
 
-## Things to watch for
+**Outputs from the current C++ node definition**
 
-- Renaming or moving Physical Material assets can change their paths. Test after asset migrations.
-- Do not confuse the Acoustic Physical Material asset used for transmission calculations with the Physical Material path used for playback routing.
+- **`Out Left`** — *Audio buffer*. Stereo mix output.
+- **`Out Right`** — *Audio buffer*. Right channel of the stereo playback mix.
+- **`On Finished`** — *Trigger*. Fires when the final voice ends naturally.
+- **`On Rejected`** — *Trigger*. Fires when a requested voice cannot start.
 
-==- Full input reference
-- **`Play`** · *Trigger* — Choose and play one recording.
-- **`Stop`** · *Trigger* — Stop all active voices.
-- **`Hit PhysMat Path`** · *String* — Exact Physical Material asset path.
-- **`Default Waves`** · *Wave Asset Array* — Wave Asset array used when no route matches.
-- **`Default Volume`** · *Float* — Linear gain of fallback recordings.
-- **`No Immediate Repeat`** · *Boolean* — Avoid repeating the previous recording  when alternatives are available.
-- **`Max Voices`** · *Integer* — Maximum overlapping recordings.
-- **`Waves`** · *Wave Asset Array* — Wave Asset array for this material.
-- **`Volume`** · *Float* — Linear volume for this material.
 ===
 
-==- Full output reference
-- **`Out Mono`** · Audio (mono) — Mixed mono audio output.
-- **`On Finished`** · Trigger — Fires when the final voice ends naturally.
-- **`On Rejected`** · Trigger — Fires when a requested voice cannot start.
-===
-
-## Continue learning
-
-[Material footsteps recipe](../../../examples/material-footsteps.md) compares this with surface-type routing. Also see the [Playback overview](../../playback.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Surface Wave Player](surface-wave-player.md) for category-based routing.

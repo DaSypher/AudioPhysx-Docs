@@ -1,38 +1,21 @@
-# Make a sound believable behind a wall
+# Sound behind a wall
 
-**Goal:** Have a mono sound change its tone and apparent arrival when the path between source and listener becomes obstructed.
+**Primary AudioPhysx tools:** AP: Material Transmission or Acoustic Paths
 
-A hard on/off mute is rarely convincing. Even when an object blocks line of sight, some sound can transmit through the barrier or reach the listener by another route. AudioPhysx gives you two levels of control depending on whether the game already has acoustic path data.
+A good example is a listening experiment, not just a screenshot of connected pins. This exercise explains what content to prepare, which signals the graph needs, and what result you should listen for before increasing complexity.
 
-## Choose an approach
+## Prepare the recording and context
 
-+++ Simple authored transmission
+Use a short, bright source such as speech, a hand clap or a mechanical impact. A strong high-frequency component makes it easier to hear what the obstruction processor changes. Put the source behind a simple wall and establish a clear listening reference before adding effects. When the recording is already very dull, it may be difficult to hear the difference between correct transmission and an ineffective setup.
 
-Use [AP: Material Transmission](../metasound/nodes/acoustics/material-transmission.md) when you can provide an `Obstructed` Boolean plus designer-authored frequency losses. This is the easiest demonstration: toggle one state and hear a darker, quieter sound.
+## Assemble the MetaSound and test it
 
-+++ World-selected route
+For the simplest comparison, use Material Transmission with a controlled `Obstructed` Boolean and set the high-band loss larger than the low-band loss. Connect `In Left` and `In Right`, then the processed stereo outputs. For world-selected path processing, first print the route from the acoustic Blueprint query and feed its four-value Float Array into Acoustic Paths. Pass the upstream completion trigger into `Source Finished` so delayed audio is not cut off.
 
-Use [AP: Acoustic Paths](../metasound/nodes/acoustics/acoustic-paths.md) when the Blueprint/world solver supplies a four-value selected-route array. It can represent delay and three-band loss for the preferred direct or around-obstacle route.
+## Judge the result in a game
 
-+++
+The blocked version should generally become quieter and less bright while still sounding like the same source. If it is overly muffled, check whether Unreal's native occlusion is also active. If the effect appears too late, check the path delay and the amount of delay buffering reserved by the node. A world-derived path model is only as reliable as its collision data and query settings.
 
-## Build a controlled listening test
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
 
->>> 1. Choose a clear source
-A spoken phrase or a short repeated impact with some high-frequency content makes obstruction changes easy to hear.
-
->>> 2. Establish the unobstructed reference
-Play it in an open path with no extra obstruction treatment. Adjust your game attenuation separately if necessary.
-
->>> 3. Apply one obstruction method
-Wire the appropriate node and its controls. Compare clear and blocked values, keeping the recording itself unchanged.
-
->>> 4. Check completion
-If the selected processor can delay the audio, use its completion output so the tail isn't cut off when the original Wave Player finishes.
->>>
-
-## Listen critically
-
-If the obstructed version sounds like someone turned the volume down but left all the sharp high frequencies untouched, it probably needs more spectral coloration. If it becomes completely dull, examine whether you're applying both Unreal occlusion and full-strength AudioPhysx transmission loss.
-
-[Acoustic path queries](../blueprint/acoustic-paths.md)
+[Browse the full node reference](../metasound/README.md) for exact control types and limitations.

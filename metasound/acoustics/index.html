@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096906935">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101525427">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Acoustics — change the character of sound</title>
-    <meta name="title" content="Acoustics — change the character of sound">
-    <meta name="description" content="These nodes are for effects that can make the same recording behave differently in different spaces, behind different materials or at different listener positions.">
+    <title>Acoustics: why does a place change the sound?</title>
+    <meta name="title" content="Acoustics: why does a place change the sound?">
+    <meta name="description" content="A recording played through a loudspeaker should not sound identical in every physical situation. It may be blocked by a door, travel around an opening, lose high-frequency detail when the source faces away, or produce an initial set of room reflections.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics/">
-    <meta property="og:title" content="Acoustics — change the character of sound">
-    <meta property="og:description" content="These nodes are for effects that can make the same recording behave differently in different spaces, behind different materials or at different listener positions.">
+    <meta property="og:title" content="Acoustics: why does a place change the sound?">
+    <meta property="og:description" content="A recording played through a loudspeaker should not sound identical in every physical situation. It may be blocked by a door, travel around an opening, lose high-frequency detail when the source faces away, or produce an initial set of room reflections.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics/">
-    <meta name="twitter:title" content="Acoustics — change the character of sound">
-    <meta name="twitter:description" content="These nodes are for effects that can make the same recording behave differently in different spaces, behind different materials or at different listener positions.">
+    <meta name="twitter:title" content="Acoustics: why does a place change the sound?">
+    <meta name="twitter:description" content="A recording played through a loudspeaker should not sound identical in every physical situation. It may be blocked by a door, travel around an opening, lose high-frequency detail when the source faces away, or produce an initial set of room reflections.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849096906935" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849101525427" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096906935" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101525427" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,34 +134,12 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="acoustics--change-the-character-of-sound">Acoustics — change the character of sound</h1>
-<p>These nodes are for effects that can make the <strong>same recording</strong> behave differently in different spaces, behind different materials or at different listener positions. They are useful where another random recording is not enough.</p>
-<h2 id="sound-passing-through-a-barrier">Sound passing through a barrier</h2>
-<p><a href="../nodes/acoustics/material-transmission/">Material Transmission</a> uses an obstruction state and frequency-dependent losses to produce a muffled, transmitted sound. Use it for a simple, authored blocked/unblocked effect. <a href="../nodes/acoustics/acoustic-paths/">Acoustic Paths</a> instead consumes the selected route from the world solver, including route delay and three-band loss.</p>
-<h2 id="sound-arriving-in-a-space">Sound arriving in a space</h2>
-<p><a href="../nodes/acoustics/early-reflections/">Early Reflections</a> suggests the first short echoes from nearby surfaces. It uses a lightweight model controlled by room size and damping, not real-time geometric reconstruction.</p>
-<h2 id="where-the-source-faces">Where the source faces</h2>
-<p><a href="../nodes/acoustics/source-directivity/">Source Directivity</a> shapes loudness and brightness as the listener moves from a source&#x27;s front to its rear. It needs source-listener orientation information from the game.</p>
-<h2 id="how-strongly-something-is-hit">How strongly something is hit</h2>
-<p><a href="../nodes/acoustics/impact-dynamics/">Impact Dynamics</a> turns an impact event plus a strength value into filtered and transient-shaped playback. It is an audio processor, not an impact detector.</p>
-<div class="flex mb-6">
-    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
-    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
-        <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-warning" width="22" height="22" viewBox="0 0 24 24" role="presentation">
-                <g fill="currentColor"><g>
-                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
-                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
-                </g></g>
-            </svg>
-        </div>
-        <div class="pr-5 ml-3 w-full">
-            <h5>Avoid accidental double-processing</h5>
-<p>Unreal attenuation and other environmental effects can also apply occlusion, air absorption and directivity. Compare the complete signal path before stacking several strong filters.</p>
-        </div>
-    </div>
-</div>
-<p><a href="../nodes/acoustics/">Browse the Acoustics reference</a> · <a href="../../examples/acoustic-obstruction/">Try the obstruction recipe</a></p>
+<h1 id="acoustics-why-does-a-place-change-the-sound">Acoustics: why does a place change the sound?</h1>
+<p>A recording played through a loudspeaker should not sound identical in every physical situation. It may be blocked by a door, travel around an opening, lose high-frequency detail when the source faces away, or produce an initial set of room reflections. AudioPhysx separates these phenomena into focused processing nodes so you can build only the behaviour needed by a particular sound.</p>
+<p><a href="../nodes/acoustics/material-transmission/">Material Transmission</a> uses an externally supplied obstruction state and material losses to colour a sound through a barrier. <a href="../nodes/acoustics/acoustic-paths/">Acoustic Paths</a> takes a <strong>world-selected</strong> route and applies its delay plus low/mid/high frequency losses. The two nodes can sound similar in some situations, but one is an authored material-filter approach and the other is a route-driven processor. Applying both at full strength without a reason can make a source much darker than intended.</p>
+<p><a href="../nodes/acoustics/early-reflections/">Early Reflections</a> is meant to suggest the first short returns from nearby surfaces. It is not the same as pathing through a doorway and is not a complete acoustic room solve. <a href="../nodes/acoustics/source-directivity/">Source Directivity</a> changes the signal with the listener-relative angle, allowing a front-facing emitter to sound more present than when heard from behind. <a href="../nodes/acoustics/impact-dynamics/">Impact Dynamics</a> shapes transients according to an externally supplied impact strength; it is a DSP stage, not a collision detector.</p>
+<p>Every one of these processors now accepts Left and Right audio inputs and emits Left and Right audio outputs. The world/material controls remain shared where that makes physical sense, while channel-specific filter or delay history is kept separate. That lets an effect treat stereo content without reducing it prematurely to one channel. If you later want a mono positional emitter, convert at the end of the relevant chain.</p>
+<p>The realism comes from the input data as much as the signal processing. Before adjusting the filter or reflection wetness, verify that the game is sending the correct obstruction, angle, material or impact strength. <a href="../../blueprint/">Blueprint acoustic integration</a> describes where these values come from.</p>
 
                 
                 <!-- Required only on API pages -->

@@ -1,31 +1,11 @@
-# Quick setup checklist
+# A practical setup checklist
 
-Use this before assuming a node is broken. It catches the most common installation, routing and completion mistakes.
+Most silent or incorrect AudioPhysx graphs can be diagnosed by working from the simplest part of the chain outward. First make sure a known-good Wave Asset plays through a basic stereo Source with the correct `Out Left` and `Out Right` wiring. Only then connect random selection, material routing, time delay or a world acoustic parameter. This separates an asset/import problem from a source-graph problem and from an acoustic-world problem.
 
-## Can the sound start?
+**When audio is silent**, check that the correct start trigger actually reaches the node, that the relevant recording arrays contain playable assets, and that you have connected the outputs to an active MetaSound Source. For players that can reject a request, inspect `On Rejected` or an index output before assuming Unreal audio itself is failing.
 
-- [ ] The AudioPhysx plugin is enabled and the node appears in MetaSound search.
-- [ ] Every required Wave Asset is imported and playable on its own.
-- [ ] The correct trigger reaches the node (`Play` versus `Start Firing`, for example).
-- [ ] `Out Mono` reaches the active MetaSound output, and the Source is actually being auditioned or played.
+**When timing is wrong**, distinguish a completion-driven sequence from RPM scheduling. Sequence Wave Player advances only when the current recording finishes. Start Loop End with positive RPM starts middle shots by a fixed interval and needs `Stop Firing` to enter the release phase. An extra Distance Delay or Acoustic Paths stage can delay the audible output even after the original playback has begun.
 
-## Can the sound finish correctly?
+**When world-driven sound is wrong**, print the source-listener distance, physical material, obstruction result or selected acoustic route. Check units carefully: centimetres, metres and metres per second are used for different controls. A perfectly functioning filter cannot make an incorrect material path or invalid world trace meaningful.
 
-- [ ] A repeating player has a valid stop/release trigger when appropriate.
-- [ ] The `On Finished` connection doesn't cut off downstream effects such as early reflections.
-- [ ] Voice limits and retriggering make sense under rapid gameplay events.
-
-## Does the world data make sense?
-
-- [ ] Distances are converted correctly between centimetres and metres.
-- [ ] Material paths and surface types match the configured routes.
-- [ ] Dynamic input group sizes still match the intended graph.
-- [ ] World-based Blueprint helpers have a valid world/listener/audio environment.
-
-## Before releasing a game
-
-- [ ] Test standalone playback, then package a Development build.
-- [ ] Verify cooked audio assets and Shipping behaviour.
-- [ ] Repeat the test with missing/empty arrays and rapid triggers.
-
-[Troubleshooting guide](../support/troubleshooting.md)
+**Before shipping**, test the exact plugin package in a clean project and compare Editor preview with packaged Development and Shipping audio. Include stereo and mono recordings, empty arrays, rapid retriggering and more than one simultaneously active sound. A clean Editor build is important, but it does not prove all runtime platform behaviour.
