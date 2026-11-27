@@ -1,0 +1,8 @@
+input: docs
+output: .retype
+url: DaSypher.github.io/AudioPhysx-Docs/
+branding:
+  title: AudioPhysx
+  label: Docs
+footer:
+  copyright: "&copy; 2026 DaSypher. All rights reserved."
