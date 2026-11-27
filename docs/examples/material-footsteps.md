@@ -24,6 +24,6 @@ For broad categories, configure Surface Audio routes and use Surface Wave Player
 
 Surface type and Physical Material path represent different levels of detail; pick the one your game actually uses. A stereo recording may be suitable as part of a designed close-up effect, but a character's footstep as a small point source is also a good candidate for a final Stereo to Mono downmix. Listen in the game's actual spatialization environment rather than assuming one format will always be better.
 
-A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/qol-nodes/stereo-to-mono.md) version as well as the full stereo path.
 
 [Browse the full node reference](../metasound/README.md) for exact control types and limitations.

@@ -11,7 +11,7 @@ AudioPhysx separates gameplay-side world queries from audio rendering. One conse
 
 ## The compact selected acoustic route
 
-The current source includes a selected-route Float Array named `AP.AcousticRoute.Selected`. It is intended for the [Acoustic Paths](nodes/acoustics/acoustic-paths.md) processor, and the values must follow the same order as the source-side contract:
+The current source includes a selected-route Float Array named `AP.AcousticRoute.Selected`. It is intended for the [Acoustic Paths](acoustics-nodes/acoustic-paths.md) processor, and the values must follow the same order as the source-side contract:
 
 ```text
 [delay ms, low loss dB, mid loss dB, high loss dB]

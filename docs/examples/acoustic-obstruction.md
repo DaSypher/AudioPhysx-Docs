@@ -24,6 +24,6 @@ For the simplest comparison, use Material Transmission with a controlled `Obstru
 
 The blocked version should generally become quieter and less bright while still sounding like the same source. If it is overly muffled, check whether Unreal's native occlusion is also active. If the effect appears too late, check the path delay and the amount of delay buffering reserved by the node. A world-derived path model is only as reliable as its collision data and query settings.
 
-A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/qol-nodes/stereo-to-mono.md) version as well as the full stereo path.
 
 [Browse the full node reference](../metasound/README.md) for exact control types and limitations.

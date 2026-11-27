@@ -39,4 +39,4 @@ If your MetaSound was authored with an older AudioPhysx version, back it up befo
 
 Do not treat trigger and Float nodes as part of this migration. `AP: Doppler Ratio`, `AP: Float Smoother`, `AP: Trigger Probability`, `AP: Trigger Cooldown` and `AP: Distance Switch` do not render audio samples, so their existing event/number pin contracts remain appropriate. **AP: Stereo to Mono** is the deliberate mono-output exception. Recompile the graph and check real stereo separation using a test recording with noticeably different Left and Right content.
 
-Read the [Stereo to Mono node reference](../metasound/nodes/qol/stereo-to-mono.md) for the exact pin names and limitations.
+Read the [Stereo to Mono node reference](../metasound/qol-nodes/stereo-to-mono.md) for the exact pin names and limitations.

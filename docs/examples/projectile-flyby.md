@@ -24,6 +24,6 @@ Set up a stereo Source with Flyby Wave Player and the five exact `AP.Flyby.*` Fl
 
 Compare close, distant, slower and faster passes. The crack layer should follow the computed shock request rather than playing on every whizz. If a moving projectile produces duplicate flybys, review the `ProjectileInstance` you supply for duplicate suppression. Remember that the helper uses a simplified constant-speed acoustic model, not an exact physical shock-front simulation.
 
-A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/qol-nodes/stereo-to-mono.md) version as well as the full stereo path.
 
 [Browse the full node reference](../metasound/README.md) for exact control types and limitations.

@@ -13,7 +13,7 @@ The public Blueprint API exposes `AP: Calculate Flyby`, which returns an `FAPFly
 
 ## Connect the stereo MetaSound
 
-Create a stereo MetaSound Source and add [AP: Flyby Wave Player](../metasound/nodes/playback/flyby-wave-player.md). Supply one or more `Whizz Waves` and optionally `Crack Waves`. Connect `Out Left` and `Out Right` to the Source's corresponding stereo outputs. Expose the following **Float** inputs with precisely these names, as used by the current flyby world subsystem:
+Create a stereo MetaSound Source and add [AP: Flyby Wave Player](../metasound/playback-nodes/flyby-wave-player.md). Supply one or more `Whizz Waves` and optionally `Crack Waves`. Connect `Out Left` and `Out Right` to the Source's corresponding stereo outputs. Expose the following **Float** inputs with precisely these names, as used by the current flyby world subsystem:
 
 - `AP.Flyby.DistanceM` → `Distance (m)`
 - `AP.Flyby.SpeedMps` → `Speed (m/s)`

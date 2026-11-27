@@ -24,6 +24,6 @@ Create a stereo Source and add Start Loop End Player. Fill `Start Waves`, `Loop 
 
 A convincing automatic weapon should communicate a stable firing rhythm while allowing individual shot bodies and tails to overlap. The source has a bounded twelve-voice middle pool, so extremely high RPM plus long clips can saturate it and cause new scheduled shots to be skipped. If the event never finishes, check that `Stop Firing` actually arrives; a missing release event is not an audio-decoder problem.
 
-A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/qol-nodes/stereo-to-mono.md) version as well as the full stereo path.
 
 [Browse the full node reference](../metasound/README.md) for exact control types and limitations.

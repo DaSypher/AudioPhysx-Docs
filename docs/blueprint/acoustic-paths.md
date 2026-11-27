@@ -13,7 +13,7 @@ The Blueprint library exposes **`AP: Query Acoustic Path`**, taking a world cont
 
 ## Understand validity and selection
 
-A particularly important distinction is **`bAroundPathValid` versus `bAroundPathSelected`**. Valid means the solver found a candidate. Selected means it considers that candidate preferable according to the available losses and configuration. The corresponding [Acoustic Paths MetaSound node](../metasound/nodes/acoustics/acoustic-paths.md) renders one selected route rather than automatically duplicating the signal into direct and around channels.
+A particularly important distinction is **`bAroundPathValid` versus `bAroundPathSelected`**. Valid means the solver found a candidate. Selected means it considers that candidate preferable according to the available losses and configuration. The corresponding [Acoustic Paths MetaSound node](../metasound/acoustics-nodes/acoustic-paths.md) renders one selected route rather than automatically duplicating the signal into direct and around channels.
 
 For testing, build a small scene with a sound source, listener and a single blocking surface. Query with a clear path first, then move the listener behind the barrier. Print the obstruction flag, barrier count, direct delay and band losses. Once those results are understandable, add an opening or Acoustic Portal and inspect whether a valid and selected alternate route appears. These experiments reveal much more than immediately trying to tune filter parameters by ear.
 

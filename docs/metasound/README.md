@@ -13,16 +13,19 @@ Understanding the difference between these groups is important. A playback node 
 
 ## Navigate by what you are building
 
-[!card layout="compact" title="Playback" text="Random, shuffle-bag, layered, sequenced, distance- and material-based players, held RPM effects, and flybys."](playback.md)
+[!card layout="compact" title="Playback" text="Random, shuffle-bag, layered, sequenced, distance- and material-based players, held RPM effects, and flybys."](playback-nodes/README.md)
 
-[!card layout="compact" title="Acoustics" text="Selected acoustic routes, transmission through materials, directionality, impacts and early reflections."](acoustics.md)
+[!card layout="compact" title="Acoustics" text="Selected acoustic routes, transmission through materials, directionality, impacts and early reflections."](acoustics-nodes/README.md)
 
-[!card layout="compact" title="Propagation" text="Travel-time delay, dynamic motion, Doppler ratio and atmospheric absorption."](propagation.md)
+[!card layout="compact" title="Propagation" text="Travel-time delay, dynamic motion, Doppler ratio and atmospheric absorption."](propagation-nodes/README.md)
 
-[!card layout="compact" title="QoL" text="Smooth values, limit and randomize triggers, switch distance branches, and fold stereo to mono."](qol.md)
+[!card layout="compact" title="QoL" text="Smooth values, limit and randomize triggers, switch distance branches, and fold stereo to mono."](qol-nodes/README.md)
 
 ## How to read the reference pages
 
 Each node begins with a practical explanation of the problem it solves. You will then find a more detailed discussion of what the node does to the sound or to the event flow, a real game-audio example, setup guidance and the risks worth testing. The complete pin descriptions are still present in an expandable **Exact input and output pins** section. They are extracted from the current C++ declarations, so you do not have to trust an older screenshot for the correct pin names.
 
 The stereo convention is consistent across the audio processors: the input is typically `In Left` and `In Right`, and the output is `Out Left` and `Out Right`. Wave Players generally supply `Out Left` and `Out Right`. Control-only nodes are not artificially given audio channels. `AP: Stereo to Mono` deliberately outputs `Out Mono` because that is the point of the converter. If you are migrating an older MetaSound, see [stereo routing and migration](../getting-started/stereo-routing.md) before saving the revised graph.
+
+
+**Prefer a worked example?** Open [Node tutorials and screenshots](node-tutorials.md), then expand a category in the sidebar. Each node has its own page and a five-step basic graph.
