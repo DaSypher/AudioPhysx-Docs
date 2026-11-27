@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101567109">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849103298161">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,11 +38,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849101567109" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849103298161" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101567109" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849103298161" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101567109" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849103298161" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -138,7 +138,7 @@
 <p>A useful projectile near-miss sound should represent a projectile that actually passed near the listener, not every time any weapon fired. AudioPhysx&#x27;s flyby helper accepts the start and end of a projectile path segment, its speed, and an audible radius. It can calculate the point of closest approach and an approximate arrival time. The audio renderer then uses that result to play a whizz and, where appropriate, a shock-like crack.</p>
 <p>The public Blueprint API exposes <code translate="no" v-pre>AP: Calculate Flyby</code>, which returns an <code translate="no" v-pre>FAPFlybyResult</code> with values such as <code translate="no" v-pre>bAudible</code>, <code translate="no" v-pre>bShockWave</code>, <code translate="no" v-pre>ClosestPoint</code>, <code translate="no" v-pre>DistanceMeters</code>, <code translate="no" v-pre>SpeedMetersPerSecond</code>, <code translate="no" v-pre>Intensity</code> and <code translate="no" v-pre>ArrivalSeconds</code>. This is valuable for debugging because it lets you inspect the geometry and acoustic decision <strong>without immediately scheduling audio</strong>. <code translate="no" v-pre>AP: Play Projectile Flyby</code> combines the calculation with world-level scheduling; a <code translate="no" v-pre>true</code> return means the request was accepted for scheduling, not that the listener has already heard the resulting sound.</p>
 <h2 id="connect-the-stereo-metasound">Connect the stereo MetaSound</h2>
-<p>Create a stereo MetaSound Source and add <a href="../../metasound/nodes/playback/flyby-wave-player/">AP: Flyby Wave Player</a>. Supply one or more <code translate="no" v-pre>Whizz Waves</code> and optionally <code translate="no" v-pre>Crack Waves</code>. Connect <code translate="no" v-pre>Out Left</code> and <code translate="no" v-pre>Out Right</code> to the Source&#x27;s corresponding stereo outputs. Expose the following <strong>Float</strong> inputs with precisely these names, as used by the current flyby world subsystem:</p>
+<p>Create a stereo MetaSound Source and add <a href="../../metasound/playback-nodes/flyby-wave-player/">AP: Flyby Wave Player</a>. Supply one or more <code translate="no" v-pre>Whizz Waves</code> and optionally <code translate="no" v-pre>Crack Waves</code>. Connect <code translate="no" v-pre>Out Left</code> and <code translate="no" v-pre>Out Right</code> to the Source&#x27;s corresponding stereo outputs. Expose the following <strong>Float</strong> inputs with precisely these names, as used by the current flyby world subsystem:</p>
 <ul>
 <li><code translate="no" v-pre>AP.Flyby.DistanceM</code> → <code translate="no" v-pre>Distance (m)</code></li>
 <li><code translate="no" v-pre>AP.Flyby.SpeedMps</code> → <code translate="no" v-pre>Speed (m/s)</code></li>

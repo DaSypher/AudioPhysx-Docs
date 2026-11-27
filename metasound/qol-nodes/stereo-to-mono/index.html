@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="turbo-root" content="/AudioPhysx-Docs">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849103298161">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 4.6.0">
+
+    <!-- Primary Meta Tags -->
+    <title>AP: Stereo to Mono</title>
+    <meta name="title" content="AP: Stereo to Mono">
+    <meta name="description" content="AudioPhysx / QoL · Unreal Engine 5.8.4 development source">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/stereo-to-mono/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://DaSypher.github.io/AudioPhysx-Docs/sitemap.xml">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/stereo-to-mono/">
+    <meta property="og:title" content="AP: Stereo to Mono">
+    <meta property="og:description" content="AudioPhysx / QoL · Unreal Engine 5.8.4 development source">
+    <meta property="og:site_name" content="AudioPhysx">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/stereo-to-mono/">
+    <meta name="twitter:title" content="AP: Stereo to Mono">
+    <meta name="twitter:description" content="AudioPhysx / QoL · Unreal Engine 5.8.4 development source">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/stereo-to-mono.md">
+
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
+
+    <link href="../../../resources/css/retype.css?v=4.6.0.849103298161" rel="stylesheet">
+
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.849103298161" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.849103298161" data-turbo-eval="false" defer></script>
+</head>
+<body>
+    <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
+    <div class="absolute bottom-0 left-0" style="top: 5rem; right: 50%"></div>
+
+    <header id="retype-header" class="sticky top-0 z-30 flex w-full h-16 bg-header-bg border-b border-header-border md:h-20">
+        <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+            <!-- Mobile menu button skeleton -->
+            <button v-cloak class="skeleton retype-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-hidden rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+            <div v-cloak id="retype-sidebar-left-toggle-button"></div>
+    
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-full py-2 md:w-75">
+                <div class="flex items-center px-2 md:px-6">
+                    <a id="retype-branding-logo" href="https://DaSypher.github.io/AudioPhysx-Docs/" class="flex items-center leading-snug text-2xl">
+                        <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">AudioPhysx</span>
+                    </a><span id="retype-branding-label" class="inline-flex mt-1 px-2 py-1 ml-4 text-xs font-medium leading-none items-center rounded-md bg-branding-label-bg text-branding-label-text ring-1 ring-branding-label-border ring-inset md:inline-block">Docs</span>
+                </div>
+    
+                <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
+            </div>
+    
+            <div class="flex justify-between md:grow">
+                <!-- Top Nav -->
+                <nav id="retype-header-nav" class="hidden md:flex">
+                    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                        
+                    </ul>
+                </nav>
+    
+                <div v-cloak class="flex justify-end grow">
+                    <div id="retype-mobile-search-button"></div>
+                    <doc-search-desktop></doc-search-desktop>
+    
+                    <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                    <doc-history></doc-history>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div id="retype-container" class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+        <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-sidebar-left-bg border-sidebar-left-border sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton">
+        
+            <div class="flex items-center h-16 px-6">
+                <input id="retype-filter-input-mock" class="w-full h-10 pl-8 px-3 py-2 transition-colors duration-200 ease-linear bg-filter-bg border border-filter-border rounded-lg shadow-none md:text-sm hover:border-filter-border-hover focus:outline-hidden focus:border-filter-border-focus placeholder-filter-placeholder" type="text">
+            </div>
+        
+            <div class="pl-6 mt-1 mb-4">
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            </div>
+        
+            <div class="shrink-0 mt-auto bg-transparent dark:border-base-border">
+                <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                    <span class="text-xs whitespace-nowrap">Powered by</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Sidebar component -->
+        <doc-sidebar v-cloak>
+            <template #sidebar-footer>
+                <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-base-border">
+        
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </template>
+        </doc-sidebar>
+
+        <div class="grow min-w-0 bg-body-bg">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+<div class="flex">
+    <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
+        <main class="relative pb-12 lg:pt-2">
+            <div class="relative retype-markdown" id="retype-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
+                <!-- Page content  -->
+<h1 id="ap-stereo-to-mono">AP: Stereo to Mono</h1>
+<p><strong>AudioPhysx / QoL</strong> · Unreal Engine 5.8.4 development source</p>
+<p>A deliberate exit from a stereo AudioPhysx graph when the next stage needs one mono audio stream.</p>
+<!-- IMAGE SLOT: docs/static/images/nodes/node-stereo-to-mono.png -->
+<h2 id="understanding-the-behaviour">Understanding the behaviour</h2>
+<p>AudioPhysx&#x27;s updated playback and DSP nodes preserve two channels by default. That is useful for stereo recordings and creative effects, but some Source layouts and downstream processors expect a single audio buffer. <strong>AP: Stereo to Mono</strong> exists so you can decide exactly where that conversion happens instead of losing channel information early in the graph.</p>
+<p>The converter reads <code translate="no" v-pre>In Left</code> and <code translate="no" v-pre>In Right</code> and writes one <code translate="no" v-pre>Out Mono</code> buffer. Its math is intentionally simple: for each frame, the output is <strong>0.5 × (Left + Right)</strong>. If both input channels contain the same signal, the resulting mono level remains the same instead of doubling. There is no intentional delay or extra sample-buffer history introduced by the node.</p>
+<p>Suppose your layered weapon effect combines stereo mechanical recordings, a left-biased recoil texture and a broad tail. You can build and evaluate that mix in stereo, then convert it to mono before a precisely positioned 3D source if that fits the game&#x27;s spatialization design. This avoids forcing every upstream player and effect to operate in mono just because the final emitter has a point-source role.</p>
+<p>It is also useful for compatibility with a mono-only signal processor. However, converting to mono always sacrifices some stereo spatial information, so it should be a conscious decision.</p>
+<h2 id="build-the-sound--step-by-step">Build the sound — step by step</h2>
+<p>The setup below is deliberately small so you can hear what this node contributes before adding more systems. Create the sound in a fresh test MetaSound first, then copy the working graph into your game.</p>
+<doc-steps>
+   <doc-step id="create-a-mono-destination-source" step-number="1">
+      <template #title>Create a mono destination Source</template>
+<p>Create a <strong>Mono</strong> MetaSound Source for a spatialized point-source test. Inside it, use an AudioPhysx stereo player or another stereo processor upstream.</p>
+   </doc-step>
+   <doc-step id="add-the-dedicated-converter" step-number="2">
+      <template #title>Add the dedicated converter</template>
+<p>Insert <strong>AP: Stereo to Mono</strong> from AudioPhysx → QoL. This is the deliberate mono-output exception to the general stereo-output convention.</p>
+   </doc-step>
+   <doc-step id="connect-both-stereo-inputs" step-number="3">
+      <template #title>Connect both stereo inputs</template>
+<p>Connect the upstream <code translate="no" v-pre>Out Left</code> to the converter <code translate="no" v-pre>In Left</code>, and <code translate="no" v-pre>Out Right</code> to <code translate="no" v-pre>In Right</code>. Do not leave one side disconnected if you intend to fold down the complete mix.</p>
+   </doc-step>
+   <doc-step id="connect-the-mono-output" step-number="4">
+      <template #title>Connect the mono output</template>
+<p>Route the converter <code translate="no" v-pre>Out Mono</code> to the Mono Source audio output. The converter folds the channels with <code translate="no" v-pre>(Left + Right) / 2</code> rather than discarding a side.</p>
+   </doc-step>
+   <doc-step id="compare-the-playback-carefully" step-number="5">
+      <template #title>Compare the playback carefully</template>
+<p>Audition a true stereo recording through both a stereo Source and the downmixed Mono Source. Listen for narrowed spatial width and possible cancellation of opposing-polarity content, then judge which format best suits your 3D sound.</p>
+   </doc-step>
+</doc-steps>
+<!-- IMAGE SLOT: docs/static/images/graphs/setup-stereo-to-mono.png -->
+<p><strong>After the basic setup:</strong> Add <code translate="no" v-pre>AP: Stereo to Mono</code> from <strong>AudioPhysx → QoL</strong> after the last stereo stage that needs both channels. Connect the source or processor&#x27;s <code translate="no" v-pre>Out Left</code> to <code translate="no" v-pre>In Left</code> and <code translate="no" v-pre>Out Right</code> to <code translate="no" v-pre>In Right</code>. Then connect the converter&#x27;s <code translate="no" v-pre>Out Mono</code> to a mono MetaSound output or mono-only downstream node.</p>
+<p>Start by testing a dual-mono signal, then a recording with different left/right content. Compare the folded-down result with the original stereo mix. If a strong instrument or effect disappears in mono, inspect phase relationships in the recording or layered chain before treating the converter as the cause.</p>
+<p>There are only three audio pins: two inputs and one output. The node does not generate a trigger, does not select recordings and does not normalize loudness dynamically. Averaging is a conventional, conservative fold-down but not a universal perceptual mix algorithm. Material that is opposite in polarity between channels can cancel substantially or completely when summed.</p>
+<p><strong>Practical limitations.</strong> This converter is the <strong>intentional exception</strong> to AudioPhysx&#x27;s stereo-output convention. Control-only QoL nodes still produce controls and triggers rather than stereo audio, while other audio-bearing playback and DSP nodes expose independent channel outputs. If you only have one channel from upstream, do not assume that connecting it twice recreates the missing stereo information.</p>
+<doc-panel id="exact-input-and-output-pins" collapsed>
+    <template #title>Exact input and output pins</template>
+<p><strong>Inputs from the current C++ node definition</strong></p>
+<ul>
+<li><strong><code translate="no" v-pre>In Left</code></strong> — <em>Audio buffer</em>. Left channel of the stereo source.</li>
+<li><strong><code translate="no" v-pre>In Right</code></strong> — <em>Audio buffer</em>. Right channel of the stereo source.</li>
+</ul>
+<p><strong>Outputs from the current C++ node definition</strong></p>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> — <em>Audio buffer</em>. Mono result: 0.5 * (Left + Right). Opposite-polarity content may cancel.</li>
+</ul>
+</doc-panel>
+<p><strong>Related:</strong> <a href="../../../getting-started/stereo-routing/">Stereo signal flow guide</a> for when to retain or fold down stereo in Unreal.</p>
+
+                
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+            </div>
+            <footer id="retype-content-footer" class="clear-both">
+            
+                <nav id="retype-nextprev" class="print:hidden flex mt-14">
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../metasound/qol-nodes/distance-switch/">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                            <span>
+                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
+                                <span class="block mt-1">AP: Distance Switch (Dynamic)</span>
+                            </span>
+                        </a>
+                    </div>
+            
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../metasound/qol/">
+                            <span>
+                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
+                                <span class="block mt-1">Qo​L</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        </a>
+                    </div>
+                </nav>
+            </footer>
+        </main>
+
+        <div id="retype-page-footer" class="print:border-none border-t border-base-border pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                <div id="retype-footer-links" class="print:hidden">
+                    <ul class="flex flex-wrap items-center text-sm">
+                    </ul>
+                </div>
+                <div id="retype-copyright" class="print:justify-center py-2 text-footer-text font-footer-link text-sm leading-relaxed"><p>© 2026 DaSypher. All rights reserved.</p></div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-sidebar-right-bg border-sidebar-right-border lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:translate-x-0 sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+        </div>
+    </div>
+
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+    <div id="retype-overlay-target"></div>
+
+        <script data-cfasync="false">window.__DOCS__ = { "title": "AP: Stereo to Mono", level: 3, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/metasound/qol-nodes/stereo-to-mono.md" }</script>
+</body>
+</html>

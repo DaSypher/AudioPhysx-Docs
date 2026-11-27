@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101567109">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849103298161">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,11 +38,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849101567109" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849103298161" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101567109" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849103298161" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101567109" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849103298161" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -143,7 +143,7 @@
 <p>Press Preview. The result should sound like one structured action: click, movement, latch. Now swap the middle recording for a much longer file. The last stage should happen later automatically because the player waits for playback completion. This is why a sequence node can be more robust than scheduling every stage with a hard-coded number of milliseconds.</p>
 <h2 id="make-the-design-more-flexible">Make the design more flexible</h2>
 <p>Try turning on <code translate="no" v-pre>Loop Sequence</code>. The complete three-part action should repeat rather than ending after its final clip. Turn looping off again and press <code translate="no" v-pre>Stop</code> while the middle recording is audible. The stop request cancels the sequence; it is not the same thing as completing the sequence naturally, so do not assume it will issue <code translate="no" v-pre>On Finished</code>.</p>
-<p>When you want the three stages to remain in order but use different recordings on each play, move to <a href="../../metasound/nodes/playback/random-sequence-wave-player/">Random Sequence Wave Player</a>. When the stages should overlap instead of waiting for completion, try <a href="../../metasound/nodes/playback/layered-wave-player/">Layered Wave Player</a>. Both now output stereo, so the channel-wiring pattern stays familiar.</p>
+<p>When you want the three stages to remain in order but use different recordings on each play, move to <a href="../../metasound/playback-nodes/random-sequence-wave-player/">Random Sequence Wave Player</a>. When the stages should overlap instead of waiting for completion, try <a href="../../metasound/playback-nodes/layered-wave-player/">Layered Wave Player</a>. Both now output stereo, so the channel-wiring pattern stays familiar.</p>
 <p>If you are building a sound that should be precisely located at a point in 3D space, the <a href="../stereo-routing/">stereo routing guide</a> explains when to keep both channels and when to convert the final result to mono before spatialization.</p>
 
                 

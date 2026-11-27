@@ -14,6 +14,6 @@ Press Preview. The result should sound like one structured action: click, moveme
 
 Try turning on `Loop Sequence`. The complete three-part action should repeat rather than ending after its final clip. Turn looping off again and press `Stop` while the middle recording is audible. The stop request cancels the sequence; it is not the same thing as completing the sequence naturally, so do not assume it will issue `On Finished`.
 
-When you want the three stages to remain in order but use different recordings on each play, move to [Random Sequence Wave Player](../metasound/nodes/playback/random-sequence-wave-player.md). When the stages should overlap instead of waiting for completion, try [Layered Wave Player](../metasound/nodes/playback/layered-wave-player.md). Both now output stereo, so the channel-wiring pattern stays familiar.
+When you want the three stages to remain in order but use different recordings on each play, move to [Random Sequence Wave Player](../metasound/playback-nodes/random-sequence-wave-player.md). When the stages should overlap instead of waiting for completion, try [Layered Wave Player](../metasound/playback-nodes/layered-wave-player.md). Both now output stereo, so the channel-wiring pattern stays familiar.
 
 If you are building a sound that should be precisely located at a point in 3D space, the [stereo routing guide](stereo-routing.md) explains when to keep both channels and when to convert the final result to mono before spatialization.

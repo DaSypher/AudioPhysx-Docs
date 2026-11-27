@@ -16,6 +16,6 @@ Add a Random Wave Player to a stereo Source and connect the recording array to `
 
 You should hear the same kind of event with subtle natural differences. If one take leaps out of the mix or contains a long tail that conflicts with the next event, correct the source asset or reduce overlap deliberately. For a strictly positioned sound, try converting the completed stereo result to mono before spatialization and compare the two presentations.
 
-A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/qol-nodes/stereo-to-mono.md) version as well as the full stereo path.
 
 [Browse the full node reference](../metasound/README.md) for exact control types and limitations.

@@ -16,6 +16,6 @@ Create a stereo Source with Random Sequence Wave Player and expand it to three a
 
 The player waits for the chosen recording in one phase to finish before beginning the next. That makes this much easier to maintain than a chain of hard-coded delays when you replace assets later. If you actually need multiple stages to sound at once, use Layered Wave Player instead; that is a mixing problem, not a sequencing problem.
 
-A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/qol-nodes/stereo-to-mono.md) version as well as the full stereo path.
 
 [Browse the full node reference](../metasound/README.md) for exact control types and limitations.

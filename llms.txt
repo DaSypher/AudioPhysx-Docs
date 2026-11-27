@@ -20,10 +20,50 @@
 
 ## MetaSound nodes
 
+### Playback
+
+- [Playback: what should play, and when?](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/readme.md): A convincing sound library needs more than a folder of recordings. It needs a clear decision about when an event begins, whether recordings overlap, how a variation is chosen, and when the audible result should actually end.
+- [AP: Random Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/random-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
+- [AP: Shuffle-Bag Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/shuffle-bag-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
+- [AP: Sequence Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/sequence-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
+- [AP: Random Sequence Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/random-sequence-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
+- [AP: Layered Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/layered-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
+- [AP: Start Loop End Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/start-loop-end.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
+- [AP: Distance Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/distance-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
+- [AP: PhysMat Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/physmat-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
+- [AP: Surface Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/surface-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
+- [AP: Flyby Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/flyby-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
 - [Playback: what should play, and when?](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback.md): A convincing sound library needs more than a folder of recordings. It needs a clear decision about when an event begins, whether recordings overlap, how a variation is chosen, and when the audible result should actually end.
+
+### Acoustics
+
+- [Acoustics: why does a place change the sound?](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/readme.md): A recording played through a loudspeaker should not sound identical in every physical situation. It may be blocked by a door, travel around an opening, lose high-frequency detail when the source faces away, or produce an initial set of room reflections.
+- [AP: Acoustic Paths](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/acoustic-paths.md): AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source
+- [AP: Material Transmission](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/material-transmission.md): AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source
+- [AP: Source Directivity](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/source-directivity.md): AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source
+- [AP: Impact Dynamics](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/impact-dynamics.md): AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source
+- [AP: Early Reflections](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/early-reflections.md): AudioPhysx / Acoustics · Unreal Engine 5.8.4 development source
 - [Acoustics: why does a place change the sound?](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics.md): A recording played through a loudspeaker should not sound identical in every physical situation. It may be blocked by a door, travel around an opening, lose high-frequency detail when the source faces away, or produce an initial set of room reflections.
+
+### Propagation
+
+- [Propagation: when sound takes time to reach us](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/readme.md): Propagation concerns how a sound changes while travelling from its source to the listener. In the real world, an explosion heard at a great distance arrives after its flash, and a moving source can exhibit Doppler shift.
+- [AP: Distance Delay](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/distance-delay.md): AudioPhysx / Propagation · Unreal Engine 5.8.4 development source
+- [AP: Dynamic Propagation](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/dynamic-propagation.md): AudioPhysx / Propagation · Unreal Engine 5.8.4 development source
+- [AP: Doppler Ratio](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/doppler-ratio.md): AudioPhysx / Propagation · Unreal Engine 5.8.4 development source
+- [AP: Atmosphere Absorption](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/atmosphere-absorption.md): AudioPhysx / Propagation · Unreal Engine 5.8.4 development source
 - [Propagation: when sound takes time to reach us](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation.md): Propagation concerns how a sound changes while travelling from its source to the listener. In the real world, an explosion heard at a great distance arrives after its flash, and a moving source can exhibit Doppler shift.
+
+### QoL
+
+- [QoL: fewer repeated control graphs](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/readme.md): Not everything in AudioPhysx needs to process audio samples. Many MetaSounds become difficult to maintain because the same housekeeping logic is rebuilt
+- [AP: Float Smoother](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/float-smoother.md): AudioPhysx / QoL · Unreal Engine 5.8.4 development source
+- [AP: Trigger Cooldown](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/trigger-cooldown.md): AudioPhysx / QoL · Unreal Engine 5.8.4 development source
+- [AP: Trigger Probability](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/trigger-probability.md): AudioPhysx / QoL · Unreal Engine 5.8.4 development source
+- [AP: Distance Switch (Dynamic)](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/distance-switch.md): AudioPhysx / QoL · Unreal Engine 5.8.4 development source
+- [AP: Stereo to Mono](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/stereo-to-mono.md): AudioPhysx / QoL · Unreal Engine 5.8.4 development source
 - [QoL: fewer repeated control graphs](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol.md): Not everything in AudioPhysx needs to process audio samples. Many MetaSounds become difficult to maintain because the same housekeeping logic is rebuilt
+- [How to use the node tutorials](https://DaSypher.github.io/AudioPhysx-Docs/metasound/node-tutorials.md): Every AudioPhysx MetaSound node has its own page in the left sidebar. Expand Playback, Acoustics, Propagation or QoL and select the node you want to build. You no longer need to navigate through an extra generic “Nodes” folder or a second “node reference” directory.
 - [Interfaces and external audio parameters](https://DaSypher.github.io/AudioPhysx-Docs/metasound/interfaces.md): AudioPhysx separates gameplay-side world queries from audio rendering. One consequence is that some MetaSound inputs are fed by named parameters or registered interfaces rather than being authored independently in each graph.
 
 ## Blueprint integration

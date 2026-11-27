@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849101567109">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849103298161">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,11 +38,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849101567109" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849103298161" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849101567109" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849103298161" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849101567109" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849103298161" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -138,7 +138,7 @@
 <p>A line from source to listener may be clear, obstructed by a wall or partly bypassed through an opening. AudioPhysx provides a game-thread acoustic path solver to estimate how these possibilities affect the sound. The result is deliberately separate from the MetaSound render thread: scene traces and geometry queries belong with the game world, while stereo DSP nodes process the returned control values.</p>
 <p>The Blueprint library exposes <strong><code translate="no" v-pre>AP: Query Acoustic Path</code></strong>, taking a world context, source location, listener location and optional source actor. Its result describes obstruction state, surface type, barrier count, acoustic-material use and measured thickness, plus direct-path delay and low/mid/high losses. It can additionally describe an around-obstacle candidate, including a possible emitter position and its estimated delay and frequency losses.</p>
 <h2 id="understand-validity-and-selection">Understand validity and selection</h2>
-<p>A particularly important distinction is <strong><code translate="no" v-pre>bAroundPathValid</code> versus <code translate="no" v-pre>bAroundPathSelected</code></strong>. Valid means the solver found a candidate. Selected means it considers that candidate preferable according to the available losses and configuration. The corresponding <a href="../../metasound/nodes/acoustics/acoustic-paths/">Acoustic Paths MetaSound node</a> renders one selected route rather than automatically duplicating the signal into direct and around channels.</p>
+<p>A particularly important distinction is <strong><code translate="no" v-pre>bAroundPathValid</code> versus <code translate="no" v-pre>bAroundPathSelected</code></strong>. Valid means the solver found a candidate. Selected means it considers that candidate preferable according to the available losses and configuration. The corresponding <a href="../../metasound/acoustics-nodes/acoustic-paths/">Acoustic Paths MetaSound node</a> renders one selected route rather than automatically duplicating the signal into direct and around channels.</p>
 <p>For testing, build a small scene with a sound source, listener and a single blocking surface. Query with a clear path first, then move the listener behind the barrier. Print the obstruction flag, barrier count, direct delay and band losses. Once those results are understandable, add an opening or Acoustic Portal and inspect whether a valid and selected alternate route appears. These experiments reveal much more than immediately trying to tune filter parameters by ear.</p>
 <!-- IMAGE SLOT: docs/static/images/blueprint/bp-query-acoustic-path.png -->
 <h2 id="use-the-result-in-metasound">Use the result in MetaSound</h2>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="turbo-root" content="/AudioPhysx-Docs">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849103298161">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 4.6.0">
+
+    <!-- Primary Meta Tags -->
+    <title>AP: Distance Wave Player</title>
+    <meta name="title" content="AP: Distance Wave Player">
+    <meta name="description" content="AudioPhysx / Playback · Unreal Engine 5.8.4 development source">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/distance-wave-player/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://DaSypher.github.io/AudioPhysx-Docs/sitemap.xml">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/distance-wave-player/">
+    <meta property="og:title" content="AP: Distance Wave Player">
+    <meta property="og:description" content="AudioPhysx / Playback · Unreal Engine 5.8.4 development source">
+    <meta property="og:site_name" content="AudioPhysx">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/distance-wave-player/">
+    <meta name="twitter:title" content="AP: Distance Wave Player">
+    <meta name="twitter:description" content="AudioPhysx / Playback · Unreal Engine 5.8.4 development source">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/distance-wave-player.md">
+
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
+
+    <link href="../../../resources/css/retype.css?v=4.6.0.849103298161" rel="stylesheet">
+
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.849103298161" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.849103298161" data-turbo-eval="false" defer></script>
+</head>
+<body>
+    <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
+    <div class="absolute bottom-0 left-0" style="top: 5rem; right: 50%"></div>
+
+    <header id="retype-header" class="sticky top-0 z-30 flex w-full h-16 bg-header-bg border-b border-header-border md:h-20">
+        <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+            <!-- Mobile menu button skeleton -->
+            <button v-cloak class="skeleton retype-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-hidden rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+            <div v-cloak id="retype-sidebar-left-toggle-button"></div>
+    
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-full py-2 md:w-75">
+                <div class="flex items-center px-2 md:px-6">
+                    <a id="retype-branding-logo" href="https://DaSypher.github.io/AudioPhysx-Docs/" class="flex items-center leading-snug text-2xl">
+                        <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">AudioPhysx</span>
+                    </a><span id="retype-branding-label" class="inline-flex mt-1 px-2 py-1 ml-4 text-xs font-medium leading-none items-center rounded-md bg-branding-label-bg text-branding-label-text ring-1 ring-branding-label-border ring-inset md:inline-block">Docs</span>
+                </div>
+    
+                <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
+            </div>
+    
+            <div class="flex justify-between md:grow">
+                <!-- Top Nav -->
+                <nav id="retype-header-nav" class="hidden md:flex">
+                    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                        
+                    </ul>
+                </nav>
+    
+                <div v-cloak class="flex justify-end grow">
+                    <div id="retype-mobile-search-button"></div>
+                    <doc-search-desktop></doc-search-desktop>
+    
+                    <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                    <doc-history></doc-history>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div id="retype-container" class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+        <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-sidebar-left-bg border-sidebar-left-border sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton">
+        
+            <div class="flex items-center h-16 px-6">
+                <input id="retype-filter-input-mock" class="w-full h-10 pl-8 px-3 py-2 transition-colors duration-200 ease-linear bg-filter-bg border border-filter-border rounded-lg shadow-none md:text-sm hover:border-filter-border-hover focus:outline-hidden focus:border-filter-border-focus placeholder-filter-placeholder" type="text">
+            </div>
+        
+            <div class="pl-6 mt-1 mb-4">
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            </div>
+        
+            <div class="shrink-0 mt-auto bg-transparent dark:border-base-border">
+                <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                    <span class="text-xs whitespace-nowrap">Powered by</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Sidebar component -->
+        <doc-sidebar v-cloak>
+            <template #sidebar-footer>
+                <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-base-border">
+        
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </template>
+        </doc-sidebar>
+
+        <div class="grow min-w-0 bg-body-bg">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+<div class="flex">
+    <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
+        <main class="relative pb-12 lg:pt-2">
+            <div class="relative retype-markdown" id="retype-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
+                <!-- Page content  -->
+<h1 id="ap-distance-wave-player">AP: Distance Wave Player</h1>
+<p><strong>AudioPhysx / Playback</strong> · Unreal Engine 5.8.4 development source</p>
+<p>Choose a different recorded perspective at different distances, rather than relying on volume attenuation alone.</p>
+<!-- IMAGE SLOT: docs/static/images/nodes/node-distance-wave-player.png -->
+<h2 id="understanding-the-behaviour">Understanding the behaviour</h2>
+<p>A gunshot ten metres away often needs different recorded content from one heard several hundred metres away. Distance Wave Player evaluates <code translate="no" v-pre>Distance (cm)</code> when <code translate="no" v-pre>Play</code> arrives and uses the configured distance range to select a recording. Each expandable range has a start distance, a Wave Asset Array, and a volume setting. This lets the same gameplay event choose a near, medium or far recording without building a separate switch network for each sound.</p>
+<p>The decision is made when playback starts. The player is not designed to continuously crossfade a recording that has already begun as the listener crosses a range boundary. Once accepted, the selected sound plays with its latched range gain and retains two audio output channels.</p>
+<p>A useful application is a rifle report with separate close mechanical detail and distant tails. At short range, you may emphasize the muzzle report; farther away, you may want the environmental tail and less close-microphone detail. The node selects the appropriate authored material when the sound fires, while Unreal attenuation can continue to manage overall distance level and source spatialization.</p>
+<p>For a repeatable test, move the listener between two fixed distances and trigger the sound at each location. You should hear a different recording pool, not just a quieter version of the same one.</p>
+<h2 id="build-the-sound--step-by-step">Build the sound — step by step</h2>
+<p>The setup below is deliberately small so you can hear what this node contributes before adding more systems. Create the sound in a fresh test MetaSound first, then copy the working graph into your game.</p>
+<doc-steps>
+   <doc-step id="make-a-test-source-with-a-distance-input" step-number="1">
+      <template #title>Make a test Source with a distance input</template>
+<p>Create a Stereo MetaSound Source and add <strong>AP: Distance Wave Player</strong>. Expose or set a Float for <code translate="no" v-pre>Distance (cm)</code> so you can vary the distance while testing.</p>
+   </doc-step>
+   <doc-step id="configure-at-least-two-distance-ranges" step-number="2">
+      <template #title>Configure at least two distance ranges</template>
+<p>Expand the distance range groups and set <code translate="no" v-pre>Start Distance (cm)</code> for your close and far bands in ascending order. Add distinguishable <code translate="no" v-pre>Waves</code> arrays to each range, such as close mechanical detail and a distant report.</p>
+   </doc-step>
+   <doc-step id="set-the-allowed-range" step-number="3">
+      <template #title>Set the allowed range</template>
+<p>Supply an appropriate <code translate="no" v-pre>Max Distance (cm)</code> and keep each authored band’s <code translate="no" v-pre>Volume</code> under control. This player selects an appropriate <strong>recording perspective</strong>, not merely the gain of one recording.</p>
+   </doc-step>
+   <doc-step id="trigger-and-connect-stereo" step-number="4">
+      <template #title>Trigger and connect stereo</template>
+<p>Connect <code translate="no" v-pre>On Play</code> to <code translate="no" v-pre>Play</code> and wire <code translate="no" v-pre>Out Left</code>/<code translate="no" v-pre>Out Right</code> to the Source outputs. If needed, set <code translate="no" v-pre>Max Voices</code> and <code translate="no" v-pre>No Immediate Repeat</code> to handle repeated events.</p>
+   </doc-step>
+   <doc-step id="audition-range-changes-on-retrigger" step-number="5">
+      <template #title>Audition range changes on retrigger</template>
+<p>Set a close distance and trigger the sound, then try a far distance and trigger again. The selected sample should change according to the band. A change in distance does not automatically crossfade a recording already playing.</p>
+   </doc-step>
+</doc-steps>
+<!-- IMAGE SLOT: docs/static/images/graphs/setup-distance-wave-player.png -->
+<p><strong>After the basic setup:</strong> Configure the dynamic distance ranges in ascending order of <code translate="no" v-pre>Start Distance (cm)</code>, then assign one or more recordings to each <code translate="no" v-pre>Waves</code> array. Supply the listener-source separation to <code translate="no" v-pre>Distance (cm)</code> and connect <code translate="no" v-pre>Play</code> and the two stereo outputs. Set <code translate="no" v-pre>Max Distance (cm)</code> deliberately; it is a hard cutoff evaluated when a new sound is requested, not an automatic fade applied to all currently playing voices.</p>
+<p>Use <code translate="no" v-pre>No Immediate Repeat</code> when several takes exist in a range. Trigger the player in a test level with a known numerical distance before integrating any automatic listener-distance calculation.</p>
+<p><code translate="no" v-pre>Volume</code> in a range is a <strong>linear</strong> playback multiplier, not a decibel value. This matters when you match the apparent loudness of near and far captures. <code translate="no" v-pre>Max Voices</code> determines permitted overlap, and <code translate="no" v-pre>On Finished</code> fires when the final naturally playing voice completes. There is no inherent acoustic air-absorption or Doppler calculation in the selection logic; those are separate responsibilities.</p>
+<p><strong>Practical limitations.</strong> Keep the boundaries meaningful and avoid excessive ranges with recordings that are nearly identical. A hard change between badly matched pools can be obvious during repeated action at a range boundary. Source location and built-in Unreal attenuation still need to be configured correctly. For simple trigger branching without an integrated Wave Player, <a href="../../qol-nodes/distance-switch/">Distance Switch</a> is a lighter control-flow tool.</p>
+<doc-panel id="exact-input-and-output-pins" collapsed>
+    <template #title>Exact input and output pins</template>
+<p><strong>Inputs from the current C++ node definition</strong></p>
+<ul>
+<li><strong><code translate="no" v-pre>Play</code></strong> — <em>Trigger</em>. Select one sample from the current distance range.</li>
+<li><strong><code translate="no" v-pre>Stop</code></strong> — <em>Trigger</em>. Stop every active voice.</li>
+<li><strong><code translate="no" v-pre>Distance (cm)</code></strong> — <em>Float</em>. Source-to-listener distance in centimetres.</li>
+<li><strong><code translate="no" v-pre>Max Distance (cm)</code></strong> — <em>Float</em>. Hard playback cutoff evaluated only on Play.</li>
+<li><strong><code translate="no" v-pre>Max Voices</code></strong> — <em>Integer</em>. Maximum simultaneous samples (1 to 16).</li>
+<li><strong><code translate="no" v-pre>No Immediate Repeat</code></strong> — <em>Boolean</em>. Avoid selecting the same sample consecutively  within the selected distance range.</li>
+<li><strong><code translate="no" v-pre>Start Distance (cm)</code></strong> — <em>Float</em>. Distance at which this range becomes active.</li>
+<li><strong><code translate="no" v-pre>Waves</code></strong> — <em>Wave Asset Array</em>. Array of samples for this range.</li>
+<li><strong><code translate="no" v-pre>Volume</code></strong> — <em>Float</em>. Linear gain latched when a sample begins.</li>
+</ul>
+<p><strong>Outputs from the current C++ node definition</strong></p>
+<ul>
+<li><strong><code translate="no" v-pre>Out Left</code></strong> — <em>Audio buffer</em>. Stereo mix of all active voices.</li>
+<li><strong><code translate="no" v-pre>Out Right</code></strong> — <em>Audio buffer</em>. Right channel of the stereo playback mix.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> — <em>Trigger</em>. Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it.</li>
+</ul>
+</doc-panel>
+<p><strong>Related:</strong> <a href="../../qol-nodes/distance-switch/">Dynamic Distance Switch</a> for routing other players by distance.</p>
+
+                
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+            </div>
+            <footer id="retype-content-footer" class="clear-both">
+            
+                <nav id="retype-nextprev" class="print:hidden flex mt-14">
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../metasound/playback-nodes/start-loop-end/">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                            <span>
+                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
+                                <span class="block mt-1">AP: Start Loop End Player</span>
+                            </span>
+                        </a>
+                    </div>
+            
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../metasound/playback-nodes/physmat-wave-player/">
+                            <span>
+                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
+                                <span class="block mt-1">AP: Phys​Mat Wave Player</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        </a>
+                    </div>
+                </nav>
+            </footer>
+        </main>
+
+        <div id="retype-page-footer" class="print:border-none border-t border-base-border pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                <div id="retype-footer-links" class="print:hidden">
+                    <ul class="flex flex-wrap items-center text-sm">
+                    </ul>
+                </div>
+                <div id="retype-copyright" class="print:justify-center py-2 text-footer-text font-footer-link text-sm leading-relaxed"><p>© 2026 DaSypher. All rights reserved.</p></div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-sidebar-right-bg border-sidebar-right-border lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:translate-x-0 sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+        </div>
+    </div>
+
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+    <div id="retype-overlay-target"></div>
+
+        <script data-cfasync="false">window.__DOCS__ = { "title": "AP: Distance Wave Player", level: 3, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/metasound/playback-nodes/distance-wave-player.md" }</script>
+</body>
+</html>
