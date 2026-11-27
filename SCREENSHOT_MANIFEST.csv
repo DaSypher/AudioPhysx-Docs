@@ -1,0 +1,44 @@
+Priority,File inside docs/static/images/,Description,What to capture,Suggested size,Docs page
+P0,blueprint/bp-flyby-hitscan.png,Hitscan integration,Blueprint node AP: Play Projectile Flyby wired to trace start/end and MetaSound asset.,1600×900,Flyby integration
+P0,brand/hero-audiophysx.png,Hero image,"Unreal scene or polished composite: one side a MetaSound graph, other side in-game audio scene. No generic stock photos.",1600×900 or 1920×1080,Home
+P0,graphs/graph-automatic-weapon.png,Automatic fire demo,Working weapon graph with RPM showing start/stop and output.,1600×900,Automatic weapon recipe
+P0,graphs/graph-first-sequence.png,First graph,Complete working Sequence Wave Player graph with three waves and On Finished wiring.,1600×900,First MetaSound
+P0,graphs/graph-flyby-metasound.png,Flyby MetaSound,"Flyby Wave Player inputs, outputs and runtime parameters.",1600×900,Flyby integration
+P0,nodes/node-start-loop-end.png,RPM player,"Crop Start Loop End node with RPM, three arrays and both outputs visible.",1000×900,Start Loop End reference
+P0,setup/node-search.png,Node palette,MetaSound add-node search for AudioPhysx showing categories.,1400×900,Getting started
+P0,setup/plugin-enabled.png,Plugin installed,Edit → Plugins with AudioPhysx enabled; hide personal project paths.,1400×900,Installation
+P1,acoustics/acoustic-test-room.png,Acoustic demo,"Simple two-room map, wall barrier, emitter and portal, preferably with annotations.",1600×900,Components
+P1,blueprint/bp-play-physical-sound.png,Physical playback helper,Blueprint node AP: Play Physical Sound with basic inputs wired.,1600×900,Playback helpers
+P1,blueprint/bp-query-acoustic-path.png,Acoustic query,Blueprint AP: Query Acoustic Path and useful return fields.,1600×900,Acoustic path query
+P1,brand/hero-demos.png,Demo overview,Two or three verified demo moments or a screenshot of example map.,1600×900,Examples
+P1,graphs/graph-acoustic-interface.png,Compact path array,AP.AcousticRoute.Selected array connected to Acoustic Paths.,1600×900,Interfaces
+P1,settings/acoustic-material-inspector.png,Acoustic material,"Details panel for UAPAcousticPhysicalMaterial, readable section names.",1400×900,Acoustic settings
+P1,settings/project-settings-audiophysx.png,Project settings,AudioPhysx Developer Settings with path/ray budgets; hide unrelated settings.,1400×900,Settings
+P1,setup/create-metasound.png,Create MetaSound,Content browser and MetaSound Source asset creation.,1400×900,First MetaSound
+P2,graphs/graph-acoustic-obstruction.png,Basic acoustic obstruction recipe,Capture complete working graph for this recipe; zoom for legibility.,1600×900,Basic acoustic obstruction recipe
+P2,graphs/graph-material-footsteps.png,Material-dependent footsteps recipe,Capture complete working graph for this recipe; zoom for legibility.,1600×900,Material-dependent footsteps recipe
+P2,graphs/graph-projectile-flyby.png,Projectile near-miss flyby recipe,Capture complete working graph for this recipe; zoom for legibility.,1600×900,Projectile near-miss flyby recipe
+P2,graphs/graph-random-sequence.png,Multi-stage sound variation recipe,Capture complete working graph for this recipe; zoom for legibility.,1600×900,Multi-stage sound variation recipe
+P2,graphs/graph-randomized-one-shot.png,Randomized one-shot sounds recipe,Capture complete working graph for this recipe; zoom for legibility.,1600×900,Randomized one-shot sounds recipe
+P2,nodes/node-acoustic-paths.png,AP: Acoustic Paths node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Acoustics node reference
+P2,nodes/node-atmosphere-absorption.png,AP: Atmosphere Absorption node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Propagation node reference
+P2,nodes/node-distance-delay.png,AP: Distance Delay node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Propagation node reference
+P2,nodes/node-distance-switch.png,AP: Distance Switch (Dynamic) node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,QoL node reference
+P2,nodes/node-distance-wave-player.png,AP: Distance Wave Player node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Playback node reference
+P2,nodes/node-doppler-ratio.png,AP: Doppler Ratio node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Propagation node reference
+P2,nodes/node-dynamic-propagation.png,AP: Dynamic Propagation node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Propagation node reference
+P2,nodes/node-early-reflections.png,AP: Early Reflections node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Acoustics node reference
+P2,nodes/node-float-smoother.png,AP: Float Smoother node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,QoL node reference
+P2,nodes/node-flyby-wave-player.png,AP: Flyby Wave Player node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Playback node reference
+P2,nodes/node-impact-dynamics.png,AP: Impact Dynamics node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Acoustics node reference
+P2,nodes/node-layered-wave-player.png,AP: Layered Wave Player node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Playback node reference
+P2,nodes/node-material-transmission.png,AP: Material Transmission node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Acoustics node reference
+P2,nodes/node-physmat-wave-player.png,AP: PhysMat Wave Player node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Playback node reference
+P2,nodes/node-random-sequence-wave-player.png,AP: Random Sequence Wave Player node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Playback node reference
+P2,nodes/node-random-wave-player.png,AP: Random Wave Player node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Playback node reference
+P2,nodes/node-sequence-wave-player.png,AP: Sequence Wave Player node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Playback node reference
+P2,nodes/node-shuffle-bag-wave-player.png,AP: Shuffle-Bag Wave Player node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Playback node reference
+P2,nodes/node-source-directivity.png,AP: Source Directivity node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Acoustics node reference
+P2,nodes/node-surface-wave-player.png,AP: Surface Wave Player node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,Playback node reference
+P2,nodes/node-trigger-cooldown.png,AP: Trigger Cooldown node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,QoL node reference
+P2,nodes/node-trigger-probability.png,AP: Trigger Probability node,Capture full native node with key inputs/outputs and representative non-sensitive values.,1000×900,QoL node reference

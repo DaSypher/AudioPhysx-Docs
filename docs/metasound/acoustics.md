@@ -1,16 +1,26 @@
 ---
-icon: pulse
+label: "Acoustics"
+icon: broadcast
+order: 80
 ---
 # Acoustics
 
-Current acoustics-oriented nodes include:
+These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.
 
-- AP: Acoustic Paths
-- AP: Material Transmission
-- AP: Source Directivity
-- AP: Impact Dynamics
-- AP: Early Reflections
+| Node | Purpose |
+| --- | --- |
+| [AP: Acoustic Paths](nodes/acoustics/acoustic-paths.md) | Apply the selected acoustic route: propagation delay and three-band loss from the game-thread path solver. |
+| [AP: Impact Dynamics](nodes/acoustics/impact-dynamics.md) | Shape the transient, level and filtering of an impact recording according to impact strength. |
+| [AP: Early Reflections](nodes/acoustics/early-reflections.md) | Add a small set of simulated early reflections to a mono recording. |
+| [AP: Material Transmission](nodes/acoustics/material-transmission.md) | Apply obstruction-dependent, frequency-shaped transmission loss to mono audio. |
+| [AP: Source Directivity](nodes/acoustics/source-directivity.md) | Apply direction-dependent spectral shaping and attenuation. |
 
-These are approximations and signal-processing helpers. Their accuracy depends on the data supplied by AudioPhysx gameplay-side components and the scene setup.
+## How to choose
 
-> TODO: Document every pin, frequency assumptions, acceptable inputs, fallback behaviour, and listener/source integration. Include at least one controlled before/after audio demonstration.
+- **Wall transmission:** Material Transmission.
+- **Selected path and delay:** Acoustic Paths.
+- **Impact shaping:** Impact Dynamics.
+- **Synthetic room taps:** Early Reflections.
+- **Facing-dependent tone:** Source Directivity.
+
+For a reproducible demonstration, start with the [first MetaSound tutorial](../getting-started/first-metasound.md).

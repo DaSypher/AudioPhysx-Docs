@@ -1,16 +1,38 @@
 ---
+label: "FAQ"
 icon: question
+order: 85
 ---
 # Frequently asked questions
 
-## Does AudioPhysx require Chaos?
+## Is AudioPhysx a replacement for Unreal audio?
 
-The flyby path helpers are designed to work from path and speed data supplied by the game, without requiring Chaos rigid-body simulation. Other physics-related features may use engine queries depending on the setup.
+No. It extends MetaSounds and game-audio workflows. Unreal's own attenuation, concurrency, mixer, audio components and Sound Cues remain part of a typical project.
 
-## Can Sound Cues use these MetaSound nodes?
+## Do I need Chaos physics?
 
-No. The MetaSound nodes live inside MetaSound graphs. Dedicated Sound Cue QoL nodes are planned separately and are not yet part of this source version.
+No. The flyby path helpers use supplied positions and speed; the acoustic/material tools can use Blueprint or C++ data provided by your game. Some integrations use world traces or primitive components, but not a bespoke Chaos rigid-body simulation.
 
-## Are future Unreal Engine versions guaranteed?
+## Does every node create audio?
 
-No. Native code plugins must be tested and submitted for the specific engine versions advertised.
+No. Playback nodes output recordings; DSP nodes modify existing audio; utility nodes shape triggers/controls; Blueprint helpers connect game-world information.
+
+## Why is `Out Mono` used so often?
+
+Many nodes deliberately produce mono audio to leave source spatialization and further processing to the MetaSound Source and Unreal audio pipeline.
+
+## Is `On Finished` triggered when I stop a Wave Player?
+
+Not necessarily. On several players, an explicit `Stop` cancels playback without the natural completion event. Consult that player's reference.
+
+## Does changing Acoustic Physical Materials change existing recording assets?
+
+No. Material parameters influence routing/evaluation or sound-selection logic. They don't destructively edit imported Wave Assets.
+
+## Does AudioPhysx include Sound Cue nodes?
+
+Not in the development source represented by this documentation. Sound Cue quality-of-life extensions are planned and should not be advertised as included until shipped.
+
+## Will it work in Unreal Engine 6?
+
+No future UE6 compatibility claim has been verified or promised. Check the supported engine matrix for the version you purchase.
