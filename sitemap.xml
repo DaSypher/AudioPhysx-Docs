@@ -16,9 +16,6 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/getting-started/first-metasound/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/</loc>
-  </url>
-  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/getting-started/requirements/</loc>
   </url>
   <url>
@@ -67,9 +64,6 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/random-sequence-wave-player/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/layered-wave-player/</loc>
-  </url>
-  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/node-tutorials/</loc>
   </url>
   <url>
@@ -82,22 +76,16 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/sequence-wave-player/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/start-loop-end/</loc>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/layered-wave-player/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/distance-wave-player/</loc>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/start-loop-end/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/blueprint/acoustic-paths/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/physmat-wave-player/</loc>
-  </url>
-  <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/surface-wave-player/</loc>
-  </url>
-  <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/flyby-wave-player/</loc>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/distance-wave-player/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/blueprint/playback-helpers/</loc>
@@ -113,6 +101,15 @@
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/material-footsteps/</loc>
+  </url>
+  <url>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/physmat-wave-player/</loc>
+  </url>
+  <url>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/surface-wave-player/</loc>
+  </url>
+  <url>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/flyby-wave-player/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/acoustic-paths/</loc>

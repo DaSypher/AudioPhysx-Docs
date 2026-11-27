@@ -22,7 +22,6 @@
 
 ### Playback
 
-- [Playback: what should play, and when?](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/readme.md): A convincing sound library needs more than a folder of recordings. It needs a clear decision about when an event begins, whether recordings overlap, how a variation is chosen, and when the audible result should actually end.
 - [AP: Random Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/random-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
 - [AP: Shuffle-Bag Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/shuffle-bag-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
 - [AP: Sequence Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/sequence-wave-player.md): AudioPhysx / Playback · Unreal Engine 5.8.4 development source
