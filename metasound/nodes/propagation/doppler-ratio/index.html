@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Doppler Ratio</title>
     <meta name="title" content="AP: Doppler Ratio">
-    <meta name="description" content="MetaSound category: AudioPhysx → Propagation Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="description" content="MetaSound · AudioPhysx / Propagation">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/doppler-ratio/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/doppler-ratio/">
     <meta property="og:title" content="AP: Doppler Ratio">
-    <meta property="og:description" content="MetaSound category: AudioPhysx → Propagation Source contract: Unreal Engine 5.8.4 development source">
+    <meta property="og:description" content="MetaSound · AudioPhysx / Propagation">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/doppler-ratio/">
     <meta name="twitter:title" content="AP: Doppler Ratio">
-    <meta name="twitter:description" content="MetaSound category: AudioPhysx → Propagation Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="twitter:description" content="MetaSound · AudioPhysx / Propagation">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/doppler-ratio.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,85 +135,60 @@
 
                 <!-- Page content  -->
 <h1 id="ap-doppler-ratio">AP: Doppler Ratio</h1>
-<p><strong>MetaSound category:</strong> <code translate="no" v-pre>AudioPhysx → Propagation</code><br />
-<strong>Source contract:</strong> Unreal Engine 5.8.4 development source</p>
-<p>Compute a pitch ratio from radial source and listener velocities.</p>
+<p><strong>MetaSound · AudioPhysx / Propagation</strong></p>
+<p>Calculate a playback pitch multiplier from the motion of the source and listener toward one another.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-doppler-ratio.png -->
-<h2 id="when-to-use-it">When to use it</h2>
-<p>Manual Doppler control for players or modulation chains not using Dynamic Propagation.</p>
-<h2 id="quick-setup">Quick setup</h2>
-<p>Supply source/listener velocities toward each other and use <code translate="no" v-pre>Pitch Ratio</code> to control a compatible playback pitch input.</p>
-<h2 id="inputs">Inputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Source Toward Listener (m/s)` | Float | Positive means source approaches listener. |
-| `Listener Toward Source (m/s)` | Float | Positive means listener approaches source. |
-| `Speed of Sound (m/s)` | Float | Default 343 m/s. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Source Toward Listener (m/s)</code></td>
-<td>Float</td>
-<td>Positive means source approaches listener.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Listener Toward Source (m/s)</code></td>
-<td>Float</td>
-<td>Positive means listener approaches source.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Speed of Sound (m/s)</code></td>
-<td>Float</td>
-<td>Default 343 m/s.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="outputs">Outputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Pitch Ratio` | Float | Pitch multiplier for playback WITHOUT Dynamic Propagation. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Pitch Ratio</code></td>
-<td>Float</td>
-<td>Pitch multiplier for playback WITHOUT Dynamic Propagation.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="behaviour-and-design-notes">Behaviour and design notes</h2>
-<p>Positive velocity values in the named pins mean moving toward the other party. Do not double-apply with Dynamic Propagation.</p>
-<blockquote>
-<p><strong>Units matter:</strong> Pin names indicate metres (<code translate="no" v-pre>m</code>), metres per second (<code translate="no" v-pre>m/s</code>), centimetres (<code translate="no" v-pre>cm</code>), milliseconds (<code translate="no" v-pre>ms</code>), decibels (<code translate="no" v-pre>dB</code>) and semitones (<code translate="no" v-pre>st</code>). Don&#x27;t convert centimetres to metres unless the target pin expects metres.</p>
-</blockquote>
-<h2 id="testing-checklist">Testing checklist</h2>
-<ol>
-<li>Test the intended input settings with a valid source recording or signal.</li>
-<li>Test zero/empty/invalid inputs where applicable.</li>
-<li>Test rapid parameter changes and retriggering where applicable.</li>
-<li>Verify output and completion behaviour in a packaged build before relying on the node in shipping content.</li>
-</ol>
-<p>See <a href="../../../propagation/">Propagation overview</a> and <a href="../../../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="what-actually-happens">What actually happens</h2>
+<p>Doppler shift is the change in perceived pitch caused by relative motion. This node operates on <strong>radial velocity</strong>—the component of motion directly toward or away from the other participant—not the total speed of either object.</p>
+<p>It outputs a pitch ratio for use elsewhere in the graph. It does not decode or pitch-shift a Wave Asset by itself.</p>
+<h2 id="hear-it-in-a-game">Hear it in a game</h2>
+<p>Drive a vehicle past a stationary listener and compare approaching and receding motion. Feed the directional velocity components into the node, then apply its output to a compatible pitch control downstream. Keep the effect moderate for believable engine audio.</p>
+<h2 id="build-a-working-graph">Build a working graph</h2>
+<doc-steps>
+   <doc-step id="feed-radial-source-velocity" step-number="1">
+      <template #title>Feed radial source velocity</template>
+<p>Supply source velocity <strong>toward</strong> the listener to <code translate="no" v-pre>Source Toward Listener (m/s)</code>.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="feed-listener-velocity-and-sound-speed" step-number="2">
+      <template #title>Feed listener velocity and sound speed</template>
+<p>Supply listener velocity <strong>toward</strong> the source to <code translate="no" v-pre>Listener Toward Source (m/s)</code> and provide the speed of sound.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="use-the-resulting-ratio" step-number="3">
+      <template #title>Use the resulting ratio</template>
+<p>Connect the output ratio to the playback/pitch system you actually use.</p>
+   </doc-step>
+</doc-steps>
+<h2 id="the-controls-that-matter">The controls that matter</h2>
+<p>A positive radial velocity here means movement <strong>toward</strong> the other point, according to the pin labels. <code translate="no" v-pre>Speed of Sound (m/s)</code> affects the magnitude of the ratio. This node expects metres per second rather than Unreal centimetres per second.</p>
+<h2 id="what-the-node-outputs">What the node outputs</h2>
+<ul>
+<li><strong><code translate="no" v-pre>Pitch Ratio</code></strong> · Float — Pitch multiplier for playback WITHOUT Dynamic Propagation.</li>
+</ul>
+<h2 id="things-to-watch-for">Things to watch for</h2>
+<ul>
+<li>Passing an unsigned speed (always positive) erases the distinction between approach and departure.</li>
+<li>Avoid stacking this full-strength ratio with Dynamic Propagation or Unreal’s own Doppler unless you intentionally want an exaggerated effect.</li>
+</ul>
+<doc-panel id="full-input-reference" collapsed>
+    <template #title>Full input reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Source Toward Listener (m/s)</code></strong> · <em>Float</em> — Positive means source approaches listener.</li>
+<li><strong><code translate="no" v-pre>Listener Toward Source (m/s)</code></strong> · <em>Float</em> — Positive means listener approaches source.</li>
+<li><strong><code translate="no" v-pre>Speed of Sound (m/s)</code></strong> · <em>Float</em> — Default 343 m/s.</li>
+</ul>
+</doc-panel>
+<doc-panel id="full-output-reference" collapsed>
+    <template #title>Full output reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Pitch Ratio</code></strong> · Float — Pitch multiplier for playback WITHOUT Dynamic Propagation.</li>
+</ul>
+</doc-panel>
+<h2 id="continue-learning">Continue learning</h2>
+<p><a href="../dynamic-propagation/">Dynamic Propagation</a> works directly on mono audio rather than merely supplying a ratio. Also see the <a href="../../../propagation/">Propagation overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
 
                 
                 <!-- Required only on API pages -->

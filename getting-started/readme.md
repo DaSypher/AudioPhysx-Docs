@@ -1,9 +1,23 @@
-# Getting started
+# Start creating with AudioPhysx
 
-New to AudioPhysx? Follow these pages in order. You can reach a first playable result without using acoustic path components or writing C++.
+You do not need to understand sound propagation or C++ before getting value from AudioPhysx. Begin with a simple Wave Player and add complexity only when the sound actually calls for it.
 
-1. [Requirements and terminology](requirements.md)
-2. [Install the plugin](installation.md)
-3. [Build your first MetaSound](first-metasound.md)
-4. [Understand inputs and completion](signals-and-completion.md)
-5. [Common setup checklist](checklist.md)
+## Your first 15 minutes
+
+>>> 1. Understand the basics
+Read [Requirements and terminology](requirements.md). Learn the difference between a Wave Asset, trigger and audio output, and why Unreal distances are often in centimetres.
+
+>>> 2. Install and confirm the plugin
+Follow [Installation](installation.md), then check that the `AudioPhysx` categories appear in the MetaSound node search.
+
+>>> 3. Build one complete sound
+Use [Your first MetaSound](first-metasound.md) to connect three recordings to **AP: Sequence Wave Player**.
+
+>>> 4. Understand completion
+Read [Signals and completion](signals-and-completion.md). It explains why an audio source can finish before a delayed reflection or propagation tail has ended.
+
+>>> 5. Troubleshoot with a checklist
+Keep the [Setup checklist](checklist.md) open when testing your own MetaSounds.
+>>>
+
+Once that works, try a [randomized one-shot](../examples/randomized-one-shot.md) or [RPM-controlled weapon](../examples/automatic-weapon.md). Both reuse the same fundamentals.

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Acoustic Paths</title>
     <meta name="title" content="AP: Acoustic Paths">
-    <meta name="description" content="MetaSound category: AudioPhysx → Acoustics Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="description" content="MetaSound · AudioPhysx / Acoustics">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/acoustic-paths/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/acoustic-paths/">
     <meta property="og:title" content="AP: Acoustic Paths">
-    <meta property="og:description" content="MetaSound category: AudioPhysx → Acoustics Source contract: Unreal Engine 5.8.4 development source">
+    <meta property="og:description" content="MetaSound · AudioPhysx / Acoustics">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/acoustic-paths/">
     <meta name="twitter:title" content="AP: Acoustic Paths">
-    <meta name="twitter:description" content="MetaSound category: AudioPhysx → Acoustics Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="twitter:description" content="MetaSound · AudioPhysx / Acoustics">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/acoustic-paths.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,103 +135,80 @@
 
                 <!-- Page content  -->
 <h1 id="ap-acoustic-paths">AP: Acoustic Paths</h1>
-<p><strong>MetaSound category:</strong> <code translate="no" v-pre>AudioPhysx → Acoustics</code><br />
-<strong>Source contract:</strong> Unreal Engine 5.8.4 development source</p>
-<p>Apply the selected acoustic route: propagation delay and three-band loss from the game-thread path solver.</p>
+<p><strong>MetaSound · AudioPhysx / Acoustics</strong></p>
+<p>Apply the acoustic path chosen by the game-world solver, including travel delay and low/mid/high frequency loss.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-acoustic-paths.png -->
-<h2 id="when-to-use-it">When to use it</h2>
-<p>Wall and portal acoustics where direct or around-obstacle routing changes audibility.</p>
-<h2 id="quick-setup">Quick setup</h2>
-<p>Connect your mono audio, the compact four-value route array and <code translate="no" v-pre>Source Finished</code> from the upstream player.</p>
-<h2 id="inputs">Inputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Audio In` | Audio (mono) | Mono input to propagate. |
-| `Source Finished` | Trigger | Wave Player On Finished; passed through after the path tails. |
-| `Selected Route` | Float Array | Float Array from AP.AcousticRoute.Selected: delay ms, low/mid/high loss dB. Route selection occurs on the game thread. |
-| `Smoothing (ms)` | Float | Smooth path loss and delay changes. |
-| `Delay Capacity (ms)` | Float | Delay buffer capacity allocated ONCE at graph creation. Default 128 ms; raise to 1500 ms only if long cinematic propagation is required. Changes during playback cannot grow the buffer. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Audio In</code></td>
-<td>Audio (mono)</td>
-<td>Mono input to propagate.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Source Finished</code></td>
-<td>Trigger</td>
-<td>Wave Player On Finished; passed through after the path tails.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Selected Route</code></td>
-<td>Float Array</td>
-<td>Float Array from AP.AcousticRoute.Selected: delay ms, low/mid/high loss dB. Route selection occurs on the game thread.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Smoothing (ms)</code></td>
-<td>Float</td>
-<td>Smooth path loss and delay changes.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Delay Capacity (ms)</code></td>
-<td>Float</td>
-<td>Delay buffer capacity allocated ONCE at graph creation. Default 128 ms; raise to 1500 ms only if long cinematic propagation is required. Changes during playback cannot grow the buffer.</td>
-</tr>
-</tbody>
-</table>
+<h2 id="what-actually-happens">What actually happens</h2>
+<p>The gameplay solver estimates a <strong>selected</strong> acoustic route between source and listener. The result is packed into four floating-point values: <code translate="no" v-pre>delay milliseconds</code>, <code translate="no" v-pre>low-band loss dB</code>, <code translate="no" v-pre>mid-band loss dB</code>, and <code translate="no" v-pre>high-band loss dB</code>. This node consumes that array and applies an audible delay and frequency-dependent reduction to the mono input.</p>
+<p>The key design choice is that it renders <strong>one chosen route</strong>. It does not create two independent copies for direct and around-corner sound, which helps prevent phasey doubling and uncontrolled extra voices.</p>
+<h2 id="hear-it-in-a-game">Hear it in a game</h2>
+<p>Place a sound on the other side of a wall with a doorway nearby. Compare a clear direct path with an obstructed one and an available around-door route. Observe how the delay and band losses change in the route data, then listen for the difference.</p>
+<h2 id="build-a-working-graph">Build a working graph</h2>
+<doc-steps>
+   <doc-step id="connect-the-original-recording" step-number="1">
+      <template #title>Connect the original recording</template>
+<p>Feed your existing mono playback into <code translate="no" v-pre>Audio In</code>.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="supply-the-selected-route" step-number="2">
+      <template #title>Supply the selected route</template>
+<p>Provide the four-value <code translate="no" v-pre>Selected Route</code> array, preferably from the Acoustic Path Blueprint/world subsystem integration.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="pass-through-completion" step-number="3">
+      <template #title>Pass through completion</template>
+<p>Connect the Wave Player completion to <code translate="no" v-pre>Source Finished</code>, and use this node’s <code translate="no" v-pre>On Finished</code> after the propagation tail.</p>
+   </doc-step>
+</doc-steps>
+<h2 id="the-controls-that-matter">The controls that matter</h2>
+<p><code translate="no" v-pre>Smoothing (ms)</code> reduces abrupt changes in route colour or timing. <code translate="no" v-pre>Delay Capacity (ms)</code> allocates the delay buffer when the operator is created: the default is designed for low latency and modest memory use; raising it allows longer delays but increases memory. Changing the pin during playback does not resize the allocated buffer.</p>
+<h2 id="outputs-and-completion">Outputs and completion</h2>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Only the selected, delayed and filtered acoustic path.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Triggered after the longest queued acoustic path tail.</li>
+</ul>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-tip"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-tip" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M7.90625 2.15625C4.50944 2.15625 2.15625 4.58563 2.15625 7.54688C2.15625 8.96138 2.76575 9.88281 3.57075 10.8589L3.87837 11.2226C4.19894 11.6021 4.554 12.0218 4.84581 12.4416C5.25406 13.0324 5.61775 13.7296 5.7385 14.5834C5.76728 14.8608 5.68746 15.1386 5.51579 15.3583C5.34413 15.5781 5.09399 15.7228 4.8179 15.7621C4.5418 15.8013 4.26124 15.7321 4.03512 15.5689C3.809 15.4056 3.65493 15.1612 3.60525 14.8867C3.54775 14.4814 3.37094 14.1004 3.07338 13.6692C2.8306 13.3302 2.57055 13.0039 2.29425 12.6917C2.1735 12.5479 2.04556 12.397 1.909 12.2317C1.00769 11.1406 0 9.72613 0 7.54688C0 3.32062 3.39681 0 7.90625 0C12.4157 0 15.8125 3.32062 15.8125 7.54688C15.8125 9.72613 14.8048 11.1406 13.9035 12.2317C13.7669 12.397 13.639 12.5479 13.5183 12.6903C13.2207 13.0424 12.9677 13.3414 12.7406 13.6692C12.4416 14.1004 12.2662 14.4814 12.2087 14.8867C12.1557 15.1584 12.0003 15.3994 11.7747 15.5598C11.5492 15.7202 11.2706 15.7879 10.9965 15.7488C10.7225 15.7096 10.474 15.5667 10.3023 15.3496C10.1306 15.1325 10.0489 14.8577 10.074 14.582C10.1948 13.7296 10.5584 13.0324 10.9667 12.4416C11.2585 12.0218 11.6136 11.6021 11.9341 11.2226C12.0419 11.0961 12.1454 10.9739 12.2403 10.8589C13.0468 9.88281 13.6562 8.96138 13.6562 7.54688C13.6562 4.58563 11.3031 2.15625 7.90625 2.15625ZM4.67188 17.25H11.1406C11.4266 17.25 11.7008 17.3636 11.903 17.5658C12.1052 17.768 12.2188 18.0422 12.2188 18.3281C12.2188 18.6141 12.1052 18.8883 11.903 19.0905C11.7008 19.2927 11.4266 19.4062 11.1406 19.4062H4.67188C4.38594 19.4062 4.11171 19.2927 3.90953 19.0905C3.70734 18.8883 3.59375 18.6141 3.59375 18.3281C3.59375 18.0422 3.70734 17.768 3.90953 17.5658C4.11171 17.3636 4.38594 17.25 4.67188 17.25ZM5.03125 21.9219C5.03125 21.6359 5.14484 21.3617 5.34703 21.1595C5.54921 20.9573 5.82344 20.8438 6.10938 20.8438H9.70312C9.98906 20.8438 10.2633 20.9573 10.4655 21.1595C10.6677 21.3617 10.7812 21.6359 10.7812 21.9219C10.7812 22.2078 10.6677 22.482 10.4655 22.6842C10.2633 22.8864 9.98906 23 9.70312 23H6.10938C5.82344 23 5.54921 22.8864 5.34703 22.6842C5.14484 22.482 5.03125 22.2078 5.03125 21.9219Z" />
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>About finishing sounds</h5>
+<p>A trigger that indicates a source has finished is not always the end of <strong>everything audible</strong>. If you add propagation, early reflections or another tail-generating processor downstream, route completion through that final processor before ending your MetaSound Source.</p>
+        </div>
+    </div>
 </div>
-</retype-table>
-<h2 id="outputs">Outputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Only the selected, delayed and filtered acoustic path. |
-| `On Finished` | Trigger | Triggered after the longest queued acoustic path tail. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Out Mono</code></td>
-<td>Audio (mono)</td>
-<td>Only the selected, delayed and filtered acoustic path.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Finished</code></td>
-<td>Trigger</td>
-<td>Triggered after the longest queued acoustic path tail.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="behaviour-and-design-notes">Behaviour and design notes</h2>
-<p>The <code translate="no" v-pre>Selected Route</code> array is <code translate="no" v-pre>[delay ms, low loss dB, mid loss dB, high loss dB]</code>. This node renders one selected path, not separate simultaneous direct/around voices.</p>
-<blockquote>
-<p><strong>Units matter:</strong> Pin names indicate metres (<code translate="no" v-pre>m</code>), metres per second (<code translate="no" v-pre>m/s</code>), centimetres (<code translate="no" v-pre>cm</code>), milliseconds (<code translate="no" v-pre>ms</code>), decibels (<code translate="no" v-pre>dB</code>) and semitones (<code translate="no" v-pre>st</code>). Don&#x27;t convert centimetres to metres unless the target pin expects metres.</p>
-</blockquote>
-<h2 id="testing-checklist">Testing checklist</h2>
-<ol>
-<li>Test the intended input settings with a valid source recording or signal.</li>
-<li>Test zero/empty/invalid inputs where applicable.</li>
-<li>Test rapid parameter changes and retriggering where applicable.</li>
-<li>Verify output and completion behaviour in a packaged build before relying on the node in shipping content.</li>
-</ol>
-<p>See <a href="../../../acoustics/">Acoustics overview</a> and <a href="../../../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="things-to-watch-for">Things to watch for</h2>
+<ul>
+<li>Array order matters: <code translate="no" v-pre>[delay, low, mid, high]</code>. A wrongly ordered route can turn attenuation into a misleading filter response.</li>
+<li>If your MetaSound has downstream reverberation or reflections, use the <strong>last audible processor’s</strong> completion output rather than ending the source as soon as the original wave stops.</li>
+</ul>
+<doc-panel id="full-input-reference" collapsed>
+    <template #title>Full input reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Audio In</code></strong> · <em>Audio (mono)</em> — Mono input to propagate.</li>
+<li><strong><code translate="no" v-pre>Source Finished</code></strong> · <em>Trigger</em> — Wave Player On Finished; passed through after the path tails.</li>
+<li><strong><code translate="no" v-pre>Selected Route</code></strong> · <em>Float Array</em> — Float Array from AP.AcousticRoute.Selected: delay ms, low/mid/high loss dB. Route selection occurs on the game thread.</li>
+<li><strong><code translate="no" v-pre>Smoothing (ms)</code></strong> · <em>Float</em> — Smooth path loss and delay changes.</li>
+<li><strong><code translate="no" v-pre>Delay Capacity (ms)</code></strong> · <em>Float</em> — Delay buffer capacity allocated ONCE at graph creation. Default 128 ms; raise to 1500 ms only if long cinematic propagation is required. Changes during playback cannot grow the buffer.</li>
+</ul>
+</doc-panel>
+<doc-panel id="full-output-reference" collapsed>
+    <template #title>Full output reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Only the selected, delayed and filtered acoustic path.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Triggered after the longest queued acoustic path tail.</li>
+</ul>
+</doc-panel>
+<h2 id="continue-learning">Continue learning</h2>
+<p><a href="../../../../blueprint/acoustic-paths/">Acoustic path queries</a> explains how to obtain and publish the path data. Also see the <a href="../../../acoustics/">Acoustics overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -245,7 +222,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Acoustics</span>
+                                <span class="block mt-1">Acoustics node reference</span>
                             </span>
                         </a>
                     </div>

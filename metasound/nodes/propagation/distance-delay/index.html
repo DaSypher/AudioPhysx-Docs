@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Distance Delay</title>
     <meta name="title" content="AP: Distance Delay">
-    <meta name="description" content="MetaSound category: AudioPhysx → Propagation Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="description" content="MetaSound · AudioPhysx / Propagation">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/distance-delay/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/distance-delay/">
     <meta property="og:title" content="AP: Distance Delay">
-    <meta property="og:description" content="MetaSound category: AudioPhysx → Propagation Source contract: Unreal Engine 5.8.4 development source">
+    <meta property="og:description" content="MetaSound · AudioPhysx / Propagation">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/distance-delay/">
     <meta name="twitter:title" content="AP: Distance Delay">
-    <meta name="twitter:description" content="MetaSound category: AudioPhysx → Propagation Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="twitter:description" content="MetaSound · AudioPhysx / Propagation">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/distance-delay.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,97 +135,62 @@
 
                 <!-- Page content  -->
 <h1 id="ap-distance-delay">AP: Distance Delay</h1>
-<p><strong>MetaSound category:</strong> <code translate="no" v-pre>AudioPhysx → Propagation</code><br />
-<strong>Source contract:</strong> Unreal Engine 5.8.4 development source</p>
-<p>Delay mono audio based on distance divided by speed of sound.</p>
+<p><strong>MetaSound · AudioPhysx / Propagation</strong></p>
+<p>Delay a mono signal to imitate the time it takes sound to travel across a fixed source-to-listener distance.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-distance-delay.png -->
-<h2 id="when-to-use-it">When to use it</h2>
-<p>Large propagation distances, distinct far-off events and controlled travel-time effects.</p>
-<h2 id="quick-setup">Quick setup</h2>
-<p>Supply <code translate="no" v-pre>Distance (cm)</code>, speed of sound and maximum delay capacity, then trigger <code translate="no" v-pre>Relatch</code> when you need a new fixed delay.</p>
-<h2 id="inputs">Inputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Audio` | Audio (mono) | Mono audio input. |
-| `Distance (cm)` | Float | Distance travelled by sound in Unreal centimetres. Sampled only when latched. |
-| `Speed of Sound (m/s)` | Float | Propagation speed in metres per second.  Default 343 m/s. Converted internally to cm/s.  Sampled only when latched. |
-| `Max Delay (s)` | Float | Maximum delay capacity in seconds (0.01-10). Allocated when the operator is constructed. |
-| `Relatch` | Trigger | Recalculate propagation delay and discard the previous pending audio tail. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Audio</code></td>
-<td>Audio (mono)</td>
-<td>Mono audio input.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Distance (cm)</code></td>
-<td>Float</td>
-<td>Distance travelled by sound in Unreal centimetres. Sampled only when latched.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Speed of Sound (m/s)</code></td>
-<td>Float</td>
-<td>Propagation speed in metres per second.  Default 343 m/s. Converted internally to cm/s.  Sampled only when latched.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Max Delay (s)</code></td>
-<td>Float</td>
-<td>Maximum delay capacity in seconds (0.01-10). Allocated when the operator is constructed.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Relatch</code></td>
-<td>Trigger</td>
-<td>Recalculate propagation delay and discard the previous pending audio tail.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="outputs">Outputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Audio` | Audio (mono) | Delayed mono audio. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Audio</code></td>
-<td>Audio (mono)</td>
-<td>Delayed mono audio.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="behaviour-and-design-notes">Behaviour and design notes</h2>
-<p>Delay capacity is allocated when the operator is built. Increasing it raises per-instance memory use.</p>
-<blockquote>
-<p><strong>Units matter:</strong> Pin names indicate metres (<code translate="no" v-pre>m</code>), metres per second (<code translate="no" v-pre>m/s</code>), centimetres (<code translate="no" v-pre>cm</code>), milliseconds (<code translate="no" v-pre>ms</code>), decibels (<code translate="no" v-pre>dB</code>) and semitones (<code translate="no" v-pre>st</code>). Don&#x27;t convert centimetres to metres unless the target pin expects metres.</p>
-</blockquote>
-<h2 id="testing-checklist">Testing checklist</h2>
-<ol>
-<li>Test the intended input settings with a valid source recording or signal.</li>
-<li>Test zero/empty/invalid inputs where applicable.</li>
-<li>Test rapid parameter changes and retriggering where applicable.</li>
-<li>Verify output and completion behaviour in a packaged build before relying on the node in shipping content.</li>
-</ol>
-<p>See <a href="../../../propagation/">Propagation overview</a> and <a href="../../../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="what-actually-happens">What actually happens</h2>
+<p>Sound does not arrive instantly in the real world. This node approximates travel time as <strong>distance divided by speed of sound</strong>, then delays the incoming audio by that amount, subject to the available buffer capacity.</p>
+<p>The distinctive control is <code translate="no" v-pre>Relatch</code>: instead of necessarily treating every small movement as a continuous Doppler effect, the delay can be captured deliberately for a discrete event such as an explosion.</p>
+<h2 id="hear-it-in-a-game">Hear it in a game</h2>
+<p>Take an explosion recording at a fixed distance and compare an immediate playback with a latched delayed version. At ordinary air sound speeds, a distant explosion should arrive later even when the visual event has already occurred.</p>
+<h2 id="build-a-working-graph">Build a working graph</h2>
+<doc-steps>
+   <doc-step id="connect-the-mono-sound" step-number="1">
+      <template #title>Connect the mono sound</template>
+<p>Feed a mono audio signal into <code translate="no" v-pre>Audio</code>.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="provide-distance-and-sound-speed" step-number="2">
+      <template #title>Provide distance and sound speed</template>
+<p>Set <code translate="no" v-pre>Distance (cm)</code> and <code translate="no" v-pre>Speed of Sound (m/s)</code> with consistent units.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="latch-the-intended-travel-time" step-number="3">
+      <template #title>Latch the intended travel time</template>
+<p>Ensure <code translate="no" v-pre>Max Delay (s)</code> is large enough for the intended distance, then use <code translate="no" v-pre>Relatch</code> when the playback event needs the current delay captured.</p>
+   </doc-step>
+</doc-steps>
+<h2 id="the-controls-that-matter">The controls that matter</h2>
+<p><code translate="no" v-pre>Distance (cm)</code> is the source-listener separation in Unreal centimetres. <code translate="no" v-pre>Speed of Sound (m/s)</code> is in metres per second. <code translate="no" v-pre>Max Delay (s)</code> caps how much memory the delay buffer reserves. <code translate="no" v-pre>Relatch</code> requests a new captured delay value.</p>
+<h2 id="what-the-node-outputs">What the node outputs</h2>
+<ul>
+<li><strong><code translate="no" v-pre>Audio</code></strong> · Audio (mono) — Delayed mono audio.</li>
+</ul>
+<h2 id="things-to-watch-for">Things to watch for</h2>
+<ul>
+<li>A travel-time delay and a manually delayed sound can add together. Avoid applying both unless that is intentional.</li>
+<li>A large maximum delay reserves more audio memory; choose the smallest capacity that covers your intended scenario.</li>
+</ul>
+<doc-panel id="full-input-reference" collapsed>
+    <template #title>Full input reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Audio</code></strong> · <em>Audio (mono)</em> — Mono audio input.</li>
+<li><strong><code translate="no" v-pre>Distance (cm)</code></strong> · <em>Float</em> — Distance travelled by sound in Unreal centimetres. Sampled only when latched.</li>
+<li><strong><code translate="no" v-pre>Speed of Sound (m/s)</code></strong> · <em>Float</em> — Propagation speed in metres per second.  Default 343 m/s. Converted internally to cm/s.  Sampled only when latched.</li>
+<li><strong><code translate="no" v-pre>Max Delay (s)</code></strong> · <em>Float</em> — Maximum delay capacity in seconds (0.01-10). Allocated when the operator is constructed.</li>
+<li><strong><code translate="no" v-pre>Relatch</code></strong> · <em>Trigger</em> — Recalculate propagation delay and discard the previous pending audio tail.</li>
+</ul>
+</doc-panel>
+<doc-panel id="full-output-reference" collapsed>
+    <template #title>Full output reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Audio</code></strong> · Audio (mono) — Delayed mono audio.</li>
+</ul>
+</doc-panel>
+<h2 id="continue-learning">Continue learning</h2>
+<p><a href="../dynamic-propagation/">Dynamic Propagation</a> handles continuously changing distance and moving-source effects. Also see the <a href="../../../propagation/">Propagation overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
 
                 
                 <!-- Required only on API pages -->

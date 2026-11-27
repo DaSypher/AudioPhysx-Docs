@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>QoL node reference</title>
-    <meta name="title" content="QoL node reference">
-    <meta name="description" content="AP: Distance Switch (Dynamic) — Route a trigger to one of several expandable distance bands.">
+    <title>QoL reference</title>
+    <meta name="title" content="QoL reference">
+    <meta name="description" content="These utilities help manage triggers and smooth the values feeding other nodes.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/">
-    <meta property="og:title" content="QoL node reference">
-    <meta property="og:description" content="AP: Distance Switch (Dynamic) — Route a trigger to one of several expandable distance bands.">
+    <meta property="og:title" content="QoL reference">
+    <meta property="og:description" content="These utilities help manage triggers and smooth the values feeding other nodes.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/">
-    <meta name="twitter:title" content="QoL node reference">
-    <meta name="twitter:description" content="AP: Distance Switch (Dynamic) — Route a trigger to one of several expandable distance bands.">
+    <meta name="twitter:title" content="QoL reference">
+    <meta name="twitter:description" content="These utilities help manage triggers and smooth the values feeding other nodes.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/readme.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,13 +134,17 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="qol-node-reference">QoL node reference</h1>
-<ul>
-<li><a href="distance-switch/">AP: Distance Switch (Dynamic)</a> — Route a trigger to one of several expandable distance bands.</li>
-<li><a href="float-smoother/">AP: Float Smoother</a> — Apply independent rise and fall smoothing to a floating-point control value.</li>
-<li><a href="trigger-cooldown/">AP: Trigger Cooldown</a> — Let triggers through only when a configured cooldown has elapsed.</li>
-<li><a href="trigger-probability/">AP: Trigger Probability</a> — Allow or reject incoming triggers according to a configurable probability.</li>
-</ul>
+<h1 id="qol-reference">QoL reference</h1>
+<p>These utilities help manage triggers and smooth the values feeding other nodes.</p>
+<h3 id="ap-distance-switch-dynamic"><a href="distance-switch/">AP: Distance Switch (Dynamic)</a></h3>
+<p>Route one trigger into an appropriate distance range, without building a large nested Switch graph.</p>
+<h3 id="ap-float-smoother"><a href="float-smoother/">AP: Float Smoother</a></h3>
+<p>Prevent sudden gameplay value changes from producing audible jumps in volume, filtering or other controls.</p>
+<h3 id="ap-trigger-cooldown"><a href="trigger-cooldown/">AP: Trigger Cooldown</a></h3>
+<p>Reject rapid repeated trigger events until a chosen minimum interval has elapsed.</p>
+<h3 id="ap-trigger-probability"><a href="trigger-probability/">AP: Trigger Probability</a></h3>
+<p>Let an incoming trigger through only some of the time.</p>
+<p><a href="../../qol/">Back to QoL overview</a></p>
 
                 
                 <!-- Required only on API pages -->
@@ -207,6 +211,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "QoL", level: 3, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/metasound/nodes/qol/readme.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "QoL node reference", level: 3, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/metasound/nodes/qol/readme.md" }</script>
 </body>
 </html>

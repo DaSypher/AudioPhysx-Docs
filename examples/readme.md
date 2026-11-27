@@ -1,12 +1,16 @@
-# Examples and recipes
+# Learn by building something audible
 
-These are small, task-oriented walkthroughs meant to show a useful result before you explore the complete node catalogue.
+Every recipe here starts with a sound-design goal, not a list of API calls. You can follow a short graph, listen for a specific result, and then explore the deeper node reference when you want more control.
 
-1. [Randomized one-shot sounds](randomized-one-shot.md)
-2. [Automatic weapon with RPM](automatic-weapon.md)
-3. [Multi-stage sound variation](random-sequence.md)
-4. [Material-dependent footsteps](material-footsteps.md)
-5. [Projectile near-miss flyby](projectile-flyby.md)
-6. [Basic acoustic obstruction](acoustic-obstruction.md)
+## Choose a result
 
-Each recipe explains inputs, a minimal graph, the expected result and what you should listen for.
+[!card layout="compact" title="Randomized one-shot" text="Build a repeatable impact or Foley event from several takes."](randomized-one-shot.md)
+[!card layout="compact" title="Automatic weapon at a chosen RPM" text="Start, overlapping middle shots, release and proper completion."](automatic-weapon.md)
+[!card layout="compact" title="Multi-stage variation" text="Fixed action stages with a new random recording at each stage."](random-sequence.md)
+[!card layout="compact" title="Material-dependent footsteps" text="Route audio from a physical-material path or surface type."](material-footsteps.md)
+[!card layout="compact" title="Projectile near miss" text="Path proximity, whizz/crack layers and game-side scheduling."](projectile-flyby.md)
+[!card layout="compact" title="Basic acoustic obstruction" text="Compare authored transmission with world-selected acoustic paths."](acoustic-obstruction.md)
+
+!!!tip Use your own recordings
+These examples describe how to wire and test AudioPhysx. They do **not** include or grant rights to sound recordings. Use licensed or original Wave Assets and check their loudness and edit points before judging the node's result.
+!!!

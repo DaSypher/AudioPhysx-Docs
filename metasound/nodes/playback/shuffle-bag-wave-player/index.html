@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Shuffle-Bag Wave Player</title>
     <meta name="title" content="AP: Shuffle-Bag Wave Player">
-    <meta name="description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/shuffle-bag-wave-player/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/shuffle-bag-wave-player/">
     <meta property="og:title" content="AP: Shuffle-Bag Wave Player">
-    <meta property="og:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta property="og:description" content="MetaSound · AudioPhysx / Playback">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/shuffle-bag-wave-player/">
     <meta name="twitter:title" content="AP: Shuffle-Bag Wave Player">
-    <meta name="twitter:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="twitter:description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/shuffle-bag-wave-player.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,145 +135,74 @@
 
                 <!-- Page content  -->
 <h1 id="ap-shuffle-bag-wave-player">AP: Shuffle-Bag Wave Player</h1>
-<p><strong>MetaSound category:</strong> <code translate="no" v-pre>AudioPhysx → Playback</code><br />
-<strong>Source contract:</strong> Unreal Engine 5.8.4 development source</p>
-<p>Draw from a weighted bag of wave variations while reducing repetition across successive triggers.</p>
+<p><strong>MetaSound · AudioPhysx / Playback</strong></p>
+<p>Choose variations without repeatedly favoring the same few recordings, with weights and an explicit bag reset.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-shuffle-bag-wave-player.png -->
-<h2 id="when-to-use-it">When to use it</h2>
-<p>Footsteps, dialogue barks, repetitive mechanisms and repeated impact samples.</p>
-<h2 id="quick-setup">Quick setup</h2>
-<p>Supply a <code translate="no" v-pre>Waves</code> array and optional aligned <code translate="no" v-pre>Weights</code>. Trigger <code translate="no" v-pre>Play</code>; use <code translate="no" v-pre>Reset Bag</code> when you want a fresh cycle.</p>
-<h2 id="inputs">Inputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Play` | Trigger | Draw and play one unused eligible wave. |
-| `Stop` | Trigger | Stop all current voices without firing On Finished. |
-| `Reset Bag` | Trigger | Discard the remaining bag; keep playing voices. |
-| `Waves` | Wave Asset Array | Wave Asset Array. Maximum 128 entries. |
-| `Weights` | Float Array | Optional non-negative weights aligned with Waves. Missing entries use 1; zero excludes an entry. |
-| `Pitch Shift (st)` | Float | Playback-rate pitch in semitones, -24 to 24. |
-| `Gain (dB)` | Float | Gain for newly started voices, -96 to +12 dB. |
-| `Max Voices` | Integer | Maximum overlapping voices (1 to 16). |
-| `Seed` | Integer | Nonzero seed is deterministic. Zero selects a random seed. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Play</code></td>
-<td>Trigger</td>
-<td>Draw and play one unused eligible wave.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Stop</code></td>
-<td>Trigger</td>
-<td>Stop all current voices without firing On Finished.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Reset Bag</code></td>
-<td>Trigger</td>
-<td>Discard the remaining bag; keep playing voices.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Waves</code></td>
-<td>Wave Asset Array</td>
-<td>Wave Asset Array. Maximum 128 entries.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Weights</code></td>
-<td>Float Array</td>
-<td>Optional non-negative weights aligned with Waves. Missing entries use 1; zero excludes an entry.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Pitch Shift (st)</code></td>
-<td>Float</td>
-<td>Playback-rate pitch in semitones, -24 to 24.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Gain (dB)</code></td>
-<td>Float</td>
-<td>Gain for newly started voices, -96 to +12 dB.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Max Voices</code></td>
-<td>Integer</td>
-<td>Maximum overlapping voices (1 to 16).</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Seed</code></td>
-<td>Integer</td>
-<td>Nonzero seed is deterministic. Zero selects a random seed.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="outputs">Outputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Mixed playback audio. |
-| `On Finished` | Trigger | Final active voice finished naturally. |
-| `On Rejected` | Trigger | No eligible wave, free voice or playable proxy. |
-| `Selected Index` | Integer | Most recent selected index; -1 on rejection/Stop. |
-| `Bag Remaining` | Integer | Number of unplayed entries left in the current bag. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Out Mono</code></td>
-<td>Audio (mono)</td>
-<td>Mixed playback audio.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Finished</code></td>
-<td>Trigger</td>
-<td>Final active voice finished naturally.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Rejected</code></td>
-<td>Trigger</td>
-<td>No eligible wave, free voice or playable proxy.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Selected Index</code></td>
-<td>Integer</td>
-<td>Most recent selected index; -1 on rejection/Stop.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Bag Remaining</code></td>
-<td>Integer</td>
-<td>Number of unplayed entries left in the current bag.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="behaviour-and-design-notes">Behaviour and design notes</h2>
-<p><code translate="no" v-pre>Selected Index</code> and <code translate="no" v-pre>Bag Remaining</code> are diagnostic outputs. Invalid or zero-weight entries are not eligible.</p>
-<blockquote>
-<p><strong>Units matter:</strong> Pin names indicate metres (<code translate="no" v-pre>m</code>), metres per second (<code translate="no" v-pre>m/s</code>), centimetres (<code translate="no" v-pre>cm</code>), milliseconds (<code translate="no" v-pre>ms</code>), decibels (<code translate="no" v-pre>dB</code>) and semitones (<code translate="no" v-pre>st</code>). Don&#x27;t convert centimetres to metres unless the target pin expects metres.</p>
-</blockquote>
-<h2 id="testing-checklist">Testing checklist</h2>
-<ol>
-<li>Test the intended input settings with a valid source recording or signal.</li>
-<li>Test zero/empty/invalid inputs where applicable.</li>
-<li>Test rapid parameter changes and retriggering where applicable.</li>
-<li>Verify output and completion behaviour in a packaged build before relying on the node in shipping content.</li>
-</ol>
-<p>See <a href="../../../playback/">Playback overview</a> and <a href="../../../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="what-actually-happens">What actually happens</h2>
+<p>A shuffle bag builds a cycle of eligible selections, drawing from that pool until it has been exhausted. That differs from plain random selection: over a full cycle, you get more controlled coverage of the available options.</p>
+<p>The node also supports weights, gain and pitch controls and multiple voices. It is useful for repetitive sound events where players can quickly notice when a particular clip keeps returning.</p>
+<h2 id="hear-it-in-a-game">Hear it in a game</h2>
+<p>Put six footsteps recorded on the same surface into <code translate="no" v-pre>Waves</code>. Trigger the node on every step. The sequence should feel varied without the same take being chosen repeatedly at random. Use <code translate="no" v-pre>Reset Bag</code> if the game needs to deliberately start a new selection cycle.</p>
+<h2 id="build-a-working-graph">Build a working graph</h2>
+<doc-steps>
+   <doc-step id="build-the-bag" step-number="1">
+      <template #title>Build the bag</template>
+<p>Supply the <code translate="no" v-pre>Waves</code> array with the desired recordings.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="configure-the-selection-rules" step-number="2">
+      <template #title>Configure the selection rules</template>
+<p>If using <code translate="no" v-pre>Weights</code>, align the weight entries to the wave array and test the resulting distribution; omit extra complexity when equal weighting is enough.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="play-and-reset-when-needed" step-number="3">
+      <template #title>Play and reset when needed</template>
+<p>Wire <code translate="no" v-pre>Play</code> and <code translate="no" v-pre>Out Mono</code>. Use <code translate="no" v-pre>Reset Bag</code> only when deliberately restarting the selection history.</p>
+   </doc-step>
+</doc-steps>
+<h2 id="the-controls-that-matter">The controls that matter</h2>
+<p><code translate="no" v-pre>Weights</code> biases which clips appear more or less often; they do not change loudness. <code translate="no" v-pre>Seed</code> controls reproducibility when a deterministic sequence is useful for tests. <code translate="no" v-pre>Pitch Shift (st)</code> and <code translate="no" v-pre>Gain (dB)</code> shape the sound after selection. <code translate="no" v-pre>Max Voices</code> limits overlap.</p>
+<h2 id="outputs-and-completion">Outputs and completion</h2>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mixed playback audio.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Final active voice finished naturally.</li>
+<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — No eligible wave, free voice or playable proxy.</li>
+<li><strong><code translate="no" v-pre>Selected Index</code></strong> · Integer — Most recent selected index; -1 on rejection/Stop.</li>
+<li><strong><code translate="no" v-pre>Bag Remaining</code></strong> · Integer — Number of unplayed entries left in the current bag.</li>
+</ul>
+<h2 id="things-to-watch-for">Things to watch for</h2>
+<ul>
+<li>Weights and wave indices must describe the same selection order; keep arrays synchronized when editing.</li>
+<li>Shuffle-bag behaviour applies to <em>selection</em>, not the timing of events. The game still needs to send the <code translate="no" v-pre>Play</code> triggers.</li>
+</ul>
+<doc-panel id="full-input-reference" collapsed>
+    <template #title>Full input reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Play</code></strong> · <em>Trigger</em> — Draw and play one unused eligible wave.</li>
+<li><strong><code translate="no" v-pre>Stop</code></strong> · <em>Trigger</em> — Stop all current voices without firing On Finished.</li>
+<li><strong><code translate="no" v-pre>Reset Bag</code></strong> · <em>Trigger</em> — Discard the remaining bag; keep playing voices.</li>
+<li><strong><code translate="no" v-pre>Waves</code></strong> · <em>Wave Asset Array</em> — Wave Asset Array. Maximum 128 entries.</li>
+<li><strong><code translate="no" v-pre>Weights</code></strong> · <em>Float Array</em> — Optional non-negative weights aligned with Waves. Missing entries use 1; zero excludes an entry.</li>
+<li><strong><code translate="no" v-pre>Pitch Shift (st)</code></strong> · <em>Float</em> — Playback-rate pitch in semitones, -24 to 24.</li>
+<li><strong><code translate="no" v-pre>Gain (dB)</code></strong> · <em>Float</em> — Gain for newly started voices, -96 to +12 dB.</li>
+<li><strong><code translate="no" v-pre>Max Voices</code></strong> · <em>Integer</em> — Maximum overlapping voices (1 to 16).</li>
+<li><strong><code translate="no" v-pre>Seed</code></strong> · <em>Integer</em> — Nonzero seed is deterministic. Zero selects a random seed.</li>
+</ul>
+</doc-panel>
+<doc-panel id="full-output-reference" collapsed>
+    <template #title>Full output reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mixed playback audio.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Final active voice finished naturally.</li>
+<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — No eligible wave, free voice or playable proxy.</li>
+<li><strong><code translate="no" v-pre>Selected Index</code></strong> · Integer — Most recent selected index; -1 on rejection/Stop.</li>
+<li><strong><code translate="no" v-pre>Bag Remaining</code></strong> · Integer — Number of unplayed entries left in the current bag.</li>
+</ul>
+</doc-panel>
+<h2 id="continue-learning">Continue learning</h2>
+<p><a href="../random-wave-player/">Random Wave Player</a> is simpler when draw-history control is unnecessary. Also see the <a href="../../../playback/">Playback overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
 
                 
                 <!-- Required only on API pages -->

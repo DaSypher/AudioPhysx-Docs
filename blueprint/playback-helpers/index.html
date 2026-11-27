@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Blueprint playback helpers</title>
-    <meta name="title" content="Blueprint playback helpers">
-    <meta name="description" content="The public UAPAudioBlueprintLibrary exposes these callable operations in the current source:">
+    <title>Playback helpers from Blueprint</title>
+    <meta name="title" content="Playback helpers from Blueprint">
+    <meta name="description" content="You don't need a dedicated audio Actor to use every AudioPhysx feature. The public Blueprint library provides convenient entry points for sounds at world locations and for registering existing audio components with the plugin's managed update system.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/playback-helpers/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/playback-helpers/">
-    <meta property="og:title" content="Blueprint playback helpers">
-    <meta property="og:description" content="The public UAPAudioBlueprintLibrary exposes these callable operations in the current source:">
+    <meta property="og:title" content="Playback helpers from Blueprint">
+    <meta property="og:description" content="You don't need a dedicated audio Actor to use every AudioPhysx feature. The public Blueprint library provides convenient entry points for sounds at world locations and for registering existing audio components with the plugin's managed update system.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/playback-helpers/">
-    <meta name="twitter:title" content="Blueprint playback helpers">
-    <meta name="twitter:description" content="The public UAPAudioBlueprintLibrary exposes these callable operations in the current source:">
+    <meta name="twitter:title" content="Playback helpers from Blueprint">
+    <meta name="twitter:description" content="You don't need a dedicated audio Actor to use every AudioPhysx feature. The public Blueprint library provides convenient entry points for sounds at world locations and for registering existing audio components with the plugin's managed update system.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/playback-helpers.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,59 +134,37 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="blueprint-playback-helpers">Blueprint playback helpers</h1>
-<p>The public <code translate="no" v-pre>UAPAudioBlueprintLibrary</code> exposes these callable operations in the current source:</p>
-<retype-table copy-text="| Display name | Purpose / primary inputs |
-| --- | --- |
-| `AP: Play Physical Sound` | Play `USoundBase` at a location and source rotation, with optional obstruction query and volume scaling. |
-| `AP: Play Physical Impact` | Play a sound using hit location data, with optional obstruction query. |
-| `AP: Register Audio Component` | Register an existing audio component for managed AudioPhysx parameter updates; choose whether to trace obstruction. |
-| `AP: Unregister Audio Component` | Remove that audio component from managed updates. |
-| `AP: Set World Environment` | Update temperature, relative humidity and pressure for the AudioPhysx world context. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Display name</th>
-<th>Purpose / primary inputs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>AP: Play Physical Sound</code></td>
-<td>Play <code translate="no" v-pre>USoundBase</code> at a location and source rotation, with optional obstruction query and volume scaling.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>AP: Play Physical Impact</code></td>
-<td>Play a sound using hit location data, with optional obstruction query.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>AP: Register Audio Component</code></td>
-<td>Register an existing audio component for managed AudioPhysx parameter updates; choose whether to trace obstruction.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>AP: Unregister Audio Component</code></td>
-<td>Remove that audio component from managed updates.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>AP: Set World Environment</code></td>
-<td>Update temperature, relative humidity and pressure for the AudioPhysx world context.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="typical-flow">Typical flow</h2>
-<ol>
-<li>Prepare a MetaSound Source using the relevant AudioPhysx interface/parameters.</li>
-<li>Supply a <code translate="no" v-pre>USoundBase</code> and world context to the Blueprint helper.</li>
-<li>Pass location, rotation or an <code translate="no" v-pre>FHitResult</code> from your own gameplay system.</li>
-<li>Verify the sound and any propagated acoustic parameters in standalone play.</li>
-</ol>
+<h1 id="playback-helpers-from-blueprint">Playback helpers from Blueprint</h1>
+<p>You don&#x27;t need a dedicated audio Actor to use every AudioPhysx feature. The public Blueprint library provides convenient entry points for sounds at world locations and for registering existing audio components with the plugin&#x27;s managed update system.</p>
+<h2 id="play-a-sound-at-a-world-position">Play a sound at a world position</h2>
+<p><strong><code translate="no" v-pre>AP: Play Physical Sound</code></strong> accepts a sound asset, world location and source rotation, with volume and optional acoustic/obstruction behaviour exposed by its Blueprint function. This is suitable when the game already knows where an event happened, such as a door slam or explosion.</p>
+<p><strong><code translate="no" v-pre>AP: Play Physical Impact</code></strong> is the related convenience operation when you already have an <code translate="no" v-pre>FHitResult</code>. It can use hit-location information rather than requiring you to reconstruct the position by hand.</p>
+<p>Neither operation creates a sound recording. You still supply a <code translate="no" v-pre>USoundBase</code>, usually a prepared MetaSound Source or other Unreal sound asset.</p>
 <!-- IMAGE SLOT: docs/static/images/blueprint/bp-play-physical-sound.png -->
-<blockquote>
-<p>These functions don&#x27;t produce sound recordings automatically; the supplied sound asset is still required. Some rely on world registration/configuration and may behave differently if no listener or audio device is available.</p>
-</blockquote>
+<h2 id="keep-an-existing-audio-component-updated">Keep an existing Audio Component updated</h2>
+<p><strong><code translate="no" v-pre>AP: Register Audio Component</code></strong> associates an existing <code translate="no" v-pre>UAudioComponent</code> with managed AudioPhysx parameter updates. The registration call allows obstruction tracing to be enabled or disabled. <strong><code translate="no" v-pre>AP: Unregister Audio Component</code></strong> removes it from that management when it is no longer required.</p>
+<p>This is useful for persistent emitters, where creating a new sound for every update would be inappropriate. Registration should follow the component&#x27;s lifetime so the world subsystem does not keep attempting work on an irrelevant emitter.</p>
+<h2 id="set-the-world-environment">Set the world environment</h2>
+<p><strong><code translate="no" v-pre>AP: Set World Environment</code></strong> supplies temperature, humidity and pressure values for the AudioPhysx world context. These are used by relevant acoustic processing paths; they do not, on their own, change every sound in the game.</p>
+<h2 id="a-reasonable-first-test">A reasonable first test</h2>
+<p>Create a mono MetaSound Source with a simple Wave Player, call <code translate="no" v-pre>AP: Play Physical Sound</code> at a known location, and verify that it is audible with expected spatialization. Once basic playback works, enable acoustic processing and compare with an unobstructed control sound.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-warning" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
+                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>Availability matters</h5>
+<p>The helper requires a valid world/audio environment and a supported sound asset. If you&#x27;re debugging a silent sound, test the MetaSound directly before assuming the Blueprint&#x27;s acoustic query is at fault.</p>
+        </div>
+    </div>
+</div>
 
                 
                 <!-- Required only on API pages -->
@@ -200,7 +178,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Flyby: Blueprint setup</span>
+                                <span class="block mt-1">Projectile flybys</span>
                             </span>
                         </a>
                     </div>

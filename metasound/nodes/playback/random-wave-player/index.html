@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Random Wave Player</title>
     <meta name="title" content="AP: Random Wave Player">
-    <meta name="description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-wave-player/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-wave-player/">
     <meta property="og:title" content="AP: Random Wave Player">
-    <meta property="og:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta property="og:description" content="MetaSound · AudioPhysx / Playback">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-wave-player/">
     <meta name="twitter:title" content="AP: Random Wave Player">
-    <meta name="twitter:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="twitter:description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-wave-player.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,121 +135,69 @@
 
                 <!-- Page content  -->
 <h1 id="ap-random-wave-player">AP: Random Wave Player</h1>
-<p><strong>MetaSound category:</strong> <code translate="no" v-pre>AudioPhysx → Playback</code><br />
-<strong>Source contract:</strong> Unreal Engine 5.8.4 development source</p>
-<p>Select one random playable Wave Asset and output its mono audio.</p>
+<p><strong>MetaSound · AudioPhysx / Playback</strong></p>
+<p>Play a random recording from an array whenever an event occurs, with optional variation and multiple simultaneous voices.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-random-wave-player.png -->
-<h2 id="when-to-use-it">When to use it</h2>
-<p>Most non-repeating one-shots: Foley, interactions, weapons and interface sounds.</p>
-<h2 id="quick-setup">Quick setup</h2>
-<p>Populate <code translate="no" v-pre>Waves</code>, trigger <code translate="no" v-pre>Play</code>, and connect <code translate="no" v-pre>Out Mono</code>. Configure pitch variation and simultaneous-voice count when useful.</p>
-<h2 id="inputs">Inputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Play` | Trigger | Select one random valid Wave Asset and play it. |
-| `Stop` | Trigger | Stop all active wave playback. |
-| `Waves` | Wave Asset Array | Array of Wave Assets to randomly select from. |
-| `No Immediate Repeat` | Boolean | Prevent consecutive selections of the same  wave when alternatives are available. |
-| `Pitch Shift (st)` | Float | Playback pitch adjustment in semitones.  Also changes playback duration. |
-| `Max Voices` | Integer | Maximum number of overlapping recordings,  from 1 to 16. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Play</code></td>
-<td>Trigger</td>
-<td>Select one random valid Wave Asset and play it.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Stop</code></td>
-<td>Trigger</td>
-<td>Stop all active wave playback.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Waves</code></td>
-<td>Wave Asset Array</td>
-<td>Array of Wave Assets to randomly select from.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>No Immediate Repeat</code></td>
-<td>Boolean</td>
-<td>Prevent consecutive selections of the same  wave when alternatives are available.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Pitch Shift (st)</code></td>
-<td>Float</td>
-<td>Playback pitch adjustment in semitones.  Also changes playback duration.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Max Voices</code></td>
-<td>Integer</td>
-<td>Maximum number of overlapping recordings,  from 1 to 16.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="outputs">Outputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Mixed mono output from active voices. |
-| `On Finished` | Trigger | Triggered when the final active voice  finishes naturally. |
-| `On Rejected` | Trigger | Triggered when playback cannot start. |
-| `Selected Index` | Integer | Index of the most recently accepted wave,  or -1 for a rejected selection. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Out Mono</code></td>
-<td>Audio (mono)</td>
-<td>Mixed mono output from active voices.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Finished</code></td>
-<td>Trigger</td>
-<td>Triggered when the final active voice  finishes naturally.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Rejected</code></td>
-<td>Trigger</td>
-<td>Triggered when playback cannot start.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Selected Index</code></td>
-<td>Integer</td>
-<td>Index of the most recently accepted wave,  or -1 for a rejected selection.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="behaviour-and-design-notes">Behaviour and design notes</h2>
-<p>Use <code translate="no" v-pre>No Immediate Repeat</code> when you have multiple recordings and want to avoid the same take twice in succession.</p>
-<blockquote>
-<p><strong>Units matter:</strong> Pin names indicate metres (<code translate="no" v-pre>m</code>), metres per second (<code translate="no" v-pre>m/s</code>), centimetres (<code translate="no" v-pre>cm</code>), milliseconds (<code translate="no" v-pre>ms</code>), decibels (<code translate="no" v-pre>dB</code>) and semitones (<code translate="no" v-pre>st</code>). Don&#x27;t convert centimetres to metres unless the target pin expects metres.</p>
-</blockquote>
-<h2 id="testing-checklist">Testing checklist</h2>
-<ol>
-<li>Test the intended input settings with a valid source recording or signal.</li>
-<li>Test zero/empty/invalid inputs where applicable.</li>
-<li>Test rapid parameter changes and retriggering where applicable.</li>
-<li>Verify output and completion behaviour in a packaged build before relying on the node in shipping content.</li>
-</ol>
-<p>See <a href="../../../playback/">Playback overview</a> and <a href="../../../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="what-actually-happens">What actually happens</h2>
+<p>This is the everyday alternative to placing a Random Get and Wave Player chain in every graph. The node chooses a playable Wave Asset from <code translate="no" v-pre>Waves</code> on each <code translate="no" v-pre>Play</code>, then sends the decoded audio to one mono output.</p>
+<p>For events that can happen in quick succession, the configured voice capacity allows recordings to overlap. <code translate="no" v-pre>No Immediate Repeat</code> is useful when a small sound library would otherwise make identical successive takes too obvious.</p>
+<h2 id="hear-it-in-a-game">Hear it in a game</h2>
+<p>Use five short stone-impact recordings and connect a gameplay impact trigger to <code translate="no" v-pre>Play</code>. Trigger them repeatedly at different intervals. You should hear variation in the selected recordings rather than a perfectly identical impact each time.</p>
+<h2 id="build-a-working-graph">Build a working graph</h2>
+<doc-steps>
+   <doc-step id="prepare-the-variation-pool" step-number="1">
+      <template #title>Prepare the variation pool</template>
+<p>Supply several recordings of the same <em>kind</em> of event to <code translate="no" v-pre>Waves</code>.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="connect-the-gameplay-trigger" step-number="2">
+      <template #title>Connect the gameplay trigger</template>
+<p>Trigger <code translate="no" v-pre>Play</code> when that event happens; connect <code translate="no" v-pre>Out Mono</code> to the output.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="test-overlapping-events" step-number="3">
+      <template #title>Test overlapping events</template>
+<p>Set <code translate="no" v-pre>Max Voices</code> for the expected overlap and test <code translate="no" v-pre>No Immediate Repeat</code> with at least two valid choices.</p>
+   </doc-step>
+</doc-steps>
+<h2 id="the-controls-that-matter">The controls that matter</h2>
+<p><code translate="no" v-pre>Pitch Shift (st)</code> changes playback pitch in <strong>semitones</strong>; for orientation, +12 semitones is one octave and −12 is one octave down. <code translate="no" v-pre>Max Voices</code> is a capacity limit, not a guarantee that every incoming trigger will be heard under load. <code translate="no" v-pre>Stop</code> is for stopping the active playback rather than selecting another sound.</p>
+<h2 id="outputs-and-completion">Outputs and completion</h2>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mixed mono output from active voices.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Triggered when the final active voice  finishes naturally.</li>
+<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — Triggered when playback cannot start.</li>
+<li><strong><code translate="no" v-pre>Selected Index</code></strong> · Integer — Index of the most recently accepted wave,  or -1 for a rejected selection.</li>
+</ul>
+<h2 id="things-to-watch-for">Things to watch for</h2>
+<ul>
+<li>Recordings should be edited to comparable perceived loudness first. Randomization will not normalize badly mismatched takes.</li>
+<li>Check what happens at the maximum simultaneous-voice setting in an actual combat or destruction scene.</li>
+</ul>
+<doc-panel id="full-input-reference" collapsed>
+    <template #title>Full input reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Play</code></strong> · <em>Trigger</em> — Select one random valid Wave Asset and play it.</li>
+<li><strong><code translate="no" v-pre>Stop</code></strong> · <em>Trigger</em> — Stop all active wave playback.</li>
+<li><strong><code translate="no" v-pre>Waves</code></strong> · <em>Wave Asset Array</em> — Array of Wave Assets to randomly select from.</li>
+<li><strong><code translate="no" v-pre>No Immediate Repeat</code></strong> · <em>Boolean</em> — Prevent consecutive selections of the same  wave when alternatives are available.</li>
+<li><strong><code translate="no" v-pre>Pitch Shift (st)</code></strong> · <em>Float</em> — Playback pitch adjustment in semitones.  Also changes playback duration.</li>
+<li><strong><code translate="no" v-pre>Max Voices</code></strong> · <em>Integer</em> — Maximum number of overlapping recordings,  from 1 to 16.</li>
+</ul>
+</doc-panel>
+<doc-panel id="full-output-reference" collapsed>
+    <template #title>Full output reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mixed mono output from active voices.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Triggered when the final active voice  finishes naturally.</li>
+<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — Triggered when playback cannot start.</li>
+<li><strong><code translate="no" v-pre>Selected Index</code></strong> · Integer — Index of the most recently accepted wave,  or -1 for a rejected selection.</li>
+</ul>
+</doc-panel>
+<h2 id="continue-learning">Continue learning</h2>
+<p><a href="../shuffle-bag-wave-player/">Shuffle-Bag Wave Player</a> is a better choice when repeated picks should be distributed across all supplied variations. Also see the <a href="../../../playback/">Playback overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
 
                 
                 <!-- Required only on API pages -->

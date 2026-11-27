@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Flyby Wave Player</title>
     <meta name="title" content="AP: Flyby Wave Player">
-    <meta name="description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/flyby-wave-player/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/flyby-wave-player/">
     <meta property="og:title" content="AP: Flyby Wave Player">
-    <meta property="og:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta property="og:description" content="MetaSound · AudioPhysx / Playback">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/flyby-wave-player/">
     <meta name="twitter:title" content="AP: Flyby Wave Player">
-    <meta name="twitter:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="twitter:description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/flyby-wave-player.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,133 +135,70 @@
 
                 <!-- Page content  -->
 <h1 id="ap-flyby-wave-player">AP: Flyby Wave Player</h1>
-<p><strong>MetaSound category:</strong> <code translate="no" v-pre>AudioPhysx → Playback</code><br />
-<strong>Source contract:</strong> Unreal Engine 5.8.4 development source</p>
-<p>Play randomized near-miss whizz recordings, optionally including a ballistic crack layer.</p>
+<p><strong>MetaSound · AudioPhysx / Playback</strong></p>
+<p>Turn a projectile near-miss result into an audible whizz and optional ballistic crack.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-flyby-wave-player.png -->
-<h2 id="when-to-use-it">When to use it</h2>
-<p>Bullets, arrows and fast objects passing near the listener.</p>
-<h2 id="quick-setup">Quick setup</h2>
-<p>Fill <code translate="no" v-pre>Whizz Waves</code> and optionally <code translate="no" v-pre>Crack Waves</code>, feed flyby parameters and trigger <code translate="no" v-pre>Play</code>.</p>
-<h2 id="inputs">Inputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Play` | Trigger | Start one flyby, restarting this player if already active. |
-| `Stop` | Trigger | Stop immediately; does not emit On Finished. |
-| `Whizz Waves` | Wave Asset Array | Randomly chosen rush/whizz Wave Asset Array. |
-| `Crack Waves` | Wave Asset Array | Randomly chosen supersonic crack Wave Asset Array. |
-| `Distance (m)` | Float | Closest approach in metres. Optional: for custom graph controls. |
-| `Speed (m/s)` | Float | Projectile speed in metres/second. |
-| `Intensity` | Float | Normalized near-miss strength, 0 to 1. |
-| `Speed of Sound (m/s)` | Float | Local speed of sound; used to validate shock playback. |
-| `Shock` | Float | 1 = Mach cone reaches listener (0 = ordinary whizz). |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Play</code></td>
-<td>Trigger</td>
-<td>Start one flyby, restarting this player if already active.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Stop</code></td>
-<td>Trigger</td>
-<td>Stop immediately; does not emit On Finished.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Whizz Waves</code></td>
-<td>Wave Asset Array</td>
-<td>Randomly chosen rush/whizz Wave Asset Array.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Crack Waves</code></td>
-<td>Wave Asset Array</td>
-<td>Randomly chosen supersonic crack Wave Asset Array.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Distance (m)</code></td>
-<td>Float</td>
-<td>Closest approach in metres. Optional: for custom graph controls.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Speed (m/s)</code></td>
-<td>Float</td>
-<td>Projectile speed in metres/second.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Intensity</code></td>
-<td>Float</td>
-<td>Normalized near-miss strength, 0 to 1.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Speed of Sound (m/s)</code></td>
-<td>Float</td>
-<td>Local speed of sound; used to validate shock playback.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Shock</code></td>
-<td>Float</td>
-<td>1 = Mach cone reaches listener (0 = ordinary whizz).</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="outputs">Outputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Mono whizz and crack mix. Spatialize in the MetaSound Source. |
-| `On Finished` | Trigger | All started variations have finished naturally. |
-| `On Rejected` | Trigger | No playable wave was selected. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Out Mono</code></td>
-<td>Audio (mono)</td>
-<td>Mono whizz and crack mix. Spatialize in the MetaSound Source.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Finished</code></td>
-<td>Trigger</td>
-<td>All started variations have finished naturally.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Rejected</code></td>
-<td>Trigger</td>
-<td>No playable wave was selected.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="behaviour-and-design-notes">Behaviour and design notes</h2>
-<p>Spatialize the mono output through the MetaSound Source or use the Blueprint flyby helper. The acoustic model is an approximation, not full ballistic shock-wave simulation.</p>
-<blockquote>
-<p><strong>Units matter:</strong> Pin names indicate metres (<code translate="no" v-pre>m</code>), metres per second (<code translate="no" v-pre>m/s</code>), centimetres (<code translate="no" v-pre>cm</code>), milliseconds (<code translate="no" v-pre>ms</code>), decibels (<code translate="no" v-pre>dB</code>) and semitones (<code translate="no" v-pre>st</code>). Don&#x27;t convert centimetres to metres unless the target pin expects metres.</p>
-</blockquote>
-<h2 id="testing-checklist">Testing checklist</h2>
-<ol>
-<li>Test the intended input settings with a valid source recording or signal.</li>
-<li>Test zero/empty/invalid inputs where applicable.</li>
-<li>Test rapid parameter changes and retriggering where applicable.</li>
-<li>Verify output and completion behaviour in a packaged build before relying on the node in shipping content.</li>
-</ol>
-<p>See <a href="../../../playback/">Playback overview</a> and <a href="../../../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="what-actually-happens">What actually happens</h2>
+<p>This node is the <strong>audio rendering half</strong> of the flyby system. The gameplay side computes the closest pass, distance, speed and whether a shock effect should be heard. The MetaSound node then picks recordings from <code translate="no" v-pre>Whizz Waves</code> and, when requested, <code translate="no" v-pre>Crack Waves</code>, shaping the sound with the supplied parameters.</p>
+<p>A positive <code translate="no" v-pre>Shock</code> signal indicates that the ballistic-crack layer is requested; it is <strong>not</strong> simply a synonym for high speed. The standalone player can be used manually, while <code translate="no" v-pre>AP: Play Projectile Flyby</code> can prepare runtime parameters and schedule a near-miss sound automatically.</p>
+<h2 id="hear-it-in-a-game">Hear it in a game</h2>
+<p>Give it two whizz variants and two short crack recordings. Compare a close pass with a distant pass, then change <code translate="no" v-pre>Shock</code> from 0 to 1. The crack should only be requested for the latter state; the final mix depends on the supplied recordings.</p>
+<h2 id="build-a-working-graph">Build a working graph</h2>
+<doc-steps>
+   <doc-step id="create-the-flyby-source" step-number="1">
+      <template #title>Create the flyby Source</template>
+<p>Create a mono MetaSound Source, add this player, and connect its <code translate="no" v-pre>Out Mono</code> output.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="supply-whizz-and-crack-variations" step-number="2">
+      <template #title>Supply whizz and crack variations</template>
+<p>Assign <code translate="no" v-pre>Whizz Waves</code> and optional <code translate="no" v-pre>Crack Waves</code>. Wire the control values directly or expose the five named runtime parameters expected by the Blueprint flyby subsystem.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="connect-the-world-side-parameters" step-number="3">
+      <template #title>Connect the world-side parameters</template>
+<p>Trigger <code translate="no" v-pre>Play</code> in preview, then use the <a href="../../../../blueprint/flyby/">Blueprint flyby guide</a> to test a real projectile path.</p>
+   </doc-step>
+</doc-steps>
+<h2 id="the-controls-that-matter">The controls that matter</h2>
+<p><code translate="no" v-pre>Distance (m)</code> is <strong>metres</strong>, unlike Unreal world locations in centimetres. <code translate="no" v-pre>Speed (m/s)</code> and <code translate="no" v-pre>Speed of Sound (m/s)</code> are in metres per second. <code translate="no" v-pre>Intensity</code> is a designer-friendly strength control. <code translate="no" v-pre>Shock</code> is the crack-layer gate; it does not replace the game-thread geometry check.</p>
+<h2 id="outputs-and-completion">Outputs and completion</h2>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mono whizz and crack mix. Spatialize in the MetaSound Source.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — All started variations have finished naturally.</li>
+<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — No playable wave was selected.</li>
+</ul>
+<h2 id="things-to-watch-for">Things to watch for</h2>
+<ul>
+<li>Do not feed Unreal centimetres directly into the metres input; a 500 cm pass is 5 m, not 500 m.</li>
+<li>This is a playback and near-miss approximation, not a full moving 3D source or precise shock-front solver. The game-side subsystem is responsible for timing and position.</li>
+</ul>
+<doc-panel id="full-input-reference" collapsed>
+    <template #title>Full input reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Play</code></strong> · <em>Trigger</em> — Start one flyby, restarting this player if already active.</li>
+<li><strong><code translate="no" v-pre>Stop</code></strong> · <em>Trigger</em> — Stop immediately; does not emit On Finished.</li>
+<li><strong><code translate="no" v-pre>Whizz Waves</code></strong> · <em>Wave Asset Array</em> — Randomly chosen rush/whizz Wave Asset Array.</li>
+<li><strong><code translate="no" v-pre>Crack Waves</code></strong> · <em>Wave Asset Array</em> — Randomly chosen supersonic crack Wave Asset Array.</li>
+<li><strong><code translate="no" v-pre>Distance (m)</code></strong> · <em>Float</em> — Closest approach in metres. Optional: for custom graph controls.</li>
+<li><strong><code translate="no" v-pre>Speed (m/s)</code></strong> · <em>Float</em> — Projectile speed in metres/second.</li>
+<li><strong><code translate="no" v-pre>Intensity</code></strong> · <em>Float</em> — Normalized near-miss strength, 0 to 1.</li>
+<li><strong><code translate="no" v-pre>Speed of Sound (m/s)</code></strong> · <em>Float</em> — Local speed of sound; used to validate shock playback.</li>
+<li><strong><code translate="no" v-pre>Shock</code></strong> · <em>Float</em> — 1 = Mach cone reaches listener (0 = ordinary whizz).</li>
+</ul>
+</doc-panel>
+<doc-panel id="full-output-reference" collapsed>
+    <template #title>Full output reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mono whizz and crack mix. Spatialize in the MetaSound Source.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — All started variations have finished naturally.</li>
+<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — No playable wave was selected.</li>
+</ul>
+</doc-panel>
+<h2 id="continue-learning">Continue learning</h2>
+<p><a href="../../../../blueprint/flyby/">Projectile Flyby Blueprint integration</a> contains the external parameter names and near-miss workflow. Also see the <a href="../../../playback/">Playback overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
 
                 
                 <!-- Required only on API pages -->

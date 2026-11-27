@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Float Smoother</title>
     <meta name="title" content="AP: Float Smoother">
-    <meta name="description" content="MetaSound category: AudioPhysx → QoL Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="description" content="MetaSound · AudioPhysx / Qol">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/float-smoother/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/float-smoother/">
     <meta property="og:title" content="AP: Float Smoother">
-    <meta property="og:description" content="MetaSound category: AudioPhysx → QoL Source contract: Unreal Engine 5.8.4 development source">
+    <meta property="og:description" content="MetaSound · AudioPhysx / Qol">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/float-smoother/">
     <meta name="twitter:title" content="AP: Float Smoother">
-    <meta name="twitter:description" content="MetaSound category: AudioPhysx → QoL Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="twitter:description" content="MetaSound · AudioPhysx / Qol">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/float-smoother.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,91 +135,61 @@
 
                 <!-- Page content  -->
 <h1 id="ap-float-smoother">AP: Float Smoother</h1>
-<p><strong>MetaSound category:</strong> <code translate="no" v-pre>AudioPhysx → QoL</code><br />
-<strong>Source contract:</strong> Unreal Engine 5.8.4 development source</p>
-<p>Apply independent rise and fall smoothing to a floating-point control value.</p>
+<p><strong>MetaSound · AudioPhysx / Qol</strong></p>
+<p>Prevent sudden gameplay value changes from producing audible jumps in volume, filtering or other controls.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-float-smoother.png -->
-<h2 id="when-to-use-it">When to use it</h2>
-<p>Volume and filter parameters driven by noisy or abrupt gameplay values.</p>
-<h2 id="quick-setup">Quick setup</h2>
-<p>Connect <code translate="no" v-pre>Target</code>, set <code translate="no" v-pre>Rise (ms)</code> and <code translate="no" v-pre>Fall (ms)</code>, and use the <code translate="no" v-pre>Smoothed</code> output.</p>
-<h2 id="inputs">Inputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Target` | Float | Float value to smooth. Sampled once per audio block. |
-| `Rise (ms)` | Float | Exponential time constant for increasing values. Zero snaps immediately. |
-| `Fall (ms)` | Float | Exponential time constant for decreasing values. Zero snaps immediately. |
-| `Snap` | Trigger | Immediately set the output to Target in this block (block-rate behaviour). |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Target</code></td>
-<td>Float</td>
-<td>Float value to smooth. Sampled once per audio block.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Rise (ms)</code></td>
-<td>Float</td>
-<td>Exponential time constant for increasing values. Zero snaps immediately.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Fall (ms)</code></td>
-<td>Float</td>
-<td>Exponential time constant for decreasing values. Zero snaps immediately.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Snap</code></td>
-<td>Trigger</td>
-<td>Immediately set the output to Target in this block (block-rate behaviour).</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="outputs">Outputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Smoothed` | Float | Rise/fall smoothed Float control signal (block-rate). |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Smoothed</code></td>
-<td>Float</td>
-<td>Rise/fall smoothed Float control signal (block-rate).</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="behaviour-and-design-notes">Behaviour and design notes</h2>
-<p>This is a block-rate control smoother, not an audio-rate filter.</p>
-<blockquote>
-<p><strong>Units matter:</strong> Pin names indicate metres (<code translate="no" v-pre>m</code>), metres per second (<code translate="no" v-pre>m/s</code>), centimetres (<code translate="no" v-pre>cm</code>), milliseconds (<code translate="no" v-pre>ms</code>), decibels (<code translate="no" v-pre>dB</code>) and semitones (<code translate="no" v-pre>st</code>). Don&#x27;t convert centimetres to metres unless the target pin expects metres.</p>
-</blockquote>
-<h2 id="testing-checklist">Testing checklist</h2>
-<ol>
-<li>Test the intended input settings with a valid source recording or signal.</li>
-<li>Test zero/empty/invalid inputs where applicable.</li>
-<li>Test rapid parameter changes and retriggering where applicable.</li>
-<li>Verify output and completion behaviour in a packaged build before relying on the node in shipping content.</li>
-</ol>
-<p>See <a href="../../../qol/">QoL overview</a> and <a href="../../../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="what-actually-happens">What actually happens</h2>
+<p>A MetaSound Float input may change in discrete blocks even when the game value is continuous. Feeding those updates directly into a filter or mix control can create stepping. Float Smoother gradually approaches a target using separate rise and fall responses.</p>
+<p>It operates at <strong>control/block rate</strong>, so think of it as a parameter-conditioning tool, not an audio-waveform filter.</p>
+<h2 id="hear-it-in-a-game">Hear it in a game</h2>
+<p>Connect a changing engine-load value to <code translate="no" v-pre>Target</code>. Give increasing values a short <code translate="no" v-pre>Rise (ms)</code> and decreasing values a longer <code translate="no" v-pre>Fall (ms)</code> so the motor reacts quickly to throttle but relaxes more slowly.</p>
+<h2 id="build-a-working-graph">Build a working graph</h2>
+<doc-steps>
+   <doc-step id="connect-the-target-value" step-number="1">
+      <template #title>Connect the target value</template>
+<p>Connect the changing Float to <code translate="no" v-pre>Target</code>.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="set-rise-and-fall-response" step-number="2">
+      <template #title>Set rise and fall response</template>
+<p>Set independent <code translate="no" v-pre>Rise (ms)</code> and <code translate="no" v-pre>Fall (ms)</code> values. Start with modest values and judge them by ear.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="route-the-smoothed-control" step-number="3">
+      <template #title>Route the smoothed control</template>
+<p>Use <code translate="no" v-pre>Smoothed</code> wherever a downstream node expects the stabilized control. Use <code translate="no" v-pre>Snap</code> when a level or state change should happen immediately.</p>
+   </doc-step>
+</doc-steps>
+<h2 id="the-controls-that-matter">The controls that matter</h2>
+<p><code translate="no" v-pre>Rise (ms)</code> and <code translate="no" v-pre>Fall (ms)</code> are smoothing time constants rather than fixed delays. Zero snaps immediately in the corresponding direction. <code translate="no" v-pre>Snap</code> overrides the gradual transition for the current target.</p>
+<h2 id="what-the-node-outputs">What the node outputs</h2>
+<ul>
+<li><strong><code translate="no" v-pre>Smoothed</code></strong> · Float — Rise/fall smoothed Float control signal (block-rate).</li>
+</ul>
+<h2 id="things-to-watch-for">Things to watch for</h2>
+<ul>
+<li>A very long rise or fall time can make responsive effects feel disconnected from gameplay.</li>
+<li>Because the output is block-rate, it should not be mistaken for sample-by-sample modulation of an audio buffer.</li>
+</ul>
+<doc-panel id="full-input-reference" collapsed>
+    <template #title>Full input reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Target</code></strong> · <em>Float</em> — Float value to smooth. Sampled once per audio block.</li>
+<li><strong><code translate="no" v-pre>Rise (ms)</code></strong> · <em>Float</em> — Exponential time constant for increasing values. Zero snaps immediately.</li>
+<li><strong><code translate="no" v-pre>Fall (ms)</code></strong> · <em>Float</em> — Exponential time constant for decreasing values. Zero snaps immediately.</li>
+<li><strong><code translate="no" v-pre>Snap</code></strong> · <em>Trigger</em> — Immediately set the output to Target in this block (block-rate behaviour).</li>
+</ul>
+</doc-panel>
+<doc-panel id="full-output-reference" collapsed>
+    <template #title>Full output reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Smoothed</code></strong> · Float — Rise/fall smoothed Float control signal (block-rate).</li>
+</ul>
+</doc-panel>
+<h2 id="continue-learning">Continue learning</h2>
+<p><a href="../trigger-cooldown/">Trigger Cooldown</a> controls event frequency rather than the smoothness of numeric values. Also see the <a href="../../../qol/">Qol overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
 
                 
                 <!-- Required only on API pages -->

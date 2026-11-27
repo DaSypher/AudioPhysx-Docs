@@ -1,50 +1,66 @@
 # AP: Layered Wave Player
 
-**MetaSound category:** `AudioPhysx → Playback`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Playback**
 
-Trigger multiple Wave Assets as a single sound stack, with per-layer gain, pitch and onset delay.
+Build one composite effect from several recordings that start together or at different offsets.
 
-## When to use it
+## What actually happens
 
-Layered weapons, impacts, cinematic hits and machinery.
+Some sounds are easier to construct from separate layers: an attack transient, a low-frequency body, and a mechanical detail. This player starts the configured layers as one event and combines them into a mono output.
 
-## Quick setup
+`Layer Gains (dB)`, `Layer Pitch (st)` and `Layer Delays (ms)` are **arrays aligned by index** to `Layer Waves`. That lets one layer be softer, another pitched differently, and a third delayed slightly without needing separate Wave Player nodes.
 
-Populate `Layer Waves` and optional aligned arrays for gain, pitch and delay. Trigger `Play`.
+## Hear it in a game
 
-## Inputs
+For a heavy door, use a short handle click, a low mechanical movement, and a latch close. Adjust the layer delays until the action feels physically coordinated instead of sounding like three unrelated recordings.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Play` | Trigger | Start the valid layers as one atomic stack. |
-| `Stop` | Trigger | Stop all stacks. Does not fire On Finished. |
-| `Layer Waves` | Wave Asset Array | Wave Asset array: indices 0 to 7, one sound per layer. |
-| `Layer Gains (dB)` | Float Array | Optional per-layer gains, aligned with Layer Waves. Missing values = 0 dB. |
-| `Layer Pitch (st)` | Float Array | Optional per-layer playback-rate pitch offsets in semitones. Missing = 0. |
-| `Layer Delays (ms)` | Float Array | Optional per-layer onset delay, 0 to 2000 ms. Missing = 0. |
-| `Max Voices` | Integer | Maximum simultaneous individual layers across all stacks, 1 to 32. |
+## Build a working graph
 
-## Outputs
+>>> 1. Choose the layers
+Populate `Layer Waves` with the recordings that should form one compound event.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Mono mix of all active layers. |
-| `On Finished` | Trigger | Last layer of all active stacks finished naturally. |
-| `On Rejected` | Trigger | No playable layers or insufficient free voices for the entire stack. |
-| `Active Layers` | Integer | Number of active or pending layers. |
+>>> 2. Align per-layer controls
+Create optional gain, pitch and delay arrays in the **same order** as the wave array.
+>>>
 
-## Behaviour and design notes
+>>> 3. Trigger the combined effect
+Connect `Play` and `Out Mono`, then increase `Max Voices` only if multiple compound events should overlap.
+>>>
 
-Array entries are indexed by layer. The implementation allows up to eight layers per stack, subject to total voice limits.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+`Layer Delays (ms)` offsets the start of a particular layer; it does not represent the total sound duration. `Layer Gains (dB)` trims individual contributions. `Layer Pitch (st)` shifts an individual layer in semitones. `Max Voices` limits concurrent playback capacity.
 
-## Testing checklist
+## Outputs and completion
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`Out Mono`** · Audio (mono) — Mono mix of all active layers.
+- **`On Finished`** · Trigger — Last layer of all active stacks finished naturally.
+- **`On Rejected`** · Trigger — No playable layers or insufficient free voices for the entire stack.
+- **`Active Layers`** · Integer — Number of active or pending layers.
 
-See [Playback overview](../../playback.md) and [Troubleshooting](../../../support/troubleshooting.md).
+## Things to watch for
+
+- Do not assume different recordings are transient-aligned. Inspect the samples and compensate for leading silence where necessary.
+- A large number of loud layers can clip when added together. Gain-stage the components before increasing the final output.
+
+==- Full input reference
+- **`Play`** · *Trigger* — Start the valid layers as one atomic stack.
+- **`Stop`** · *Trigger* — Stop all stacks. Does not fire On Finished.
+- **`Layer Waves`** · *Wave Asset Array* — Wave Asset array: indices 0 to 7, one sound per layer.
+- **`Layer Gains (dB)`** · *Float Array* — Optional per-layer gains, aligned with Layer Waves. Missing values = 0 dB.
+- **`Layer Pitch (st)`** · *Float Array* — Optional per-layer playback-rate pitch offsets in semitones. Missing = 0.
+- **`Layer Delays (ms)`** · *Float Array* — Optional per-layer onset delay, 0 to 2000 ms. Missing = 0.
+- **`Max Voices`** · *Integer* — Maximum simultaneous individual layers across all stacks, 1 to 32.
+===
+
+==- Full output reference
+- **`Out Mono`** · Audio (mono) — Mono mix of all active layers.
+- **`On Finished`** · Trigger — Last layer of all active stacks finished naturally.
+- **`On Rejected`** · Trigger — No playable layers or insufficient free voices for the entire stack.
+- **`Active Layers`** · Integer — Number of active or pending layers.
+===
+
+## Continue learning
+
+[Random Sequence](random-sequence-wave-player.md) plays *one after another*, not as simultaneous layers. Also see the [Playback overview](../../playback.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).

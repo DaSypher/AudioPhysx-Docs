@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Understanding inputs, outputs and completion</title>
-    <meta name="title" content="Understanding inputs, outputs and completion">
-    <meta name="description" content="Trigger pins describe moments: start playback, stop playback, release a held effect or announce completion.">
+    <title>Signals, events and the end of a sound</title>
+    <meta name="title" content="Signals, events and the end of a sound">
+    <meta name="description" content="Many AudioPhysx graph problems aren't about decoding audio; they're about confusing an event, an audio stream, and a lifecycle signal. Understanding these three concepts will make every node easier to use.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/signals-and-completion/">
@@ -22,27 +22,28 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/signals-and-completion/">
-    <meta property="og:title" content="Understanding inputs, outputs and completion">
-    <meta property="og:description" content="Trigger pins describe moments: start playback, stop playback, release a held effect or announce completion.">
+    <meta property="og:title" content="Signals, events and the end of a sound">
+    <meta property="og:description" content="Many AudioPhysx graph problems aren't about decoding audio; they're about confusing an event, an audio stream, and a lifecycle signal. Understanding these three concepts will make every node easier to use.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/signals-and-completion/">
-    <meta name="twitter:title" content="Understanding inputs, outputs and completion">
-    <meta name="twitter:description" content="Trigger pins describe moments: start playback, stop playback, release a held effect or announce completion.">
+    <meta name="twitter:title" content="Signals, events and the end of a sound">
+    <meta name="twitter:description" content="Many AudioPhysx graph problems aren't about decoding audio; they're about confusing an event, an audio stream, and a lifecycle signal. Understanding these three concepts will make every node easier to use.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/signals-and-completion.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
+    <script id="mermaid-js" data-cfasync="false" src="../../resources/js/mermaid.js?v=4.6.0" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,20 +135,41 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="understanding-inputs-outputs-and-completion">Understanding inputs, outputs and completion</h1>
-<h2 id="three-kinds-of-pins">Three kinds of pins</h2>
-<ul>
-<li><strong>Trigger pins</strong> describe moments: start playback, stop playback, release a held effect or announce completion.</li>
-<li><strong>Audio pins</strong> carry sample buffers. <code translate="no" v-pre>Out Mono</code> produces a single audio channel.</li>
-<li><strong>Control pins</strong> carry values such as gain, pitch, distance, speed or material selection.</li>
-</ul>
-<h2 id="on-finished-is-not-the-same-as-stop"><code translate="no" v-pre>On Finished</code> is not the same as <code translate="no" v-pre>Stop</code></h2>
-<p>In AudioPhysx Wave Players, natural completion usually produces <code translate="no" v-pre>On Finished</code>; an explicit <code translate="no" v-pre>Stop</code> often cancels without issuing that natural-completion event. Check each node page for precise behaviour.</p>
-<p>An effect such as Early Reflections or Acoustic Paths can extend the audio tail after the source Wave Player finishes. Connect the source&#x27;s completion event to the processing node&#x27;s <code translate="no" v-pre>Source Finished</code> input and use the processor&#x27;s output completion where appropriate.</p>
-<h2 id="dynamic-pin-groups">Dynamic pin groups</h2>
-<p>Some nodes allow the graph author to add more ranges, steps or waves. Change the group counts in the MetaSound editor and inspect the generated pins. For <code translate="no" v-pre>AP: Surface Wave Player</code>, pins may additionally depend on project settings, so route edits deserve extra care.</p>
-<h2 id="common-wiring-mistake">Common wiring mistake</h2>
-<p>Don&#x27;t connect a Wave Player&#x27;s <code translate="no" v-pre>On Finished</code> directly to the MetaSound Source&#x27;s finished trigger if other downstream effects still have audible tails.</p>
+<h1 id="signals-events-and-the-end-of-a-sound">Signals, events and the end of a sound</h1>
+<p>Many AudioPhysx graph problems aren&#x27;t about decoding audio; they&#x27;re about confusing <strong>an event</strong>, <strong>an audio stream</strong>, and <strong>a lifecycle signal</strong>. Understanding these three concepts will make every node easier to use.</p>
+<h2 id="triggers-mark-moments-in-time">Triggers mark moments in time</h2>
+<p><code translate="no" v-pre>Play</code> means <em>start now</em>. <code translate="no" v-pre>Stop</code> generally cancels playback. <code translate="no" v-pre>Stop Firing</code> means <em>the held action has ended—play the release phase</em>. These commands are intentionally different. For example, the Start Loop End Player should normally receive a <code translate="no" v-pre>Stop Firing</code> event so it can play the outro.</p>
+<h2 id="audio-buffers-continue-between-triggers">Audio buffers continue between triggers</h2>
+<p>Once a recording is started, the MetaSound audio output carries samples every audio-processing block. A trigger pin is <strong>not</strong> a wire containing the sound. A separate <code translate="no" v-pre>Out Mono</code> or <code translate="no" v-pre>Audio</code> pin carries that sample stream.</p>
+<h2 id="completion-belongs-to-the-last-audible-stage">Completion belongs to the last audible stage</h2>
+<p>Consider this chain:</p>
+<div class="overflow-hidden mb-6 py-4 dark:px-5 dark:bg-white rounded-md"><pre translate="no" class="mermaid w-full">flowchart LR
+    A[Wave Player] --&gt; B[Early Reflections]
+    B --&gt; C[Source output]
+    A -.Source Finished.-&gt; B
+    B -.On Finished.-&gt; D[MetaSound completion]</pre></div>
+<p>The original Wave Player can finish before the reflection taps have died away. If its <code translate="no" v-pre>On Finished</code> directly ends the MetaSound Source, the reflection tail may be cut short. Route completion through the processor responsible for the last audible tail when it provides completion signals.</p>
+<p>Similarly, <strong>stopping intentionally</strong> is not necessarily the same as <strong>finishing naturally</strong>. Don&#x27;t assume every <code translate="no" v-pre>Stop</code> will emit <code translate="no" v-pre>On Finished</code>; check the particular player&#x27;s documentation.</p>
+<h2 id="dynamic-input-groups">Dynamic input groups</h2>
+<p>Some AudioPhysx nodes let you add more Wave slots, step arrays or distance ranges. The graph&#x27;s pin layout is therefore part of the authored asset. Changing global Surface Audio routes can also change generated pins for <a href="../../metasound/nodes/playback/surface-wave-player/">Surface Wave Player</a>. Back up and inspect affected graphs after those settings change.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-warning" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
+                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>Important for gameplay</h5>
+<p>A Source that loops forever should not be wired as though it has a natural ending after one recording. For held interactions, decide separately which event begins the sound, which event releases it, and what really marks the end of the audible result.</p>
+        </div>
+    </div>
+</div>
+<p><a href="../../metasound/playback/">Next: Choose the right player</a></p>
 
                 
                 <!-- Required only on API pages -->
@@ -170,7 +192,7 @@
                         <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../getting-started/checklist/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Quick setup checklist</span>
+                                <span class="block mt-1">Setup checklist</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>
@@ -214,6 +236,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Inputs, outputs and completion", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/getting-started/signals-and-completion.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Signals and completion", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: true, hasMath: false, tocDepth: 23, "md": "/getting-started/signals-and-completion.md" }</script>
 </body>
 </html>

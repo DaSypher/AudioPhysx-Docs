@@ -1,23 +1,32 @@
-# Projectile near-miss flyby
+# A projectile passing close to the listener
 
-**Tools used:** AP: Flyby Wave Player + AP: Play Projectile Flyby
+**Goal:** Hear an appropriate flyby when a projectile passes nearby, without playing a near-miss sound for every shot in the level.
 
-## Goal
+The trick is to test the projectile's **path**, not merely its firing event. AudioPhysx can estimate closest approach from a submitted segment and, for accepted near misses, schedule playback near that point.
 
-Produce a useful, repeatable audio behaviour with a small MetaSound/Blueprint setup.
+## What you need
 
-## Build the example
+A mono MetaSound Source containing [AP: Flyby Wave Player](../metasound/nodes/playback/flyby-wave-player.md), whizz and optional crack Wave Asset Arrays, and a Blueprint that knows the projectile's path start, path end and nominal speed.
 
-Set up the flyby MetaSound, then call the Blueprint helper with shot start/end positions and speed. Test one close pass, one far pass and one subsonic pass.
+## Test it in three passes
 
-## Expected result
+>>> 1. Configure the MetaSound
+Wire the five runtime Float parameters described in the [flyby Blueprint guide](../blueprint/flyby.md). Confirm the player auditions with manual values first.
 
-Check that close passes are more noticeable and that rejected paths do not play. Listen for any duplicated sounds on moving projectiles.
+>>> 2. Submit a close path
+Call `AP: Play Projectile Flyby` with a path that passes near the listener, within `AudibleRadiusM`.
 
-## Before shipping
+>>> 3. Submit a distant path
+Keep the speed and recording the same, but move the path outside the audible radius. This should not be accepted as a near miss.
 
-- Test empty arrays and stop/retrigger behaviour.
-- Test the final recording assets in a packaged Development build.
-- Check voice budgets and spatialization in a scene with multiple sound sources.
+>>> 4. Compare subsonic and supersonic cases
+Change the supplied speed while keeping the geometry comparable. The crack layer depends on the calculated shock condition, not simply the presence of a bullet recording.
+>>>
 
-[Find the node reference](../metasound/README.md).
+## Common mistake
+
+Positions are in Unreal world units (normally **centimetres**), but `ProjectileSpeedMps` and `AudibleRadiusM` are in **metres per second** and **metres**. Mixing units can make a believable path look thousands of times too far away or too fast.
+
+!!!info Model scope
+This is a useful game-audio approximation, not a complete aerodynamic shock-wave simulation. Test timing and source placement in your actual gameplay level.
+!!!

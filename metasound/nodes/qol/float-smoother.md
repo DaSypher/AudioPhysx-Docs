@@ -1,44 +1,57 @@
 # AP: Float Smoother
 
-**MetaSound category:** `AudioPhysx → QoL`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Qol**
 
-Apply independent rise and fall smoothing to a floating-point control value.
+Prevent sudden gameplay value changes from producing audible jumps in volume, filtering or other controls.
 
-## When to use it
+## What actually happens
 
-Volume and filter parameters driven by noisy or abrupt gameplay values.
+A MetaSound Float input may change in discrete blocks even when the game value is continuous. Feeding those updates directly into a filter or mix control can create stepping. Float Smoother gradually approaches a target using separate rise and fall responses.
 
-## Quick setup
+It operates at **control/block rate**, so think of it as a parameter-conditioning tool, not an audio-waveform filter.
 
-Connect `Target`, set `Rise (ms)` and `Fall (ms)`, and use the `Smoothed` output.
+## Hear it in a game
 
-## Inputs
+Connect a changing engine-load value to `Target`. Give increasing values a short `Rise (ms)` and decreasing values a longer `Fall (ms)` so the motor reacts quickly to throttle but relaxes more slowly.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Target` | Float | Float value to smooth. Sampled once per audio block. |
-| `Rise (ms)` | Float | Exponential time constant for increasing values. Zero snaps immediately. |
-| `Fall (ms)` | Float | Exponential time constant for decreasing values. Zero snaps immediately. |
-| `Snap` | Trigger | Immediately set the output to Target in this block (block-rate behaviour). |
+## Build a working graph
 
-## Outputs
+>>> 1. Connect the target value
+Connect the changing Float to `Target`.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Smoothed` | Float | Rise/fall smoothed Float control signal (block-rate). |
+>>> 2. Set rise and fall response
+Set independent `Rise (ms)` and `Fall (ms)` values. Start with modest values and judge them by ear.
+>>>
 
-## Behaviour and design notes
+>>> 3. Route the smoothed control
+Use `Smoothed` wherever a downstream node expects the stabilized control. Use `Snap` when a level or state change should happen immediately.
+>>>
 
-This is a block-rate control smoother, not an audio-rate filter.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+`Rise (ms)` and `Fall (ms)` are smoothing time constants rather than fixed delays. Zero snaps immediately in the corresponding direction. `Snap` overrides the gradual transition for the current target.
 
-## Testing checklist
+## What the node outputs
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`Smoothed`** · Float — Rise/fall smoothed Float control signal (block-rate).
 
-See [QoL overview](../../qol.md) and [Troubleshooting](../../../support/troubleshooting.md).
+## Things to watch for
+
+- A very long rise or fall time can make responsive effects feel disconnected from gameplay.
+- Because the output is block-rate, it should not be mistaken for sample-by-sample modulation of an audio buffer.
+
+==- Full input reference
+- **`Target`** · *Float* — Float value to smooth. Sampled once per audio block.
+- **`Rise (ms)`** · *Float* — Exponential time constant for increasing values. Zero snaps immediately.
+- **`Fall (ms)`** · *Float* — Exponential time constant for decreasing values. Zero snaps immediately.
+- **`Snap`** · *Trigger* — Immediately set the output to Target in this block (block-rate behaviour).
+===
+
+==- Full output reference
+- **`Smoothed`** · Float — Rise/fall smoothed Float control signal (block-rate).
+===
+
+## Continue learning
+
+[Trigger Cooldown](trigger-cooldown.md) controls event frequency rather than the smoothness of numeric values. Also see the [Qol overview](../../qol.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).

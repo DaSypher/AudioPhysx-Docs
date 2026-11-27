@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Changelog</title>
-    <meta name="title" content="Changelog">
-    <meta name="description" content="Documentation baseline based on the AudioPhysx UE5.8.4 Start Loop End RPM source package.">
+    <title>Version history</title>
+    <meta name="title" content="Version history">
+    <meta name="description" content="The documentation was expanded into a practical learning site, including individual explanations for the existing MetaSound nodes, Blueprint guides, example workflows and a screenshot plan.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/support/changelog/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/support/changelog/">
-    <meta property="og:title" content="Changelog">
-    <meta property="og:description" content="Documentation baseline based on the AudioPhysx UE5.8.4 Start Loop End RPM source package.">
+    <meta property="og:title" content="Version history">
+    <meta property="og:description" content="The documentation was expanded into a practical learning site, including individual explanations for the existing MetaSound nodes, Blueprint guides, example workflows and a screenshot plan.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/support/changelog/">
-    <meta name="twitter:title" content="Changelog">
-    <meta name="twitter:description" content="Documentation baseline based on the AudioPhysx UE5.8.4 Start Loop End RPM source package.">
+    <meta name="twitter:title" content="Version history">
+    <meta name="twitter:description" content="The documentation was expanded into a practical learning site, including individual explanations for the existing MetaSound nodes, Blueprint guides, example workflows and a screenshot plan.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/support/changelog.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,16 +134,12 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="changelog">Changelog</h1>
-<h2 id="development-baseline--27-november-2026">Development baseline — 27 November 2026</h2>
-<p>Documentation baseline based on the AudioPhysx UE5.8.4 <strong>Start Loop End RPM</strong> source package.</p>
-<ul>
-<li>Native MetaSound node library arranged in Playback, Acoustics, Propagation and QoL.</li>
-<li>Shared Wave Player backend adapter in source.</li>
-<li>Start Loop End Player supports optional RPM-driven middle playback while keeping completion-driven behaviour at RPM 0.</li>
-<li>Projectile flyby playback and Blueprint path helpers are present.</li>
-</ul>
-<p><strong>This is not a claim that a commercial v1.0 has been submitted or published.</strong> The first public release should receive a separate version number, shipping test matrix and dated release notes.</p>
+<h1 id="version-history">Version history</h1>
+<h2 id="development-documentation-refresh--27-november-2026">Development documentation refresh — 27 November 2026</h2>
+<p>The documentation was expanded into a practical learning site, including individual explanations for the existing MetaSound nodes, Blueprint guides, example workflows and a screenshot plan. This is a <strong>documentation change</strong>, not a new plugin release.</p>
+<h2 id="ue-584-development-baseline">UE 5.8.4 development baseline</h2>
+<p>The reviewed code contains the native MetaSound library across Playback, Acoustics, Propagation and QoL; a shared Wave Player adapter; the Start Loop End RPM extension; the flyby gameplay and playback system; and acoustic world/model helpers.</p>
+<p>This baseline is not a published <strong>AudioPhysx v1.0</strong> support claim. When the Fab release is tested, it should receive its own version number, supported-engine matrix, known issues and date.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -153,7 +149,7 @@
             
                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                     <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../support/compatibility/">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../support/compatibility/">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
@@ -163,13 +159,6 @@
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../sound-cue/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Sound Cue nodes — planned</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
                     </div>
                 </nav>
             </footer>

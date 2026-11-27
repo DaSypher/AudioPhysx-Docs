@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>Your first AudioPhysx MetaSound</title>
     <meta name="title" content="Your first AudioPhysx MetaSound">
-    <meta name="description" content="In this walkthrough you'll make three recordings play in order using AP: Sequence Wave Player. Each sound starts once the previous sound has finished—no manual delay values.">
+    <meta name="description" content="We're going to create a sound that has three distinct stages: a click, a mechanical movement, and a final clunk. One Play trigger starts the action; AudioPhysx waits for each recording to finish before moving to the next.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/first-metasound/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/first-metasound/">
     <meta property="og:title" content="Your first AudioPhysx MetaSound">
-    <meta property="og:description" content="In this walkthrough you'll make three recordings play in order using AP: Sequence Wave Player. Each sound starts once the previous sound has finished—no manual delay values.">
+    <meta property="og:description" content="We're going to create a sound that has three distinct stages: a click, a mechanical movement, and a final clunk. One Play trigger starts the action; AudioPhysx waits for each recording to finish before moving to the next.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/first-metasound/">
     <meta name="twitter:title" content="Your first AudioPhysx MetaSound">
-    <meta name="twitter:description" content="In this walkthrough you'll make three recordings play in order using AP: Sequence Wave Player. Each sound starts once the previous sound has finished—no manual delay values.">
+    <meta name="twitter:description" content="We're going to create a sound that has three distinct stages: a click, a mechanical movement, and a final clunk. One Play trigger starts the action; AudioPhysx waits for each recording to finish before moving to the next.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/first-metasound.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,49 +135,33 @@
 
                 <!-- Page content  -->
 <h1 id="your-first-audiophysx-metasound">Your first AudioPhysx MetaSound</h1>
-<p>In this walkthrough you&#x27;ll make three recordings play <strong>in order</strong> using <code translate="no" v-pre>AP: Sequence Wave Player</code>. Each sound starts once the previous sound has finished—no manual delay values.</p>
-<h2 id="1-create-a-metasound-source">1. Create a MetaSound Source</h2>
-<p>Create a new <strong>MetaSound Source</strong> with a mono output. Open it in the MetaSound editor.</p>
-<!-- IMAGE SLOT: docs/static/images/setup/create-metasound.png -->
-<h2 id="2-add-the-node">2. Add the node</h2>
-<p>Search for <strong>AP: Sequence Wave Player</strong> in <code translate="no" v-pre>AudioPhysx → Playback</code>. Add it to the graph.</p>
-<!-- IMAGE SLOT: docs/static/images/nodes/node-sequence-wave-player.png -->
-<h2 id="3-assign-waves">3. Assign waves</h2>
-<p>Expand the <code translate="no" v-pre>Sequence Waves</code> group to the number of recordings you want. Assign a Wave Asset to each <code translate="no" v-pre>Wave</code> slot in the intended order.</p>
-<h2 id="4-wire-play-audio-and-completion">4. Wire Play, audio and completion</h2>
-<retype-table copy-text="| From | To |
-| --- | --- |
-| MetaSound `On Play` | Sequence player's `Play` |
-| Sequence player's `Out Mono` | MetaSound mono audio output |
-| Sequence player's `On Finished` | MetaSound Source `On Finished` (when appropriate) |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>From</th>
-<th>To</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>MetaSound <code translate="no" v-pre>On Play</code></td>
-<td>Sequence player&#x27;s <code translate="no" v-pre>Play</code></td>
-</tr>
-<tr>
-<td>Sequence player&#x27;s <code translate="no" v-pre>Out Mono</code></td>
-<td>MetaSound mono audio output</td>
-</tr>
-<tr>
-<td>Sequence player&#x27;s <code translate="no" v-pre>On Finished</code></td>
-<td>MetaSound Source <code translate="no" v-pre>On Finished</code> (when appropriate)</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
+<p>We&#x27;re going to create a sound that has <strong>three distinct stages</strong>: a click, a mechanical movement, and a final clunk. One <code translate="no" v-pre>Play</code> trigger starts the action; AudioPhysx waits for each recording to finish before moving to the next. You won&#x27;t need Blueprint timers or hand-authored delays.</p>
+<h2 id="make-the-graph">Make the graph</h2>
+<doc-steps>
+   <doc-step id="create-a-mono-source" step-number="1">
+      <template #title>Create a mono Source</template>
+<p>Create a <strong>MetaSound Source</strong> in the Content Browser, choose a mono output layout and open it. Import three short Wave Assets if you don&#x27;t already have them.</p>
+   </doc-step>
+   <doc-step id="add-the-player" step-number="2">
+      <template #title>Add the player</template>
+<p>Search <code translate="no" v-pre>AP: Sequence Wave Player</code> in the add-node menu. This is in <strong>AudioPhysx → Playback</strong>.</p>
+   </doc-step>
+   <doc-step id="fill-the-slots" step-number="3">
+      <template #title>Fill the slots</template>
+<p>Expand <code translate="no" v-pre>Sequence Waves</code> to three inputs. Assign the click, movement and clunk in that order. These are <strong>individual Wave Assets</strong>, not arrays.</p>
+   </doc-step>
+   <doc-step id="connect-the-event-and-audio" step-number="4">
+      <template #title>Connect the event and audio</template>
+<p>Connect the Source&#x27;s <code translate="no" v-pre>On Play</code> to the node&#x27;s <code translate="no" v-pre>Play</code>, and connect <code translate="no" v-pre>Out Mono</code> to the Source&#x27;s mono audio output.</p>
+   </doc-step>
+   <doc-step id="handle-the-end-of-the-source" step-number="5">
+      <template #title>Handle the end of the source</template>
+<p>If you want the Source to finish when the last recording ends, connect the player&#x27;s <code translate="no" v-pre>On Finished</code> to the Source&#x27;s completion input. If you later add a tail-generating effect, move completion handling to the last effect.</p>
+   </doc-step>
+</doc-steps>
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-first-sequence.png -->
-<h2 id="5-audition-and-verify">5. Audition and verify</h2>
-<p>Preview the MetaSound. You should hear each recording sequentially. With <code translate="no" v-pre>Loop Sequence</code> enabled the list repeats; without looping it ends after the last valid sound.</p>
+<h2 id="what-you-should-hear">What you should hear</h2>
+<p>A single Play creates three sounds in order. If you lengthen the middle recording, the final clunk should occur later automatically. If you turn on <code translate="no" v-pre>Loop Sequence</code>, the whole pattern starts again; without looping, the player finishes after the final valid slot.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-tip"></div>
     <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
@@ -189,11 +173,14 @@
             </svg>
         </div>
         <div class="pr-5 ml-3 w-full">
-<p>If you&#x27;re creating a long-running ambient or interactive source, don&#x27;t wire <code translate="no" v-pre>On Finished</code> in a way that stops the Source before you want it to end.</p>
+            <h5>Try one change</h5>
+<p>Replace the final clunk with a different-length recording and audition again. You&#x27;ll immediately see why this approach is easier than maintaining hand-calculated trigger delays.</p>
         </div>
     </div>
 </div>
-<p>Next: <a href="../../metasound/nodes/playback/random-sequence-wave-player/">Random Sequence Wave Player</a> or <a href="../../metasound/nodes/playback/start-loop-end/">Start Loop End Player</a>.</p>
+<h2 id="when-this-is-the-wrong-node">When this is the wrong node</h2>
+<p>If each stage needs to select a <em>different random take</em>, use <a href="../../metasound/nodes/playback/random-sequence-wave-player/">Random Sequence Wave Player</a>. If you need shots at fixed RPM while the trigger is held, use <a href="../../metasound/nodes/playback/start-loop-end/">Start Loop End Player</a>.</p>
+<p><a href="../signals-and-completion/">Next: Learn triggers and completion</a></p>
 
                 
                 <!-- Required only on API pages -->
@@ -216,7 +203,7 @@
                         <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../getting-started/signals-and-completion/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Inputs, outputs and completion</span>
+                                <span class="block mt-1">Signals and completion</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>

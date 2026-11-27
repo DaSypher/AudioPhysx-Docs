@@ -1,12 +1,11 @@
-# Changelog
+# Version history
 
-## Development baseline — 27 November 2026
+## Development documentation refresh — 27 November 2026
 
-Documentation baseline based on the AudioPhysx UE5.8.4 **Start Loop End RPM** source package.
+The documentation was expanded into a practical learning site, including individual explanations for the existing MetaSound nodes, Blueprint guides, example workflows and a screenshot plan. This is a **documentation change**, not a new plugin release.
 
-- Native MetaSound node library arranged in Playback, Acoustics, Propagation and QoL.
-- Shared Wave Player backend adapter in source.
-- Start Loop End Player supports optional RPM-driven middle playback while keeping completion-driven behaviour at RPM 0.
-- Projectile flyby playback and Blueprint path helpers are present.
+## UE 5.8.4 development baseline
 
-**This is not a claim that a commercial v1.0 has been submitted or published.** The first public release should receive a separate version number, shipping test matrix and dated release notes.
+The reviewed code contains the native MetaSound library across Playback, Acoustics, Propagation and QoL; a shared Wave Player adapter; the Start Loop End RPM extension; the flyby gameplay and playback system; and acoustic world/model helpers.
+
+This baseline is not a published **AudioPhysx v1.0** support claim. When the Fab release is tested, it should receive its own version number, supported-engine matrix, known issues and date.

@@ -1,20 +1,27 @@
-# Acoustic components
+# Representing an acoustic scene
 
-AudioPhysx includes several components for representing environmental acoustics in a level.
+AudioPhysx has components that connect real game objects to the acoustic model. You don't need all of them for ordinary playback. They're most useful when you want source-to-listener obstruction or around-opening behaviour to react to the level.
 
-| Component | Role |
-| --- | --- |
-| `UAPSpatialAudioEmitterComponent` | Holds a sound, optional attenuation asset and managed obstruction-trace behaviour. |
-| `UAPAcousticBarrierComponent` | Associates acoustic material and thickness information with a primitive component. |
-| `UAPAcousticPortalComponent` | Represents an enabled passage with configurable low/mid/high-band extra loss. |
-| `UAPPhysicsBridgeComponent` | Bridges scene/audio components with movement/environment/transmission settings. |
+## The emitter: where the sound begins
 
-## Suggested demonstration
+`UAPSpatialAudioEmitterComponent` represents a managed sound source with its audio and optional attenuation behaviour. It can participate in obstruction updates, allowing the sound to react as the listener and environment change.
 
-Create a small map with two rooms, a doorway and a sound emitter. Give one wall an acoustic barrier component. Move the listener between positions and compare clear/blocked/around-path results.
+## The barrier: what blocks the sound
 
-## Important
+`UAPAcousticBarrierComponent` associates thickness and acoustic material information with a primitive. Its model is more descriptive than treating a wall as simply “blocked or clear.” The associated geometry and collision still have to be set up correctly in the map.
 
-- Acoustic barrier geometry still needs a suitable target primitive and collision behaviour.
-- The portal component does not itself model a fully traced room impulse response.
-- Project-wide scheduling limits are configurable in AudioPhysx settings; high emitter counts should be profiled in a packaged build.
+## The portal: where an alternate path may exist
+
+`UAPAcousticPortalComponent` represents an opening or passage with extra frequency-band loss. An around-path candidate can use it when the world path solver supports that route. This is **not** a full room impulse-response or reverberation bake.
+
+## The bridge: exposing additional state
+
+`UAPPhysicsBridgeComponent` connects movement, transmission and environment-related information to audio. The exact configuration depends on the emitter and game system; this is not a requirement for simple Wave Player nodes.
+
+## A useful test map
+
+Build two simple rooms, a doorway and one looping source. Add an acoustic barrier to a relevant primitive and a portal near the opening. Move the listener between clear line of sight, obstructed position and doorway. Inspect the [path query result](acoustic-paths.md) before adjusting how the MetaSound renders it.
+
+!!!tip Performance is part of the design
+Acoustic tracing is scheduled and budgeted. Begin with just one emitter, then profile how the subsystem scales with your expected number of active sources rather than enabling high-frequency traces on everything.
+!!!

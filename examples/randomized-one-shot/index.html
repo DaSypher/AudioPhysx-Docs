@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Randomized one-shot sounds</title>
-    <meta name="title" content="Randomized one-shot sounds">
-    <meta name="description" content="Tools used: AP: Random Wave Player">
+    <title>A one-shot that doesn&#39;t sound identical every time</title>
+    <meta name="title" content="A one-shot that doesn't sound identical every time">
+    <meta name="description" content="Goal: Make footsteps, impacts or small interactions feel less repetitive by varying the recording instead of triggering one identical file on every event.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot/">
-    <meta property="og:title" content="Randomized one-shot sounds">
-    <meta property="og:description" content="Tools used: AP: Random Wave Player">
+    <meta property="og:title" content="A one-shot that doesn't sound identical every time">
+    <meta property="og:description" content="Goal: Make footsteps, impacts or small interactions feel less repetitive by varying the recording instead of triggering one identical file on every event.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot/">
-    <meta name="twitter:title" content="Randomized one-shot sounds">
-    <meta name="twitter:description" content="Tools used: AP: Random Wave Player">
+    <meta name="twitter:title" content="A one-shot that doesn't sound identical every time">
+    <meta name="twitter:description" content="Goal: Make footsteps, impacts or small interactions feel less repetitive by varying the recording instead of triggering one identical file on every event.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,22 +134,32 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="randomized-one-shot-sounds">Randomized one-shot sounds</h1>
-<p><strong>Tools used:</strong> AP: Random Wave Player</p>
-<h2 id="goal">Goal</h2>
-<p>Produce a useful, repeatable audio behaviour with a small MetaSound/Blueprint setup.</p>
-<h2 id="build-the-example">Build the example</h2>
-<p>Supply multiple recordings of the same event to <code translate="no" v-pre>Waves</code>, connect <code translate="no" v-pre>On Play</code> or a gameplay trigger to <code translate="no" v-pre>Play</code>, and route <code translate="no" v-pre>Out Mono</code> to the graph output. Enable <code translate="no" v-pre>No Immediate Repeat</code> if desired.</p>
+<h1 id="a-one-shot-that-doesnt-sound-identical-every-time">A one-shot that doesn&#x27;t sound identical every time</h1>
+<p><strong>Goal:</strong> Make footsteps, impacts or small interactions feel less repetitive by varying the recording instead of triggering one identical file on every event.</p>
+<h2 id="prepare-the-sound">Prepare the sound</h2>
+<p>Import four or five takes of the <strong>same type of event</strong>. For example, several small metal knocks. Trim obvious leading silence, match the perceived loudness where practical and keep them in a single Wave Asset Array.</p>
+<h2 id="wire-the-metasound">Wire the MetaSound</h2>
+<doc-steps>
+   <doc-step id="add-the-player" step-number="1">
+      <template #title>Add the player</template>
+<p>Create a mono MetaSound Source and add <a href="../../metasound/nodes/playback/random-wave-player/">AP: Random Wave Player</a>.</p>
+   </doc-step>
+   <doc-step id="give-it-alternatives" step-number="2">
+      <template #title>Give it alternatives</template>
+<p>Connect your Wave Asset Array to <code translate="no" v-pre>Waves</code>, then connect <code translate="no" v-pre>Play</code> from the desired trigger event.</p>
+   </doc-step>
+   <doc-step id="listen-to-repeated-events" step-number="3">
+      <template #title>Listen to repeated events</template>
+<p>Connect <code translate="no" v-pre>Out Mono</code> to the Source output, enable <code translate="no" v-pre>No Immediate Repeat</code> if desired and audition repeated starts.</p>
+   </doc-step>
+   <doc-step id="stress-test-the-event" step-number="4">
+      <template #title>Stress-test the event</template>
+<p>Trigger faster than one recording can finish. Check <code translate="no" v-pre>Max Voices</code> and decide how much overlapping sound the game needs.</p>
+   </doc-step>
+</doc-steps>
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-randomized-one-shot.png -->
-<h2 id="expected-result">Expected result</h2>
-<p>Listen for variation without obvious level jumps; use consistently prepared recordings.</p>
-<h2 id="before-shipping">Before shipping</h2>
-<ul>
-<li>Test empty arrays and stop/retrigger behaviour.</li>
-<li>Test the final recording assets in a packaged Development build.</li>
-<li>Check voice budgets and spatialization in a scene with multiple sound sources.</li>
-</ul>
-<p><a href="../../metasound/">Find the node reference</a>.</p>
+<h2 id="what-to-listen-for">What to listen for</h2>
+<p>A convincing variation player should sound <strong>natural</strong>, not simply more random. If one take is much louder than the others, listeners may notice the level jump more than they appreciate the variety. If you need each variation to be heard within a cycle, try the <a href="../../metasound/nodes/playback/shuffle-bag-wave-player/">Shuffle-Bag Wave Player</a>.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -216,6 +226,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Randomized one-shot sounds", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/examples/randomized-one-shot.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Randomized one-shots", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/examples/randomized-one-shot.md" }</script>
 </body>
 </html>

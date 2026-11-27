@@ -1,21 +1,25 @@
-# Acoustics
+# Acoustics — change the character of sound
 
-These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.
+These nodes are for effects that can make the **same recording** behave differently in different spaces, behind different materials or at different listener positions. They are useful where another random recording is not enough.
 
-| Node | Purpose |
-| --- | --- |
-| [AP: Acoustic Paths](nodes/acoustics/acoustic-paths.md) | Apply the selected acoustic route: propagation delay and three-band loss from the game-thread path solver. |
-| [AP: Impact Dynamics](nodes/acoustics/impact-dynamics.md) | Shape the transient, level and filtering of an impact recording according to impact strength. |
-| [AP: Early Reflections](nodes/acoustics/early-reflections.md) | Add a small set of simulated early reflections to a mono recording. |
-| [AP: Material Transmission](nodes/acoustics/material-transmission.md) | Apply obstruction-dependent, frequency-shaped transmission loss to mono audio. |
-| [AP: Source Directivity](nodes/acoustics/source-directivity.md) | Apply direction-dependent spectral shaping and attenuation. |
+## Sound passing through a barrier
 
-## How to choose
+[Material Transmission](nodes/acoustics/material-transmission.md) uses an obstruction state and frequency-dependent losses to produce a muffled, transmitted sound. Use it for a simple, authored blocked/unblocked effect. [Acoustic Paths](nodes/acoustics/acoustic-paths.md) instead consumes the selected route from the world solver, including route delay and three-band loss.
 
-- **Wall transmission:** Material Transmission.
-- **Selected path and delay:** Acoustic Paths.
-- **Impact shaping:** Impact Dynamics.
-- **Synthetic room taps:** Early Reflections.
-- **Facing-dependent tone:** Source Directivity.
+## Sound arriving in a space
 
-For a reproducible demonstration, start with the [first MetaSound tutorial](../getting-started/first-metasound.md).
+[Early Reflections](nodes/acoustics/early-reflections.md) suggests the first short echoes from nearby surfaces. It uses a lightweight model controlled by room size and damping, not real-time geometric reconstruction.
+
+## Where the source faces
+
+[Source Directivity](nodes/acoustics/source-directivity.md) shapes loudness and brightness as the listener moves from a source's front to its rear. It needs source-listener orientation information from the game.
+
+## How strongly something is hit
+
+[Impact Dynamics](nodes/acoustics/impact-dynamics.md) turns an impact event plus a strength value into filtered and transient-shaped playback. It is an audio processor, not an impact detector.
+
+!!!warning Avoid accidental double-processing
+Unreal attenuation and other environmental effects can also apply occlusion, air absorption and directivity. Compare the complete signal path before stacking several strong filters.
+!!!
+
+[Browse the Acoustics reference](nodes/acoustics/README.md) · [Try the obstruction recipe](../examples/acoustic-obstruction.md)

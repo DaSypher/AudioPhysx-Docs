@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Acoustic components</title>
-    <meta name="title" content="Acoustic components">
-    <meta name="description" content="AudioPhysx includes several components for representing environmental acoustics in a level.">
+    <title>Representing an acoustic scene</title>
+    <meta name="title" content="Representing an acoustic scene">
+    <meta name="description" content="AudioPhysx has components that connect real game objects to the acoustic model. You don't need all of them for ordinary playback. They're most useful when you want source-to-listener obstruction or around-opening behaviour to react to the level.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/components/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/components/">
-    <meta property="og:title" content="Acoustic components">
-    <meta property="og:description" content="AudioPhysx includes several components for representing environmental acoustics in a level.">
+    <meta property="og:title" content="Representing an acoustic scene">
+    <meta property="og:description" content="AudioPhysx has components that connect real game objects to the acoustic model. You don't need all of them for ordinary playback. They're most useful when you want source-to-listener obstruction or around-opening behaviour to react to the level.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/components/">
-    <meta name="twitter:title" content="Acoustic components">
-    <meta name="twitter:description" content="AudioPhysx includes several components for representing environmental acoustics in a level.">
+    <meta name="twitter:title" content="Representing an acoustic scene">
+    <meta name="twitter:description" content="AudioPhysx has components that connect real game objects to the acoustic model. You don't need all of them for ordinary playback. They're most useful when you want source-to-listener obstruction or around-opening behaviour to react to the level.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/components.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,52 +134,35 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="acoustic-components">Acoustic components</h1>
-<p>AudioPhysx includes several components for representing environmental acoustics in a level.</p>
-<retype-table copy-text="| Component | Role |
-| --- | --- |
-| `UAPSpatialAudioEmitterComponent` | Holds a sound, optional attenuation asset and managed obstruction-trace behaviour. |
-| `UAPAcousticBarrierComponent` | Associates acoustic material and thickness information with a primitive component. |
-| `UAPAcousticPortalComponent` | Represents an enabled passage with configurable low/mid/high-band extra loss. |
-| `UAPPhysicsBridgeComponent` | Bridges scene/audio components with movement/environment/transmission settings. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Component</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>UAPSpatialAudioEmitterComponent</code></td>
-<td>Holds a sound, optional attenuation asset and managed obstruction-trace behaviour.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>UAPAcousticBarrierComponent</code></td>
-<td>Associates acoustic material and thickness information with a primitive component.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>UAPAcousticPortalComponent</code></td>
-<td>Represents an enabled passage with configurable low/mid/high-band extra loss.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>UAPPhysicsBridgeComponent</code></td>
-<td>Bridges scene/audio components with movement/environment/transmission settings.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="suggested-demonstration">Suggested demonstration</h2>
-<p>Create a small map with two rooms, a doorway and a sound emitter. Give one wall an acoustic barrier component. Move the listener between positions and compare clear/blocked/around-path results.</p>
+<h1 id="representing-an-acoustic-scene">Representing an acoustic scene</h1>
+<p>AudioPhysx has components that connect real game objects to the acoustic model. You don&#x27;t need all of them for ordinary playback. They&#x27;re most useful when you want source-to-listener obstruction or around-opening behaviour to react to the level.</p>
+<h2 id="the-emitter-where-the-sound-begins">The emitter: where the sound begins</h2>
+<p><code translate="no" v-pre>UAPSpatialAudioEmitterComponent</code> represents a managed sound source with its audio and optional attenuation behaviour. It can participate in obstruction updates, allowing the sound to react as the listener and environment change.</p>
+<h2 id="the-barrier-what-blocks-the-sound">The barrier: what blocks the sound</h2>
+<p><code translate="no" v-pre>UAPAcousticBarrierComponent</code> associates thickness and acoustic material information with a primitive. Its model is more descriptive than treating a wall as simply “blocked or clear.” The associated geometry and collision still have to be set up correctly in the map.</p>
+<h2 id="the-portal-where-an-alternate-path-may-exist">The portal: where an alternate path may exist</h2>
+<p><code translate="no" v-pre>UAPAcousticPortalComponent</code> represents an opening or passage with extra frequency-band loss. An around-path candidate can use it when the world path solver supports that route. This is <strong>not</strong> a full room impulse-response or reverberation bake.</p>
+<h2 id="the-bridge-exposing-additional-state">The bridge: exposing additional state</h2>
+<p><code translate="no" v-pre>UAPPhysicsBridgeComponent</code> connects movement, transmission and environment-related information to audio. The exact configuration depends on the emitter and game system; this is not a requirement for simple Wave Player nodes.</p>
+<h2 id="a-useful-test-map">A useful test map</h2>
+<p>Build two simple rooms, a doorway and one looping source. Add an acoustic barrier to a relevant primitive and a portal near the opening. Move the listener between clear line of sight, obstructed position and doorway. Inspect the <a href="../acoustic-paths/">path query result</a> before adjusting how the MetaSound renders it.</p>
 <!-- IMAGE SLOT: docs/static/images/acoustics/acoustic-test-room.png -->
-<h2 id="important">Important</h2>
-<ul>
-<li>Acoustic barrier geometry still needs a suitable target primitive and collision behaviour.</li>
-<li>The portal component does not itself model a fully traced room impulse response.</li>
-<li>Project-wide scheduling limits are configurable in AudioPhysx settings; high emitter counts should be profiled in a packaged build.</li>
-</ul>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-tip"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-tip" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M7.90625 2.15625C4.50944 2.15625 2.15625 4.58563 2.15625 7.54688C2.15625 8.96138 2.76575 9.88281 3.57075 10.8589L3.87837 11.2226C4.19894 11.6021 4.554 12.0218 4.84581 12.4416C5.25406 13.0324 5.61775 13.7296 5.7385 14.5834C5.76728 14.8608 5.68746 15.1386 5.51579 15.3583C5.34413 15.5781 5.09399 15.7228 4.8179 15.7621C4.5418 15.8013 4.26124 15.7321 4.03512 15.5689C3.809 15.4056 3.65493 15.1612 3.60525 14.8867C3.54775 14.4814 3.37094 14.1004 3.07338 13.6692C2.8306 13.3302 2.57055 13.0039 2.29425 12.6917C2.1735 12.5479 2.04556 12.397 1.909 12.2317C1.00769 11.1406 0 9.72613 0 7.54688C0 3.32062 3.39681 0 7.90625 0C12.4157 0 15.8125 3.32062 15.8125 7.54688C15.8125 9.72613 14.8048 11.1406 13.9035 12.2317C13.7669 12.397 13.639 12.5479 13.5183 12.6903C13.2207 13.0424 12.9677 13.3414 12.7406 13.6692C12.4416 14.1004 12.2662 14.4814 12.2087 14.8867C12.1557 15.1584 12.0003 15.3994 11.7747 15.5598C11.5492 15.7202 11.2706 15.7879 10.9965 15.7488C10.7225 15.7096 10.474 15.5667 10.3023 15.3496C10.1306 15.1325 10.0489 14.8577 10.074 14.582C10.1948 13.7296 10.5584 13.0324 10.9667 12.4416C11.2585 12.0218 11.6136 11.6021 11.9341 11.2226C12.0419 11.0961 12.1454 10.9739 12.2403 10.8589C13.0468 9.88281 13.6562 8.96138 13.6562 7.54688C13.6562 4.58563 11.3031 2.15625 7.90625 2.15625ZM4.67188 17.25H11.1406C11.4266 17.25 11.7008 17.3636 11.903 17.5658C12.1052 17.768 12.2188 18.0422 12.2188 18.3281C12.2188 18.6141 12.1052 18.8883 11.903 19.0905C11.7008 19.2927 11.4266 19.4062 11.1406 19.4062H4.67188C4.38594 19.4062 4.11171 19.2927 3.90953 19.0905C3.70734 18.8883 3.59375 18.6141 3.59375 18.3281C3.59375 18.0422 3.70734 17.768 3.90953 17.5658C4.11171 17.3636 4.38594 17.25 4.67188 17.25ZM5.03125 21.9219C5.03125 21.6359 5.14484 21.3617 5.34703 21.1595C5.54921 20.9573 5.82344 20.8438 6.10938 20.8438H9.70312C9.98906 20.8438 10.2633 20.9573 10.4655 21.1595C10.6677 21.3617 10.7812 21.6359 10.7812 21.9219C10.7812 22.2078 10.6677 22.482 10.4655 22.6842C10.2633 22.8864 9.98906 23 9.70312 23H6.10938C5.82344 23 5.54921 22.8864 5.34703 22.6842C5.14484 22.482 5.03125 22.2078 5.03125 21.9219Z" />
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>Performance is part of the design</h5>
+<p>Acoustic tracing is scheduled and budgeted. Begin with just one emitter, then profile how the subsystem scales with your expected number of active sources rather than enabling high-frequency traces on everything.</p>
+        </div>
+    </div>
+</div>
 
                 
                 <!-- Required only on API pages -->

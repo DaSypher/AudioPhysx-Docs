@@ -1,92 +1,91 @@
-﻿# AudioPhysx
+﻿# Make game audio respond to the world
 
-> Build more expressive game audio with less MetaSound wiring.
+> AudioPhysx brings purposeful playback tools, physically inspired audio processing and world-aware Blueprint helpers into Unreal Engine. Build sound that reacts to distance, materials, motion and player actions—without turning every MetaSound into a maze of wiring.
 
-- [AudioPhysx](https://DaSypher.github.io/AudioPhysx-Docs/readme.md): AudioPhysx
-- [Getting started](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/readme.md): New to AudioPhysx? Follow these pages in order. You can reach a first playable result without using acoustic path components or writing C++.
-- [MetaSound node reference](https://DaSypher.github.io/AudioPhysx-Docs/metasound/readme.md): AudioPhysx contains 23 native MetaSound nodes in the development source reviewed for this documentation.
-- [Blueprint integration](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/readme.md): AudioPhysx provides functions and components for connecting game-world information to audio. These features operate outside the MetaSound audio-render loop.
-- [Examples and recipes](https://DaSypher.github.io/AudioPhysx-Docs/examples/readme.md): These are small, task-oriented walkthroughs meant to show a useful result before you explore the complete node catalogue.
-- [Help and support](https://DaSypher.github.io/AudioPhysx-Docs/support/readme.md): Troubleshooting — the fastest checks for common problems.
-- [Sound Cue support — planned](https://DaSypher.github.io/AudioPhysx-Docs/sound-cue/readme.md): AudioPhysx's existing source reviewed for these pages implements MetaSound nodes and Blueprint helpers. Custom Sound Cue USoundNode classes are not part of this source package.
+- [Make game audio respond to the world](https://DaSypher.github.io/AudioPhysx-Docs/readme.md): Make game audio respond to the world
+- [Start creating with AudioPhysx](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/readme.md): You do not need to understand sound propagation or C++ before getting value from AudioPhysx. Begin with a simple Wave Player and add complexity only when the sound actually calls for it.
+- [MetaSound node library](https://DaSypher.github.io/AudioPhysx-Docs/metasound/readme.md): AudioPhysx extends MetaSounds with native C++ nodes for playing, processing and controlling sound. Choosing the right category is easier when you begin with the question you want your audio to answer.
+- [Connecting game events to audio](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/readme.md): MetaSound processes audio, but it does not automatically know where the player is standing, what material a bullet passed, or whether a source is behind a wall.
+- [Learn by building something audible](https://DaSypher.github.io/AudioPhysx-Docs/examples/readme.md): Every recipe here starts with a sound-design goal, not a list of API calls. You can follow a short graph, listen for a specific result, and then explore the deeper node reference when you want more control.
+- [Support, compatibility and updates](https://DaSypher.github.io/AudioPhysx-Docs/support/readme.md): Most AudioPhysx issues fall into three groups: a node was not installed or registered correctly; a playback graph has missing triggers or Wave Assets; or a world-driven node receives data in the wrong units or order.
 
 ## Getting started
 
-- [Requirements](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/requirements.md): The documentation currently targets the AudioPhysx UE5.8.4 development source. The final Fab package may have a different verified version matrix; that will be published on Compatibility.
-- [Installing AudioPhysx](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/installation.md): The exact installation method depends on whether you received the finished Fab code plugin or a private development source build.
-- [Your first AudioPhysx MetaSound](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/first-metasound.md): In this walkthrough you'll make three recordings play in order using AP: Sequence Wave Player. Each sound starts once the previous sound has finished—no manual delay values.
-- [Understanding inputs, outputs and completion](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/signals-and-completion.md): Trigger pins describe moments: start playback, stop playback, release a held effect or announce completion.
-- [Quick setup checklist](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/checklist.md): AudioPhysx plugin enabled and visible in Edit → Plugins.
+- [Before you begin](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/requirements.md): AudioPhysx is a native Unreal Engine C++ plugin. This documentation currently reflects a development build for UE 5.8.4; confirm the final supported engine versions on Compatibility before installing a commercial package.
+- [Installing AudioPhysx](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/installation.md): The exact steps depend on whether you're using a Fab-distributed plugin or a source checkout. Choose the relevant path below. In either case, the first goal is to see the AudioPhysx node categories in the MetaSound editor.
+- [Your first AudioPhysx MetaSound](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/first-metasound.md): We're going to create a sound that has three distinct stages: a click, a mechanical movement, and a final clunk. One Play trigger starts the action; AudioPhysx waits for each recording to finish before moving to the next.
+- [Signals, events and the end of a sound](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/signals-and-completion.md): Many AudioPhysx graph problems aren't about decoding audio; they're about confusing an event, an audio stream, and a lifecycle signal. Understanding these three concepts will make every node easier to use.
+- [Quick setup checklist](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/checklist.md): Use this before assuming a node is broken. It catches the most common installation, routing and completion mistakes.
 
 ## MetaSound nodes
 
-- [Playback](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback.md): Playback nodes select and play recordings. Most expose Out Mono and, where implemented, playback completion events.
-- [Acoustics](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics.md): These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.
-- [Propagation](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation.md): These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.
-- [QoL](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol.md): These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.
-- [MetaSound interfaces and game-provided data](https://DaSypher.github.io/AudioPhysx-Docs/metasound/interfaces.md): AudioPhysx can publish acoustic parameter values from Blueprint/world systems to a MetaSound graph. Use the interfaces and names included with your installed plugin build, rather than creating independent duplicate parameters with similar names.
+- [Playback — choose the right player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback.md): Playback nodes select, schedule and combine recordings. Use them when a sound needs a behaviour more involved than simply playing one Wave Asset when it receives a trigger.
+- [Acoustics — change the character of sound](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics.md): These nodes are for effects that can make the same recording behave differently in different spaces, behind different materials or at different listener positions.
+- [Propagation — distance and motion](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation.md): When we see an explosion far away, the light arrives almost immediately while the sound takes time. A moving vehicle can change the apparent pitch and travel time of its sound.
+- [QoL — small controls that clean up large graphs](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol.md): These nodes deal mainly with events and numbers, not audio samples. Their purpose is to replace common branches, random checks and smoothing networks that would otherwise appear in every MetaSound.
+- [Passing world data into MetaSound](https://DaSypher.github.io/AudioPhysx-Docs/metasound/interfaces.md): A Wave Player can play a recording with only a trigger, but an acoustic processor needs to know something about the world: distance, material, obstruction, source direction or environment.
 
 ### Nodes
 
-#### Playback
+#### Acoustics node reference
 
-- [Playback node reference](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/readme.md): AP: Sequence Wave Player — Play a set of recordings in a fixed order, starting each wave after the previous one finishes.
-- [AP: Distance Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/distance-wave-player.md): MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source
-- [AP: Flyby Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/flyby-wave-player.md): MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source
-- [AP: Layered Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/layered-wave-player.md): MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source
-- [AP: PhysMat Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/physmat-wave-player.md): MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source
-- [AP: Random Sequence Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-sequence-wave-player.md): MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source
-- [AP: Random Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-wave-player.md): MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source
-- [AP: Sequence Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/sequence-wave-player.md): MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source
-- [AP: Shuffle-Bag Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/shuffle-bag-wave-player.md): MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source
-- [AP: Start Loop End Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/start-loop-end.md): MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source
-- [AP: Surface Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/surface-wave-player.md): MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source
+- [Acoustics reference](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/readme.md): These processors shape mono audio using material, route, orientation or impact information.
+- [AP: Acoustic Paths](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/acoustic-paths.md): MetaSound · AudioPhysx / Acoustics
+- [AP: Early Reflections](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/early-reflections.md): MetaSound · AudioPhysx / Acoustics
+- [AP: Impact Dynamics](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/impact-dynamics.md): MetaSound · AudioPhysx / Acoustics
+- [AP: Material Transmission](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/material-transmission.md): MetaSound · AudioPhysx / Acoustics
+- [AP: Source Directivity](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/source-directivity.md): MetaSound · AudioPhysx / Acoustics
 
-#### Acoustics
+#### Playback node reference
 
-- [Acoustics node reference](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/readme.md): AP: Acoustic Paths — Apply the selected acoustic route: propagation delay and three-band loss from the game-thread path solver.
-- [AP: Acoustic Paths](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/acoustic-paths.md): MetaSound category: AudioPhysx → Acoustics Source contract: Unreal Engine 5.8.4 development source
-- [AP: Early Reflections](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/early-reflections.md): MetaSound category: AudioPhysx → Acoustics Source contract: Unreal Engine 5.8.4 development source
-- [AP: Impact Dynamics](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/impact-dynamics.md): MetaSound category: AudioPhysx → Acoustics Source contract: Unreal Engine 5.8.4 development source
-- [AP: Material Transmission](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/material-transmission.md): MetaSound category: AudioPhysx → Acoustics Source contract: Unreal Engine 5.8.4 development source
-- [AP: Source Directivity](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/acoustics/source-directivity.md): MetaSound category: AudioPhysx → Acoustics Source contract: Unreal Engine 5.8.4 development source
+- [Playback reference](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/readme.md): These players turn Wave Assets into varied, sequenced, layered or world-sensitive audio.
+- [AP: Distance Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/distance-wave-player.md): MetaSound · AudioPhysx / Playback
+- [AP: Flyby Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/flyby-wave-player.md): MetaSound · AudioPhysx / Playback
+- [AP: Layered Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/layered-wave-player.md): MetaSound · AudioPhysx / Playback
+- [AP: PhysMat Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/physmat-wave-player.md): MetaSound · AudioPhysx / Playback
+- [AP: Random Sequence Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-sequence-wave-player.md): MetaSound · AudioPhysx / Playback
+- [AP: Random Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/random-wave-player.md): MetaSound · AudioPhysx / Playback
+- [AP: Sequence Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/sequence-wave-player.md): MetaSound · AudioPhysx / Playback
+- [AP: Shuffle-Bag Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/shuffle-bag-wave-player.md): MetaSound · AudioPhysx / Playback
+- [AP: Start Loop End Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/start-loop-end.md): MetaSound · AudioPhysx / Playback
+- [AP: Surface Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/surface-wave-player.md): MetaSound · AudioPhysx / Playback
 
-#### Propagation
+#### Propagation node reference
 
-- [Propagation node reference](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/readme.md): AP: Atmosphere Absorption — Change high-frequency absorption based on travel distance and air conditions.
-- [AP: Atmosphere Absorption](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/atmosphere-absorption.md): MetaSound category: AudioPhysx → Propagation Source contract: Unreal Engine 5.8.4 development source
-- [AP: Distance Delay](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/distance-delay.md): MetaSound category: AudioPhysx → Propagation Source contract: Unreal Engine 5.8.4 development source
-- [AP: Doppler Ratio](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/doppler-ratio.md): MetaSound category: AudioPhysx → Propagation Source contract: Unreal Engine 5.8.4 development source
-- [AP: Dynamic Propagation](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/dynamic-propagation.md): MetaSound category: AudioPhysx → Propagation Source contract: Unreal Engine 5.8.4 development source
+- [Propagation reference](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/readme.md): These tools work with sound travel time, atmosphere and source-listener movement.
+- [AP: Atmosphere Absorption](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/atmosphere-absorption.md): MetaSound · AudioPhysx / Propagation
+- [AP: Distance Delay](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/distance-delay.md): MetaSound · AudioPhysx / Propagation
+- [AP: Doppler Ratio](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/doppler-ratio.md): MetaSound · AudioPhysx / Propagation
+- [AP: Dynamic Propagation](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/propagation/dynamic-propagation.md): MetaSound · AudioPhysx / Propagation
 
-#### QoL
+#### QoL node reference
 
-- [QoL node reference](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/readme.md): AP: Distance Switch (Dynamic) — Route a trigger to one of several expandable distance bands.
-- [AP: Distance Switch (Dynamic)](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/distance-switch.md): MetaSound category: AudioPhysx → QoL Source contract: Unreal Engine 5.8.4 development source
-- [AP: Float Smoother](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/float-smoother.md): MetaSound category: AudioPhysx → QoL Source contract: Unreal Engine 5.8.4 development source
-- [AP: Trigger Cooldown](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/trigger-cooldown.md): MetaSound category: AudioPhysx → QoL Source contract: Unreal Engine 5.8.4 development source
-- [AP: Trigger Probability](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/trigger-probability.md): MetaSound category: AudioPhysx → QoL Source contract: Unreal Engine 5.8.4 development source
+- [QoL reference](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/readme.md): These utilities help manage triggers and smooth the values feeding other nodes.
+- [AP: Distance Switch (Dynamic)](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/distance-switch.md): MetaSound · AudioPhysx / Qol
+- [AP: Float Smoother](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/float-smoother.md): MetaSound · AudioPhysx / Qol
+- [AP: Trigger Cooldown](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/trigger-cooldown.md): MetaSound · AudioPhysx / Qol
+- [AP: Trigger Probability](https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/qol/trigger-probability.md): MetaSound · AudioPhysx / Qol
 
 ## Blueprint integration
 
-- [Projectile flyby integration](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/flyby.md): You can trigger a close-pass flyby using a path segment, without using Chaos or spawning special AudioPhysx projectile actors.
-- [Blueprint playback helpers](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/playback-helpers.md): The public UAPAudioBlueprintLibrary exposes these callable operations in the current source:
-- [Acoustic path queries](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/acoustic-paths.md): AP: Query Acoustic Path is exposed by UAPAcousticPathLibrary. It evaluates an acoustic path for supplied source and listener world positions, with an optional source actor.
-- [Acoustic components](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/components.md): AudioPhysx includes several components for representing environmental acoustics in a level.
-- [Acoustic Physical Materials and project settings](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/materials-and-settings.md): UAPAcousticPhysicalMaterial extends Unreal's UPhysicalMaterial with acoustic information including:
+- [Projectile flybys from Blueprint](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/flyby.md): A good near-miss sound is about where the projectile passed and when the listener would hear it, not simply whether the weapon fired. AudioPhysx lets you
+- [Playback helpers from Blueprint](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/playback-helpers.md): You don't need a dedicated audio Actor to use every AudioPhysx feature. The public Blueprint library provides convenient entry points for sounds at world locations and for registering existing audio components with the plugin's managed update system.
+- [Querying acoustic paths](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/acoustic-paths.md): A direct ray between a speaker and listener may cross a barrier. In some scenes, sound could instead travel through an opening or around an obstacle. AudioPhysx's path solver provides a game-thread approximation of that situation, producing an acoustic route that the MetaSound can render.
+- [Representing an acoustic scene](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/components.md): AudioPhysx has components that connect real game objects to the acoustic model. You don't need all of them for ordinary playback. They're most useful when you want source-to-listener obstruction or around-opening behaviour to react to the level.
+- [Acoustic Physical Materials](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/materials-and-settings.md): An acoustic material describes how an authored surface should affect sound. It is not a recording and is not automatically measured from your level geometry.
 
 ## Examples and recipes
 
-- [Randomized one-shot sounds](https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot.md): Tools used: AP: Random Wave Player
-- [Automatic weapon with RPM](https://DaSypher.github.io/AudioPhysx-Docs/examples/automatic-weapon.md): Tools used: AP: Start Loop End Player
-- [Multi-stage sound variation](https://DaSypher.github.io/AudioPhysx-Docs/examples/random-sequence.md): Tools used: AP: Random Sequence Wave Player
-- [Material-dependent footsteps](https://DaSypher.github.io/AudioPhysx-Docs/examples/material-footsteps.md): Tools used: AP: PhysMat Wave Player or AP: Surface Wave Player
-- [Projectile near-miss flyby](https://DaSypher.github.io/AudioPhysx-Docs/examples/projectile-flyby.md): Tools used: AP: Flyby Wave Player + AP: Play Projectile Flyby
-- [Basic acoustic obstruction](https://DaSypher.github.io/AudioPhysx-Docs/examples/acoustic-obstruction.md): Tools used: AP: Material Transmission or AP: Acoustic Paths
+- [A one-shot that doesn't sound identical every time](https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot.md): Goal: Make footsteps, impacts or small interactions feel less repetitive by varying the recording instead of triggering one identical file on every event.
+- [Automatic weapon sound with RPM](https://DaSypher.github.io/AudioPhysx-Docs/examples/automatic-weapon.md): Goal: Start a weapon with an attack recording, repeat variable shot bodies at an actual firing rate, and play a proper release tail when the player lets go of the trigger.
+- [One action, several random stages](https://DaSypher.github.io/AudioPhysx-Docs/examples/random-sequence.md): Goal: Keep the order of a sound effect recognizable while allowing its individual details to change.
+- [Footsteps that match the ground](https://DaSypher.github.io/AudioPhysx-Docs/examples/material-footsteps.md): Goal: Make a footstep choose the correct texture—stone, grass, metal or another material—based on what the player actually stepped on.
+- [A projectile passing close to the listener](https://DaSypher.github.io/AudioPhysx-Docs/examples/projectile-flyby.md): Goal: Hear an appropriate flyby when a projectile passes nearby, without playing a near-miss sound for every shot in the level.
+- [Make a sound believable behind a wall](https://DaSypher.github.io/AudioPhysx-Docs/examples/acoustic-obstruction.md): Goal: Have a mono sound change its tone and apparent arrival when the path between source and listener becomes obstructed.
 
-## Support
+## Support and reference
 
-- [Troubleshooting](https://DaSypher.github.io/AudioPhysx-Docs/support/troubleshooting.md): Check Edit → Plugins and verify the plugin is enabled.
-- [Frequently asked questions](https://DaSypher.github.io/AudioPhysx-Docs/support/faq.md): No. It extends MetaSounds and game-audio workflows. Unreal's own attenuation, concurrency, mixer, audio components and Sound Cues remain part of a typical project.
-- [Engine and platform compatibility](https://DaSypher.github.io/AudioPhysx-Docs/support/compatibility.md): These pages were generated against the AudioPhysx UE5.8.4 development source available on 27 November 2026. They do not establish that a final Fab package has passed packaged-game verification.
-- [Changelog](https://DaSypher.github.io/AudioPhysx-Docs/support/changelog.md): Documentation baseline based on the AudioPhysx UE5.8.4 Start Loop End RPM source package.
+- [Troubleshooting AudioPhysx](https://DaSypher.github.io/AudioPhysx-Docs/support/troubleshooting.md): When something goes wrong, isolate the system in this order: can Unreal play the asset? → does the MetaSound receive a trigger? → does the node output audio?
+- [Frequently asked questions](https://DaSypher.github.io/AudioPhysx-Docs/support/faq.md): No. It provides additional C++ nodes and Blueprint integration for the existing Unreal audio pipeline. You still use MetaSound Sources, the mixer, spatialization, Sound Attenuation and concurrency features as appropriate for your game.
+- [Engine and platform compatibility](https://DaSypher.github.io/AudioPhysx-Docs/support/compatibility.md): A plugin is only supported where its exact distributable build has been compiled, loaded and tested. The current docs reflect the UE 5.8.4 development source reviewed on 27 November 2026; the final Fab release package has not yet passed a complete independently verified matrix.
+- [Version history](https://DaSypher.github.io/AudioPhysx-Docs/support/changelog.md): The documentation was expanded into a practical learning site, including individual explanations for the existing MetaSound nodes, Blueprint guides, example workflows and a screenshot plan.

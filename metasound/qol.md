@@ -1,19 +1,22 @@
-# QoL
+# QoL — small controls that clean up large graphs
 
-These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.
+These nodes deal mainly with **events and numbers**, not audio samples. Their purpose is to replace common branches, random checks and smoothing networks that would otherwise appear in every MetaSound.
 
-| Node | Purpose |
-| --- | --- |
-| [AP: Distance Switch (Dynamic)](nodes/qol/distance-switch.md) | Route a trigger to one of several expandable distance bands. |
-| [AP: Float Smoother](nodes/qol/float-smoother.md) | Apply independent rise and fall smoothing to a floating-point control value. |
-| [AP: Trigger Cooldown](nodes/qol/trigger-cooldown.md) | Let triggers through only when a configured cooldown has elapsed. |
-| [AP: Trigger Probability](nodes/qol/trigger-probability.md) | Allow or reject incoming triggers according to a configurable probability. |
+**[Trigger Cooldown](nodes/qol/trigger-cooldown.md)** prevents rapid bursts from turning into dozens of audible events. **[Trigger Probability](nodes/qol/trigger-probability.md)** lets an event through at a configurable chance. Use them on optional rattles, contact ticks and other sounds that should not happen every time.
 
-## How to choose
+**[Float Smoother](nodes/qol/float-smoother.md)** prevents block-rate control values from stepping abruptly. This is useful for engine load, filtering and environmental controls.
 
-- **Route triggers by distance:** Distance Switch (Dynamic).
-- **Avoid sharp parameter changes:** Float Smoother.
-- **Limit trigger rates:** Trigger Cooldown.
-- **Occasional/random events:** Trigger Probability.
+**[Distance Switch (Dynamic)](nodes/qol/distance-switch.md)** routes a trigger to one distance band. It is a branching tool, whereas Distance Wave Player actually decodes recordings selected by distance.
 
-For a reproducible demonstration, start with the [first MetaSound tutorial](../getting-started/first-metasound.md).
+## A useful pattern
+
+```mermaid
+flowchart LR
+    A[Gameplay event] --> B[Trigger Cooldown]
+    B --> C[Trigger Probability]
+    C --> D[Optional Foley player]
+```
+
+The cooldown controls *frequency*, the probability controls *whether the optional detail happens*, and the player handles the recording. You can remove either control if it adds no value to the result.
+
+[Browse the QoL reference](nodes/qol/README.md)

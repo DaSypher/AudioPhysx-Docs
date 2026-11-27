@@ -1,38 +1,38 @@
 # Installing AudioPhysx
 
-The exact installation method depends on whether you received the finished Fab code plugin or a private development source build.
+The exact steps depend on whether you're using a **Fab-distributed plugin** or a **source checkout**. Choose the relevant path below. In either case, the first goal is to see the AudioPhysx node categories in the MetaSound editor.
 
-## For a Fab plugin installation
++++ Fab / launcher installation
 
-1. Obtain the AudioPhysx plugin for a **supported engine version** through Fab/Epic's plugin installation flow.
-2. Open your project and go to **Edit → Plugins**.
-3. Search for **AudioPhysx**, enable it if needed and restart the editor when requested.
-4. Open a MetaSound Source and search for `AP:` or `AudioPhysx` in the add-node menu.
+When the commercial package is available for your verified engine version, install it through the Fab/Epic workflow, open your project and enable **AudioPhysx** under **Edit → Plugins** if it is not enabled already. Restart Unreal when prompted.
 
-!!!warning Current status
-These steps describe the intended customer workflow. The Fab distribution has not been verified here. Do not claim an engine or platform is supported until you have tested the final packaged plugin.
-!!!
+The final Fab delivery workflow has **not been validated** for this development documentation. Use the supported-engine list published with the actual product package.
 
-## For a source distribution
++++ Source checkout
 
-1. Close Unreal Editor and disable Live Coding.
-2. Put the **complete plugin directory** (including its `.uplugin` descriptor) in `YourProject/Plugins/AudioPhysx/`.
-3. Regenerate project files if required, and build the Editor target with the supported toolchain.
-4. Reopen Unreal Editor and confirm the nodes appear.
+>>> 1. Close Unreal and disable Live Coding
+A running editor can hold previously compiled module DLLs and generated build state.
 
-Do **not** copy a `Source` ZIP by itself and expect a working plugin: a distributable code plugin also needs its descriptor and appropriate packaging metadata.
+>>> 2. Install the complete plugin
+Copy the full `AudioPhysx` plugin directory—**including its `.uplugin` descriptor**—into `YourProject/Plugins/AudioPhysx/`.
 
-## Check the installation
+>>> 3. Build the Editor target
+Regenerate project files if required, then build the project Editor target with the Unreal-compatible toolchain.
 
-Create a new MetaSound Source and confirm you can add **AP: Random Wave Player**, connect a wave array and play a sample. See [Your first MetaSound](first-metasound.md).
+>>> 4. Reopen the project
+Enable the plugin if prompted, restart if necessary, and open a MetaSound Source to search for `AP:`.
+>>>
 
-## Typical installation problems
++++
 
-| Symptom | First check |
-| --- | --- |
-| AudioPhysx doesn't appear in Plugins | Plugin directory structure and `.uplugin` presence |
-| Node missing in MetaSound | Plugin enabled, editor restarted, rebuild completed |
-| C++ source fails to compile | Match engine version and platform/toolchain, check first compiler error |
-| Old node pins or registration errors | Close editor, perform clean rebuild without stale plugin intermediates |
+## Confirm it works
 
-[More troubleshooting](../support/troubleshooting.md)
+Create a mono MetaSound Source and search the add-node menu for **AP: Sequence Wave Player** under `AudioPhysx → Playback`. If it appears, continue with [Your first MetaSound](first-metasound.md). A successful plugin listing in the Plugins browser alone does not prove every audio node can play correctly.
+
+## If the nodes are missing
+
+A missing node may mean the plugin was not enabled, the compiled module failed to load, or an old editor session is still open. For a source build, pay attention to the **first** compiler error rather than secondary failures. If reflected headers or generated build outputs are stale, close Unreal and clean the plugin's `Binaries` and `Intermediate` directories before regenerating and rebuilding.
+
+Do not merge two source versions that contain the same node under different filenames; duplicate MetaSound registration can produce linker or runtime registration problems.
+
+[Read build troubleshooting](../support/troubleshooting.md)

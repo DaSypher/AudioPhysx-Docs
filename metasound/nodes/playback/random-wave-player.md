@@ -1,49 +1,65 @@
 # AP: Random Wave Player
 
-**MetaSound category:** `AudioPhysx → Playback`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Playback**
 
-Select one random playable Wave Asset and output its mono audio.
+Play a random recording from an array whenever an event occurs, with optional variation and multiple simultaneous voices.
 
-## When to use it
+## What actually happens
 
-Most non-repeating one-shots: Foley, interactions, weapons and interface sounds.
+This is the everyday alternative to placing a Random Get and Wave Player chain in every graph. The node chooses a playable Wave Asset from `Waves` on each `Play`, then sends the decoded audio to one mono output.
 
-## Quick setup
+For events that can happen in quick succession, the configured voice capacity allows recordings to overlap. `No Immediate Repeat` is useful when a small sound library would otherwise make identical successive takes too obvious.
 
-Populate `Waves`, trigger `Play`, and connect `Out Mono`. Configure pitch variation and simultaneous-voice count when useful.
+## Hear it in a game
 
-## Inputs
+Use five short stone-impact recordings and connect a gameplay impact trigger to `Play`. Trigger them repeatedly at different intervals. You should hear variation in the selected recordings rather than a perfectly identical impact each time.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Play` | Trigger | Select one random valid Wave Asset and play it. |
-| `Stop` | Trigger | Stop all active wave playback. |
-| `Waves` | Wave Asset Array | Array of Wave Assets to randomly select from. |
-| `No Immediate Repeat` | Boolean | Prevent consecutive selections of the same  wave when alternatives are available. |
-| `Pitch Shift (st)` | Float | Playback pitch adjustment in semitones.  Also changes playback duration. |
-| `Max Voices` | Integer | Maximum number of overlapping recordings,  from 1 to 16. |
+## Build a working graph
 
-## Outputs
+>>> 1. Prepare the variation pool
+Supply several recordings of the same *kind* of event to `Waves`.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Mixed mono output from active voices. |
-| `On Finished` | Trigger | Triggered when the final active voice  finishes naturally. |
-| `On Rejected` | Trigger | Triggered when playback cannot start. |
-| `Selected Index` | Integer | Index of the most recently accepted wave,  or -1 for a rejected selection. |
+>>> 2. Connect the gameplay trigger
+Trigger `Play` when that event happens; connect `Out Mono` to the output.
+>>>
 
-## Behaviour and design notes
+>>> 3. Test overlapping events
+Set `Max Voices` for the expected overlap and test `No Immediate Repeat` with at least two valid choices.
+>>>
 
-Use `No Immediate Repeat` when you have multiple recordings and want to avoid the same take twice in succession.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+`Pitch Shift (st)` changes playback pitch in **semitones**; for orientation, +12 semitones is one octave and −12 is one octave down. `Max Voices` is a capacity limit, not a guarantee that every incoming trigger will be heard under load. `Stop` is for stopping the active playback rather than selecting another sound.
 
-## Testing checklist
+## Outputs and completion
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`Out Mono`** · Audio (mono) — Mixed mono output from active voices.
+- **`On Finished`** · Trigger — Triggered when the final active voice  finishes naturally.
+- **`On Rejected`** · Trigger — Triggered when playback cannot start.
+- **`Selected Index`** · Integer — Index of the most recently accepted wave,  or -1 for a rejected selection.
 
-See [Playback overview](../../playback.md) and [Troubleshooting](../../../support/troubleshooting.md).
+## Things to watch for
+
+- Recordings should be edited to comparable perceived loudness first. Randomization will not normalize badly mismatched takes.
+- Check what happens at the maximum simultaneous-voice setting in an actual combat or destruction scene.
+
+==- Full input reference
+- **`Play`** · *Trigger* — Select one random valid Wave Asset and play it.
+- **`Stop`** · *Trigger* — Stop all active wave playback.
+- **`Waves`** · *Wave Asset Array* — Array of Wave Assets to randomly select from.
+- **`No Immediate Repeat`** · *Boolean* — Prevent consecutive selections of the same  wave when alternatives are available.
+- **`Pitch Shift (st)`** · *Float* — Playback pitch adjustment in semitones.  Also changes playback duration.
+- **`Max Voices`** · *Integer* — Maximum number of overlapping recordings,  from 1 to 16.
+===
+
+==- Full output reference
+- **`Out Mono`** · Audio (mono) — Mixed mono output from active voices.
+- **`On Finished`** · Trigger — Triggered when the final active voice  finishes naturally.
+- **`On Rejected`** · Trigger — Triggered when playback cannot start.
+- **`Selected Index`** · Integer — Index of the most recently accepted wave,  or -1 for a rejected selection.
+===
+
+## Continue learning
+
+[Shuffle-Bag Wave Player](shuffle-bag-wave-player.md) is a better choice when repeated picks should be distributed across all supplied variations. Also see the [Playback overview](../../playback.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).

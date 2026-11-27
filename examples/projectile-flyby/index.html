@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Projectile near-miss flyby</title>
-    <meta name="title" content="Projectile near-miss flyby">
-    <meta name="description" content="Tools used: AP: Flyby Wave Player + AP: Play Projectile Flyby">
+    <title>A projectile passing close to the listener</title>
+    <meta name="title" content="A projectile passing close to the listener">
+    <meta name="description" content="Goal: Hear an appropriate flyby when a projectile passes nearby, without playing a near-miss sound for every shot in the level.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/projectile-flyby/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/projectile-flyby/">
-    <meta property="og:title" content="Projectile near-miss flyby">
-    <meta property="og:description" content="Tools used: AP: Flyby Wave Player + AP: Play Projectile Flyby">
+    <meta property="og:title" content="A projectile passing close to the listener">
+    <meta property="og:description" content="Goal: Hear an appropriate flyby when a projectile passes nearby, without playing a near-miss sound for every shot in the level.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/examples/projectile-flyby/">
-    <meta name="twitter:title" content="Projectile near-miss flyby">
-    <meta name="twitter:description" content="Tools used: AP: Flyby Wave Player + AP: Play Projectile Flyby">
+    <meta name="twitter:title" content="A projectile passing close to the listener">
+    <meta name="twitter:description" content="Goal: Hear an appropriate flyby when a projectile passes nearby, without playing a near-miss sound for every shot in the level.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/examples/projectile-flyby.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,22 +134,51 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="projectile-near-miss-flyby">Projectile near-miss flyby</h1>
-<p><strong>Tools used:</strong> AP: Flyby Wave Player + AP: Play Projectile Flyby</p>
-<h2 id="goal">Goal</h2>
-<p>Produce a useful, repeatable audio behaviour with a small MetaSound/Blueprint setup.</p>
-<h2 id="build-the-example">Build the example</h2>
-<p>Set up the flyby MetaSound, then call the Blueprint helper with shot start/end positions and speed. Test one close pass, one far pass and one subsonic pass.</p>
+<h1 id="a-projectile-passing-close-to-the-listener">A projectile passing close to the listener</h1>
+<p><strong>Goal:</strong> Hear an appropriate flyby when a projectile passes nearby, without playing a near-miss sound for every shot in the level.</p>
+<p>The trick is to test the projectile&#x27;s <strong>path</strong>, not merely its firing event. AudioPhysx can estimate closest approach from a submitted segment and, for accepted near misses, schedule playback near that point.</p>
+<h2 id="what-you-need">What you need</h2>
+<p>A mono MetaSound Source containing <a href="../../metasound/nodes/playback/flyby-wave-player/">AP: Flyby Wave Player</a>, whizz and optional crack Wave Asset Arrays, and a Blueprint that knows the projectile&#x27;s path start, path end and nominal speed.</p>
+<h2 id="test-it-in-three-passes">Test it in three passes</h2>
+<doc-steps>
+   <doc-step id="configure-the-metasound" step-number="1">
+      <template #title>Configure the MetaSound</template>
+<p>Wire the five runtime Float parameters described in the <a href="../../blueprint/flyby/">flyby Blueprint guide</a>. Confirm the player auditions with manual values first.</p>
+   </doc-step>
+   <doc-step id="submit-a-close-path" step-number="2">
+      <template #title>Submit a close path</template>
+<p>Call <code translate="no" v-pre>AP: Play Projectile Flyby</code> with a path that passes near the listener, within <code translate="no" v-pre>AudibleRadiusM</code>.</p>
+   </doc-step>
+   <doc-step id="submit-a-distant-path" step-number="3">
+      <template #title>Submit a distant path</template>
+<p>Keep the speed and recording the same, but move the path outside the audible radius. This should not be accepted as a near miss.</p>
+   </doc-step>
+   <doc-step id="compare-subsonic-and-supersonic-cases" step-number="4">
+      <template #title>Compare subsonic and supersonic cases</template>
+<p>Change the supplied speed while keeping the geometry comparable. The crack layer depends on the calculated shock condition, not simply the presence of a bullet recording.</p>
+   </doc-step>
+</doc-steps>
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-projectile-flyby.png -->
-<h2 id="expected-result">Expected result</h2>
-<p>Check that close passes are more noticeable and that rejected paths do not play. Listen for any duplicated sounds on moving projectiles.</p>
-<h2 id="before-shipping">Before shipping</h2>
-<ul>
-<li>Test empty arrays and stop/retrigger behaviour.</li>
-<li>Test the final recording assets in a packaged Development build.</li>
-<li>Check voice budgets and spatialization in a scene with multiple sound sources.</li>
-</ul>
-<p><a href="../../metasound/">Find the node reference</a>.</p>
+<h2 id="common-mistake">Common mistake</h2>
+<p>Positions are in Unreal world units (normally <strong>centimetres</strong>), but <code translate="no" v-pre>ProjectileSpeedMps</code> and <code translate="no" v-pre>AudibleRadiusM</code> are in <strong>metres per second</strong> and <strong>metres</strong>. Mixing units can make a believable path look thousands of times too far away or too fast.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-info"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-info" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>Model scope</h5>
+<p>This is a useful game-audio approximation, not a complete aerodynamic shock-wave simulation. Test timing and source placement in your actual gameplay level.</p>
+        </div>
+    </div>
+</div>
 
                 
                 <!-- Required only on API pages -->
@@ -172,7 +201,7 @@
                         <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../examples/acoustic-obstruction/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Basic acoustic obstruction</span>
+                                <span class="block mt-1">Acoustic obstruction</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>
@@ -216,6 +245,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Projectile near-miss flyby", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/examples/projectile-flyby.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Projectile near miss", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/examples/projectile-flyby.md" }</script>
 </body>
 </html>

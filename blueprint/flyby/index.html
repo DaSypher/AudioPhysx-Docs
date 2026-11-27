@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Projectile flyby integration</title>
-    <meta name="title" content="Projectile flyby integration">
-    <meta name="description" content="You can trigger a close-pass flyby using a path segment, without using Chaos or spawning special AudioPhysx projectile actors.">
+    <title>Projectile flybys from Blueprint</title>
+    <meta name="title" content="Projectile flybys from Blueprint">
+    <meta name="description" content="A good near-miss sound is about where the projectile passed and when the listener would hear it, not simply whether the weapon fired. AudioPhysx lets you">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/flyby/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/flyby/">
-    <meta property="og:title" content="Projectile flyby integration">
-    <meta property="og:description" content="You can trigger a close-pass flyby using a path segment, without using Chaos or spawning special AudioPhysx projectile actors.">
+    <meta property="og:title" content="Projectile flybys from Blueprint">
+    <meta property="og:description" content="A good near-miss sound is about where the projectile passed and when the listener would hear it, not simply whether the weapon fired. AudioPhysx lets you">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/flyby/">
-    <meta name="twitter:title" content="Projectile flyby integration">
-    <meta name="twitter:description" content="You can trigger a close-pass flyby using a path segment, without using Chaos or spawning special AudioPhysx projectile actors.">
+    <meta name="twitter:title" content="Projectile flybys from Blueprint">
+    <meta name="twitter:description" content="A good near-miss sound is about where the projectile passed and when the listener would hear it, not simply whether the weapon fired. AudioPhysx lets you">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/blueprint/flyby.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,102 +134,73 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="projectile-flyby-integration">Projectile flyby integration</h1>
-<p>You can trigger a close-pass flyby using <strong>a path segment</strong>, without using Chaos or spawning special AudioPhysx projectile actors.</p>
-<h2 id="available-functions">Available functions</h2>
-<retype-table copy-text="| Blueprint function | What it returns / does |
-| --- | --- |
-| `AP: Calculate Flyby` | Returns an `FAPFlybyResult` with `bAudible`, `bShockWave`, closest point, distance, speed, intensity and estimated arrival time. |
-| `AP: Play Projectile Flyby` | Evaluates the near-miss and submits a sound for world-level scheduling when accepted. Its Boolean return means scheduling accepted, **not** that the sound has already played. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Blueprint function</th>
-<th>What it returns / does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>AP: Calculate Flyby</code></td>
-<td>Returns an <code translate="no" v-pre>FAPFlybyResult</code> with <code translate="no" v-pre>bAudible</code>, <code translate="no" v-pre>bShockWave</code>, closest point, distance, speed, intensity and estimated arrival time.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>AP: Play Projectile Flyby</code></td>
-<td>Evaluates the near-miss and submits a sound for world-level scheduling when accepted. Its Boolean return means scheduling accepted, <strong>not</strong> that the sound has already played.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="create-the-metasound">Create the MetaSound</h2>
-<ol>
-<li>Create a mono MetaSound Source and add <a href="../../metasound/nodes/playback/flyby-wave-player/">AP: Flyby Wave Player</a>.</li>
-<li>Fill <code translate="no" v-pre>Whizz Waves</code> and optionally <code translate="no" v-pre>Crack Waves</code> with licensed recordings.</li>
-<li>Wire its <code translate="no" v-pre>Out Mono</code> into the MetaSound output and its completion as appropriate.</li>
-<li>Expose the flyby parameter inputs expected by the Blueprint integration. Their names must match the source contract; see the parameter table below.</li>
-</ol>
+<h1 id="projectile-flybys-from-blueprint">Projectile flybys from Blueprint</h1>
+<p>A good near-miss sound is about <strong>where the projectile passed</strong> and <strong>when the listener would hear it</strong>, not simply whether the weapon fired. AudioPhysx lets you submit a straight path segment and evaluate the closest approach without setting up Chaos physics or spawning special audio-specific bullet Actors.</p>
+<p>The integration has two parts: a game-side helper decides whether and when a close pass is audible; <a href="../../metasound/nodes/playback/flyby-wave-player/">AP: Flyby Wave Player</a> renders the whizz and optional crack from your supplied recordings.</p>
+<h2 id="understand-the-path-calculation">Understand the path calculation</h2>
+<p>Imagine a bullet travelling along a line that passes beside the listener. The nearest point on that line is its <strong>closest approach</strong>. If that point is inside the configured audible radius, the event may qualify as a flyby. The helper also estimates arrival time and whether the configured speed and geometry permit a shock-wave effect.</p>
+<p><code translate="no" v-pre>AP: Calculate Flyby</code> returns an <code translate="no" v-pre>FAPFlybyResult</code> containing <code translate="no" v-pre>bAudible</code>, <code translate="no" v-pre>bShockWave</code>, <code translate="no" v-pre>ClosestPoint</code>, <code translate="no" v-pre>DistanceMeters</code>, <code translate="no" v-pre>SpeedMetersPerSecond</code>, <code translate="no" v-pre>Intensity</code> and <code translate="no" v-pre>ArrivalSeconds</code>. This function is useful for debugging the geometry before requesting playback.</p>
+<p><code translate="no" v-pre>AP: Play Projectile Flyby</code> performs the test and submits an accepted sound for scheduling. Its Boolean return means <strong>accepted for scheduling</strong>, not that the player has already heard the clip.</p>
+<h2 id="build-the-metasound-once">Build the MetaSound once</h2>
+<doc-steps>
+   <doc-step id="create-a-mono-source" step-number="1">
+      <template #title>Create a mono Source</template>
+<p>Make a MetaSound Source that will be used only for flyby playback. Add <code translate="no" v-pre>AP: Flyby Wave Player</code> from the Playback category.</p>
+   </doc-step>
+   <doc-step id="supply-your-recordings" step-number="2">
+      <template #title>Supply your recordings</template>
+<p>Fill <code translate="no" v-pre>Whizz Waves</code> with your licensed near-miss variations. Fill <code translate="no" v-pre>Crack Waves</code> if you want a separate supersonic shock layer. Short, clearly edited samples make debugging easier.</p>
+   </doc-step>
+   <doc-step id="wire-playback" step-number="3">
+      <template #title>Wire playback</template>
+<p>Connect the Source&#x27;s <code translate="no" v-pre>On Play</code> to the Flyby player&#x27;s <code translate="no" v-pre>Play</code>, its <code translate="no" v-pre>Out Mono</code> to the Source output, and route completion appropriately.</p>
+   </doc-step>
+   <doc-step id="create-five-exposed-float-inputs" step-number="4">
+      <template #title>Create five exposed Float inputs</template>
+<p>Use the <strong>exact names</strong> below. Connect them to the corresponding Flyby Wave Player controls; they are set by the world subsystem before the sound starts.</p>
+   </doc-step>
+   <doc-step id="audition-and-save" step-number="5">
+      <template #title>Audition and save</template>
+<p>Test the MetaSound manually with reasonable values first. Then use it as the asset supplied to the Blueprint helper.</p>
+   </doc-step>
+</doc-steps>
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-flyby-metasound.png -->
-<h2 id="call-it-from-a-hitscan-weapon">Call it from a hitscan weapon</h2>
-<p>Call <code translate="no" v-pre>AP: Play Projectile Flyby</code> <strong>once per shot</strong>, with <code translate="no" v-pre>Path Start</code> at the muzzle and <code translate="no" v-pre>Path End</code> at your trace end or impact location. Use a projectile speed in <strong>metres per second</strong> and set <code translate="no" v-pre>Path Age Seconds</code> to zero for a new hitscan event.</p>
-<retype-table copy-text="| Parameter | Unit / meaning |
-| --- | --- |
-| `WorldContextObject` | World context for playback and scheduling. |
-| `FlybyMetaSound` | MetaSound Source created above, typed as `USoundBase`. |
-| `PathStart`, `PathEnd` | Unreal world locations in centimetres. |
-| `ProjectileSpeedMps` | Projectile speed, metres per second. |
-| `AudibleRadiusM` | Maximum closest-pass distance, metres. |
-| `Volume` | Playback volume scaling. |
-| `PathAgeSeconds` | Age of the submitted path segment in seconds. |
-| `ProjectileInstance` | Optional unique object representing one projectile for duplicate suppression. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Unit / meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>WorldContextObject</code></td>
-<td>World context for playback and scheduling.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>FlybyMetaSound</code></td>
-<td>MetaSound Source created above, typed as <code translate="no" v-pre>USoundBase</code>.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>PathStart</code>, <code translate="no" v-pre>PathEnd</code></td>
-<td>Unreal world locations in centimetres.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>ProjectileSpeedMps</code></td>
-<td>Projectile speed, metres per second.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>AudibleRadiusM</code></td>
-<td>Maximum closest-pass distance, metres.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Volume</code></td>
-<td>Playback volume scaling.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>PathAgeSeconds</code></td>
-<td>Age of the submitted path segment in seconds.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>ProjectileInstance</code></td>
-<td>Optional unique object representing one projectile for duplicate suppression.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
+<h3 id="the-five-runtime-inputs">The five runtime inputs</h3>
+<ul>
+<li><strong><code translate="no" v-pre>AP.Flyby.DistanceM</code></strong> → <code translate="no" v-pre>Distance (m)</code>. Closest distance from the projectile path to the listener, <strong>in metres</strong>.</li>
+<li><strong><code translate="no" v-pre>AP.Flyby.SpeedMps</code></strong> → <code translate="no" v-pre>Speed (m/s)</code>. Projectile speed, in metres per second.</li>
+<li><strong><code translate="no" v-pre>AP.Flyby.Intensity</code></strong> → <code translate="no" v-pre>Intensity</code>. The computed strength control.</li>
+<li><strong><code translate="no" v-pre>AP.Flyby.SpeedOfSoundMps</code></strong> → <code translate="no" v-pre>Speed of Sound (m/s)</code>. Acoustic model speed in metres per second.</li>
+<li><strong><code translate="no" v-pre>AP.Flyby.Shock</code></strong> → <code translate="no" v-pre>Shock</code>. A Float gate, typically 1 for requested crack and 0 otherwise.</li>
+</ul>
+<p>The parameter names above come from the reviewed <code translate="no" v-pre>APFlybyWorldSubsystem.cpp</code> development source. Keep them identical in the MetaSound graph.</p>
+<h2 id="send-a-hitscan-shot">Send a hitscan shot</h2>
+<doc-steps>
+   <doc-step id="build-the-shot-path" step-number="1">
+      <template #title>Build the shot path</template>
+<p>Use the weapon muzzle world location for <code translate="no" v-pre>PathStart</code> and the trace hit point (or maximum trace end) for <code translate="no" v-pre>PathEnd</code>.</p>
+   </doc-step>
+   <doc-step id="set-projectile-speed" step-number="2">
+      <template #title>Set projectile speed</template>
+<p>Provide <code translate="no" v-pre>ProjectileSpeedMps</code> in <strong>metres per second</strong>, even though Unreal&#x27;s path vectors are world units in centimetres.</p>
+   </doc-step>
+   <doc-step id="supply-the-sound-asset" step-number="3">
+      <template #title>Supply the sound asset</template>
+<p>Pass your flyby MetaSound Source as <code translate="no" v-pre>FlybyMetaSound</code> and choose an <code translate="no" v-pre>AudibleRadiusM</code> appropriate to your test.</p>
+   </doc-step>
+   <doc-step id="request-one-evaluation" step-number="4">
+      <template #title>Request one evaluation</template>
+<p>Call <code translate="no" v-pre>AP: Play Projectile Flyby</code> <strong>once per hitscan shot</strong>. <code translate="no" v-pre>PathAgeSeconds</code> is zero for a fresh, instantaneous hitscan query.</p>
+   </doc-step>
+   <doc-step id="test-a-passing-and-a-missing-shot" step-number="5">
+      <template #title>Test a passing and a missing shot</template>
+<p>Shoot beside the listener, then farther away than the radius. Watch the Boolean acceptance result and listen for the corresponding audio behaviour.</p>
+   </doc-step>
+</doc-steps>
 <!-- IMAGE SLOT: docs/static/images/blueprint/bp-flyby-hitscan.png -->
-<h2 id="for-moving-projectiles">For moving projectiles</h2>
-<p>Submit consecutive path segments instead of the whole future path. If you provide <code translate="no" v-pre>ProjectileInstance</code>, it should uniquely identify <strong>one projectile</strong>, not the weapon producing many projectiles. For a segment submitted after movement, the source comment recommends using segment length divided by projectile speed for <code translate="no" v-pre>PathAgeSeconds</code>.</p>
+<h2 id="moving-projectile-segments">Moving projectile segments</h2>
+<p>For a projectile that has already moved, send consecutive start/end positions rather than predicting its whole future path. The optional <code translate="no" v-pre>ProjectileInstance</code> should uniquely identify <strong>that specific projectile</strong> so the system can suppress duplicate near-miss events. A shared weapon object is not a suitable substitute when it fires multiple independent bullets.</p>
+<p><code translate="no" v-pre>PathAgeSeconds</code> describes how old the reported movement segment is. The source comments recommend using segment length divided by projectile speed for a segment submitted after motion, so that scheduling can account for already elapsed travel time.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
     <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
@@ -242,55 +213,12 @@
             </svg>
         </div>
         <div class="pr-5 ml-3 w-full">
-            <h5>Acoustic approximation</h5>
-<p>The initial flyby system uses simplified constant-speed near-miss/acoustic timing. Do not advertise it as an exact ballistic shock-wave solver. Test listener motion and very fast or very long paths in the final game.</p>
+            <h5>What is approximate?</h5>
+<p>This first version assumes a simplified constant-speed path and approximate acoustic arrival. It positions playback near the closest approach; it does not perform a continuous 3D flyby simulation or exact shock-front tracing. Test very close passes, fast shots and different listener positions in your game before treating timings as final.</p>
         </div>
     </div>
 </div>
-<h2 id="exact-metasound-parameter-names">Exact MetaSound parameter names</h2>
-<p>The current world subsystem supplies the following <strong>Float</strong> parameters <em>before</em> starting the flyby MetaSound. Create graph inputs with these exact names and connect them to the corresponding Flyby Wave Player controls:</p>
-<retype-table copy-text="| External MetaSound Float input | Connect to |
-| --- | --- |
-| `AP.Flyby.DistanceM` | `Distance (m)` |
-| `AP.Flyby.SpeedMps` | `Speed (m/s)` |
-| `AP.Flyby.Intensity` | `Intensity` |
-| `AP.Flyby.SpeedOfSoundMps` | `Speed of Sound (m/s)` |
-| `AP.Flyby.Shock` | `Shock` (1 or 0) |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>External MetaSound Float input</th>
-<th>Connect to</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>AP.Flyby.DistanceM</code></td>
-<td><code translate="no" v-pre>Distance (m)</code></td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>AP.Flyby.SpeedMps</code></td>
-<td><code translate="no" v-pre>Speed (m/s)</code></td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>AP.Flyby.Intensity</code></td>
-<td><code translate="no" v-pre>Intensity</code></td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>AP.Flyby.SpeedOfSoundMps</code></td>
-<td><code translate="no" v-pre>Speed of Sound (m/s)</code></td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>AP.Flyby.Shock</code></td>
-<td><code translate="no" v-pre>Shock</code> (1 or 0)</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<p>These names are taken from <code translate="no" v-pre>APFlybyWorldSubsystem.cpp</code> in the reviewed source. Confirm they remain unchanged in the final release.</p>
-<p>See <a href="../../metasound/nodes/playback/flyby-wave-player/">Flyby Wave Player</a> and <a href="../../support/troubleshooting/">Troubleshooting</a>.</p>
+<p><a href="../../examples/projectile-flyby/">Try the short flyby recipe</a> · <a href="../../metasound/nodes/playback/flyby-wave-player/">Flyby Wave Player reference</a></p>
 
                 
                 <!-- Required only on API pages -->
@@ -357,6 +285,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Flyby: Blueprint setup", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/blueprint/flyby.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Projectile flybys", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/blueprint/flyby.md" }</script>
 </body>
 </html>

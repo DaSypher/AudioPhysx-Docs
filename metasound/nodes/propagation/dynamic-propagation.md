@@ -1,49 +1,63 @@
 # AP: Dynamic Propagation
 
-**MetaSound category:** `AudioPhysx → Propagation`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Propagation**
 
-Continuously vary sound travel time with source-listener distance, including a bounded Doppler-style effect.
+Apply a continuously changing travel-time delay to moving-source audio, with safeguards against abrupt jumps.
 
-## When to use it
+## What actually happens
 
-Moving sound sources where travel-time changes should affect perceived pitch.
+A moving source changes the length of the sound path while audio is playing. This node reacts to updated `Distance (cm)` values, changing the effective propagation delay rather than relatching a single fixed arrival time.
 
-## Quick setup
+Because changing delay can create audible pitch shifts or clicks, the node provides smoothing, a limit on Doppler-like changes, and special handling for large position jumps. It is a controlled approximation designed for responsive game audio.
 
-Feed mono audio, distance and propagation settings. Use the single audio output for the processed signal.
+## Hear it in a game
 
-## Inputs
+Attach a continuous engine sound to a fast vehicle and feed its listener distance into the graph. Compare a smooth approach and departure with a sudden teleport. Tune smoothing and jump crossfade so ordinary motion is audible but teleports do not create unpleasant artifacts.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Audio` | Audio (mono) | Mono signal to propagate. |
-| `Distance (cm)` | Float | Source-listener distance in centimetres. |
-| `Speed of Sound (m/s)` | Float | Sound speed in metres per second; default 343. |
-| `Max Delay (s)` | Float | Maximum travel time, fixed at voice creation. |
-| `Smoothing (ms)` | Float | Smooths small distance changes; default 25 ms. |
-| `Max Doppler (%)` | Float | Maximum pitch deviation; default 20 percent. |
-| `Jump Threshold (cm)` | Float | Large distance changes crossfade instead of scrubbing. |
-| `Jump Crossfade (ms)` | Float | Crossfade duration; default 40 ms. |
+## Build a working graph
 
-## Outputs
+>>> 1. Connect a moving sound
+Feed the mono engine or movement recording into `Audio`.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Audio` | Audio (mono) | Mono audio after travel-time delay. |
-| `Doppler Ratio` | Float | Diagnostic pitch ratio. Do not apply again. |
+>>> 2. Supply changing distance
+Update `Distance (cm)` from your source/listener positions and choose `Max Delay (s)` large enough to contain the desired range.
+>>>
 
-## Behaviour and design notes
+>>> 3. Tune smoothing and jump handling
+Adjust `Smoothing (ms)`, `Max Doppler (%)`, `Jump Threshold (cm)` and `Jump Crossfade (ms)` while auditioning movement.
+>>>
 
-The `Doppler Ratio` output is diagnostic. Avoid applying that ratio again to the same processed signal.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+`Smoothing (ms)` controls how quickly changes are applied. `Max Doppler (%)` limits the pitch/delay-rate effect. `Jump Threshold (cm)` identifies unusually large position changes, while `Jump Crossfade (ms)` smooths those transitions. `Speed of Sound (m/s)` controls the travel-time conversion.
 
-## Testing checklist
+## What the node outputs
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`Audio`** · Audio (mono) — Mono audio after travel-time delay.
+- **`Doppler Ratio`** · Float — Diagnostic pitch ratio. Do not apply again.
 
-See [Propagation overview](../../propagation.md) and [Troubleshooting](../../../support/troubleshooting.md).
+## Things to watch for
+
+- Do not apply full-strength Unreal Doppler modulation on top of this effect without evaluating the combination.
+- Large delay capacities and many active sources increase memory use. Test against the expected number of emitters.
+
+==- Full input reference
+- **`Audio`** · *Audio (mono)* — Mono signal to propagate.
+- **`Distance (cm)`** · *Float* — Source-listener distance in centimetres.
+- **`Speed of Sound (m/s)`** · *Float* — Sound speed in metres per second; default 343.
+- **`Max Delay (s)`** · *Float* — Maximum travel time, fixed at voice creation.
+- **`Smoothing (ms)`** · *Float* — Smooths small distance changes; default 25 ms.
+- **`Max Doppler (%)`** · *Float* — Maximum pitch deviation; default 20 percent.
+- **`Jump Threshold (cm)`** · *Float* — Large distance changes crossfade instead of scrubbing.
+- **`Jump Crossfade (ms)`** · *Float* — Crossfade duration; default 40 ms.
+===
+
+==- Full output reference
+- **`Audio`** · Audio (mono) — Mono audio after travel-time delay.
+- **`Doppler Ratio`** · Float — Diagnostic pitch ratio. Do not apply again.
+===
+
+## Continue learning
+
+[Distance Delay](distance-delay.md) is simpler when an event should use a fixed captured delay. Also see the [Propagation overview](../../propagation.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).

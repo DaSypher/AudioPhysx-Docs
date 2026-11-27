@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>Quick setup checklist</title>
     <meta name="title" content="Quick setup checklist">
-    <meta name="description" content="AudioPhysx plugin enabled and visible in Edit → Plugins.">
+    <meta name="description" content="Use this before assuming a node is broken. It catches the most common installation, routing and completion mistakes.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/checklist/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/checklist/">
     <meta property="og:title" content="Quick setup checklist">
-    <meta property="og:description" content="AudioPhysx plugin enabled and visible in Edit → Plugins.">
+    <meta property="og:description" content="Use this before assuming a node is broken. It catches the most common installation, routing and completion mistakes.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/checklist/">
     <meta name="twitter:title" content="Quick setup checklist">
-    <meta name="twitter:description" content="AudioPhysx plugin enabled and visible in Edit → Plugins.">
+    <meta name="twitter:description" content="Use this before assuming a node is broken. It catches the most common installation, routing and completion mistakes.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/getting-started/checklist.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,18 +135,34 @@
 
                 <!-- Page content  -->
 <h1 id="quick-setup-checklist">Quick setup checklist</h1>
+<p>Use this before assuming a node is broken. It catches the most common installation, routing and completion mistakes.</p>
+<h2 id="can-the-sound-start">Can the sound start?</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> AudioPhysx plugin enabled and visible in <strong>Edit → Plugins</strong>.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Relevant Wave Assets import and audition correctly in Unreal.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> MetaSound source output channel layout matches the graph.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code translate="no" v-pre>Play</code> or other start trigger is connected.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code translate="no" v-pre>Out Mono</code> is connected to the intended graph output.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Completion event is connected appropriately, including any downstream audio tails.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Dynamic input groups contain the expected slots and connections.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Project settings and physical-material routes are configured if the node needs them.</li>
-<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Feature works in standalone play and in a packaged Development build before shipping.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> The AudioPhysx plugin is enabled and the node appears in MetaSound search.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Every required Wave Asset is imported and playable on its own.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> The correct trigger reaches the node (<code translate="no" v-pre>Play</code> versus <code translate="no" v-pre>Start Firing</code>, for example).</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <code translate="no" v-pre>Out Mono</code> reaches the active MetaSound output, and the Source is actually being auditioned or played.</li>
 </ul>
-<p>If a sound is silent, use <a href="../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="can-the-sound-finish-correctly">Can the sound finish correctly?</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> A repeating player has a valid stop/release trigger when appropriate.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> The <code translate="no" v-pre>On Finished</code> connection doesn&#x27;t cut off downstream effects such as early reflections.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Voice limits and retriggering make sense under rapid gameplay events.</li>
+</ul>
+<h2 id="does-the-world-data-make-sense">Does the world data make sense?</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Distances are converted correctly between centimetres and metres.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Material paths and surface types match the configured routes.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Dynamic input group sizes still match the intended graph.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> World-based Blueprint helpers have a valid world/listener/audio environment.</li>
+</ul>
+<h2 id="before-releasing-a-game">Before releasing a game</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test standalone playback, then package a Development build.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Verify cooked audio assets and Shipping behaviour.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Repeat the test with missing/empty arrays and rapid triggers.</li>
+</ul>
+<p><a href="../../support/troubleshooting/">Troubleshooting guide</a></p>
 
                 
                 <!-- Required only on API pages -->
@@ -160,7 +176,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Inputs, outputs and completion</span>
+                                <span class="block mt-1">Signals and completion</span>
                             </span>
                         </a>
                     </div>
@@ -213,6 +229,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Quick setup checklist", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/getting-started/checklist.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Setup checklist", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/getting-started/checklist.md" }</script>
 </body>
 </html>

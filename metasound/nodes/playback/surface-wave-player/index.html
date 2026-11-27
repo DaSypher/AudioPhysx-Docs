@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Surface Wave Player</title>
     <meta name="title" content="AP: Surface Wave Player">
-    <meta name="description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/surface-wave-player/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/surface-wave-player/">
     <meta property="og:title" content="AP: Surface Wave Player">
-    <meta property="og:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta property="og:description" content="MetaSound · AudioPhysx / Playback">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/surface-wave-player/">
     <meta name="twitter:title" content="AP: Surface Wave Player">
-    <meta name="twitter:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="twitter:description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/surface-wave-player.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,115 +135,66 @@
 
                 <!-- Page content  -->
 <h1 id="ap-surface-wave-player">AP: Surface Wave Player</h1>
-<p><strong>MetaSound category:</strong> <code translate="no" v-pre>AudioPhysx → Playback</code><br />
-<strong>Source contract:</strong> Unreal Engine 5.8.4 development source</p>
-<p>Select waves using Unreal physical surface types and a configured route table.</p>
+<p><strong>MetaSound · AudioPhysx / Playback</strong></p>
+<p>Select surface-appropriate sound variations using Unreal surface types and your project’s AudioPhysx route settings.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-surface-wave-player.png -->
-<h2 id="when-to-use-it">When to use it</h2>
-<p>Footsteps and impacts that vary by the EPhysicalSurface of a hit.</p>
-<h2 id="quick-setup">Quick setup</h2>
-<p>Set up the plugin’s Surface Audio settings, restart the editor when required, then assign recordings to the generated surface-specific pins.</p>
-<h2 id="inputs">Inputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Play` | Trigger | Select one valid wave from the hit surface. |
-| `Stop` | Trigger | Stop all playing samples. |
-| `Hit Surface Type` | Integer | Unreal EPhysicalSurface integer value  of the impacted physical material. |
-| `Max Voices` | Integer | Maximum overlapping samples (1 to 16). |
-| `No Immediate Repeat` | Boolean | Avoid selecting the previous sample  when alternatives exist. |
-| `Default Waves` | Wave Asset Array | Fallback array for unmatched surfaces  or empty surface arrays. |
-| `Default Volume` | Float | Linear volume for fallback samples. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Play</code></td>
-<td>Trigger</td>
-<td>Select one valid wave from the hit surface.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Stop</code></td>
-<td>Trigger</td>
-<td>Stop all playing samples.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Hit Surface Type</code></td>
-<td>Integer</td>
-<td>Unreal EPhysicalSurface integer value  of the impacted physical material.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Max Voices</code></td>
-<td>Integer</td>
-<td>Maximum overlapping samples (1 to 16).</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>No Immediate Repeat</code></td>
-<td>Boolean</td>
-<td>Avoid selecting the previous sample  when alternatives exist.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Default Waves</code></td>
-<td>Wave Asset Array</td>
-<td>Fallback array for unmatched surfaces  or empty surface arrays.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Default Volume</code></td>
-<td>Float</td>
-<td>Linear volume for fallback samples.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="outputs">Outputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Mixed mono audio from active samples. |
-| `On Finished` | Trigger | Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Out Mono</code></td>
-<td>Audio (mono)</td>
-<td>Mixed mono audio from active samples.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Finished</code></td>
-<td>Trigger</td>
-<td>Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="behaviour-and-design-notes">Behaviour and design notes</h2>
-<p>The node creates pins from project settings. Changing enabled routes can change the graph interface; back up and review affected MetaSounds after changing the configuration.</p>
-<blockquote>
-<p><strong>Units matter:</strong> Pin names indicate metres (<code translate="no" v-pre>m</code>), metres per second (<code translate="no" v-pre>m/s</code>), centimetres (<code translate="no" v-pre>cm</code>), milliseconds (<code translate="no" v-pre>ms</code>), decibels (<code translate="no" v-pre>dB</code>) and semitones (<code translate="no" v-pre>st</code>). Don&#x27;t convert centimetres to metres unless the target pin expects metres.</p>
-</blockquote>
-<h2 id="testing-checklist">Testing checklist</h2>
-<ol>
-<li>Test the intended input settings with a valid source recording or signal.</li>
-<li>Test zero/empty/invalid inputs where applicable.</li>
-<li>Test rapid parameter changes and retriggering where applicable.</li>
-<li>Verify output and completion behaviour in a packaged build before relying on the node in shipping content.</li>
-</ol>
-<p>See <a href="../../../playback/">Playback overview</a> and <a href="../../../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="what-actually-happens">What actually happens</h2>
+<p>The Surface Wave Player uses <code translate="no" v-pre>Hit Surface Type</code> to decide which pool of recordings should play. It can expose <strong>surface-specific pins</strong> based on AudioPhysx settings, and it includes a default pool for unmatched material IDs.</p>
+<p>It is intended for workflows such as footsteps or impacts where the gameplay side already knows what surface was hit. The MetaSound is responsible for choosing and playing the recording, not for tracing the world itself.</p>
+<h2 id="hear-it-in-a-game">Hear it in a game</h2>
+<p>Create stone, metal and grass variations, then play a footstep animation with a surface trace. Send the returned surface type to the graph and listen for the correct texture. Test an unconfigured surface too: it should use <code translate="no" v-pre>Default Waves</code> when that pool is populated.</p>
+<h2 id="build-a-working-graph">Build a working graph</h2>
+<doc-steps>
+   <doc-step id="configure-surface-routes" step-number="1">
+      <template #title>Configure surface routes</template>
+<p>Configure the project’s AudioPhysx surface routes first, then restart the editor if the project settings require it.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="assign-surface-recordings" step-number="2">
+      <template #title>Assign surface recordings</template>
+<p>Add the player to a MetaSound and connect the exposed surface-specific arrays as well as <code translate="no" v-pre>Default Waves</code>.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="send-surface-type-and-play" step-number="3">
+      <template #title>Send surface type and Play</template>
+<p>Supply <code translate="no" v-pre>Hit Surface Type</code> before sending <code translate="no" v-pre>Play</code>. Tune the volume and <code translate="no" v-pre>Max Voices</code> for footsteps or repeated impacts.</p>
+   </doc-step>
+</doc-steps>
+<h2 id="the-controls-that-matter">The controls that matter</h2>
+<p><code translate="no" v-pre>Hit Surface Type</code> is the numerical physical-surface selection provided by game logic. <code translate="no" v-pre>Default Waves</code> and <code translate="no" v-pre>Default Volume</code> supply a fallback when no authored route matches. <code translate="no" v-pre>No Immediate Repeat</code> affects variation choice; <code translate="no" v-pre>Max Voices</code> caps overlapping playback.</p>
+<h2 id="outputs-and-completion">Outputs and completion</h2>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mixed mono audio from active samples.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it.</li>
+</ul>
+<h2 id="things-to-watch-for">Things to watch for</h2>
+<ul>
+<li><strong>Saved-graph compatibility:</strong> changing which surface routes are enabled can change this node’s pin layout. Review existing graphs after route-setting changes rather than assuming connections remain intact.</li>
+<li>A physical-material trace generally needs physical material return information enabled in the relevant query/collision setup. This node does not perform the trace for you.</li>
+</ul>
+<doc-panel id="full-input-reference" collapsed>
+    <template #title>Full input reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Play</code></strong> · <em>Trigger</em> — Select one valid wave from the hit surface.</li>
+<li><strong><code translate="no" v-pre>Stop</code></strong> · <em>Trigger</em> — Stop all playing samples.</li>
+<li><strong><code translate="no" v-pre>Hit Surface Type</code></strong> · <em>Integer</em> — Unreal EPhysicalSurface integer value  of the impacted physical material.</li>
+<li><strong><code translate="no" v-pre>Max Voices</code></strong> · <em>Integer</em> — Maximum overlapping samples (1 to 16).</li>
+<li><strong><code translate="no" v-pre>No Immediate Repeat</code></strong> · <em>Boolean</em> — Avoid selecting the previous sample  when alternatives exist.</li>
+<li><strong><code translate="no" v-pre>Default Waves</code></strong> · <em>Wave Asset Array</em> — Fallback array for unmatched surfaces  or empty surface arrays.</li>
+<li><strong><code translate="no" v-pre>Default Volume</code></strong> · <em>Float</em> — Linear volume for fallback samples.</li>
+</ul>
+</doc-panel>
+<doc-panel id="full-output-reference" collapsed>
+    <template #title>Full output reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mixed mono audio from active samples.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it.</li>
+</ul>
+</doc-panel>
+<h2 id="continue-learning">Continue learning</h2>
+<p><a href="../physmat-wave-player/">PhysMat Wave Player</a> selects by exact Physical Material path rather than surface-type number. Also see the <a href="../../../playback/">Playback overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -263,10 +214,10 @@
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/acoustics/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../../metasound/nodes/propagation/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Acoustics</span>
+                                <span class="block mt-1">Propagation node reference</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>

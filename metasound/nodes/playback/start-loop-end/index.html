@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: Start Loop End Player</title>
     <meta name="title" content="AP: Start Loop End Player">
-    <meta name="description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/start-loop-end/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/start-loop-end/">
     <meta property="og:title" content="AP: Start Loop End Player">
-    <meta property="og:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta property="og:description" content="MetaSound · AudioPhysx / Playback">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/start-loop-end/">
     <meta name="twitter:title" content="AP: Start Loop End Player">
-    <meta name="twitter:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="twitter:description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/start-loop-end.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,115 +135,83 @@
 
                 <!-- Page content  -->
 <h1 id="ap-start-loop-end-player">AP: Start Loop End Player</h1>
-<p><strong>MetaSound category:</strong> <code translate="no" v-pre>AudioPhysx → Playback</code><br />
-<strong>Source contract:</strong> Unreal Engine 5.8.4 development source</p>
-<p>Play a randomized introduction, repeat middle recordings, then play a randomized ending on release.</p>
+<p><strong>MetaSound · AudioPhysx / Playback</strong></p>
+<p>Play an opening sound, sustain a repeatable middle section, and finish with a proper release when the action ends.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-start-loop-end.png -->
-<h2 id="when-to-use-it">When to use it</h2>
-<p>Automatic-fire weapons, powered tools, engines, energy beams and other held actions.</p>
-<h2 id="quick-setup">Quick setup</h2>
-<p>Fill the three Wave Asset Arrays. Trigger <code translate="no" v-pre>Start Firing</code>, then <code translate="no" v-pre>Stop Firing</code> to request release. Connect <code translate="no" v-pre>Out Mono</code> and use <code translate="no" v-pre>On Finished</code> for natural completion.</p>
-<h2 id="inputs">Inputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Start Firing` | Trigger | Play a random intro, then begin firing middle waves. |
-| `Stop Firing` | Trigger | Stop scheduling shots and enter the ending. |
-| `Immediate Release` | Boolean | True: fade active waves and play ending immediately. False: let all active waves finish before ending. |
-| `RPM` | Float | 0 = legacy sequential middle waves. 60-2400 = middle shots per minute, with overlap. Updated at shot boundaries. |
-| `Start Waves` | Wave Asset Array | Random intro wave array. If empty, start middle sounds immediately. |
-| `Loop Waves` | Wave Asset Array | Random middle wave array; RPM sets the interval between starts, not between completions. |
-| `End Waves` | Wave Asset Array | Random ending wave array. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Start Firing</code></td>
-<td>Trigger</td>
-<td>Play a random intro, then begin firing middle waves.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Stop Firing</code></td>
-<td>Trigger</td>
-<td>Stop scheduling shots and enter the ending.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Immediate Release</code></td>
-<td>Boolean</td>
-<td>True: fade active waves and play ending immediately. False: let all active waves finish before ending.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>RPM</code></td>
-<td>Float</td>
-<td>0 = legacy sequential middle waves. 60-2400 = middle shots per minute, with overlap. Updated at shot boundaries.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Start Waves</code></td>
-<td>Wave Asset Array</td>
-<td>Random intro wave array. If empty, start middle sounds immediately.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Loop Waves</code></td>
-<td>Wave Asset Array</td>
-<td>Random middle wave array; RPM sets the interval between starts, not between completions.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>End Waves</code></td>
-<td>Wave Asset Array</td>
-<td>Random ending wave array.</td>
-</tr>
-</tbody>
-</table>
+<h2 id="what-actually-happens">What actually happens</h2>
+<p>This node follows three phases: <strong>Start</strong>, <strong>Middle</strong>, and <strong>End</strong>. Each phase chooses a recording from its respective Wave Asset Array. It works for automatic weapons, powered tools, long energy effects, and other actions that start, continue, then stop.</p>
+<p>The important distinction is <strong>RPM</strong>. At <code translate="no" v-pre>RPM = 0</code>, middle recordings play consecutively when each recording finishes. At a positive RPM, the node schedules fresh middle recordings at a fixed number of starts per minute, so the recordings can overlap. The implementation maintains a bounded pool of twelve middle voices instead of dynamically creating a new audio player for every shot.</p>
+<h2 id="hear-it-in-a-game">Hear it in a game</h2>
+<p>For a rifle, put an initial bolt/attack in <code translate="no" v-pre>Start Waves</code>, several shot bodies in <code translate="no" v-pre>Loop Waves</code>, and mechanical release recordings in <code translate="no" v-pre>End Waves</code>. Set <code translate="no" v-pre>RPM</code> to 600: a new middle shot is scheduled approximately every 100 milliseconds once the intro finishes. Then send <code translate="no" v-pre>Stop Firing</code> and listen to the ending.</p>
+<h2 id="build-a-working-graph">Build a working graph</h2>
+<doc-steps>
+   <doc-step id="choose-attack-middle-and-end-sounds" step-number="1">
+      <template #title>Choose attack, middle and end sounds</template>
+<p>Fill the three arrays. <code translate="no" v-pre>Start Waves</code> is optional; if it has no playable recording, playback proceeds to the middle.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="wire-press-and-release" step-number="2">
+      <template #title>Wire press and release</template>
+<p>Connect the weapon pressed signal to <code translate="no" v-pre>Start Firing</code> and release signal to <code translate="no" v-pre>Stop Firing</code>. Connect <code translate="no" v-pre>Out Mono</code> and <code translate="no" v-pre>On Finished</code> according to your Source lifecycle.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="set-rpm-and-release-behaviour" step-number="3">
+      <template #title>Set RPM and release behaviour</template>
+<p>Choose <code translate="no" v-pre>RPM = 0</code> for completion-driven machinery loops, or a positive RPM for timed overlapping shots. Test both <code translate="no" v-pre>Immediate Release</code> settings with your actual recordings.</p>
+   </doc-step>
+</doc-steps>
+<h2 id="the-controls-that-matter">The controls that matter</h2>
+<p><code translate="no" v-pre>Immediate Release = true</code> fades currently active audio and begins the end recording promptly. When false, the player waits for active shots or intro audio to finish before entering the end phase. <code translate="no" v-pre>RPM</code> is a <strong>firing interval</strong>, not a playback speed control: raising it should increase the number of shot starts without shortening individual recordings. The source clamps positive rates to its supported range.</p>
+<h2 id="outputs-and-completion">Outputs and completion</h2>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mixed mono audio output.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Fires when ending audio and any remaining shots have finished.</li>
+</ul>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-tip"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-tip" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M7.90625 2.15625C4.50944 2.15625 2.15625 4.58563 2.15625 7.54688C2.15625 8.96138 2.76575 9.88281 3.57075 10.8589L3.87837 11.2226C4.19894 11.6021 4.554 12.0218 4.84581 12.4416C5.25406 13.0324 5.61775 13.7296 5.7385 14.5834C5.76728 14.8608 5.68746 15.1386 5.51579 15.3583C5.34413 15.5781 5.09399 15.7228 4.8179 15.7621C4.5418 15.8013 4.26124 15.7321 4.03512 15.5689C3.809 15.4056 3.65493 15.1612 3.60525 14.8867C3.54775 14.4814 3.37094 14.1004 3.07338 13.6692C2.8306 13.3302 2.57055 13.0039 2.29425 12.6917C2.1735 12.5479 2.04556 12.397 1.909 12.2317C1.00769 11.1406 0 9.72613 0 7.54688C0 3.32062 3.39681 0 7.90625 0C12.4157 0 15.8125 3.32062 15.8125 7.54688C15.8125 9.72613 14.8048 11.1406 13.9035 12.2317C13.7669 12.397 13.639 12.5479 13.5183 12.6903C13.2207 13.0424 12.9677 13.3414 12.7406 13.6692C12.4416 14.1004 12.2662 14.4814 12.2087 14.8867C12.1557 15.1584 12.0003 15.3994 11.7747 15.5598C11.5492 15.7202 11.2706 15.7879 10.9965 15.7488C10.7225 15.7096 10.474 15.5667 10.3023 15.3496C10.1306 15.1325 10.0489 14.8577 10.074 14.582C10.1948 13.7296 10.5584 13.0324 10.9667 12.4416C11.2585 12.0218 11.6136 11.6021 11.9341 11.2226C12.0419 11.0961 12.1454 10.9739 12.2403 10.8589C13.0468 9.88281 13.6562 8.96138 13.6562 7.54688C13.6562 4.58563 11.3031 2.15625 7.90625 2.15625ZM4.67188 17.25H11.1406C11.4266 17.25 11.7008 17.3636 11.903 17.5658C12.1052 17.768 12.2188 18.0422 12.2188 18.3281C12.2188 18.6141 12.1052 18.8883 11.903 19.0905C11.7008 19.2927 11.4266 19.4062 11.1406 19.4062H4.67188C4.38594 19.4062 4.11171 19.2927 3.90953 19.0905C3.70734 18.8883 3.59375 18.6141 3.59375 18.3281C3.59375 18.0422 3.70734 17.768 3.90953 17.5658C4.11171 17.3636 4.38594 17.25 4.67188 17.25ZM5.03125 21.9219C5.03125 21.6359 5.14484 21.3617 5.34703 21.1595C5.54921 20.9573 5.82344 20.8438 6.10938 20.8438H9.70312C9.98906 20.8438 10.2633 20.9573 10.4655 21.1595C10.6677 21.3617 10.7812 21.6359 10.7812 21.9219C10.7812 22.2078 10.6677 22.482 10.4655 22.6842C10.2633 22.8864 9.98906 23 9.70312 23H6.10938C5.82344 23 5.54921 22.8864 5.34703 22.6842C5.14484 22.482 5.03125 22.2078 5.03125 21.9219Z" />
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>About finishing sounds</h5>
+<p>A trigger that indicates a source has finished is not always the end of <strong>everything audible</strong>. If you add propagation, early reflections or another tail-generating processor downstream, route completion through that final processor before ending your MetaSound Source.</p>
+        </div>
+    </div>
 </div>
-</retype-table>
-<h2 id="outputs">Outputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Mixed mono audio output. |
-| `On Finished` | Trigger | Fires when ending audio and any remaining shots have finished. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Out Mono</code></td>
-<td>Audio (mono)</td>
-<td>Mixed mono audio output.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Finished</code></td>
-<td>Trigger</td>
-<td>Fires when ending audio and any remaining shots have finished.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="behaviour-and-design-notes">Behaviour and design notes</h2>
-<p><code translate="no" v-pre>RPM = 0</code> waits for each middle recording to finish. Positive RPM values schedule overlapping middle shots. <code translate="no" v-pre>Immediate Release</code> changes whether active audio finishes or fades into release.</p>
-<blockquote>
-<p><strong>Units matter:</strong> Pin names indicate metres (<code translate="no" v-pre>m</code>), metres per second (<code translate="no" v-pre>m/s</code>), centimetres (<code translate="no" v-pre>cm</code>), milliseconds (<code translate="no" v-pre>ms</code>), decibels (<code translate="no" v-pre>dB</code>) and semitones (<code translate="no" v-pre>st</code>). Don&#x27;t convert centimetres to metres unless the target pin expects metres.</p>
-</blockquote>
-<h2 id="testing-checklist">Testing checklist</h2>
-<ol>
-<li>Test the intended input settings with a valid source recording or signal.</li>
-<li>Test zero/empty/invalid inputs where applicable.</li>
-<li>Test rapid parameter changes and retriggering where applicable.</li>
-<li>Verify output and completion behaviour in a packaged build before relying on the node in shipping content.</li>
-</ol>
-<p>See <a href="../../../playback/">Playback overview</a> and <a href="../../../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="things-to-watch-for">Things to watch for</h2>
+<ul>
+<li>At high RPM with long recordings, all twelve middle voices can be occupied. The newest scheduled shot is then skipped rather than cutting an existing voice.</li>
+<li><code translate="no" v-pre>On Finished</code> follows the release sequence; it is not expected during a continuously held firing action. Missing middle waves can prevent audible firing even if the state remains active.</li>
+<li>The node is not a ballistic simulation; it controls recording playback. Keep muzzle, mechanical and environmental content appropriately designed.</li>
+</ul>
+<doc-panel id="full-input-reference" collapsed>
+    <template #title>Full input reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Start Firing</code></strong> · <em>Trigger</em> — Play a random intro, then begin firing middle waves.</li>
+<li><strong><code translate="no" v-pre>Stop Firing</code></strong> · <em>Trigger</em> — Stop scheduling shots and enter the ending.</li>
+<li><strong><code translate="no" v-pre>Immediate Release</code></strong> · <em>Boolean</em> — True: fade active waves and play ending immediately. False: let all active waves finish before ending.</li>
+<li><strong><code translate="no" v-pre>RPM</code></strong> · <em>Float</em> — 0 = legacy sequential middle waves. 60-2400 = middle shots per minute, with overlap. Updated at shot boundaries.</li>
+<li><strong><code translate="no" v-pre>Start Waves</code></strong> · <em>Wave Asset Array</em> — Random intro wave array. If empty, start middle sounds immediately.</li>
+<li><strong><code translate="no" v-pre>Loop Waves</code></strong> · <em>Wave Asset Array</em> — Random middle wave array; RPM sets the interval between starts, not between completions.</li>
+<li><strong><code translate="no" v-pre>End Waves</code></strong> · <em>Wave Asset Array</em> — Random ending wave array.</li>
+</ul>
+</doc-panel>
+<doc-panel id="full-output-reference" collapsed>
+    <template #title>Full output reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mixed mono audio output.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Fires when ending audio and any remaining shots have finished.</li>
+</ul>
+</doc-panel>
+<h2 id="continue-learning">Continue learning</h2>
+<p><a href="../../../../examples/automatic-weapon/">Automatic weapon recipe</a> walks through practical recording choices and Stop Firing behaviour. Also see the <a href="../../../playback/">Playback overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
 
                 
                 <!-- Required only on API pages -->

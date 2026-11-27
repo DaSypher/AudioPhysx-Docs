@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092828831">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849096765860">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AP: PhysMat Wave Player</title>
     <meta name="title" content="AP: PhysMat Wave Player">
-    <meta name="description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/physmat-wave-player/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/physmat-wave-player/">
     <meta property="og:title" content="AP: PhysMat Wave Player">
-    <meta property="og:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta property="og:description" content="MetaSound · AudioPhysx / Playback">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/physmat-wave-player/">
     <meta name="twitter:title" content="AP: PhysMat Wave Player">
-    <meta name="twitter:description" content="MetaSound category: AudioPhysx → Playback Source contract: Unreal Engine 5.8.4 development source">
+    <meta name="twitter:description" content="MetaSound · AudioPhysx / Playback">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/nodes/playback/physmat-wave-player.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.6.0.849092828831" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.6.0.849096765860" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849092828831" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.6.0.849096765860" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,133 +135,70 @@
 
                 <!-- Page content  -->
 <h1 id="ap-physmat-wave-player">AP: PhysMat Wave Player</h1>
-<p><strong>MetaSound category:</strong> <code translate="no" v-pre>AudioPhysx → Playback</code><br />
-<strong>Source contract:</strong> Unreal Engine 5.8.4 development source</p>
-<p>Select recordings by exact Physical Material asset path, with fallback recordings.</p>
+<p><strong>MetaSound · AudioPhysx / Playback</strong></p>
+<p>Route playback using an exact Unreal Physical Material asset path, with a fallback when nothing matches.</p>
 <!-- IMAGE SLOT: docs/static/images/nodes/node-physmat-wave-player.png -->
-<h2 id="when-to-use-it">When to use it</h2>
-<p>Footsteps, collision feedback and material-dependent interactions.</p>
-<h2 id="quick-setup">Quick setup</h2>
-<p>Supply <code translate="no" v-pre>Hit PhysMat Path</code>, configure material routes and assign <code translate="no" v-pre>Default Waves</code> for unmatched materials.</p>
-<h2 id="inputs">Inputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Play` | Trigger | Choose and play one recording. |
-| `Stop` | Trigger | Stop all active voices. |
-| `Hit PhysMat Path` | String | Exact Physical Material asset path. |
-| `Default Waves` | Wave Asset Array | Wave Asset array used when no route matches. |
-| `Default Volume` | Float | Linear gain of fallback recordings. |
-| `No Immediate Repeat` | Boolean | Avoid repeating the previous recording  when alternatives are available. |
-| `Max Voices` | Integer | Maximum overlapping recordings. |
-| `Waves` | Wave Asset Array | Wave Asset array for this material. |
-| `Volume` | Float | Linear volume for this material. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Play</code></td>
-<td>Trigger</td>
-<td>Choose and play one recording.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Stop</code></td>
-<td>Trigger</td>
-<td>Stop all active voices.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Hit PhysMat Path</code></td>
-<td>String</td>
-<td>Exact Physical Material asset path.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Default Waves</code></td>
-<td>Wave Asset Array</td>
-<td>Wave Asset array used when no route matches.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Default Volume</code></td>
-<td>Float</td>
-<td>Linear gain of fallback recordings.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>No Immediate Repeat</code></td>
-<td>Boolean</td>
-<td>Avoid repeating the previous recording  when alternatives are available.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Max Voices</code></td>
-<td>Integer</td>
-<td>Maximum overlapping recordings.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Waves</code></td>
-<td>Wave Asset Array</td>
-<td>Wave Asset array for this material.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>Volume</code></td>
-<td>Float</td>
-<td>Linear volume for this material.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="outputs">Outputs</h2>
-<retype-table copy-text="| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Mixed mono audio output. |
-| `On Finished` | Trigger | Fires when the final voice ends naturally. |
-| `On Rejected` | Trigger | Fires when a requested voice cannot start. |">
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Pin</th>
-<th>Type</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code translate="no" v-pre>Out Mono</code></td>
-<td>Audio (mono)</td>
-<td>Mixed mono audio output.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Finished</code></td>
-<td>Trigger</td>
-<td>Fires when the final voice ends naturally.</td>
-</tr>
-<tr>
-<td><code translate="no" v-pre>On Rejected</code></td>
-<td>Trigger</td>
-<td>Fires when a requested voice cannot start.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</retype-table>
-<h2 id="behaviour-and-design-notes">Behaviour and design notes</h2>
-<p>Material path matching is exact. It is not enough to supply only a surface-type integer.</p>
-<blockquote>
-<p><strong>Units matter:</strong> Pin names indicate metres (<code translate="no" v-pre>m</code>), metres per second (<code translate="no" v-pre>m/s</code>), centimetres (<code translate="no" v-pre>cm</code>), milliseconds (<code translate="no" v-pre>ms</code>), decibels (<code translate="no" v-pre>dB</code>) and semitones (<code translate="no" v-pre>st</code>). Don&#x27;t convert centimetres to metres unless the target pin expects metres.</p>
-</blockquote>
-<h2 id="testing-checklist">Testing checklist</h2>
-<ol>
-<li>Test the intended input settings with a valid source recording or signal.</li>
-<li>Test zero/empty/invalid inputs where applicable.</li>
-<li>Test rapid parameter changes and retriggering where applicable.</li>
-<li>Verify output and completion behaviour in a packaged build before relying on the node in shipping content.</li>
-</ol>
-<p>See <a href="../../../playback/">Playback overview</a> and <a href="../../../../support/troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="what-actually-happens">What actually happens</h2>
+<p>Surface type alone may be too coarse. Multiple Physical Materials can share a broad category but require different sounds. This player accepts <code translate="no" v-pre>Hit PhysMat Path</code> and compares it against configured material routes, selecting a variation from the matching pool.</p>
+<p>The player also has default recordings. That matters commercially: a missing or newly introduced material should be handled gracefully rather than requiring a new branch in every MetaSound.</p>
+<h2 id="hear-it-in-a-game">Hear it in a game</h2>
+<p>Imagine two surfaces both categorized as metal: a thin steel sheet and a heavy steel plate. Give them distinct Physical Materials and different impact recordings. Supply the actual asset path so the player can distinguish them.</p>
+<h2 id="build-a-working-graph">Build a working graph</h2>
+<doc-steps>
+   <doc-step id="define-physical-material-routes" step-number="1">
+      <template #title>Define Physical Material routes</template>
+<p>Define Physical Material routes using the plugin’s supported configuration and confirm the path strings are accurate.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="provide-reliable-fallback-sounds" step-number="2">
+      <template #title>Provide reliable fallback sounds</template>
+<p>Assign recordings for each route and populate <code translate="no" v-pre>Default Waves</code> as a fallback.</p>
+   </doc-step>
+</doc-steps>
+<doc-steps>
+   <doc-step id="send-the-asset-path-and-play" step-number="3">
+      <template #title>Send the asset path and Play</template>
+<p>Send the exact <code translate="no" v-pre>Hit PhysMat Path</code> and trigger <code translate="no" v-pre>Play</code>; test a valid configured path and an intentionally unmatched path.</p>
+   </doc-step>
+</doc-steps>
+<h2 id="the-controls-that-matter">The controls that matter</h2>
+<p><code translate="no" v-pre>Hit PhysMat Path</code> is an <strong>asset path</strong>, not the display name of a material in Content Browser. <code translate="no" v-pre>Waves</code> and <code translate="no" v-pre>Volume</code> correspond to authored route entries. <code translate="no" v-pre>Default Volume</code> applies to fallback recordings. <code translate="no" v-pre>Max Voices</code> and <code translate="no" v-pre>No Immediate Repeat</code> control overlapping playback and repetition.</p>
+<h2 id="outputs-and-completion">Outputs and completion</h2>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mixed mono audio output.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Fires when the final voice ends naturally.</li>
+<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — Fires when a requested voice cannot start.</li>
+</ul>
+<h2 id="things-to-watch-for">Things to watch for</h2>
+<ul>
+<li>Renaming or moving Physical Material assets can change their paths. Test after asset migrations.</li>
+<li>Do not confuse the Acoustic Physical Material asset used for transmission calculations with the Physical Material path used for playback routing.</li>
+</ul>
+<doc-panel id="full-input-reference" collapsed>
+    <template #title>Full input reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Play</code></strong> · <em>Trigger</em> — Choose and play one recording.</li>
+<li><strong><code translate="no" v-pre>Stop</code></strong> · <em>Trigger</em> — Stop all active voices.</li>
+<li><strong><code translate="no" v-pre>Hit PhysMat Path</code></strong> · <em>String</em> — Exact Physical Material asset path.</li>
+<li><strong><code translate="no" v-pre>Default Waves</code></strong> · <em>Wave Asset Array</em> — Wave Asset array used when no route matches.</li>
+<li><strong><code translate="no" v-pre>Default Volume</code></strong> · <em>Float</em> — Linear gain of fallback recordings.</li>
+<li><strong><code translate="no" v-pre>No Immediate Repeat</code></strong> · <em>Boolean</em> — Avoid repeating the previous recording  when alternatives are available.</li>
+<li><strong><code translate="no" v-pre>Max Voices</code></strong> · <em>Integer</em> — Maximum overlapping recordings.</li>
+<li><strong><code translate="no" v-pre>Waves</code></strong> · <em>Wave Asset Array</em> — Wave Asset array for this material.</li>
+<li><strong><code translate="no" v-pre>Volume</code></strong> · <em>Float</em> — Linear volume for this material.</li>
+</ul>
+</doc-panel>
+<doc-panel id="full-output-reference" collapsed>
+    <template #title>Full output reference</template>
+<ul>
+<li><strong><code translate="no" v-pre>Out Mono</code></strong> · Audio (mono) — Mixed mono audio output.</li>
+<li><strong><code translate="no" v-pre>On Finished</code></strong> · Trigger — Fires when the final voice ends naturally.</li>
+<li><strong><code translate="no" v-pre>On Rejected</code></strong> · Trigger — Fires when a requested voice cannot start.</li>
+</ul>
+</doc-panel>
+<h2 id="continue-learning">Continue learning</h2>
+<p><a href="../../../../examples/material-footsteps/">Material footsteps recipe</a> compares this with surface-type routing. Also see the <a href="../../../playback/">Playback overview</a> and <a href="../../../../getting-started/signals-and-completion/">signal &amp; completion concepts</a>.</p>
 
                 
                 <!-- Required only on API pages -->

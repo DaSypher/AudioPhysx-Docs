@@ -1,17 +1,27 @@
-# MetaSound interfaces and game-provided data
+# Passing world data into MetaSound
 
-AudioPhysx can publish acoustic parameter values from Blueprint/world systems to a MetaSound graph. Use the interfaces and names included with your **installed plugin build**, rather than creating independent duplicate parameters with similar names.
+A Wave Player can play a recording with only a trigger, but an acoustic processor needs to know something about the world: distance, material, obstruction, source direction or environment. AudioPhysx has interfaces and parameter names that link those game-side calculations to a MetaSound graph.
 
-The current source includes a compact selected-route contract:
+## The selected acoustic route
 
-| Parameter | Data |
-| --- | --- |
-| `AP.AcousticRoute.Selected` | Float Array: `[delay ms, low loss dB, mid loss dB, high loss dB]` |
+The current source uses one compact Float Array named **`AP.AcousticRoute.Selected`**. Its four values are ordered as follows:
 
-Connect that array to [AP: Acoustic Paths](nodes/acoustics/acoustic-paths.md) when using the managed route system.
+```text
+[delay in ms, low-band loss in dB, mid-band loss in dB, high-band loss in dB]
+```
 
-Other parameters are grouped by propagation, atmosphere, transmission and impact; refer to your installed interface list in the MetaSound editor. Avoid manually mixing data from different interface versions.
+The game-world solver decides which route to use. [AP: Acoustic Paths](nodes/acoustics/acoustic-paths.md) reads that selected route and renders the corresponding delayed and filtered mono audio. This avoids connecting several unrelated route controls and accidentally using values from different world updates.
 
-## Authoring tip
+## Why order and units matter
 
-When an engine or plugin interface changes, compare the generated MetaSound pins **before saving modified graphs**. This is particularly important for projects with previously authored material routes.
+If you swap the low- and high-loss values, the filter could make the source sound brighter when the material should muffle it. If you pass seconds as milliseconds, a travel delay can be wrong by a factor of a thousand. Treat the array as a **data contract**, not a bag of arbitrary floats.
+
+## Other named parameters
+
+The source also contains propagation, atmosphere, transmission and impact parameters. These are registered by AudioPhysx's native interfaces and world/Blueprint helpers. Prefer the exact pins and interface versions supplied by the installed plugin over manually recreating near-identical parameters with different names.
+
+The standalone flyby subsystem supplies five named Float parameters, listed on the [Flyby Blueprint guide](../blueprint/flyby.md). Those must be exposed with matching names so the world helper can populate them before playback.
+
+!!!warning Existing graph compatibility
+When changing engine or plugin versions, inspect a saved graph's generated MetaSound inputs **before resaving it**, especially if interface versions or surface-route settings changed. A graph can compile but listen to the wrong input if names or types no longer match.
+!!!

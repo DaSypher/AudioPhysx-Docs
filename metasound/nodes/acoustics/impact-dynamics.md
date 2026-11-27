@@ -1,50 +1,64 @@
 # AP: Impact Dynamics
 
-**MetaSound category:** `AudioPhysx → Acoustics`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Acoustics**
 
-Shape the transient, level and filtering of an impact recording according to impact strength.
+Make one impact recording react to whether the hit was gentle or forceful.
 
-## When to use it
+## What actually happens
 
-Soft versus hard footsteps, collisions and physical interactions.
+An impact is more than a volume change. Soft contacts tend to have gentler transients, while harder contacts can sound brighter and more aggressive. This node uses an `Impact` trigger and a normalized strength value to drive impact-time gain, filtering and transient emphasis around the input recording.
 
-## Quick setup
+It is a **sound-shaping** node, not a collision detector. Supply the actual impact event and, if desired, calculate its strength through an existing AudioPhysx Blueprint helper.
 
-Connect an impact recording to `Audio In`, fire `Impact` when playback starts and supply normalized `Impact Strength`.
+## Hear it in a game
 
-## Inputs
+Use one moderately strong metal knock recording. Audition it with an impact strength near the soft end and then near the hard end. Adjust the soft/hard gain and cutoff controls until one source asset provides useful expressive variation.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Audio In` | Audio (mono) | Mono audio from the impact Wave Player. |
-| `Impact` | Trigger | Restart the transient when playback starts. |
-| `Impact Strength` | Float | Normalized impact strength, 0 to 1. |
-| `Soft Gain` | Float | Linear gain at impact strength 0. |
-| `Hard Gain` | Float | Linear gain at impact strength 1. |
-| `Soft Cutoff (Hz)` | Float | Low-pass cutoff for gentle impacts. |
-| `Hard Cutoff (Hz)` | Float | Low-pass cutoff for strong impacts. |
-| `Transient Boost` | Float | Extra attack gain applied to harder hits. |
-| `Transient Time (ms)` | Float | Duration of the attack enhancement. |
+## Build a working graph
 
-## Outputs
+>>> 1. Provide the impact sound
+Connect the existing impact audio to `Audio In`.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Impact-shaped mono audio. |
-| `Applied Strength` | Float | Clamped strength used by this operator. |
+>>> 2. Drive strength and impact event
+Trigger `Impact` at the event and supply a normalized `Impact Strength` control.
+>>>
 
-## Behaviour and design notes
+>>> 3. Shape the transient
+Tune `Soft Gain`, `Hard Gain`, `Soft Cutoff (Hz)` and `Hard Cutoff (Hz)`, adding transient boost only where the recording benefits.
+>>>
 
-This is a sound-shaping operator; it does not detect collisions or generate the source recording by itself.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+`Soft Gain` and `Hard Gain` describe level shaping at the two strength extremes. `Soft Cutoff (Hz)` and `Hard Cutoff (Hz)` control the filter range. `Transient Boost` and `Transient Time (ms)` affect attack emphasis over a short window.
 
-## Testing checklist
+## What the node outputs
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`Out Mono`** · Audio (mono) — Impact-shaped mono audio.
+- **`Applied Strength`** · Float — Clamped strength used by this operator.
 
-See [Acoustics overview](../../acoustics.md) and [Troubleshooting](../../../support/troubleshooting.md).
+## Things to watch for
+
+- A noisy or inaccurate strength value can make the same asset change character unpredictably; smooth or normalize the driving gameplay value if needed.
+- Too much transient boost can sound clicky or harsh. Audition at realistic game levels.
+
+==- Full input reference
+- **`Audio In`** · *Audio (mono)* — Mono audio from the impact Wave Player.
+- **`Impact`** · *Trigger* — Restart the transient when playback starts.
+- **`Impact Strength`** · *Float* — Normalized impact strength, 0 to 1.
+- **`Soft Gain`** · *Float* — Linear gain at impact strength 0.
+- **`Hard Gain`** · *Float* — Linear gain at impact strength 1.
+- **`Soft Cutoff (Hz)`** · *Float* — Low-pass cutoff for gentle impacts.
+- **`Hard Cutoff (Hz)`** · *Float* — Low-pass cutoff for strong impacts.
+- **`Transient Boost`** · *Float* — Extra attack gain applied to harder hits.
+- **`Transient Time (ms)`** · *Float* — Duration of the attack enhancement.
+===
+
+==- Full output reference
+- **`Out Mono`** · Audio (mono) — Impact-shaped mono audio.
+- **`Applied Strength`** · Float — Clamped strength used by this operator.
+===
+
+## Continue learning
+
+[Blueprint playback helpers](../../../blueprint/playback-helpers.md) describes available game-side audio and impact utilities. Also see the [Acoustics overview](../../acoustics.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
