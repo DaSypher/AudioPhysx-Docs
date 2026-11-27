@@ -1,12 +1,30 @@
 ---
-label: "Acoustics"
+label: "Acoustics node reference"
 icon: broadcast
-order: 80
+order: 90
 ---
-# Acoustics node reference
+# Acoustics reference
 
-- [AP: Acoustic Paths](acoustic-paths.md) — Apply the selected acoustic route: propagation delay and three-band loss from the game-thread path solver.
-- [AP: Impact Dynamics](impact-dynamics.md) — Shape the transient, level and filtering of an impact recording according to impact strength.
-- [AP: Early Reflections](early-reflections.md) — Add a small set of simulated early reflections to a mono recording.
-- [AP: Material Transmission](material-transmission.md) — Apply obstruction-dependent, frequency-shaped transmission loss to mono audio.
-- [AP: Source Directivity](source-directivity.md) — Apply direction-dependent spectral shaping and attenuation.
+These processors shape mono audio using material, route, orientation or impact information.
+
+### [AP: Acoustic Paths](acoustic-paths.md)
+
+Apply the acoustic path chosen by the game-world solver, including travel delay and low/mid/high frequency loss.
+
+### [AP: Early Reflections](early-reflections.md)
+
+Add a handful of short delayed copies that suggest nearby surfaces without simulating a complete room impulse response.
+
+### [AP: Impact Dynamics](impact-dynamics.md)
+
+Make one impact recording react to whether the hit was gentle or forceful.
+
+### [AP: Material Transmission](material-transmission.md)
+
+Colour and attenuate sound when a source is behind a material or barrier.
+
+### [AP: Source Directivity](source-directivity.md)
+
+Make a sound change as you move around the front, side and rear of its emitter.
+
+[Back to Acoustics overview](../../acoustics.md)

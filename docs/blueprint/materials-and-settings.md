@@ -1,32 +1,30 @@
 ---
-label: "Materials and settings"
+label: Materials and settings
 icon: gear
 order: 70
 ---
-# Acoustic Physical Materials and project settings
+# Acoustic Physical Materials
 
-## Acoustic material asset
+An acoustic material describes how an authored surface should affect sound. It is not a recording and is not automatically measured from your level geometry. The values express a **model** that AudioPhysx can use when estimating transmission and other acoustic behaviour.
 
-`UAPAcousticPhysicalMaterial` extends Unreal's `UPhysicalMaterial` with acoustic information including:
+`UAPAcousticPhysicalMaterial` extends Unreal's Physical Material with acoustic properties. It can include material density and longitudinal sound speed, damping, a thickness context and low/mid/high authored transmission losses. There are also absorption and scattering controls for acoustic models that use them.
 
-- Acoustic density and longitudinal sound speed.
-- Internal damping.
-- Three-band authored transmission loss or approximate mass-law evaluation.
-- Reference/fallback thickness and optional thickness scaling.
-- Surface absorption and scattering values.
+## Think in terms of listening results
 
-Values such as density and sound speed should represent the material **model you're authoring**; they are not automatically measured from geometry.
+A heavy, sealed barrier may need much larger transmission loss than a thin partition. That loss can differ across frequency bands; the goal is to make obstructed audio believable, not to pretend every wall is accurately described by one physical constant.
+
+You can use an authored three-band loss curve or the available approximate mass-law model. Authored values are useful when you want repeatable, designer-controlled outcomes. The mass-law option is a simplified estimate, not a measurement of a specific finished structure.
 
 <!-- IMAGE SLOT: docs/static/images/settings/acoustic-material-inspector.png -->
 
-## Project settings
+## Project-wide acoustic settings
 
-`UAPAudioSettings` exposes performance budgets and acoustic controls, including emitter updates per tick, obstruction-query limits, atmosphere values, acoustic path depth and optional around-obstacle paths.
+`UAPAudioSettings` contains environment and workload controls, including world update scheduling, obstruction-ray limits, maximum path detail and optional alternate-route processing. These matter when the scene contains many emitters: a convincing effect that performs poorly with twenty active sources is not ready for shipping.
 
 <!-- IMAGE SLOT: docs/static/images/settings/project-settings-audiophysx.png -->
 
-## Surface Audio warning
+## Important: surface-specific node pins
 
-`AP: Surface Wave Player` generates pins from enabled surface routes configured in project settings. **After changing that route list, restart the editor and inspect affected MetaSound assets**, because pin interfaces can change.
+[AP: Surface Wave Player](../metasound/nodes/playback/surface-wave-player.md) can generate pins based on enabled surface routes in AudioPhysx settings. If you change that list, **restart the editor and review existing MetaSound graphs**. Unlike a runtime float value, a changed pin layout can affect authored graph connections.
 
-See [Surface Wave Player](../metasound/nodes/playback/surface-wave-player.md) and [Acoustic components](components.md).
+[Acoustic components](components.md) · [Material Transmission](../metasound/nodes/acoustics/material-transmission.md)

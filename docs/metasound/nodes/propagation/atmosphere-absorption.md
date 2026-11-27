@@ -5,48 +5,61 @@ order: 70
 ---
 # AP: Atmosphere Absorption
 
-**MetaSound category:** `AudioPhysx → Propagation`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Propagation**
 
-Change high-frequency absorption based on travel distance and air conditions.
+Make distant sound lose some of its brightness as it travels through air.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-atmosphere-absorption.png -->
 
-## When to use it
+## What actually happens
 
-Large outdoor scenes and long-range sound effects.
+Air tends to reduce high-frequency content over distance, and the amount depends on conditions such as temperature, humidity and pressure. This node applies an approximate distance-and-atmosphere-dependent spectral loss to the mono signal.
 
-## Quick setup
+Unlike standard distance attenuation, the goal is not just to reduce overall volume but to change the tonal balance. A distant sharp recording can become less brittle and more subdued.
 
-Connect mono audio; provide `Distance (cm)`, temperature, humidity and pressure values.
+## Hear it in a game
 
-## Inputs
+Play a short crisp impact while increasing `Distance (cm)` from near to far. Then change humidity and temperature to hear how the approximate frequency response changes. Compare against a reference recording rather than relying only on extreme parameter settings.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Audio` | Audio (mono) | Mono input audio. |
-| `Distance (cm)` | Float | Distance travelled by sound in centimetres. |
-| `Temperature (C)` | Float | Air temperature in degrees Celsius; default 20. |
-| `Humidity (%)` | Float | Relative humidity from 0 to 100; default 50. |
-| `Pressure (kPa)` | Float | Atmospheric pressure in kilopascals; default 101.325. |
+## Build a working graph
 
-## Outputs
+>>> 1. Feed mono audio
+Route mono audio into `Audio`.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Audio` | Audio (mono) | Audio after atmospheric absorption. |
+>>> 2. Provide atmospheric conditions
+Provide `Distance (cm)`; use the project’s current environmental values when available.
+>>>
 
-## Behaviour and design notes
+>>> 3. Compare near and far tone
+Tune the result while comparing direct sound against already-enabled Unreal air absorption.
+>>>
 
-For realism, combine thoughtfully with Unreal attenuation; avoid unintentionally applying two similar air-absorption treatments.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+`Temperature (C)` is degrees Celsius, `Humidity (%)` is relative humidity, and `Pressure (kPa)` is kilopascals. `Distance (cm)` is in Unreal centimetres and drives how much the atmospheric model affects the sound.
 
-## Testing checklist
+## What the node outputs
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`Audio`** · Audio (mono) — Audio after atmospheric absorption.
 
-See [Propagation overview](../../propagation.md) and [Troubleshooting](../../../support/troubleshooting.md).
+## Things to watch for
+
+- This is an approximate game-audio model, not a laboratory-calibrated propagation solver.
+- If Unreal attenuation settings already perform air absorption, the two effects may make the source unnecessarily dark.
+
+==- Full input reference
+- **`Audio`** · *Audio (mono)* — Mono input audio.
+- **`Distance (cm)`** · *Float* — Distance travelled by sound in centimetres.
+- **`Temperature (C)`** · *Float* — Air temperature in degrees Celsius; default 20.
+- **`Humidity (%)`** · *Float* — Relative humidity from 0 to 100; default 50.
+- **`Pressure (kPa)`** · *Float* — Atmospheric pressure in kilopascals; default 101.325.
+===
+
+==- Full output reference
+- **`Audio`** · Audio (mono) — Audio after atmospheric absorption.
+===
+
+## Continue learning
+
+[Material Transmission](../acoustics/material-transmission.md) changes spectral content because of barriers instead of air. Also see the [Propagation overview](../../propagation.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).

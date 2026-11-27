@@ -5,48 +5,63 @@ order: 60
 ---
 # AP: Trigger Cooldown
 
-**MetaSound category:** `AudioPhysx → QoL`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Qol**
 
-Let triggers through only when a configured cooldown has elapsed.
+Reject rapid repeated trigger events until a chosen minimum interval has elapsed.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-trigger-cooldown.png -->
 
-## When to use it
+## What actually happens
 
-Preventing repeated impact or UI sounds from firing too frequently.
+Collision, interaction and animation systems often produce more triggers than a sound designer wants to hear. This node lets an input trigger through, then holds off additional events for a configurable period.
 
-## Quick setup
+The purpose is practical: avoid six identical scrape clicks caused by one contact, or a machine noise retriggering faster than it can be perceived.
 
-Connect `In`, configure `Cooldown (ms)`, and route `On Passed` to the destination.
+## Hear it in a game
 
-## Inputs
+Send repeated footstep events to `In` with a modest `Cooldown (ms)`. Observe which events reach `On Passed` and which are rejected. Then set `Cooldown (ms)` to zero to compare unrestricted behaviour.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `In` | Trigger | Triggers to rate-limit. |
-| `Reset` | Trigger | Clear the cooldown; simultaneous In triggers may pass. |
-| `Cooldown (ms)` | Float | Minimum time between accepted triggers. Zero passes all triggers. |
+## Build a working graph
 
-## Outputs
+>>> 1. Connect the trigger
+Connect a source trigger to `In`.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `On Passed` | Trigger | Triggers allowed through at the original sample frame. |
-| `On Rejected` | Trigger | Triggers blocked by the cooldown at the original sample frame. |
-| `Remaining (ms)` | Float | Cooldown remaining at the end of this audio block. Block-rate Float. |
+>>> 2. Choose a minimum interval
+Choose `Cooldown (ms)` for the event you want to limit.
+>>>
 
-## Behaviour and design notes
+>>> 3. Route the accepted events
+Use `On Passed` to start playback; optionally inspect rejected events when debugging. `Reset` clears the cooldown state.
+>>>
 
-`On Rejected` exposes blocked triggers so the graph can respond or debug. `Reset` clears the current cooldown.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+`Cooldown (ms)` is the minimum allowed interval between accepted events. `Reset` makes the next event eligible according to the implementation’s state. This does not modify audio; it only routes triggers.
 
-## Testing checklist
+## What the node outputs
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`On Passed`** · Trigger — Triggers allowed through at the original sample frame.
+- **`On Rejected`** · Trigger — Triggers blocked by the cooldown at the original sample frame.
+- **`Remaining (ms)`** · Float — Cooldown remaining at the end of this audio block. Block-rate Float.
 
-See [QoL overview](../../qol.md) and [Troubleshooting](../../../support/troubleshooting.md).
+## Things to watch for
+
+- A cooldown that is too long may hide valid rapid events, particularly for automatic weapons.
+- When gameplay timing matters, test the actual trigger producer; adding a cooldown does not correct a broken animation/event schedule.
+
+==- Full input reference
+- **`In`** · *Trigger* — Triggers to rate-limit.
+- **`Reset`** · *Trigger* — Clear the cooldown; simultaneous In triggers may pass.
+- **`Cooldown (ms)`** · *Float* — Minimum time between accepted triggers. Zero passes all triggers.
+===
+
+==- Full output reference
+- **`On Passed`** · Trigger — Triggers allowed through at the original sample frame.
+- **`On Rejected`** · Trigger — Triggers blocked by the cooldown at the original sample frame.
+- **`Remaining (ms)`** · Float — Cooldown remaining at the end of this audio block. Block-rate Float.
+===
+
+## Continue learning
+
+[Trigger Probability](trigger-probability.md) is for random admission rather than minimum spacing. Also see the [Qol overview](../../qol.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).

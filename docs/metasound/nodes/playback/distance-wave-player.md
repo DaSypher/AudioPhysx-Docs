@@ -5,53 +5,67 @@ order: 90
 ---
 # AP: Distance Wave Player
 
-**MetaSound category:** `AudioPhysx → Playback`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Playback**
 
-Choose recordings from configurable distance ranges at play time.
+Choose a recording collection based on how far the sound source is from the listener.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-distance-wave-player.png -->
 
-## When to use it
+## What actually happens
 
-Near/mid/far weapon tails, ambience and sound-design perspective changes.
+The node groups recordings into **distance ranges**. At playback time, it checks `Distance (cm)` and selects the matching range, then chooses a suitable recording from that range. This is about selecting a *different recording*, not merely making the same file quieter.
 
-## Quick setup
+Close recordings may contain strong mechanical detail; far recordings can instead emphasize the report and environment. The dynamic range entries let a designer author those perspectives without building a large branching graph.
 
-Configure the dynamic distance ranges and their `Waves` arrays. Supply `Distance (cm)` before triggering `Play`.
+## Hear it in a game
 
-## Inputs
+Prepare a close gunshot, a medium-distance gunshot and a distant report. Put the files into suitable bands; then change `Distance (cm)` before `Play`. Confirm the selected recording changes when the listener crosses each authored threshold.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Play` | Trigger | Select one sample from the current distance range. |
-| `Stop` | Trigger | Stop every active voice. |
-| `Distance (cm)` | Float | Source-to-listener distance in centimetres. |
-| `Max Distance (cm)` | Float | Hard playback cutoff evaluated only on Play. |
-| `Max Voices` | Integer | Maximum simultaneous samples (1 to 16). |
-| `No Immediate Repeat` | Boolean | Avoid selecting the same sample consecutively  within the selected distance range. |
-| `Start Distance (cm)` | Float | Distance at which this range becomes active. |
-| `Waves` | Wave Asset Array | Array of samples for this range. |
-| `Volume` | Float | Linear gain latched when a sample begins. |
+## Build a working graph
 
-## Outputs
+>>> 1. Author the distance bands
+Expand and configure your distance ranges in ascending order of `Start Distance (cm)`.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Mixed mono audio of all active voices. |
-| `On Finished` | Trigger | Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it. |
+>>> 2. Supply listener distance
+Put a `Waves` array in each band and supply `Distance (cm)` from your existing distance system.
+>>>
 
-## Behaviour and design notes
+>>> 3. Audition near and far
+Use `Play` to request a sound. Set `Max Distance (cm)` and range `Volume` as needed, then audition the band transitions.
+>>>
 
-Distance selection is evaluated when a voice starts; it is not an automatic live crossfade between active recordings.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+`Start Distance (cm)` marks where an authored band starts; `Max Distance (cm)` sets the overall outer limit. `Waves` contains recordings for that band. `Volume` adjusts band playback level. `Max Voices` controls overlap; `No Immediate Repeat` reduces back-to-back identical choices.
 
-## Testing checklist
+## Outputs and completion
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`Out Mono`** · Audio (mono) — Mixed mono audio of all active voices.
+- **`On Finished`** · Trigger — Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it.
 
-See [Playback overview](../../playback.md) and [Troubleshooting](../../../support/troubleshooting.md).
+## Things to watch for
+
+- A recording switching bands is not itself acoustic propagation. If Unreal attenuation is also enabled, test the combined loudness and distance response.
+- Use consistent capture/processing of near and far recordings. A volume-only difference may sound less convincing than intended.
+
+==- Full input reference
+- **`Play`** · *Trigger* — Select one sample from the current distance range.
+- **`Stop`** · *Trigger* — Stop every active voice.
+- **`Distance (cm)`** · *Float* — Source-to-listener distance in centimetres.
+- **`Max Distance (cm)`** · *Float* — Hard playback cutoff evaluated only on Play.
+- **`Max Voices`** · *Integer* — Maximum simultaneous samples (1 to 16).
+- **`No Immediate Repeat`** · *Boolean* — Avoid selecting the same sample consecutively  within the selected distance range.
+- **`Start Distance (cm)`** · *Float* — Distance at which this range becomes active.
+- **`Waves`** · *Wave Asset Array* — Array of samples for this range.
+- **`Volume`** · *Float* — Linear gain latched when a sample begins.
+===
+
+==- Full output reference
+- **`Out Mono`** · Audio (mono) — Mixed mono audio of all active voices.
+- **`On Finished`** · Trigger — Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it.
+===
+
+## Continue learning
+
+[Distance Switch](../qol/distance-switch.md) routes triggers by band when you want to control external playback nodes instead. Also see the [Playback overview](../../playback.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).

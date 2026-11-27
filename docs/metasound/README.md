@@ -1,23 +1,38 @@
 ---
-label: "MetaSound nodes"
+label: MetaSound nodes
 icon: pulse
 order: 90
 ---
-# MetaSound node reference
+# MetaSound node library
 
-AudioPhysx contains **23 native MetaSound nodes** in the development source reviewed for this documentation.
+AudioPhysx extends MetaSounds with native C++ nodes for **playing**, **processing** and **controlling** sound. Choosing the right category is easier when you begin with the question you want your audio to answer.
 
-Each node page contains the **exact input and output pin labels extracted from the current C++ source**, plus an explanation, a minimal setup path and important limitations. Source-code inspection does not replace auditioning or packaged-game tests.
+## I want to play recordings more intelligently
 
-## Browse by category
+Do you need a random variation? A guaranteed order? Multiple simultaneous layers? A start/hold/end action? Explore [Playback](playback.md), which contains the integrated Wave Players.
 
-| Category | Nodes | Main use |
-| --- | ---: | --- |
-| [Playback](playback.md) | 10 | Wave variation, sequencing, layering and flybys |
-| [Acoustics](acoustics.md) | 5 | Transmission, early reflections, impact shaping and directivity |
-| [Propagation](propagation.md) | 4 | Delay, distance-dependent response and Doppler |
-| [QoL](qol.md) | 4 | Trigger routing and control utilities |
+[!card layout="compact" title="Playback" text="Variations, sequences, layers, distance bands, physical materials, gunfire and flybys."](playback.md)
 
-## Not sure where to start?
+## I want the room or material to change the sound
 
-Try [Your first MetaSound](../getting-started/first-metasound.md) or browse the [examples](../examples/README.md).
+You may need a filter, transmission model, directivity effect or reflection taps rather than another recording. Those tools are under [Acoustics](acoustics.md).
+
+[!card layout="compact" title="Acoustics" text="Obstruction, selected routes, impact shaping, reflections and orientation."](acoustics.md)
+
+## I want motion and travel time to matter
+
+When a source moves or becomes more distant, sound arrival and spectral balance can change. [Propagation](propagation.md) contains distance delay, Doppler-style control and atmospheric absorption.
+
+[!card layout="compact" title="Propagation" text="Timing, Doppler ratios, moving-source delay and air absorption."](propagation.md)
+
+## I want simpler trigger and control logic
+
+Use [QoL](qol.md) for routing triggers, smoothing values and managing trigger repetition. These nodes generally do not decode Wave Assets.
+
+[!card layout="compact" title="QoL" text="Distance branching, float smoothing, probability and cooldowns."](qol.md)
+
+!!!tip How to read a node page
+Every reference starts with **what happens**, then shows a **game-audio use case** and **wiring steps**. The exact pin list is folded away under **Full input reference** / **Full output reference** so you can still look up types without interrupting the explanation.
+!!!
+
+[Understanding completion](../getting-started/signals-and-completion.md) · [Blueprint integration](../blueprint/README.md)

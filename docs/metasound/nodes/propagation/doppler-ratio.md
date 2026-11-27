@@ -5,46 +5,59 @@ order: 70
 ---
 # AP: Doppler Ratio
 
-**MetaSound category:** `AudioPhysx → Propagation`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Propagation**
 
-Compute a pitch ratio from radial source and listener velocities.
+Calculate a playback pitch multiplier from the motion of the source and listener toward one another.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-doppler-ratio.png -->
 
-## When to use it
+## What actually happens
 
-Manual Doppler control for players or modulation chains not using Dynamic Propagation.
+Doppler shift is the change in perceived pitch caused by relative motion. This node operates on **radial velocity**—the component of motion directly toward or away from the other participant—not the total speed of either object.
 
-## Quick setup
+It outputs a pitch ratio for use elsewhere in the graph. It does not decode or pitch-shift a Wave Asset by itself.
 
-Supply source/listener velocities toward each other and use `Pitch Ratio` to control a compatible playback pitch input.
+## Hear it in a game
 
-## Inputs
+Drive a vehicle past a stationary listener and compare approaching and receding motion. Feed the directional velocity components into the node, then apply its output to a compatible pitch control downstream. Keep the effect moderate for believable engine audio.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Source Toward Listener (m/s)` | Float | Positive means source approaches listener. |
-| `Listener Toward Source (m/s)` | Float | Positive means listener approaches source. |
-| `Speed of Sound (m/s)` | Float | Default 343 m/s. |
+## Build a working graph
 
-## Outputs
+>>> 1. Feed radial source velocity
+Supply source velocity **toward** the listener to `Source Toward Listener (m/s)`.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Pitch Ratio` | Float | Pitch multiplier for playback WITHOUT Dynamic Propagation. |
+>>> 2. Feed listener velocity and sound speed
+Supply listener velocity **toward** the source to `Listener Toward Source (m/s)` and provide the speed of sound.
+>>>
 
-## Behaviour and design notes
+>>> 3. Use the resulting ratio
+Connect the output ratio to the playback/pitch system you actually use.
+>>>
 
-Positive velocity values in the named pins mean moving toward the other party. Do not double-apply with Dynamic Propagation.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+A positive radial velocity here means movement **toward** the other point, according to the pin labels. `Speed of Sound (m/s)` affects the magnitude of the ratio. This node expects metres per second rather than Unreal centimetres per second.
 
-## Testing checklist
+## What the node outputs
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`Pitch Ratio`** · Float — Pitch multiplier for playback WITHOUT Dynamic Propagation.
 
-See [Propagation overview](../../propagation.md) and [Troubleshooting](../../../support/troubleshooting.md).
+## Things to watch for
+
+- Passing an unsigned speed (always positive) erases the distinction between approach and departure.
+- Avoid stacking this full-strength ratio with Dynamic Propagation or Unreal’s own Doppler unless you intentionally want an exaggerated effect.
+
+==- Full input reference
+- **`Source Toward Listener (m/s)`** · *Float* — Positive means source approaches listener.
+- **`Listener Toward Source (m/s)`** · *Float* — Positive means listener approaches source.
+- **`Speed of Sound (m/s)`** · *Float* — Default 343 m/s.
+===
+
+==- Full output reference
+- **`Pitch Ratio`** · Float — Pitch multiplier for playback WITHOUT Dynamic Propagation.
+===
+
+## Continue learning
+
+[Dynamic Propagation](dynamic-propagation.md) works directly on mono audio rather than merely supplying a ratio. Also see the [Propagation overview](../../propagation.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).

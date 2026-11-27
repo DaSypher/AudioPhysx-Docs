@@ -5,52 +5,69 @@ order: 60
 ---
 # AP: Distance Switch (Dynamic)
 
-**MetaSound category:** `AudioPhysx → QoL`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Qol**
 
-Route a trigger to one of several expandable distance bands.
+Route one trigger into an appropriate distance range, without building a large nested Switch graph.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-distance-switch.png -->
 
-## When to use it
+## What actually happens
 
-Different MetaSound branches for close, medium and far perspectives.
+This is a control-flow utility for a distance-based sound design. It evaluates the supplied `Distance (cm)` against expandable ranges and routes an incoming `Play` event to the selected output branch.
 
-## Quick setup
+Unlike Distance Wave Player, this node does **not** select and decode a recording. It leaves audio playback to whichever nodes you connect to its dynamic outputs.
 
-Expand distance range groups and configure start distances, volumes and outputs; trigger `Play`.
+## Hear it in a game
 
-## Inputs
+Connect three range outputs to separate close, medium and far Wave Players. Move the listener across the authored thresholds and trigger `Play`. Only the appropriate branch should fire for the current distance.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Play` | Trigger | Evaluate distance and trigger one range. |
-| `Distance (cm)` | Float | Source-to-listener distance in centimetres. |
-| `Max Distance (cm)` | Float | Maximum distance at which sound can start. |
-| `Start Distance (cm)` | Float | Distance at which this range becomes active. |
-| `Volume` | Float | Volume multiplier for this range. |
+## Build a working graph
 
-## Outputs
+>>> 1. Create the distance bands
+Add the node and expand the desired distance bands.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Play` | Trigger | Triggers when this range is selected. |
-| `Gain` | Float | Volume multiplier for the selected branch. |
-| `Out of Range` | Trigger | Triggered when distance exceeds Max Distance. |
-| `Invalid Ranges` | Trigger | Triggered when range configuration is invalid. |
-| `Selected Index` | Integer | Selected range index, or -1 if rejected. |
+>>> 2. Supply a distance value
+Provide an ascending set of `Start Distance (cm)` values and a `Distance (cm)` input.
+>>>
 
-## Behaviour and design notes
+>>> 3. Route each output to playback
+Connect each branch’s trigger to the corresponding sound or logic chain; use `Max Distance (cm)` and per-band `Volume` where appropriate.
+>>>
 
-This routes triggers and gain controls; it is not an audio player. Set input/output group counts consistently.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+`Distance (cm)` is the tested value. `Start Distance (cm)` specifies each band boundary and `Max Distance (cm)` the outer selection extent. `Volume` gives the associated branch a control value; confirm downstream nodes actually use it.
 
-## Testing checklist
+## What the node outputs
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`Play`** · Trigger — Triggers when this range is selected.
+- **`Gain`** · Float — Volume multiplier for the selected branch.
+- **`Out of Range`** · Trigger — Triggered when distance exceeds Max Distance.
+- **`Invalid Ranges`** · Trigger — Triggered when range configuration is invalid.
+- **`Selected Index`** · Integer — Selected range index, or -1 if rejected.
 
-See [QoL overview](../../qol.md) and [Troubleshooting](../../../support/troubleshooting.md).
+## Things to watch for
+
+- Keep the configured range groups consistent with the output connections after editing a graph.
+- This is a routing node, not a distance attenuation or atmospheric propagation processor.
+
+==- Full input reference
+- **`Play`** · *Trigger* — Evaluate distance and trigger one range.
+- **`Distance (cm)`** · *Float* — Source-to-listener distance in centimetres.
+- **`Max Distance (cm)`** · *Float* — Maximum distance at which sound can start.
+- **`Start Distance (cm)`** · *Float* — Distance at which this range becomes active.
+- **`Volume`** · *Float* — Volume multiplier for this range.
+===
+
+==- Full output reference
+- **`Play`** · Trigger — Triggers when this range is selected.
+- **`Gain`** · Float — Volume multiplier for the selected branch.
+- **`Out of Range`** · Trigger — Triggered when distance exceeds Max Distance.
+- **`Invalid Ranges`** · Trigger — Triggered when range configuration is invalid.
+- **`Selected Index`** · Integer — Selected range index, or -1 if rejected.
+===
+
+## Continue learning
+
+[Distance Wave Player](../playback/distance-wave-player.md) combines band selection with integrated sound playback. Also see the [Qol overview](../../qol.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).

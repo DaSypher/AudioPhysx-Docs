@@ -1,44 +1,42 @@
 ---
-label: "Your first MetaSound"
+label: Your first MetaSound
 icon: play
 order: 80
 ---
 # Your first AudioPhysx MetaSound
 
-In this walkthrough you'll make three recordings play **in order** using `AP: Sequence Wave Player`. Each sound starts once the previous sound has finished—no manual delay values.
+We're going to create a sound that has **three distinct stages**: a click, a mechanical movement, and a final clunk. One `Play` trigger starts the action; AudioPhysx waits for each recording to finish before moving to the next. You won't need Blueprint timers or hand-authored delays.
 
-## 1. Create a MetaSound Source
+## Make the graph
 
-Create a new **MetaSound Source** with a mono output. Open it in the MetaSound editor.
+>>> 1. Create a mono Source
+Create a **MetaSound Source** in the Content Browser, choose a mono output layout and open it. Import three short Wave Assets if you don't already have them.
 
-<!-- IMAGE SLOT: docs/static/images/setup/create-metasound.png -->
+>>> 2. Add the player
+Search `AP: Sequence Wave Player` in the add-node menu. This is in **AudioPhysx → Playback**.
 
-## 2. Add the node
+>>> 3. Fill the slots
+Expand `Sequence Waves` to three inputs. Assign the click, movement and clunk in that order. These are **individual Wave Assets**, not arrays.
 
-Search for **AP: Sequence Wave Player** in `AudioPhysx → Playback`. Add it to the graph.
+>>> 4. Connect the event and audio
+Connect the Source's `On Play` to the node's `Play`, and connect `Out Mono` to the Source's mono audio output.
 
-<!-- IMAGE SLOT: docs/static/images/nodes/node-sequence-wave-player.png -->
-
-## 3. Assign waves
-
-Expand the `Sequence Waves` group to the number of recordings you want. Assign a Wave Asset to each `Wave` slot in the intended order.
-
-## 4. Wire Play, audio and completion
-
-| From | To |
-| --- | --- |
-| MetaSound `On Play` | Sequence player's `Play` |
-| Sequence player's `Out Mono` | MetaSound mono audio output |
-| Sequence player's `On Finished` | MetaSound Source `On Finished` (when appropriate) |
+>>> 5. Handle the end of the source
+If you want the Source to finish when the last recording ends, connect the player's `On Finished` to the Source's completion input. If you later add a tail-generating effect, move completion handling to the last effect.
+>>>
 
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-first-sequence.png -->
 
-## 5. Audition and verify
+## What you should hear
 
-Preview the MetaSound. You should hear each recording sequentially. With `Loop Sequence` enabled the list repeats; without looping it ends after the last valid sound.
+A single Play creates three sounds in order. If you lengthen the middle recording, the final clunk should occur later automatically. If you turn on `Loop Sequence`, the whole pattern starts again; without looping, the player finishes after the final valid slot.
 
-!!!tip
-If you're creating a long-running ambient or interactive source, don't wire `On Finished` in a way that stops the Source before you want it to end.
+!!!tip Try one change
+Replace the final clunk with a different-length recording and audition again. You'll immediately see why this approach is easier than maintaining hand-calculated trigger delays.
 !!!
 
-Next: [Random Sequence Wave Player](../metasound/nodes/playback/random-sequence-wave-player.md) or [Start Loop End Player](../metasound/nodes/playback/start-loop-end.md).
+## When this is the wrong node
+
+If each stage needs to select a *different random take*, use [Random Sequence Wave Player](../metasound/nodes/playback/random-sequence-wave-player.md). If you need shots at fixed RPM while the trigger is held, use [Start Loop End Player](../metasound/nodes/playback/start-loop-end.md).
+
+[Next: Learn triggers and completion](signals-and-completion.md)

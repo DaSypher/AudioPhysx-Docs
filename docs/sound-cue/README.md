@@ -1,16 +1,21 @@
 ---
-label: "Sound Cue nodes — planned"
+visibility: hidden
+label: Sound Cue nodes — planned
 icon: bookmark
 order: 15
 ---
 # Sound Cue support — planned
 
-AudioPhysx's existing source reviewed for these pages implements MetaSound nodes and Blueprint helpers. **Custom Sound Cue `USoundNode` classes are not part of this source package.**
+AudioPhysx currently focuses its native node library on **MetaSounds**. Sound Cue QoL additions are part of the proposed commercial roadmap, but **no custom `USoundNode` implementation is included in the reviewed development baseline**.
 
-The planned Sound Cue direction is focused on quality-of-life selection and routing rather than duplicating MetaSound DSP:
+## Why consider Sound Cue extensions?
 
-- Smart randomized selection with optional repeat controls.
-- Multi-stage randomized sequences.
-- Optional context-driven selection where it adds something beyond Unreal's built-in Sound Cue nodes.
+Sound Cues already contain useful random, modulation, switching and concatenation facilities. A new AudioPhysx node should only be added when it removes substantial graph complexity or improves everyday authoring. Building a second copy of every MetaSound DSP node would add maintenance cost without offering Sound Cue users much benefit.
 
-These features are **not shipped or available yet**. This page will become a reference only after implementation, testing and a verified release.
+The first possible additions are a **Smart Random** control with cohesive selection and repeat behaviour, and a **Random Sequence** that keeps stages in order but chooses variations at each stage. These are concepts, not shipped features.
+
+!!!info Feature availability
+Do not assume the Sound Cue examples described here are available in the current plugin. The navigation and documentation will be updated when an implementation has passed runtime and packaged-build testing.
+!!!
+
+In the meantime, use the [MetaSound Playback tools](../metasound/playback.md) for the equivalent audio workflows, or Unreal's built-in Sound Cue nodes where appropriate.

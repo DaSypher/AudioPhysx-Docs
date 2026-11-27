@@ -5,49 +5,67 @@ order: 80
 ---
 # AP: Acoustic Paths
 
-**MetaSound category:** `AudioPhysx → Acoustics`  
-**Source contract:** Unreal Engine 5.8.4 development source
+**MetaSound · AudioPhysx / Acoustics**
 
-Apply the selected acoustic route: propagation delay and three-band loss from the game-thread path solver.
+Apply the acoustic path chosen by the game-world solver, including travel delay and low/mid/high frequency loss.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-acoustic-paths.png -->
 
-## When to use it
+## What actually happens
 
-Wall and portal acoustics where direct or around-obstacle routing changes audibility.
+The gameplay solver estimates a **selected** acoustic route between source and listener. The result is packed into four floating-point values: `delay milliseconds`, `low-band loss dB`, `mid-band loss dB`, and `high-band loss dB`. This node consumes that array and applies an audible delay and frequency-dependent reduction to the mono input.
 
-## Quick setup
+The key design choice is that it renders **one chosen route**. It does not create two independent copies for direct and around-corner sound, which helps prevent phasey doubling and uncontrolled extra voices.
 
-Connect your mono audio, the compact four-value route array and `Source Finished` from the upstream player.
+## Hear it in a game
 
-## Inputs
+Place a sound on the other side of a wall with a doorway nearby. Compare a clear direct path with an obstructed one and an available around-door route. Observe how the delay and band losses change in the route data, then listen for the difference.
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Audio In` | Audio (mono) | Mono input to propagate. |
-| `Source Finished` | Trigger | Wave Player On Finished; passed through after the path tails. |
-| `Selected Route` | Float Array | Float Array from AP.AcousticRoute.Selected: delay ms, low/mid/high loss dB. Route selection occurs on the game thread. |
-| `Smoothing (ms)` | Float | Smooth path loss and delay changes. |
-| `Delay Capacity (ms)` | Float | Delay buffer capacity allocated ONCE at graph creation. Default 128 ms; raise to 1500 ms only if long cinematic propagation is required. Changes during playback cannot grow the buffer. |
+## Build a working graph
 
-## Outputs
+>>> 1. Connect the original recording
+Feed your existing mono playback into `Audio In`.
+>>>
 
-| Pin | Type | Purpose |
-| --- | --- | --- |
-| `Out Mono` | Audio (mono) | Only the selected, delayed and filtered acoustic path. |
-| `On Finished` | Trigger | Triggered after the longest queued acoustic path tail. |
+>>> 2. Supply the selected route
+Provide the four-value `Selected Route` array, preferably from the Acoustic Path Blueprint/world subsystem integration.
+>>>
 
-## Behaviour and design notes
+>>> 3. Pass through completion
+Connect the Wave Player completion to `Source Finished`, and use this node’s `On Finished` after the propagation tail.
+>>>
 
-The `Selected Route` array is `[delay ms, low loss dB, mid loss dB, high loss dB]`. This node renders one selected path, not separate simultaneous direct/around voices.
+## The controls that matter
 
-> **Units matter:** Pin names indicate metres (`m`), metres per second (`m/s`), centimetres (`cm`), milliseconds (`ms`), decibels (`dB`) and semitones (`st`). Don't convert centimetres to metres unless the target pin expects metres.
+`Smoothing (ms)` reduces abrupt changes in route colour or timing. `Delay Capacity (ms)` allocates the delay buffer when the operator is created: the default is designed for low latency and modest memory use; raising it allows longer delays but increases memory. Changing the pin during playback does not resize the allocated buffer.
 
-## Testing checklist
+## Outputs and completion
 
-1. Test the intended input settings with a valid source recording or signal.
-2. Test zero/empty/invalid inputs where applicable.
-3. Test rapid parameter changes and retriggering where applicable.
-4. Verify output and completion behaviour in a packaged build before relying on the node in shipping content.
+- **`Out Mono`** · Audio (mono) — Only the selected, delayed and filtered acoustic path.
+- **`On Finished`** · Trigger — Triggered after the longest queued acoustic path tail.
 
-See [Acoustics overview](../../acoustics.md) and [Troubleshooting](../../../support/troubleshooting.md).
+!!!tip About finishing sounds
+A trigger that indicates a source has finished is not always the end of **everything audible**. If you add propagation, early reflections or another tail-generating processor downstream, route completion through that final processor before ending your MetaSound Source.
+!!!
+
+## Things to watch for
+
+- Array order matters: `[delay, low, mid, high]`. A wrongly ordered route can turn attenuation into a misleading filter response.
+- If your MetaSound has downstream reverberation or reflections, use the **last audible processor’s** completion output rather than ending the source as soon as the original wave stops.
+
+==- Full input reference
+- **`Audio In`** · *Audio (mono)* — Mono input to propagate.
+- **`Source Finished`** · *Trigger* — Wave Player On Finished; passed through after the path tails.
+- **`Selected Route`** · *Float Array* — Float Array from AP.AcousticRoute.Selected: delay ms, low/mid/high loss dB. Route selection occurs on the game thread.
+- **`Smoothing (ms)`** · *Float* — Smooth path loss and delay changes.
+- **`Delay Capacity (ms)`** · *Float* — Delay buffer capacity allocated ONCE at graph creation. Default 128 ms; raise to 1500 ms only if long cinematic propagation is required. Changes during playback cannot grow the buffer.
+===
+
+==- Full output reference
+- **`Out Mono`** · Audio (mono) — Only the selected, delayed and filtered acoustic path.
+- **`On Finished`** · Trigger — Triggered after the longest queued acoustic path tail.
+===
+
+## Continue learning
+
+[Acoustic path queries](../../../blueprint/acoustic-paths.md) explains how to obtain and publish the path data. Also see the [Acoustics overview](../../acoustics.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).

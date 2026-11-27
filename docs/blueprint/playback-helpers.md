@@ -1,27 +1,36 @@
 ---
-label: "Physical sound playback"
+label: Physical sound playback
 icon: play
 order: 85
 ---
-# Blueprint playback helpers
+# Playback helpers from Blueprint
 
-The public `UAPAudioBlueprintLibrary` exposes these callable operations in the current source:
+You don't need a dedicated audio Actor to use every AudioPhysx feature. The public Blueprint library provides convenient entry points for sounds at world locations and for registering existing audio components with the plugin's managed update system.
 
-| Display name | Purpose / primary inputs |
-| --- | --- |
-| `AP: Play Physical Sound` | Play `USoundBase` at a location and source rotation, with optional obstruction query and volume scaling. |
-| `AP: Play Physical Impact` | Play a sound using hit location data, with optional obstruction query. |
-| `AP: Register Audio Component` | Register an existing audio component for managed AudioPhysx parameter updates; choose whether to trace obstruction. |
-| `AP: Unregister Audio Component` | Remove that audio component from managed updates. |
-| `AP: Set World Environment` | Update temperature, relative humidity and pressure for the AudioPhysx world context. |
+## Play a sound at a world position
 
-## Typical flow
+**`AP: Play Physical Sound`** accepts a sound asset, world location and source rotation, with volume and optional acoustic/obstruction behaviour exposed by its Blueprint function. This is suitable when the game already knows where an event happened, such as a door slam or explosion.
 
-1. Prepare a MetaSound Source using the relevant AudioPhysx interface/parameters.
-2. Supply a `USoundBase` and world context to the Blueprint helper.
-3. Pass location, rotation or an `FHitResult` from your own gameplay system.
-4. Verify the sound and any propagated acoustic parameters in standalone play.
+**`AP: Play Physical Impact`** is the related convenience operation when you already have an `FHitResult`. It can use hit-location information rather than requiring you to reconstruct the position by hand.
+
+Neither operation creates a sound recording. You still supply a `USoundBase`, usually a prepared MetaSound Source or other Unreal sound asset.
 
 <!-- IMAGE SLOT: docs/static/images/blueprint/bp-play-physical-sound.png -->
 
-> These functions don't produce sound recordings automatically; the supplied sound asset is still required. Some rely on world registration/configuration and may behave differently if no listener or audio device is available.
+## Keep an existing Audio Component updated
+
+**`AP: Register Audio Component`** associates an existing `UAudioComponent` with managed AudioPhysx parameter updates. The registration call allows obstruction tracing to be enabled or disabled. **`AP: Unregister Audio Component`** removes it from that management when it is no longer required.
+
+This is useful for persistent emitters, where creating a new sound for every update would be inappropriate. Registration should follow the component's lifetime so the world subsystem does not keep attempting work on an irrelevant emitter.
+
+## Set the world environment
+
+**`AP: Set World Environment`** supplies temperature, humidity and pressure values for the AudioPhysx world context. These are used by relevant acoustic processing paths; they do not, on their own, change every sound in the game.
+
+## A reasonable first test
+
+Create a mono MetaSound Source with a simple Wave Player, call `AP: Play Physical Sound` at a known location, and verify that it is audible with expected spatialization. Once basic playback works, enable acoustic processing and compare with an unobstructed control sound.
+
+!!!warning Availability matters
+The helper requires a valid world/audio environment and a supported sound asset. If you're debugging a silent sound, test the MetaSound directly before assuming the Blueprint's acoustic query is at fault.
+!!!
