@@ -53,7 +53,6 @@
 
 ### QoL
 
-- [QoL: fewer repeated control graphs](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/readme.md): Not everything in AudioPhysx needs to process audio samples. Many MetaSounds become difficult to maintain because the same housekeeping logic is rebuilt
 - [AP: Float Smoother](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/float-smoother.md): AudioPhysx / QoL · Unreal Engine 5.8.4 development source
 - [AP: Trigger Cooldown](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/trigger-cooldown.md): AudioPhysx / QoL · Unreal Engine 5.8.4 development source
 - [AP: Trigger Probability](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/trigger-probability.md): AudioPhysx / QoL · Unreal Engine 5.8.4 development source

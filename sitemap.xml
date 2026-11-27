@@ -46,9 +46,6 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/</loc>
-  </url>
-  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol/</loc>
   </url>
   <url>
@@ -70,6 +67,9 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/blueprint/flyby/</loc>
   </url>
   <url>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/blueprint/acoustic-paths/</loc>
+  </url>
+  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/sequence-wave-player/</loc>
   </url>
   <url>
@@ -79,7 +79,7 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/start-loop-end/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/blueprint/acoustic-paths/</loc>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/material-footsteps/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/distance-wave-player/</loc>
@@ -98,9 +98,6 @@
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/automatic-weapon/</loc>
-  </url>
-  <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/material-footsteps/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/physmat-wave-player/</loc>
