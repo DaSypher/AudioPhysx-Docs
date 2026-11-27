@@ -1,24 +1,43 @@
 # Troubleshooting
 
-## Plugin fails to compile after replacing source
+## No AudioPhysx nodes appear
 
-- Verify the editor was closed and Live Coding is disabled.
-- Make sure the old source folder was **replaced**, not merged; stale `.cpp` files can cause duplicate registrations or symbols.
-- If generated-header errors appear following reflection declaration changes, delete generated plugin/project `Intermediate` outputs and rebuild cleanly.
-- Check the exact first compiler error, not only the final UnrealBuildTool failure message.
+1. Check **Edit → Plugins** and verify the plugin is enabled.
+2. Confirm that the installed plugin contains a `.uplugin` descriptor and supported compiled module.
+3. Restart Unreal Editor after enabling/rebuilding.
+4. Search the MetaSound add-node menu for `AP:` and check the `AudioPhysx` categories.
 
-## Node not visible in MetaSound
+## Node exists but produces silence
 
-- Check AudioPhysx is enabled and the correct editor target built successfully.
-- Search using the full name, such as `AP: Start Loop End Player`.
-- Restart the editor when dynamic-interface configuration changes.
+- Confirm a playable Wave Asset is assigned and not an empty array.
+- Check trigger wiring and connect `Out Mono` to an active audio output.
+- Verify attenuation, distance controls and any required material/route inputs.
+- Check whether `On Rejected` is being emitted (where available).
 
-## Sequence plays silence or ends unexpectedly
+## Sequencer doesn't finish
 
-- Verify the Wave Asset inputs are assigned, cooked and playable in the target project.
-- Test simple mono PCM assets first, then compressed/streamed formats.
-- Check the player `Stop`/`Stop Firing` control flow and that the MetaSound itself is not stopped prematurely.
+- `Loop Sequence` may be enabled.
+- `Start Loop End Player` requires `Stop Firing` to request release.
+- A downstream delay or reflection node may have an additional audible tail.
 
-## Need help?
+## Dynamic pins changed or broke a graph
 
-> TODO: Add a verified support contact method and expected response policy. Do not promise future engine-version updates unless they can be delivered.
+- Back up the MetaSound asset before changing global route configurations.
+- For `Surface Wave Player`, review Surface Audio settings, restart and reconnect affected pins.
+- For expandable input/output groups, confirm the current instance counts.
+
+## C++ build errors
+
+1. Disable Live Coding and close the Editor.
+2. Read the **first actual compiler error**, not the last cascade error.
+3. Verify supported engine/toolchain and source package version.
+4. If reflected headers changed or compiler output is stale, clean plugin `Binaries/` and `Intermediate/` before regenerating/rebuilding.
+5. Don't merge two versions of the same implementation file into `Source`.
+
+## Packaged game differs from Editor
+
+Check cooked Wave Assets, AudioPhysx module loading, asset references, concurrency and audio device initialization in a **Development package**, followed by Shipping verification. Editor preview alone is insufficient.
+
+## Report a reproducible problem
+
+Include UE version, plugin version, operating system, exact input settings, expected result, actual result, log and a minimal graph screenshot.

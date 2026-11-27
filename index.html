@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849091902704">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092748308">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>AudioPhysx</title>
     <meta name="title" content="AudioPhysx">
-    <meta name="description" content="Advanced audio tools for Unreal Engine — MetaSound playback, acoustic processing, and Blueprint utilities.">
+    <meta name="description" content="Build more expressive game audio with less MetaSound wiring.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/">
     <meta property="og:title" content="AudioPhysx">
-    <meta property="og:description" content="Advanced audio tools for Unreal Engine — MetaSound playback, acoustic processing, and Blueprint utilities.">
+    <meta property="og:description" content="Build more expressive game audio with less MetaSound wiring.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/">
     <meta name="twitter:title" content="AudioPhysx">
-    <meta name="twitter:description" content="Advanced audio tools for Unreal Engine — MetaSound playback, acoustic processing, and Blueprint utilities.">
+    <meta name="twitter:description" content="Build more expressive game audio with less MetaSound wiring.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/readme.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="resources/css/retype.css?v=4.6.0.849091902704" rel="stylesheet">
+    <link href="resources/css/retype.css?v=4.6.0.849092748308" rel="stylesheet">
 
-    <script data-cfasync="false" src="resources/js/config.js?v=4.6.0.849091902704" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="resources/js/config.js?v=4.6.0.849092748308" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="resources/js/lunr.js?v=4.6.0.849091902704" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="resources/js/lunr.js?v=4.6.0.849092748308" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,29 +135,87 @@
 
                 <!-- Page content  -->
 <h1 id="audiophysx">AudioPhysx</h1>
-<p><strong>Advanced audio tools for Unreal Engine — MetaSound playback, acoustic processing, and Blueprint utilities.</strong></p>
-<p>Welcome to the AudioPhysx documentation. This draft site is being prepared for the Fab release and is not yet an assurance that every feature has completed packaged-game validation.</p>
+<p><strong>Build more expressive game audio with less MetaSound wiring.</strong></p>
+<p>AudioPhysx is an Unreal Engine C++ audio toolkit focused on <strong>sample playback, procedural acoustic behaviour, physical-material routing and Blueprint audio integration</strong>. It provides native MetaSound nodes intended to simplify common game-audio tasks while keeping the important sound-design controls exposed.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-info"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-info" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>Development documentation</h5>
+<p>This site documents the current AudioPhysx <strong>UE5.8.4 development source</strong>, including the latest Start Loop End RPM change. The commercial release and supported-platform matrix are not yet finalized. Review <a href="support/compatibility/">compatibility</a> before using these pages as a release guarantee.</p>
+        </div>
+    </div>
+</div>
+<!-- HERO IMAGE SLOT: docs/static/images/brand/hero-audiophysx.png -->
 <h2 id="start-here">Start here</h2>
+<ol>
+<li><a href="getting-started/installation/">Install AudioPhysx</a> into your Unreal Engine project.</li>
+<li><a href="getting-started/first-metasound/">Create your first AudioPhysx MetaSound</a>.</li>
+<li>Explore the <a href="metasound/">MetaSound node catalogue</a> or <a href="blueprint/">Blueprint integrations</a>.</li>
+<li>Follow a <a href="examples/">practical recipe</a>.</li>
+</ol>
+<h2 id="what-can-audiophysx-do">What can AudioPhysx do?</h2>
+<retype-table copy-text="| Playback and variation | Acoustic behaviour | Game integration |
+| --- | --- | --- |
+| Random, weighted and shuffle-bag selection | Acoustic paths and transmission | Blueprint playback helpers |
+| Sequence and random-sequence players | Dynamic propagation and Doppler control | Projectile flyby path calculations |
+| Layered one-shots and intro/loop/outro | Atmospheric absorption and reflections | Acoustic components and materials |
+| RPM-driven overlapping middle shots | Source directivity and impact shaping | Material- and surface-aware sounds |">
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Playback and variation</th>
+<th>Acoustic behaviour</th>
+<th>Game integration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Random, weighted and shuffle-bag selection</td>
+<td>Acoustic paths and transmission</td>
+<td>Blueprint playback helpers</td>
+</tr>
+<tr>
+<td>Sequence and random-sequence players</td>
+<td>Dynamic propagation and Doppler control</td>
+<td>Projectile flyby path calculations</td>
+</tr>
+<tr>
+<td>Layered one-shots and intro/loop/outro</td>
+<td>Atmospheric absorption and reflections</td>
+<td>Acoustic components and materials</td>
+</tr>
+<tr>
+<td>RPM-driven overlapping middle shots</td>
+<td>Source directivity and impact shaping</td>
+<td>Material- and surface-aware sounds</td>
+</tr>
+</tbody>
+</table>
+</div>
+</retype-table>
+<h2 id="find-your-tool">Find your tool</h2>
 <ul>
-<li><a href="getting-started/installation/">Installation and first project</a></li>
-<li><a href="getting-started/first-metasound/">First MetaSound</a></li>
-<li><a href="metasound/playback/">Playback node reference</a></li>
-<li><a href="metasound/acoustics/">Acoustics and propagation</a></li>
-<li><a href="blueprint/flyby/">Flyby Blueprint integration</a></li>
-<li><a href="support/troubleshooting/">Troubleshooting</a></li>
-<li><a href="support/compatibility/">Compatibility</a></li>
+<li><a href="metasound/playback/">Playback nodes</a> — randomized sounds, sequences, layers and specialized players.</li>
+<li><a href="metasound/acoustics/">Acoustics nodes</a> — material transmission, paths, impact shaping, reflections and directivity.</li>
+<li><a href="metasound/propagation/">Propagation nodes</a> — delay, air absorption and Doppler-inspired processing.</li>
+<li><a href="metasound/qol/">QoL nodes</a> — control smoothing, trigger probability, cooldowns and routing.</li>
+<li><a href="blueprint/">Blueprint integration</a> — world-aware playback, flyby and acoustic querying.</li>
 </ul>
-<h2 id="key-capabilities">Key capabilities</h2>
-<ul>
-<li>Random, weighted, shuffled, layered and sequential Wave playback.</li>
-<li>Intro/loop/outro playback, including optional RPM-driven overlapping middle shots.</li>
-<li>Acoustic modelling helpers covering path transmission, propagation and directivity.</li>
-<li>Flyby calculation and playback tools.</li>
-<li>Trigger and control utilities for MetaSounds.</li>
-</ul>
-<blockquote>
-<p><strong>Status:</strong> Documentation draft based on the latest AudioPhysx source package available when this starter was created. Validate node behaviour and supported platforms before publishing.</p>
-</blockquote>
+<h2 id="a-note-about-realism">A note about realism</h2>
+<p>AudioPhysx combines physically motivated calculations with perceptual approximations. A believable game-audio result is the goal; not every node is a complete physical simulation. Each reference page explains the data or controls it expects.</p>
+<hr>
+<p><a href="support/compatibility/">Compatibility</a> · <a href="support/troubleshooting/">Troubleshooting</a> · <a href="support/changelog/">Changelog</a></p>
 
                 
                 <!-- Required only on API pages -->
@@ -170,10 +228,10 @@
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l rounded-r-lg transition-colors duration-150 relative hover:z-5" href="blueprint/flyby/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l rounded-r-lg transition-colors duration-150 relative hover:z-5" href="getting-started/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Flyby integration in Blueprint</span>
+                                <span class="block mt-1">Getting started</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>

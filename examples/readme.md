@@ -1,15 +1,12 @@
-# Examples and demos
+# Examples and recipes
 
-## Priority examples to capture
+These are small, task-oriented walkthroughs meant to show a useful result before you explore the complete node catalogue.
 
-| Example | What buyers should hear |
-| --- | --- |
-| Automatic weapon | RPM changes without changing recording length; natural stop-to-tail transition. |
-| Sequential playback | Three distinct recordings play fully in order. |
-| Random sequence | Each ordered step randomly chooses one of several alternatives. |
-| Flyby | Subsonic and supersonic near misses at different distances. |
-| Acoustic routing | Audible change between clear and obstructed/alternate paths. |
+1. [Randomized one-shot sounds](randomized-one-shot.md)
+2. [Automatic weapon with RPM](automatic-weapon.md)
+3. [Multi-stage sound variation](random-sequence.md)
+4. [Material-dependent footsteps](material-footsteps.md)
+5. [Projectile near-miss flyby](projectile-flyby.md)
+6. [Basic acoustic obstruction](acoustic-obstruction.md)
 
-Each demo should include a short video, the MetaSound graph, a real-time audio capture and concise setup instructions.
-
-> TODO: Replace this planning page with final example project assets and videos before release.
+Each recipe explains inputs, a minimal graph, the expected result and what you should listen for.

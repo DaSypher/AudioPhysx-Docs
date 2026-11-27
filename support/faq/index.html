@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849091902704">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092748308">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -13,7 +13,7 @@
     <!-- Primary Meta Tags -->
     <title>Frequently asked questions</title>
     <meta name="title" content="Frequently asked questions">
-    <meta name="description" content="The flyby path helpers are designed to work from path and speed data supplied by the game, without requiring Chaos rigid-body simulation. Other physics-related features may use engine queries depending on the setup.">
+    <meta name="description" content="No. It extends MetaSounds and game-audio workflows. Unreal's own attenuation, concurrency, mixer, audio components and Sound Cues remain part of a typical project.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/support/faq/">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/support/faq/">
     <meta property="og:title" content="Frequently asked questions">
-    <meta property="og:description" content="The flyby path helpers are designed to work from path and speed data supplied by the game, without requiring Chaos rigid-body simulation. Other physics-related features may use engine queries depending on the setup.">
+    <meta property="og:description" content="No. It extends MetaSounds and game-audio workflows. Unreal's own attenuation, concurrency, mixer, audio components and Sound Cues remain part of a typical project.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
@@ -31,18 +31,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/support/faq/">
     <meta name="twitter:title" content="Frequently asked questions">
-    <meta name="twitter:description" content="The flyby path helpers are designed to work from path and speed data supplied by the game, without requiring Chaos rigid-body simulation. Other physics-related features may use engine queries depending on the setup.">
+    <meta name="twitter:description" content="No. It extends MetaSounds and game-audio workflows. Unreal's own attenuation, concurrency, mixer, audio components and Sound Cues remain part of a typical project.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/support/faq.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849091902704" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849092748308" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849091902704" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092748308" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849091902704" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092748308" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -135,12 +135,22 @@
 
                 <!-- Page content  -->
 <h1 id="frequently-asked-questions">Frequently asked questions</h1>
-<h2 id="does-audiophysx-require-chaos">Does AudioPhysx require Chaos?</h2>
-<p>The flyby path helpers are designed to work from path and speed data supplied by the game, without requiring Chaos rigid-body simulation. Other physics-related features may use engine queries depending on the setup.</p>
-<h2 id="can-sound-cues-use-these-metasound-nodes">Can Sound Cues use these MetaSound nodes?</h2>
-<p>No. The MetaSound nodes live inside MetaSound graphs. Dedicated Sound Cue QoL nodes are planned separately and are not yet part of this source version.</p>
-<h2 id="are-future-unreal-engine-versions-guaranteed">Are future Unreal Engine versions guaranteed?</h2>
-<p>No. Native code plugins must be tested and submitted for the specific engine versions advertised.</p>
+<h2 id="is-audiophysx-a-replacement-for-unreal-audio">Is AudioPhysx a replacement for Unreal audio?</h2>
+<p>No. It extends MetaSounds and game-audio workflows. Unreal&#x27;s own attenuation, concurrency, mixer, audio components and Sound Cues remain part of a typical project.</p>
+<h2 id="do-i-need-chaos-physics">Do I need Chaos physics?</h2>
+<p>No. The flyby path helpers use supplied positions and speed; the acoustic/material tools can use Blueprint or C++ data provided by your game. Some integrations use world traces or primitive components, but not a bespoke Chaos rigid-body simulation.</p>
+<h2 id="does-every-node-create-audio">Does every node create audio?</h2>
+<p>No. Playback nodes output recordings; DSP nodes modify existing audio; utility nodes shape triggers/controls; Blueprint helpers connect game-world information.</p>
+<h2 id="why-is-out-mono-used-so-often">Why is <code translate="no" v-pre>Out Mono</code> used so often?</h2>
+<p>Many nodes deliberately produce mono audio to leave source spatialization and further processing to the MetaSound Source and Unreal audio pipeline.</p>
+<h2 id="is-on-finished-triggered-when-i-stop-a-wave-player">Is <code translate="no" v-pre>On Finished</code> triggered when I stop a Wave Player?</h2>
+<p>Not necessarily. On several players, an explicit <code translate="no" v-pre>Stop</code> cancels playback without the natural completion event. Consult that player&#x27;s reference.</p>
+<h2 id="does-changing-acoustic-physical-materials-change-existing-recording-assets">Does changing Acoustic Physical Materials change existing recording assets?</h2>
+<p>No. Material parameters influence routing/evaluation or sound-selection logic. They don&#x27;t destructively edit imported Wave Assets.</p>
+<h2 id="does-audiophysx-include-sound-cue-nodes">Does AudioPhysx include Sound Cue nodes?</h2>
+<p>Not in the development source represented by this documentation. Sound Cue quality-of-life extensions are planned and should not be advertised as included until shipped.</p>
+<h2 id="will-it-work-in-unreal-engine-6">Will it work in Unreal Engine 6?</h2>
+<p>No future UE6 compatibility claim has been verified or promised. Check the supported engine matrix for the version you purchase.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -150,20 +160,20 @@
             
                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                     <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../support/compatibility/">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../support/troubleshooting/">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Compatibility and support</span>
+                                <span class="block mt-1">Troubleshooting</span>
                             </span>
                         </a>
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../support/troubleshooting/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../support/compatibility/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Troubleshooting</span>
+                                <span class="block mt-1">Compatibility</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>
@@ -207,6 +217,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Frequently asked questions", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/support/faq.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "FAQ", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/support/faq.md" }</script>
 </body>
 </html>

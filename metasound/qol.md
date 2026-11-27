@@ -1,10 +1,19 @@
-# QoL nodes
+# QoL
 
-- AP: Float Smoother
-- AP: Trigger Cooldown
-- AP: Trigger Probability
-- AP: Distance Switch (Dynamic)
+These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.
 
-These are utility nodes for everyday graph building. Prefer existing Unreal nodes when they already solve the same problem with fewer steps.
+| Node | Purpose |
+| --- | --- |
+| [AP: Distance Switch (Dynamic)](nodes/qol/distance-switch.md) | Route a trigger to one of several expandable distance bands. |
+| [AP: Float Smoother](nodes/qol/float-smoother.md) | Apply independent rise and fall smoothing to a floating-point control value. |
+| [AP: Trigger Cooldown](nodes/qol/trigger-cooldown.md) | Let triggers through only when a configured cooldown has elapsed. |
+| [AP: Trigger Probability](nodes/qol/trigger-probability.md) | Allow or reject incoming triggers according to a configurable probability. |
 
-> TODO: Capture the full pin list for each of these four tools and include an example graph that a new user can reproduce in under five minutes.
+## How to choose
+
+- **Route triggers by distance:** Distance Switch (Dynamic).
+- **Avoid sharp parameter changes:** Float Smoother.
+- **Limit trigger rates:** Trigger Cooldown.
+- **Occasional/random events:** Trigger Probability.
+
+For a reproducible demonstration, start with the [first MetaSound tutorial](../getting-started/first-metasound.md).

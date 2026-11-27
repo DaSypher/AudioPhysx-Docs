@@ -1,21 +1,38 @@
-# Installation
+# Installing AudioPhysx
 
-## Prerequisites
+The exact installation method depends on whether you received the finished Fab code plugin or a private development source build.
 
-- An Unreal Engine installation compatible with the **specific AudioPhysx package** you downloaded.
-- The AudioPhysx code plugin purchased through Fab, or its development build from the author.
+## For a Fab plugin installation
 
-## Install and enable
+1. Obtain the AudioPhysx plugin for a **supported engine version** through Fab/Epic's plugin installation flow.
+2. Open your project and go to **Edit → Plugins**.
+3. Search for **AudioPhysx**, enable it if needed and restart the editor when requested.
+4. Open a MetaSound Source and search for `AP:` or `AudioPhysx` in the add-node menu.
 
-1. Install the plugin through Fab using its supported installation workflow, or place the distributed plugin in your Unreal project's `Plugins/AudioPhysx/` folder if using a source distribution.
-2. Open Unreal Editor, go to **Edit → Plugins**, and check that AudioPhysx is enabled.
-3. Restart the editor if requested.
-4. Create or open a MetaSound asset and search the node palette for `AudioPhysx`.
+!!!warning Current status
+These steps describe the intended customer workflow. The Fab distribution has not been verified here. Do not claim an engine or platform is supported until you have tested the final packaged plugin.
+!!!
 
-If compiling a source distribution, match the supported engine/toolchain combination and use a full Editor build. Do not copy stale `Binaries` or `Intermediate` from a different machine.
+## For a source distribution
 
-## Next steps
+1. Close Unreal Editor and disable Live Coding.
+2. Put the **complete plugin directory** (including its `.uplugin` descriptor) in `YourProject/Plugins/AudioPhysx/`.
+3. Regenerate project files if required, and build the Editor target with the supported toolchain.
+4. Reopen Unreal Editor and confirm the nodes appear.
 
-Follow the [first MetaSound example](first-metasound.md).
+Do **not** copy a `Source` ZIP by itself and expect a working plugin: a distributable code plugin also needs its descriptor and appropriate packaging metadata.
 
-> TODO: Before publishing, verify these installation steps against a **fresh Blueprint-only project** and an actual Fab-installed build. Add screenshots for Windows, and document other platforms only if tested.
+## Check the installation
+
+Create a new MetaSound Source and confirm you can add **AP: Random Wave Player**, connect a wave array and play a sample. See [Your first MetaSound](first-metasound.md).
+
+## Typical installation problems
+
+| Symptom | First check |
+| --- | --- |
+| AudioPhysx doesn't appear in Plugins | Plugin directory structure and `.uplugin` presence |
+| Node missing in MetaSound | Plugin enabled, editor restarted, rebuild completed |
+| C++ source fails to compile | Match engine version and platform/toolchain, check first compiler error |
+| Old node pins or registration errors | Close editor, perform clean rebuild without stale plugin intermediates |
+
+[More troubleshooting](../support/troubleshooting.md)

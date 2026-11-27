@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="turbo-root" content="/AudioPhysx-Docs">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849091902704">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.849092748308">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>QoL nodes</title>
-    <meta name="title" content="QoL nodes">
-    <meta name="description" content="AP: Float Smoother">
+    <title>QoL</title>
+    <meta name="title" content="QoL">
+    <meta name="description" content="These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol/">
@@ -22,27 +22,27 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol/">
-    <meta property="og:title" content="QoL nodes">
-    <meta property="og:description" content="AP: Float Smoother">
+    <meta property="og:title" content="QoL">
+    <meta property="og:description" content="These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.">
     <meta property="og:site_name" content="AudioPhysx">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol/">
-    <meta name="twitter:title" content="QoL nodes">
-    <meta name="twitter:description" content="AP: Float Smoother">
+    <meta name="twitter:title" content="QoL">
+    <meta name="twitter:description" content="These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.849091902704" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.849092748308" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849091902704" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.849092748308" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849091902704" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.849092748308" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -134,17 +134,51 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="qol-nodes">QoL nodes</h1>
+<h1 id="qol">QoL</h1>
+<p>These tools shape audio behaviour using physically inspired processing, author-controlled parameters or timing logic.</p>
+<retype-table copy-text="| Node | Purpose |
+| --- | --- |
+| [AP: Distance Switch (Dynamic)](nodes/qol/distance-switch.md) | Route a trigger to one of several expandable distance bands. |
+| [AP: Float Smoother](nodes/qol/float-smoother.md) | Apply independent rise and fall smoothing to a floating-point control value. |
+| [AP: Trigger Cooldown](nodes/qol/trigger-cooldown.md) | Let triggers through only when a configured cooldown has elapsed. |
+| [AP: Trigger Probability](nodes/qol/trigger-probability.md) | Allow or reject incoming triggers according to a configurable probability. |">
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Node</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../nodes/qol/distance-switch/">AP: Distance Switch (Dynamic)</a></td>
+<td>Route a trigger to one of several expandable distance bands.</td>
+</tr>
+<tr>
+<td><a href="../nodes/qol/float-smoother/">AP: Float Smoother</a></td>
+<td>Apply independent rise and fall smoothing to a floating-point control value.</td>
+</tr>
+<tr>
+<td><a href="../nodes/qol/trigger-cooldown/">AP: Trigger Cooldown</a></td>
+<td>Let triggers through only when a configured cooldown has elapsed.</td>
+</tr>
+<tr>
+<td><a href="../nodes/qol/trigger-probability/">AP: Trigger Probability</a></td>
+<td>Allow or reject incoming triggers according to a configurable probability.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</retype-table>
+<h2 id="how-to-choose">How to choose</h2>
 <ul>
-<li>AP: Float Smoother</li>
-<li>AP: Trigger Cooldown</li>
-<li>AP: Trigger Probability</li>
-<li>AP: Distance Switch (Dynamic)</li>
+<li><strong>Route triggers by distance:</strong> Distance Switch (Dynamic).</li>
+<li><strong>Avoid sharp parameter changes:</strong> Float Smoother.</li>
+<li><strong>Limit trigger rates:</strong> Trigger Cooldown.</li>
+<li><strong>Occasional/random events:</strong> Trigger Probability.</li>
 </ul>
-<p>These are utility nodes for everyday graph building. Prefer existing Unreal nodes when they already solve the same problem with fewer steps.</p>
-<blockquote>
-<p>TODO: Capture the full pin list for each of these four tools and include an example graph that a new user can reproduce in under five minutes.</p>
-</blockquote>
+<p>For a reproducible demonstration, start with the <a href="../../getting-started/first-metasound/">first MetaSound tutorial</a>.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -164,10 +198,10 @@
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../support/changelog/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../metasound/interfaces/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Changelog</span>
+                                <span class="block mt-1">Interfaces and external parameters</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>
@@ -211,6 +245,6 @@
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "QoL nodes", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/metasound/qol.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "QoL", level: 2, icon: "file", hasPrism: false, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/metasound/qol.md" }</script>
 </body>
 </html>
