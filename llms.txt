@@ -1,0 +1,33 @@
+﻿# AudioPhysx
+
+> Advanced audio tools for Unreal Engine — MetaSound playback, acoustic processing, and Blueprint utilities.
+
+- [AudioPhysx](https://DaSypher.github.io/AudioPhysx-Docs/readme.md): AudioPhysx
+- [Examples and demos](https://DaSypher.github.io/AudioPhysx-Docs/examples/readme.md): Example
+- [Sound Cue nodes](https://DaSypher.github.io/AudioPhysx-Docs/sound-cue/readme.md): Planned for a future AudioPhysx release. Not currently included in the audited C++ plugin source.
+
+## Blueprint
+
+- [Flyby integration in Blueprint](https://DaSypher.github.io/AudioPhysx-Docs/blueprint/flyby.md): The AudioPhysx flyby helpers are designed to accept projectile-path information without requiring Chaos physics simulation.
+
+## Getting started
+
+- [Installation](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/installation.md): An Unreal Engine installation compatible with the specific AudioPhysx package you downloaded.
+- [Your first AudioPhysx MetaSound](https://DaSypher.github.io/AudioPhysx-Docs/getting-started/first-metasound.md): This example uses AP: Sequence Wave Player to play multiple recordings one after another.
+
+## Metasound
+
+- [Acoustics](https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics.md): Current acoustics-oriented nodes include:
+- [AP: Flyby Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/flyby.md): Category: AudioPhysx → Playback
+- [AP: Random Sequence Wave Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/random-sequence.md): Category: AudioPhysx → Playback
+- [AP: Start Loop End Player](https://DaSypher.github.io/AudioPhysx-Docs/metasound/start-loop-end.md): Category: AudioPhysx → Playback
+- [Playback nodes](https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback.md): AudioPhysx includes several playback patterns. Select the simplest one that fits the sound design; do not use a complex multi-voice player when a single Wave Player is enough.
+- [Propagation](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation.md): Current propagation nodes include:
+- [QoL nodes](https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol.md): AP: Float Smoother
+
+## Support
+
+- [Changelog](https://DaSypher.github.io/AudioPhysx-Docs/support/changelog.md): MetaSound playback and QoL toolkit.
+- [Compatibility and support](https://DaSypher.github.io/AudioPhysx-Docs/support/compatibility.md): Item
+- [Frequently asked questions](https://DaSypher.github.io/AudioPhysx-Docs/support/faq.md): The flyby path helpers are designed to work from path and speed data supplied by the game, without requiring Chaos rigid-body simulation. Other physics-related features may use engine queries depending on the setup.
+- [Troubleshooting](https://DaSypher.github.io/AudioPhysx-Docs/support/troubleshooting.md): Verify the editor was closed and Live Coding is disabled.
