@@ -45,7 +45,6 @@
 
 ### Propagation
 
-- [Propagation: when sound takes time to reach us](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/readme.md): Propagation concerns how a sound changes while travelling from its source to the listener. In the real world, an explosion heard at a great distance arrives after its flash, and a moving source can exhibit Doppler shift.
 - [AP: Distance Delay](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/distance-delay.md): AudioPhysx / Propagation · Unreal Engine 5.8.4 development source
 - [AP: Dynamic Propagation](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/dynamic-propagation.md): AudioPhysx / Propagation · Unreal Engine 5.8.4 development source
 - [AP: Doppler Ratio](https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/doppler-ratio.md): AudioPhysx / Propagation · Unreal Engine 5.8.4 development source

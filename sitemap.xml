@@ -43,9 +43,6 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/support/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/</loc>
-  </url>
-  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation/</loc>
   </url>
   <url>
@@ -88,6 +85,9 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/distance-wave-player/</loc>
   </url>
   <url>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/surface-wave-player/</loc>
+  </url>
+  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/blueprint/playback-helpers/</loc>
   </url>
   <url>
@@ -104,9 +104,6 @@
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/physmat-wave-player/</loc>
-  </url>
-  <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/surface-wave-player/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/flyby-wave-player/</loc>
@@ -151,13 +148,13 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/dynamic-propagation/</loc>
   </url>
   <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/doppler-ratio/</loc>
-  </url>
-  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/qol-nodes/stereo-to-mono/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/support/faq/</loc>
+  </url>
+  <url>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/doppler-ratio/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/atmosphere-absorption/</loc>
