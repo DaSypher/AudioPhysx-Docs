@@ -1,28 +1,23 @@
 #!/usr/bin/env python3
-"""Optional Retype pre-build step. Only activates image links when the file is present.
-
-  - name: Activate screenshot references
-    run: python3 scripts/activate_screenshots.py
-
-Run after actions/checkout and before retypeapp/action-build in your existing workflow.
+"""Make screenshot comments visible only when the corresponding image exists.
+Run between checkout and Retype build in GitHub Actions.
 """
 from pathlib import Path
-import re,os
-
+import os, re
 root=Path(__file__).resolve().parents[1]
-image_pattern=re.compile(r'<!--\s*(?:IMAGE SLOT|HERO IMAGE SLOT):\s*(docs/static/images/[a-zA-Z0-9_./-]+)\s*-->')
+site=root/"site"
+pattern=re.compile(r'<!--\s*(?:IMAGE SLOT|HERO IMAGE SLOT):\s*((?:docs|site)/static/images/[A-Za-z0-9_./-]+)\s*-->')
 activated=0
-for page in (root/'docs').rglob('*.md'):
+for page in site.rglob('*.md'):
     before=page.read_text(encoding='utf-8')
-    def replace(match):
+    def insert(match):
         global activated
-        f=root/match.group(1)
-        if not f.is_file():return match.group(0)
+        target=root/match.group(1)
+        if not target.is_file():return match.group(0)
         activated+=1
-        # Relative paths keep working even when GitHub Pages is hosted under /repo-name/.
-        href=os.path.relpath(f,page.parent).replace(os.sep,'/')
-        alt=f.stem.replace('-',' ').title()+' — AudioPhysx'
+        href=os.path.relpath(target,page.parent).replace(os.sep,'/')
+        alt=target.stem.replace('-', ' ').title()+' — AudioPhysx'
         return f'![{alt}]({href})'
-    after=image_pattern.sub(replace,before)
+    after=pattern.sub(insert,before)
     if after!=before:page.write_text(after,encoding='utf-8')
-print(f'Activated {activated} image references; missing assets remain hidden comments.')
+print(f'Activated {activated} image references. Missing images remain invisible.')
