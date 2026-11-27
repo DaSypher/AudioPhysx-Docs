@@ -1,26 +1,21 @@
 ---
 label: "QoL node reference"
 icon: tools
-order: 90
+order: 70
 ---
-# QoL reference
 
-These utilities help manage triggers and smooth the values feeding other nodes.
+# QoL nodes
 
-### [AP: Distance Switch (Dynamic)](distance-switch.md)
+These utilities streamline graph control and channel routing. Most manipulate events or Float values rather than waveform data. Stereo to Mono is the exception: it deliberately converts left and right audio into one channel at the point where the sound designer asks for that conversion.
 
-Route one trigger into an appropriate distance range, without building a large nested Switch graph.
+**[AP: Float Smoother](float-smoother.md)** — Turn abrupt control changes into more natural transitions without adding an audio filter to the signal.
 
-### [AP: Float Smoother](float-smoother.md)
+**[AP: Trigger Cooldown](trigger-cooldown.md)** — Prevent bursts of nearly simultaneous gameplay events from becoming a wall of repeated sound.
 
-Prevent sudden gameplay value changes from producing audible jumps in volume, filtering or other controls.
+**[AP: Trigger Probability](trigger-probability.md)** — Make optional sound details happen occasionally rather than on every gameplay event.
 
-### [AP: Trigger Cooldown](trigger-cooldown.md)
+**[AP: Distance Switch (Dynamic)](distance-switch.md)** — Choose which gameplay-audio branch should react to an event based on the current source-to-listener distance.
 
-Reject rapid repeated trigger events until a chosen minimum interval has elapsed.
+**[AP: Stereo to Mono](stereo-to-mono.md)** — A deliberate exit from a stereo AudioPhysx graph when the next stage needs one mono audio stream.
 
-### [AP: Trigger Probability](trigger-probability.md)
-
-Let an incoming trigger through only some of the time.
-
-[Back to QoL overview](../../qol.md)
+For a broader explanation, return to the [QoL overview](../../qol.md).

@@ -1,71 +1,59 @@
 ---
 label: "AP: Impact Dynamics"
-icon: zap
-order: 80
+icon: file
+order: 87
 ---
+
 # AP: Impact Dynamics
 
-**MetaSound · AudioPhysx / Acoustics**
+**AudioPhysx / Acoustics** · Unreal Engine 5.8.4 development source
 
-Make one impact recording react to whether the hit was gentle or forceful.
+Use one impact recording more expressively by changing its attack and colour according to how hard the impact was.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-impact-dynamics.png -->
 
-## What actually happens
+## Understanding the behaviour
 
-An impact is more than a volume change. Soft contacts tend to have gentler transients, while harder contacts can sound brighter and more aggressive. This node uses an `Impact` trigger and a normalized strength value to drive impact-time gain, filtering and transient emphasis around the input recording.
+Impact Dynamics takes an existing stereo audio recording plus an `Impact` trigger and an `Impact Strength` control in the 0–1 range. It uses the strength to interpolate between soft and hard gain/filter settings, with an additional transient enhancement for stronger events. This can make a single usable asset feel gentler for a light contact and brighter or more aggressive for a forceful collision.
 
-It is a **sound-shaping** node, not a collision detector. Supply the actual impact event and, if desired, calculate its strength through an existing AudioPhysx Blueprint helper.
+It does **not** detect a collision or compute collision impulse inside the audio thread. Your game, animation, trace or Blueprint helper decides that an impact occurred and provides a meaningful strength value. The node then shapes the audio. Both channels are processed independently, preserving the stereo source while applying the same intended impact strength.
 
-## Hear it in a game
+Imagine a character dropping a small tool onto a wooden surface. A very light contact may need a soft, muted tap; a much stronger drop can need a brighter transient and greater level. Rather than importing dozens of almost identical strength variations, you can use a few recordings with dynamics that follow the gameplay's impact-strength signal.
 
-Use one moderately strong metal knock recording. Audition it with an impact strength near the soft end and then near the hard end. Adjust the soft/hard gain and cutoff controls until one source asset provides useful expressive variation.
+This becomes particularly valuable for many small environmental interactions. It should still be driven by plausible events: setting the strength to 1 on every minor collision can make an otherwise natural scene sound exaggerated and exhausting.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Provide the impact sound
-Connect the existing impact audio to `Audio In`.
->>>
+Connect your stereo impact recording to `In Left` and `In Right`, trigger its player and the Impact Dynamics `Impact` event together, and set `Impact Strength` appropriately. Begin with audible but moderate differences between `Soft Gain` / `Hard Gain` and between `Soft Cutoff (Hz)` / `Hard Cutoff (Hz)`. Audition at several strength values instead of testing only the extremes.
 
->>> 2. Drive strength and impact event
-Trigger `Impact` at the event and supply a normalized `Impact Strength` control.
->>>
+The output includes `Applied Strength`, which exposes the clamped value used by the processor. That makes it useful for checking whether gameplay is sending valid input and whether the strength normalization behaves as you expect.
 
->>> 3. Shape the transient
-Tune `Soft Gain`, `Hard Gain`, `Soft Cutoff (Hz)` and `Hard Cutoff (Hz)`, adding transient boost only where the recording benefits.
->>>
+`Soft Gain` and `Hard Gain` are **linear gain controls**, while the cutoff inputs are in hertz. `Transient Boost` adds attack emphasis, with `Transient Time (ms)` determining how long that emphasis lasts. Excessive transient gain can create sharp peaks and clipping, especially when multiple impacts overlap. A normalized strength represents an authored mapping from gameplay force, not a universal physical unit such as newtons.
 
-## The controls that matter
+**Practical limitations.** A strong impact can consist of several physical stages—first contact, material resonance and secondary movement—so dynamics processing cannot replace all variation in source recordings. Use a good base sound, and consider Layered Wave Player or material-based selection when a change in physical material is more important than a change in force. Profile simultaneous impacts in a dense scene before raising every node's transient enhancement.
 
-`Soft Gain` and `Hard Gain` describe level shaping at the two strength extremes. `Soft Cutoff (Hz)` and `Hard Cutoff (Hz)` control the filter range. `Transient Boost` and `Transient Time (ms)` affect attack emphasis over a short window.
 
-## What the node outputs
+==- Exact input and output pins
 
-- **`Out Mono`** · Audio (mono) — Impact-shaped mono audio.
-- **`Applied Strength`** · Float — Clamped strength used by this operator.
+**Inputs from the current C++ node definition**
 
-## Things to watch for
+- **`In Left`** — *Audio buffer*. Stereo audio from the impact Wave Player.
+- **`In Right`** — *Audio buffer*. Right audio channel to process.
+- **`Impact`** — *Trigger*. Restart the transient when playback starts.
+- **`Impact Strength`** — *Float*. Normalized impact strength, 0 to 1.
+- **`Soft Gain`** — *Float*. Linear gain at impact strength 0.
+- **`Hard Gain`** — *Float*. Linear gain at impact strength 1.
+- **`Soft Cutoff (Hz)`** — *Float*. Low-pass cutoff for gentle impacts.
+- **`Hard Cutoff (Hz)`** — *Float*. Low-pass cutoff for strong impacts.
+- **`Transient Boost`** — *Float*. Extra attack gain applied to harder hits.
+- **`Transient Time (ms)`** — *Float*. Duration of the attack enhancement.
 
-- A noisy or inaccurate strength value can make the same asset change character unpredictably; smooth or normalize the driving gameplay value if needed.
-- Too much transient boost can sound clicky or harsh. Audition at realistic game levels.
+**Outputs from the current C++ node definition**
 
-==- Full input reference
-- **`Audio In`** · *Audio (mono)* — Mono audio from the impact Wave Player.
-- **`Impact`** · *Trigger* — Restart the transient when playback starts.
-- **`Impact Strength`** · *Float* — Normalized impact strength, 0 to 1.
-- **`Soft Gain`** · *Float* — Linear gain at impact strength 0.
-- **`Hard Gain`** · *Float* — Linear gain at impact strength 1.
-- **`Soft Cutoff (Hz)`** · *Float* — Low-pass cutoff for gentle impacts.
-- **`Hard Cutoff (Hz)`** · *Float* — Low-pass cutoff for strong impacts.
-- **`Transient Boost`** · *Float* — Extra attack gain applied to harder hits.
-- **`Transient Time (ms)`** · *Float* — Duration of the attack enhancement.
+- **`Out Left`** — *Audio buffer*. Impact-shaped stereo audio.
+- **`Out Right`** — *Audio buffer*. Right audio channel after processing.
+- **`Applied Strength`** — *Float*. Clamped strength used by this operator.
+
 ===
 
-==- Full output reference
-- **`Out Mono`** · Audio (mono) — Impact-shaped mono audio.
-- **`Applied Strength`** · Float — Clamped strength used by this operator.
-===
-
-## Continue learning
-
-[Blueprint playback helpers](../../../blueprint/playback-helpers.md) describes available game-side audio and impact utilities. Also see the [Acoustics overview](../../acoustics.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Material-dependent footsteps](../../../examples/material-footsteps.md) for a related event-driven workflow.

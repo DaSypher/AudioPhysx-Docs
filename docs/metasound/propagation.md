@@ -1,22 +1,18 @@
 ---
-label: Propagation
+label: "Propagation"
 icon: pulse
 order: 75
 ---
-# Propagation — distance and motion
 
-When we see an explosion far away, the light arrives almost immediately while the sound takes time. A moving vehicle can change the apparent pitch and travel time of its sound. These nodes provide controllable approximations of those behaviours.
 
-**[Distance Delay](nodes/propagation/distance-delay.md)** is suited to events where a chosen distance can be latched into a travel-time delay. **[Dynamic Propagation](nodes/propagation/dynamic-propagation.md)** is designed for continuously updated distance and includes smoothing and jump handling.
+# Propagation: when sound takes time to reach us
 
-**[Doppler Ratio](nodes/propagation/doppler-ratio.md)** outputs a control value based on radial motion; it does not render audio by itself. **[Atmosphere Absorption](nodes/propagation/atmosphere-absorption.md)** adjusts how frequencies are lost with travel through air.
+Propagation concerns how a sound changes while travelling from its source to the listener. In the real world, an explosion heard at a great distance arrives after its flash, and a moving source can exhibit Doppler shift. In a game, these effects must be balanced against latency, memory and the fact that the level geometry and player motion may update suddenly rather than continuously.
 
-## Use the right physical quantities
+[Distance Delay](nodes/propagation/distance-delay.md) captures a travel-time delay based on distance and sound speed. It works well for discrete events whose distance can be latched. [Dynamic Propagation](nodes/propagation/dynamic-propagation.md) changes the delay continuously for a moving source and includes smoothing and jump handling to keep the audible result controlled. Both are stereo DSP nodes and maintain separate channel delay histories.
 
-A **radial velocity** is movement *toward or away from* the listener; total movement speed is not sufficient on its own. A **distance** supplied in centimetres must be converted to metres where a model explicitly expects metres. A sound travelling through air cannot meaningfully exceed the delay buffer that its node allocated.
+[Doppler Ratio](nodes/propagation/doppler-ratio.md) computes a pitch multiplier from relative radial motion. It does not output audio—there is no reason to manufacture left and right audio channels for a single numeric ratio. Use it when another playback stage needs a pitch control, and avoid applying it again to a sound whose Dynamic Propagation has already introduced Doppler-like movement.
 
-!!!tip A good first test
-Use a clean, short impact and an explicit `Distance (cm)` input with Distance Delay. Once that sounds correct, move to Dynamic Propagation and a moving-source recording.
-!!!
+[Atmosphere Absorption](nodes/propagation/atmosphere-absorption.md) adjusts high-frequency content according to travelled distance and environmental conditions. It is separate from a wall-transmission filter and separate from ordinary source volume attenuation. In some projects Unreal's own air absorption may already be active, so compare the complete chain before using both systems together.
 
-[Browse the Propagation reference](nodes/propagation/README.md) · [Units and terminology](../getting-started/requirements.md)
+These are physically motivated **approximations**, not guaranteed measurements of the acoustic field in your level. A reliable design uses the right units and limits processing to what the listener can actually perceive. The individual references discuss centimetres, metres per second and buffer capacities in detail.

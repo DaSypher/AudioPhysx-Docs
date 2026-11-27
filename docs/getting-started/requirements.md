@@ -1,40 +1,28 @@
 ---
-label: Requirements & terminology
+label: "Requirements & terms"
 icon: checklist
 order: 90
 ---
-# Before you begin
 
-AudioPhysx is a native Unreal Engine **C++ plugin**. This documentation currently reflects a development build for **UE 5.8.4**; confirm the final supported engine versions on [Compatibility](../support/compatibility.md) before installing a commercial package.
 
-You'll need an Unreal project with MetaSounds available, a working AudioPhysx installation, and appropriately licensed audio recordings for the playback tutorials. The more advanced acoustic and flyby workflows also need game-provided positions, traces or material data.
+# Requirements and terminology
 
-## The four things you connect most often
+AudioPhysx is a native C++ plugin for Unreal Engine. The code reviewed for this edition targets **UE 5.8.4** and includes the stereo conversion and RPM playback system. That establishes what the source is intended to build against; it does not prove that a final Fab distribution has passed testing in every target build configuration. For current support claims, consult the [compatibility page](../support/compatibility.md).
 
-**Wave Asset** is a reference to an imported sound recording. A **Wave Asset Array** holds several such references; it does not itself play multiple recordings simultaneously unless the chosen player is designed to do that.
+You need a compatible Unreal project with MetaSounds enabled, the complete AudioPhysx plugin installed and some legal Wave Assets for the tutorials. More advanced systems require meaningful game data: a projectile path, an impact location, source-listener separation, a hit Physical Material or an acoustic barrier and portal setup. The audio nodes cannot invent those values from a waveform alone.
 
-**Trigger** means *something happens at this moment*. `Play`, `Stop Firing` and `On Finished` are events, not audio streams. A trigger might be issued by another MetaSound node or by a gameplay parameter/event.
+## Understanding the pins
 
-**Audio** pins carry actual sample buffers. `Out Mono` is a one-channel audio stream. That mono output can be routed through additional processing and then spatialized by Unreal's broader audio system.
+A **Wave Asset** is a reference to an imported recording. A **Wave Asset Array** stores several recordings for variation, selection or layering. The array itself is not an audio stream; a Wave Player decides what to do with its contents when an event arrives.
 
-**Control** pins carry numbers, Booleans, arrays or material identifiers. For example, a player may use a `Distance (cm)` control to select an appropriate recording before playback begins.
+An **audio buffer** carries actual samples. With the current stereo AudioPhysx convention, you normally connect the Left audio channel to the Left input of the next processor, and Right to Right. The final MetaSound Source output format should match the signal you want to render. If you intentionally need one mono stream, [Stereo to Mono](stereo-routing.md) makes that conversion explicit.
 
-## Units are part of the contract
+A **Trigger** represents a point in time: play, stop, release, reset or announce completion. Triggers are not audio signals. A **Float**, **Boolean**, **Integer**, **String** or **Float Array** is a control value; it can describe distance, acoustic loss, random probability or surface identity without being either an event or an audio channel.
 
-- **cm** — centimetres. Unreal world positions are generally expressed in centimetres.
-- **m** — metres. Some AudioPhysx physical models and flyby inputs use metres instead.
-- **m/s** — metres per second; do not confuse this with Unreal's centimetres-per-second velocity values.
-- **ms** — milliseconds, one thousandth of a second.
-- **dB** — decibels, used for level or frequency-band loss. A dB number is not a linear gain multiplier.
-- **st** — semitones, a unit of musical pitch interval.
-- **RPM** — events or rounds per minute, used for the middle of Start Loop End playback.
+## Units are not optional
 
-!!!warning Watch your conversions
-A projectile 500 Unreal units away is typically **500 cm = 5 m**. Feeding `500` directly to a pin labelled `Distance (m)` would be a hundredfold distance error.
-!!!
+Most Unreal world coordinates and many AudioPhysx distances are expressed in **centimetres**. Other pins are explicitly labelled metres `(m)`, metres per second `(m/s)`, milliseconds `(ms)`, seconds `(s)`, decibels `(dB)`, hertz `(Hz)`, kilopascals `(kPa)` or semitones `(st)`. Use the unit printed on the pin, because there is no universal convention that all values in the plugin are metres.
 
-## What this plugin does not replace
+For example, a projectile whose closest approach is 500 Unreal units away is usually **500 cm, or 5 m**. Feeding the number 500 to the flyby player's `Distance (m)` would tell it the projectile passed half a kilometre away. Likewise, a pitch ratio from Doppler Ratio is not interchangeable with a semitone pitch input.
 
-AudioPhysx extends, rather than replaces, Unreal's core audio features. You still use MetaSound Sources, audio components, Sound Attenuation, concurrency settings and the Audio Mixer where relevant. Acoustic modelling nodes also need meaningful world data; they do not automatically know your level geometry from the audio samples alone.
-
-[Next: Install AudioPhysx](installation.md)
+If an effect sounds unexpectedly late, quiet or bright, verify the values and units before changing the DSP. Errors in source data can be far more dramatic than errors in a filter setting.

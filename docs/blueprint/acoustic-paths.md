@@ -1,46 +1,26 @@
 ---
-label: Acoustic path queries
+label: "Acoustic path queries"
 icon: broadcast
-order: 80
+order: 90
 ---
-# Querying acoustic paths
 
-A direct ray between a speaker and listener may cross a barrier. In some scenes, sound could instead travel through an opening or around an obstacle. AudioPhysx's path solver provides a **game-thread approximation** of that situation, producing an acoustic route that the MetaSound can render.
 
-## What the Blueprint actually receives
+# Querying sound routes through the level
 
-`AP: Query Acoustic Path` is exposed through `UAPAcousticPathLibrary`. Give it a world context, source position, listener position and optionally a source actor. The returned `FAPAcousticPathResult` describes direct-path obstruction, delay and low/mid/high frequency losses. It can also describe an alternative route, including its proposed emitter location and losses, when one is valid.
+A line from source to listener may be clear, obstructed by a wall or partly bypassed through an opening. AudioPhysx provides a game-thread acoustic path solver to estimate how these possibilities affect the sound. The result is deliberately separate from the MetaSound render thread: scene traces and geometry queries belong with the game world, while stereo DSP nodes process the returned control values.
 
-The flags are important:
+The Blueprint library exposes **`AP: Query Acoustic Path`**, taking a world context, source location, listener location and optional source actor. Its result describes obstruction state, surface type, barrier count, acoustic-material use and measured thickness, plus direct-path delay and low/mid/high losses. It can additionally describe an around-obstacle candidate, including a possible emitter position and its estimated delay and frequency losses.
 
-- **`bAroundPathValid`** means the solver found a usable alternate candidate.
-- **`bAroundPathSelected`** means the system considers that alternate preferable to the direct path.
+## Understand validity and selection
 
-A valid path is not automatically the path selected for playback. This distinction helps prevent two sound copies playing at once merely because a doorway route exists.
+A particularly important distinction is **`bAroundPathValid` versus `bAroundPathSelected`**. Valid means the solver found a candidate. Selected means it considers that candidate preferable according to the available losses and configuration. The corresponding [Acoustic Paths MetaSound node](../metasound/nodes/acoustics/acoustic-paths.md) renders one selected route rather than automatically duplicating the signal into direct and around channels.
 
-## Build a small repeatable test
-
->>> 1. Make a two-area map
-Use a source on one side of a simple wall and a listener on the other. Leave a doorway or other controllable opening so there is a meaningful alternate route to compare.
-
->>> 2. Query the path
-Call `AP: Query Acoustic Path` and print direct obstruction, selected-route state, delays and the loss values.
-
->>> 3. Change only one condition
-Move the listener to a clear line of sight, then behind the wall, then near the doorway. Confirm the results change in a way that matches the geometry.
-
->>> 4. Connect a MetaSound
-Use the compact selected-route Float Array with [AP: Acoustic Paths](../metasound/nodes/acoustics/acoustic-paths.md). Listen to the difference only after the geometric result makes sense.
->>>
+For testing, build a small scene with a sound source, listener and a single blocking surface. Query with a clear path first, then move the listener behind the barrier. Print the obstruction flag, barrier count, direct delay and band losses. Once those results are understandable, add an opening or Acoustic Portal and inspect whether a valid and selected alternate route appears. These experiments reveal much more than immediately trying to tune filter parameters by ear.
 
 <!-- IMAGE SLOT: docs/static/images/blueprint/bp-query-acoustic-path.png -->
 
-## Why this runs outside MetaSound
+## Use the result in MetaSound
 
-World traces require access to scene geometry. They belong on the **game thread**, not inside a DSP function rendering thousands of audio samples. The managed AudioPhysx world subsystem provides limits and scheduling controls so a large level does not perform unconstrained acoustic queries for every source at every moment.
+The selected route contract passed to the audio processor is a compact four-value Float Array: **delay milliseconds, low loss dB, mid loss dB, high loss dB**. The order is part of the interface. Connect the stereo source signal to Acoustic Paths, feed the selected array, and route completion through the processor when it still has delayed audio to release. When hearing something odd, first confirm the exact four values printed from the world-side calculation.
 
-!!!tip Test data before audio
-When a sound seems too muffled, print the selected route first. If the wrong barrier is being found, changing the MetaSound filter will only hide the real problem.
-!!!
-
-[Acoustic components](components.md) · [MetaSound route processor](../metasound/nodes/acoustics/acoustic-paths.md)
+Because world queries cost CPU time, AudioPhysx has per-tick scheduling and ray budgets. Querying every emitter every rendered sample would be inappropriate. Use managed update intervals and realistic emitter counts, profile packaged-game performance, and avoid assigning the highest query detail to effects whose difference cannot be heard in the final mix.

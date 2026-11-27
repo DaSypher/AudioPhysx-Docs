@@ -1,63 +1,50 @@
 ---
 label: "AP: Doppler Ratio"
 icon: file
-order: 70
+order: 83
 ---
+
 # AP: Doppler Ratio
 
-**MetaSound · AudioPhysx / Propagation**
+**AudioPhysx / Propagation** · Unreal Engine 5.8.4 development source
 
-Calculate a playback pitch multiplier from the motion of the source and listener toward one another.
+Calculate a pitch multiplier from source and listener motion without rendering audio in the node itself.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-doppler-ratio.png -->
 
-## What actually happens
+## Understanding the behaviour
 
-Doppler shift is the change in perceived pitch caused by relative motion. This node operates on **radial velocity**—the component of motion directly toward or away from the other participant—not the total speed of either object.
+The Doppler effect is a change in perceived frequency caused by relative movement along the line between source and listener. Doppler Ratio receives the source's velocity **toward** the listener and the listener's velocity **toward** the source, plus the speed of sound. From those controls it produces `Pitch Ratio`, a Float value suitable for a playback or modulation stage that accepts a linear pitch multiplier.
 
-It outputs a pitch ratio for use elsewhere in the graph. It does not decode or pitch-shift a Wave Asset by itself.
+Unlike Dynamic Propagation, this node does not take `In Left` or `In Right`, and it does not output audio. It remains a control-only node despite the broader move to stereo, because a numerical ratio does not have independent audio channels. Changing a control-only node to emit stereo audio would add complexity without making its result more correct.
 
-## Hear it in a game
+Picture a horn attached to a train moving toward a stationary listener. The relevant speed is how fast the horn's source is approaching *along the listener direction*, not merely how fast the train is travelling somewhere on the map. A vehicle driving sideways across the listener's line of sight can have a large total velocity but a much smaller radial velocity.
 
-Drive a vehicle past a stationary listener and compare approaching and receding motion. Feed the directional velocity components into the node, then apply its output to a compatible pitch control downstream. Keep the effect moderate for believable engine audio.
+The same idea applies when the listener is moving. By supplying both toward-velocities you can model which party contributes to the perceived pitch change.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Feed radial source velocity
-Supply source velocity **toward** the listener to `Source Toward Listener (m/s)`.
->>>
+In Blueprint or your gameplay-side acoustic system, calculate signed radial velocity components in metres per second. Supply them to `Source Toward Listener (m/s)` and `Listener Toward Source (m/s)`. Positive values mean approaching, according to these pin labels. Use a sensible `Speed of Sound (m/s)` and connect the output ratio to a compatible playback-pitch control.
 
->>> 2. Feed listener velocity and sound speed
-Supply listener velocity **toward** the source to `Listener Toward Source (m/s)` and provide the speed of sound.
->>>
+Check a stationary case first: the ratio should be near the neutral value. Then test approaching and receding motion and confirm the resulting multiplier changes in the expected direction. Some downstream pitch inputs use semitones rather than ratios, so check the receiving node's unit before making the connection.
 
->>> 3. Use the resulting ratio
-Connect the output ratio to the playback/pitch system you actually use.
->>>
+`Pitch Ratio` is not an octave/semitone value and is not an audio buffer. The source's `Speed of Sound (m/s)` input defaults to an ordinary air value and sets the scale of the effect. No panning, attenuation, or travel delay is added in this node; it is a small mathematical part of a larger audio graph.
 
-## The controls that matter
+**Practical limitations.** Avoid calculating radial velocity from unsigned speed alone. That would not distinguish an approaching vehicle from one moving away. If you already use Dynamic Propagation for the same sound, applying the resulting ratio as a second pitch effect can exaggerate movement. Prefer one clear Doppler responsibility in the audio chain.
 
-A positive radial velocity here means movement **toward** the other point, according to the pin labels. `Speed of Sound (m/s)` affects the magnitude of the ratio. This node expects metres per second rather than Unreal centimetres per second.
 
-## What the node outputs
+==- Exact input and output pins
 
-- **`Pitch Ratio`** · Float — Pitch multiplier for playback WITHOUT Dynamic Propagation.
+**Inputs from the current C++ node definition**
 
-## Things to watch for
+- **`Source Toward Listener (m/s)`** — *Float*. Positive means source approaches listener.
+- **`Listener Toward Source (m/s)`** — *Float*. Positive means listener approaches source.
+- **`Speed of Sound (m/s)`** — *Float*. Default 343 m/s.
 
-- Passing an unsigned speed (always positive) erases the distinction between approach and departure.
-- Avoid stacking this full-strength ratio with Dynamic Propagation or Unreal’s own Doppler unless you intentionally want an exaggerated effect.
+**Outputs from the current C++ node definition**
 
-==- Full input reference
-- **`Source Toward Listener (m/s)`** · *Float* — Positive means source approaches listener.
-- **`Listener Toward Source (m/s)`** · *Float* — Positive means listener approaches source.
-- **`Speed of Sound (m/s)`** · *Float* — Default 343 m/s.
+- **`Pitch Ratio`** — *Float*. Pitch multiplier for playback WITHOUT Dynamic Propagation.
+
 ===
 
-==- Full output reference
-- **`Pitch Ratio`** · Float — Pitch multiplier for playback WITHOUT Dynamic Propagation.
-===
-
-## Continue learning
-
-[Dynamic Propagation](dynamic-propagation.md) works directly on mono audio rather than merely supplying a ratio. Also see the [Propagation overview](../../propagation.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Dynamic Propagation](dynamic-propagation.md) when you need a processed stereo stream.

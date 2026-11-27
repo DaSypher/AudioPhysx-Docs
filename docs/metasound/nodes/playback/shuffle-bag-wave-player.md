@@ -1,77 +1,61 @@
 ---
 label: "AP: Shuffle-Bag Wave Player"
 icon: file
-order: 90
+order: 99
 ---
+
 # AP: Shuffle-Bag Wave Player
 
-**MetaSound · AudioPhysx / Playback**
+**AudioPhysx / Playback** · Unreal Engine 5.8.4 development source
 
-Choose variations without repeatedly favoring the same few recordings, with weights and an explicit bag reset.
+Variation selection that deliberately uses a bag of eligible recordings instead of always making an unrestricted random choice.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-shuffle-bag-wave-player.png -->
 
-## What actually happens
+## Understanding the behaviour
 
-A shuffle bag builds a cycle of eligible selections, drawing from that pool until it has been exhausted. That differs from plain random selection: over a full cycle, you get more controlled coverage of the available options.
+A shuffle bag is useful when ordinary randomness still sounds repetitive. In a small sound library, the same take can be selected several times in a row by chance. Here, each eligible entry participates in the current bag, and `Play` draws from the remaining entries. When a cycle is exhausted, another bag can be constructed. Optional weights influence how the eligible entries participate in that selection process; they do not change the volume of the Wave Asset.
 
-The node also supports weights, gain and pitch controls and multiple voices. It is useful for repetitive sound events where players can quickly notice when a particular clip keeps returning.
+Playback remains fully stereo. Each accepted sound is mixed into `Out Left` and `Out Right`, so a recorded stereo rustle or environmental hit can retain its channel information. `Selected Index` and `Bag Remaining` provide useful feedback for diagnosing unexpected variation choices without listening for tiny differences between similar clips.
 
-## Hear it in a game
+Imagine an NPC walking over a dry wooden floor. With a random player, it is possible to hear the same distinctive creak repeatedly. A bag approach distributes selection more deliberately across available takes. It can also work well for repeated mechanical clunks, short movement details and sets of similar destruction fragments.
 
-Put six footsteps recorded on the same surface into `Waves`. Trigger the node on every step. The sequence should feel varied without the same take being chosen repeatedly at random. Use `Reset Bag` if the game needs to deliberately start a new selection cycle.
+Do not confuse this with timing or sequencing. A shuffle bag determines **which** recording to play next. Your animation, footsteps system or game event still determines **when** the next `Play` trigger arrives.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Build the bag
-Supply the `Waves` array with the desired recordings.
->>>
+Create a Wave Asset Array with your variations, then connect it to `Waves`. `Weights` is optional; its entries correspond by index to the Wave Assets, so keep the arrays aligned when you add or remove a recording. Connect the trigger and both stereo outputs in the same way as any other player. Trigger through a complete cycle and observe the remaining count to understand the node's behaviour.
 
->>> 2. Configure the selection rules
-If using `Weights`, align the weight entries to the wave array and test the resulting distribution; omit extra complexity when equal weighting is enough.
->>>
+Use `Reset Bag` when you intentionally want to abandon the current selection history, such as after moving to a completely different interaction context. Resetting the bag does not automatically stop existing voices, so the sound that is already audible need not be cut off.
 
->>> 3. Play and reset when needed
-Wire `Play` and `Out Mono`. Use `Reset Bag` only when deliberately restarting the selection history.
->>>
+`Seed` controls reproducibility. A fixed, nonzero seed is useful when testing the same sequence repeatedly; the source defines zero as a request for a new random seed. `Pitch Shift (st)` and `Gain (dB)` affect newly started voices, not the weights. `Max Voices` controls simultaneous playback. Rejected selections are reported through `On Rejected` when there is no playable eligible choice or available voice.
 
-## The controls that matter
+**Practical limitations.** This node is not a content-quality substitute: obviously different loudness or inconsistent noise floors can reveal the individual recording choices. Very high weights may cause the distribution to feel less even than expected, and zero-weight entries are intentionally ineligible. Check selection in a realistic playback run rather than assuming a handful of preview clicks establishes the distribution.
 
-`Weights` biases which clips appear more or less often; they do not change loudness. `Seed` controls reproducibility when a deterministic sequence is useful for tests. `Pitch Shift (st)` and `Gain (dB)` shape the sound after selection. `Max Voices` limits overlap.
 
-## Outputs and completion
+==- Exact input and output pins
 
-- **`Out Mono`** · Audio (mono) — Mixed playback audio.
-- **`On Finished`** · Trigger — Final active voice finished naturally.
-- **`On Rejected`** · Trigger — No eligible wave, free voice or playable proxy.
-- **`Selected Index`** · Integer — Most recent selected index; -1 on rejection/Stop.
-- **`Bag Remaining`** · Integer — Number of unplayed entries left in the current bag.
+**Inputs from the current C++ node definition**
 
-## Things to watch for
+- **`Play`** — *Trigger*. Draw and play one unused eligible wave.
+- **`Stop`** — *Trigger*. Stop all current voices without firing On Finished.
+- **`Reset Bag`** — *Trigger*. Discard the remaining bag; keep playing voices.
+- **`Waves`** — *Wave Asset Array*. Wave Asset Array. Maximum 128 entries.
+- **`Weights`** — *FFloatArray*. Optional non-negative weights aligned with Waves. Missing entries use 1; zero excludes an entry.
+- **`Pitch Shift (st)`** — *Float*. Playback-rate pitch in semitones, -24 to 24.
+- **`Gain (dB)`** — *Float*. Gain for newly started voices, -96 to +12 dB.
+- **`Max Voices`** — *Integer*. Maximum overlapping voices (1 to 16).
+- **`Seed`** — *Integer*. Nonzero seed is deterministic. Zero selects a random seed.
 
-- Weights and wave indices must describe the same selection order; keep arrays synchronized when editing.
-- Shuffle-bag behaviour applies to *selection*, not the timing of events. The game still needs to send the `Play` triggers.
+**Outputs from the current C++ node definition**
 
-==- Full input reference
-- **`Play`** · *Trigger* — Draw and play one unused eligible wave.
-- **`Stop`** · *Trigger* — Stop all current voices without firing On Finished.
-- **`Reset Bag`** · *Trigger* — Discard the remaining bag; keep playing voices.
-- **`Waves`** · *Wave Asset Array* — Wave Asset Array. Maximum 128 entries.
-- **`Weights`** · *Float Array* — Optional non-negative weights aligned with Waves. Missing entries use 1; zero excludes an entry.
-- **`Pitch Shift (st)`** · *Float* — Playback-rate pitch in semitones, -24 to 24.
-- **`Gain (dB)`** · *Float* — Gain for newly started voices, -96 to +12 dB.
-- **`Max Voices`** · *Integer* — Maximum overlapping voices (1 to 16).
-- **`Seed`** · *Integer* — Nonzero seed is deterministic. Zero selects a random seed.
+- **`Out Left`** — *Audio buffer*. Mixed playback audio.
+- **`Out Right`** — *Audio buffer*. Right channel of the stereo playback mix.
+- **`On Finished`** — *Trigger*. Final active voice finished naturally.
+- **`On Rejected`** — *Trigger*. No eligible wave, free voice or playable proxy.
+- **`Selected Index`** — *Integer*. Most recent selected index; -1 on rejection/Stop.
+- **`Bag Remaining`** — *Integer*. Number of unplayed entries left in the current bag.
+
 ===
 
-==- Full output reference
-- **`Out Mono`** · Audio (mono) — Mixed playback audio.
-- **`On Finished`** · Trigger — Final active voice finished naturally.
-- **`On Rejected`** · Trigger — No eligible wave, free voice or playable proxy.
-- **`Selected Index`** · Integer — Most recent selected index; -1 on rejection/Stop.
-- **`Bag Remaining`** · Integer — Number of unplayed entries left in the current bag.
-===
-
-## Continue learning
-
-[Random Wave Player](random-wave-player.md) is simpler when draw-history control is unnecessary. Also see the [Playback overview](../../playback.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Random Wave Player](random-wave-player.md) when you do not need bag history.

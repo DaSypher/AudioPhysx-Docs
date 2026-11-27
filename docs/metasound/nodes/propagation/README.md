@@ -1,26 +1,19 @@
 ---
 label: "Propagation node reference"
 icon: pulse
-order: 90
+order: 70
 ---
-# Propagation reference
 
-These tools work with sound travel time, atmosphere and source-listener movement.
+# Propagation nodes
 
-### [AP: Atmosphere Absorption](atmosphere-absorption.md)
+Propagation tools describe how travel time, relative motion and atmosphere change the sound. Some process stereo audio directly; Doppler Ratio produces a single Float because it is a mathematical control. Knowing which type you are using helps avoid doubling the same physical effect in the signal chain.
 
-Make distant sound lose some of its brightness as it travels through air.
+**[AP: Distance Delay](distance-delay.md)** — Delay a sound by its estimated travel time across an authored source-to-listener distance.
 
-### [AP: Distance Delay](distance-delay.md)
+**[AP: Dynamic Propagation](dynamic-propagation.md)** — Model changing sound travel time from a moving source, with bounded pitch-like effects and protection against sudden position jumps.
 
-Delay a mono signal to imitate the time it takes sound to travel across a fixed source-to-listener distance.
+**[AP: Doppler Ratio](doppler-ratio.md)** — Calculate a pitch multiplier from source and listener motion without rendering audio in the node itself.
 
-### [AP: Doppler Ratio](doppler-ratio.md)
+**[AP: Atmosphere Absorption](atmosphere-absorption.md)** — Make distant audio gradually lose some of its high-frequency definition as it travels through air.
 
-Calculate a playback pitch multiplier from the motion of the source and listener toward one another.
-
-### [AP: Dynamic Propagation](dynamic-propagation.md)
-
-Apply a continuously changing travel-time delay to moving-source audio, with safeguards against abrupt jumps.
-
-[Back to Propagation overview](../../propagation.md)
+For a broader explanation, return to the [Propagation overview](../../propagation.md).

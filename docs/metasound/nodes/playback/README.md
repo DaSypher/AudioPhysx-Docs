@@ -1,50 +1,31 @@
 ---
 label: "Playback node reference"
 icon: play
-order: 90
+order: 70
 ---
-# Playback reference
 
-These players turn Wave Assets into varied, sequenced, layered or world-sensitive audio.
+# Playback nodes
 
-### [AP: Distance Wave Player](distance-wave-player.md)
+This category is where AudioPhysx decides which recordings should play, how they are ordered, and whether several recordings should be heard simultaneously. The ten Wave Player nodes all expose stereo audio output, so you can keep an authored stereo recording intact until your Source needs to be downmixed for a particular spatialization policy.
 
-Choose a recording collection based on how far the sound source is from the listener.
+**[AP: Random Wave Player](random-wave-player.md)** — A reliable starting point for any event that should sound familiar without replaying precisely the same recording every time.
 
-### [AP: Flyby Wave Player](flyby-wave-player.md)
+**[AP: Shuffle-Bag Wave Player](shuffle-bag-wave-player.md)** — Variation selection that deliberately uses a bag of eligible recordings instead of always making an unrestricted random choice.
 
-Turn a projectile near-miss result into an audible whizz and optional ballistic crack.
+**[AP: Sequence Wave Player](sequence-wave-player.md)** — Play several recordings one after another, using the recordings themselves to determine when each step should advance.
 
-### [AP: Layered Wave Player](layered-wave-player.md)
+**[AP: Random Sequence Wave Player](random-sequence-wave-player.md)** — A predictable beginning, middle and end—but with fresh recording choices inside every stage.
 
-Build one composite effect from several recordings that start together or at different offsets.
+**[AP: Layered Wave Player](layered-wave-player.md)** — Combine several recordings into a single composite sound while controlling the level, pitch and onset of each layer.
 
-### [AP: PhysMat Wave Player](physmat-wave-player.md)
+**[AP: Start Loop End Player](start-loop-end.md)** — One sound can have a meaningful start, a repeating body, and a release that only plays when the action ends.
 
-Route playback using an exact Unreal Physical Material asset path, with a fallback when nothing matches.
+**[AP: Distance Wave Player](distance-wave-player.md)** — Choose a different recorded perspective at different distances, rather than relying on volume attenuation alone.
 
-### [AP: Random Sequence Wave Player](random-sequence-wave-player.md)
+**[AP: PhysMat Wave Player](physmat-wave-player.md)** — Choose impact or interaction recordings using the exact Physical Material asset involved in the event.
 
-Keep the stages of an action in order, but randomly vary the recording played at each stage.
+**[AP: Surface Wave Player](surface-wave-player.md)** — Use Unreal physical surface types to select footstep, impact or interaction variations through one MetaSound player.
 
-### [AP: Random Wave Player](random-wave-player.md)
+**[AP: Flyby Wave Player](flyby-wave-player.md)** — Turn a near-miss calculation into an audible projectile whizz, with an optional ballistic-crack layer.
 
-Play a random recording from an array whenever an event occurs, with optional variation and multiple simultaneous voices.
-
-### [AP: Sequence Wave Player](sequence-wave-player.md)
-
-Build a fixed sequence of recordings without timing it by hand. Each playable wave starts after the one before it finishes.
-
-### [AP: Shuffle-Bag Wave Player](shuffle-bag-wave-player.md)
-
-Choose variations without repeatedly favoring the same few recordings, with weights and an explicit bag reset.
-
-### [AP: Start Loop End Player](start-loop-end.md)
-
-Play an opening sound, sustain a repeatable middle section, and finish with a proper release when the action ends.
-
-### [AP: Surface Wave Player](surface-wave-player.md)
-
-Add the player to a MetaSound and connect the exposed surface-specific arrays as well as `Default Waves`.
-
-[Back to Playback overview](../../playback.md)
+For a broader explanation, return to the [Playback overview](../../playback.md).

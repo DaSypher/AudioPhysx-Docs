@@ -1,69 +1,56 @@
 ---
 label: "AP: Surface Wave Player"
 icon: file
-order: 90
+order: 92
 ---
+
 # AP: Surface Wave Player
 
-**MetaSound · AudioPhysx / Playback**
+**AudioPhysx / Playback** · Unreal Engine 5.8.4 development source
 
-Select surface-appropriate sound variations using Unreal surface types and your project’s AudioPhysx route settings.
+Use Unreal physical surface types to select footstep, impact or interaction variations through one MetaSound player.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-surface-wave-player.png -->
 
-## What actually happens
+## Understanding the behaviour
 
-The Surface Wave Player uses `Hit Surface Type` to decide which pool of recordings should play. It can expose **surface-specific pins** based on AudioPhysx settings, and it includes a default pool for unmatched material IDs.
+Surface Wave Player uses the integer value of `EPhysicalSurface` supplied through `Hit Surface Type`. Configured AudioPhysx routes determine which surface-specific Wave Asset Array should be used, with `Default Waves` available for unmatched values. This is especially useful when the game already classifies surfaces into a manageable set such as grass, concrete, gravel and metal.
 
-It is intended for workflows such as footsteps or impacts where the gameplay side already knows what surface was hit. The MetaSound is responsible for choosing and playing the recording, not for tracing the world itself.
+The surface-specific pins are generated from configuration, rather than being identical in every possible project. That reduces pointless pins when only a few surfaces are used, but it creates an authoring responsibility: if route configuration changes, inspect the saved MetaSound graph to ensure its dynamic input layout still matches the intended assets.
 
-## Hear it in a game
+In a footstep system, the animation usually defines the exact timing of the step and the gameplay trace identifies the ground material. Surface Wave Player uses that supplied value to choose a recording pool. It does **not** perform the character's foot trace or decide how often footsteps should occur.
 
-Create stone, metal and grass variations, then play a footstep animation with a surface trace. Send the returned surface type to the graph and listen for the correct texture. Test an unconfigured surface too: it should use `Default Waves` when that pool is populated.
+With stereo output, a designer can preserve deliberately stereo footstep recordings through the graph. For a single, precisely positioned footstep in the world, downmixing to mono just before the Source output may still be the better spatial choice.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Configure surface routes
-Configure the project’s AudioPhysx surface routes first, then restart the editor if the project settings require it.
->>>
+First configure the enabled Surface Audio routes in AudioPhysx project settings and restart the Editor when required. Create a Source and add the player, then assign the arrays to the generated surface pins. Fill `Default Waves` with a safe fallback, supply the hit surface's integer value to `Hit Surface Type`, and connect `Play` and both audio outputs.
 
->>> 2. Assign surface recordings
-Add the player to a MetaSound and connect the exposed surface-specific arrays as well as `Default Waves`.
->>>
+Test three cases separately: one surface with an exact route, another configured route, and an intentionally unmapped surface. You should be able to tell which pool is selected without changing the gameplay event timing.
 
->>> 3. Send surface type and Play
-Supply `Hit Surface Type` before sending `Play`. Tune the volume and `Max Voices` for footsteps or repeated impacts.
->>>
+`Max Voices` controls the maximum number of overlapping recordings. `No Immediate Repeat` is useful with several takes per surface, but cannot guarantee variation with only one valid recording. `Default Volume` balances the fallback pool; route-specific volume controls balance authored surfaces. The player's `On Finished` output reflects natural completion of the last playing voice.
 
-## The controls that matter
+**Practical limitations.** This is one of the nodes most sensitive to configuration changes. If you disable or reorder configured surfaces, saved node pins may change and connections can be lost or become stale. Back up affected MetaSound assets before modifying the surface route settings. Do not assume editing a Physics Material asset alone updates the player's route list; verify what the gameplay trace supplies.
 
-`Hit Surface Type` is the numerical physical-surface selection provided by game logic. `Default Waves` and `Default Volume` supply a fallback when no authored route matches. `No Immediate Repeat` affects variation choice; `Max Voices` caps overlapping playback.
 
-## Outputs and completion
+==- Exact input and output pins
 
-- **`Out Mono`** · Audio (mono) — Mixed mono audio from active samples.
-- **`On Finished`** · Trigger — Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it.
+**Inputs from the current C++ node definition**
 
-## Things to watch for
+- **`Play`** — *Trigger*. Select one valid wave from the hit surface.
+- **`Stop`** — *Trigger*. Stop all playing samples.
+- **`Hit Surface Type`** — *Integer*. Unreal EPhysicalSurface integer value  of the impacted physical material.
+- **`Max Voices`** — *Integer*. Maximum overlapping samples (1 to 16).
+- **`No Immediate Repeat`** — *Boolean*. Avoid selecting the previous sample  when alternatives exist.
+- **`Default Waves`** — *Wave Asset Array*. Fallback array for unmatched surfaces  or empty surface arrays.
+- **`Default Volume`** — *Float*. Linear volume for fallback samples.
 
-- **Saved-graph compatibility:** changing which surface routes are enabled can change this node’s pin layout. Review existing graphs after route-setting changes rather than assuming connections remain intact.
-- A physical-material trace generally needs physical material return information enabled in the relevant query/collision setup. This node does not perform the trace for you.
+**Outputs from the current C++ node definition**
 
-==- Full input reference
-- **`Play`** · *Trigger* — Select one valid wave from the hit surface.
-- **`Stop`** · *Trigger* — Stop all playing samples.
-- **`Hit Surface Type`** · *Integer* — Unreal EPhysicalSurface integer value  of the impacted physical material.
-- **`Max Voices`** · *Integer* — Maximum overlapping samples (1 to 16).
-- **`No Immediate Repeat`** · *Boolean* — Avoid selecting the previous sample  when alternatives exist.
-- **`Default Waves`** · *Wave Asset Array* — Fallback array for unmatched surfaces  or empty surface arrays.
-- **`Default Volume`** · *Float* — Linear volume for fallback samples.
+- **`Out Left`** — *Audio buffer*. Stereo mix from active samples.
+- **`Out Right`** — *Audio buffer*. Right channel of the stereo playback mix.
+- **`On Finished`** — *Trigger*. Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it.
+
 ===
 
-==- Full output reference
-- **`Out Mono`** · Audio (mono) — Mixed mono audio from active samples.
-- **`On Finished`** · Trigger — Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it.
-===
-
-## Continue learning
-
-[PhysMat Wave Player](physmat-wave-player.md) selects by exact Physical Material path rather than surface-type number. Also see the [Playback overview](../../playback.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Material-dependent footsteps](../../../examples/material-footsteps.md) for a complete gameplay setup.

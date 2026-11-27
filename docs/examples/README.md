@@ -1,23 +1,20 @@
 ---
-label: Examples and recipes
+label: "Examples and recipes"
 icon: beaker
 order: 80
 ---
+
+
 # Learn by building something audible
 
-Every recipe here starts with a sound-design goal, not a list of API calls. You can follow a short graph, listen for a specific result, and then explore the deeper node reference when you want more control.
+Node reference pages explain individual tools; the examples show how several parts fit together in an actual listening task. They deliberately begin with ordinary Wave Assets and small MetaSound graphs rather than a large demonstration project that needs dozens of dependencies. Once you understand the basic routing, you can replace the test sounds with your game's own authored content.
 
-## Choose a result
+**For playback**, try [randomized one-shots](randomized-one-shot.md) or an [automatic weapon with RPM](automatic-weapon.md). These show the distinction between selecting a recording and scheduling it in time. A [random multi-stage action](random-sequence.md) demonstrates how each stage can vary while retaining the order of the action. The [material footstep recipe](material-footsteps.md) connects gameplay surface data to sound selection.
 
-[!card layout="compact" title="Randomized one-shot" text="Build a repeatable impact or Foley event from several takes."](randomized-one-shot.md)
-[!card layout="compact" title="Automatic weapon at a chosen RPM" text="Start, overlapping middle shots, release and proper completion."](automatic-weapon.md)
-[!card layout="compact" title="Multi-stage variation" text="Fixed action stages with a new random recording at each stage."](random-sequence.md)
-[!card layout="compact" title="Material-dependent footsteps" text="Route audio from a physical-material path or surface type."](material-footsteps.md)
-[!card layout="compact" title="Projectile near miss" text="Path proximity, whizz/crack layers and game-side scheduling."](projectile-flyby.md)
-[!card layout="compact" title="Basic acoustic obstruction" text="Compare authored transmission with world-selected acoustic paths."](acoustic-obstruction.md)
+**For world-reactive audio**, the [flyby exercise](projectile-flyby.md) separates projectile geometry from audio playback, while the [acoustic obstruction example](acoustic-obstruction.md) compares a simple authored barrier filter with a selected world route. Both are designed to be understood by printing the gameplay result before adjusting the sound.
+
+These recipes use the new stereo conventions. Unless a specific example intentionally downmixes, audio-bearing connections should run Left to Left and Right to Right. If you are building a precisely localized point emitter, the [stereo routing guide](../getting-started/stereo-routing.md) explains when and how to introduce Stereo to Mono at the end of the chain.
 
 <!-- IMAGE SLOT: docs/static/images/brand/hero-demos.png -->
 
-!!!tip Use your own recordings
-These examples describe how to wire and test AudioPhysx. They do **not** include or grant rights to sound recordings. Use licensed or original Wave Assets and check their loudness and edit points before judging the node's result.
-!!!
+Use your own or appropriately licensed recordings for these exercises. A test that sounds poor because the assets contain leading silence, mismatched loudness or phase problems is not a reliable evaluation of the node's actual timing and processing behaviour.

@@ -1,69 +1,58 @@
 ---
 label: "AP: Material Transmission"
 icon: file
-order: 80
+order: 89
 ---
+
 # AP: Material Transmission
 
-**MetaSound · AudioPhysx / Acoustics**
+**AudioPhysx / Acoustics** · Unreal Engine 5.8.4 development source
 
-Colour and attenuate sound when a source is behind a material or barrier.
+Give an obstructed sound a believable tonal change rather than making it merely quieter.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-material-transmission.png -->
 
-## What actually happens
+## Understanding the behaviour
 
-An obstructing material often reduces high frequencies more than lows. Rather than muting a source, this node uses authored low-band and high-band attenuation, a crossover and thickness-related controls to shape the sound that passes through a barrier.
+Sound transmitted through a door, wall or panel often loses more high-frequency detail than low-frequency weight. Material Transmission takes stereo audio and an externally supplied `Obstructed` Boolean, then applies a frequency-shaped loss model whose low/high loss values describe the material. Thickness and reference thickness provide a way to scale that treatment with the geometry represented by your game data.
 
-The node needs an external `Obstructed` state and material information. It does not perform collision traces itself; it makes a mono signal respond to data supplied by your game.
+The node is a DSP processor, not a raycaster. It cannot know that a wall exists unless a Blueprint, component or world path calculation supplies the obstruction state. Left and Right inputs are processed with separate filter histories so differences in a stereo recording are not forcibly collapsed. The broad obstruction amount, however, is controlled by the same material inputs for both channels.
 
-## Hear it in a game
+Try a metal door between the player and a nearby machine. The unobstructed version should contain clear clicks and bright mechanical texture. When the door closes, a filtered version might retain some low rumble but lose much of the sharp top end. A small amount of leakage can preserve an audible sense that the machine is still present, especially if you have deliberately designed a thin or imperfect barrier.
 
-Take a voice or a door slam. Toggle `Obstructed` while adjusting `Low Loss (dB)` and `High Loss (dB)`. A barrier with much greater high-frequency loss should sound duller and more distant than an open path.
+This sounds more convincing than a volume-only change because the tonal balance communicates the idea of an intervening object. It can also communicate the quality of the material: a lighter partition and a heavy sealed wall should not have identical transmitted spectra.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Connect the dry source
-Insert the node after a mono playback source.
->>>
+Start with a simple stereo Wave Player and connect its two channels to `In Left` and `In Right`. Expose `Obstructed` as a Boolean or feed it from your gameplay trace. Set modest `Low Loss (dB)` and larger `High Loss (dB)` values, then switch the state while the source loops. Add thickness scaling and leakage only after you can hear the basic blocked/unblocked distinction.
 
->>> 2. Supply obstruction and losses
-Feed a Boolean into `Obstructed`, and start with authored band losses that create a clear contrast.
->>>
+If the result is too abrupt when a door opens or closes, increase `Smoothing (ms)` until the change is audible but not clicky. Keep the final Source output stereo when preserving the recording's width is important; downmix only as part of an intentional spatialization strategy.
 
->>> 3. Tune material coloration
-Adjust thickness, crossover, leakage and smoothing only after the unblocked/blocked transition behaves as expected.
->>>
+`Thickness (cm)` describes the authored obstacle thickness. `Reference Thickness (cm)` tells the model what thickness corresponds to the supplied loss values. `Crossover (Hz)` is the approximate division between the lower- and higher-frequency treatment. `Leakage (%)` blends some unobstructed audio back into the filtered signal; large values can undermine the impression of a solid barrier. `Smoothing (ms)` controls how quickly the attenuation changes rather than how long a sound travels.
 
-## The controls that matter
+**Practical limitations.** This is not a substitute for a measured transmission-loss spectrum, and it does not independently simulate flanking paths or diffraction around corners. If Acoustic Paths already applies three-band route loss, decide whether an extra Material Transmission stage adds meaningful information or simply applies the same attenuation twice. Listen to a range of recordings before committing one loss preset to every sound category.
 
-`Thickness (cm)` and `Reference Thickness (cm)` provide a thickness context for the model. `Low Loss (dB)` and `High Loss (dB)` set the band attenuation in decibels. `Crossover (Hz)` determines where the low/high shaping transitions. `Leakage (%)` allows some unfiltered content to bleed through; `Smoothing (ms)` prevents hard switching.
 
-## What the node outputs
+==- Exact input and output pins
 
-- **`Out Mono`** · Audio (mono) — Mono audio after transmission filtering.
+**Inputs from the current C++ node definition**
 
-## Things to watch for
+- **`In Left`** — *Audio buffer*. Left channel of the stereo source audio.
+- **`In Right`** — *Audio buffer*. Right audio channel to process.
+- **`Obstructed`** — *Boolean*. True when the sound path is obstructed.
+- **`Thickness (cm)`** — *Float*. Assigned obstacle thickness in centimetres.
+- **`Reference Thickness (cm)`** — *Float*. Thickness at which the specified losses apply.
+- **`Low Loss (dB)`** — *Float*. Low-band transmission loss at reference thickness.
+- **`High Loss (dB)`** — *Float*. High-band transmission loss at reference thickness.
+- **`Crossover (Hz)`** — *Float*. Approximate low/high frequency division.
+- **`Leakage (%)`** — *Float*. Fraction of unobstructed audio mixed back in.
+- **`Smoothing (ms)`** — *Float*. Smoothing time for changing transmission gains.
 
-- Avoid double-obstructing the same sound. If an Acoustic Paths node already applies path losses, choose a deliberate combination rather than summing two full-strength filters.
-- This is approximate transmission coloration, not a substitute for measured transmission-loss data for a particular wall.
+**Outputs from the current C++ node definition**
 
-==- Full input reference
-- **`Audio`** · *Audio (mono)* — Mono source audio.
-- **`Obstructed`** · *Boolean* — True when the sound path is obstructed.
-- **`Thickness (cm)`** · *Float* — Assigned obstacle thickness in centimetres.
-- **`Reference Thickness (cm)`** · *Float* — Thickness at which the specified losses apply.
-- **`Low Loss (dB)`** · *Float* — Low-band transmission loss at reference thickness.
-- **`High Loss (dB)`** · *Float* — High-band transmission loss at reference thickness.
-- **`Crossover (Hz)`** · *Float* — Approximate low/high frequency division.
-- **`Leakage (%)`** · *Float* — Fraction of unobstructed audio mixed back in.
-- **`Smoothing (ms)`** · *Float* — Smoothing time for changing transmission gains.
+- **`Out Left`** — *Audio buffer*. Stereo audio after transmission filtering.
+- **`Out Right`** — *Audio buffer*. Right audio channel after processing.
+
 ===
 
-==- Full output reference
-- **`Out Mono`** · Audio (mono) — Mono audio after transmission filtering.
-===
-
-## Continue learning
-
-[Acoustic obstruction recipe](../../../examples/acoustic-obstruction.md) offers two different ways to build a blocked-sound demonstration. Also see the [Acoustics overview](../../acoustics.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Acoustic Paths](acoustic-paths.md) when the route and delay should come from the world solver.

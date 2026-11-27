@@ -1,80 +1,38 @@
 ---
-label: Projectile flybys
+label: "Projectile flyby"
 icon: rocket
 order: 95
 ---
-# Projectile flybys from Blueprint
 
-A good near-miss sound is about **where the projectile passed** and **when the listener would hear it**, not simply whether the weapon fired. AudioPhysx lets you submit a straight path segment and evaluate the closest approach without setting up Chaos physics or spawning special audio-specific bullet Actors.
 
-The integration has two parts: a game-side helper decides whether and when a close pass is audible; [AP: Flyby Wave Player](../metasound/nodes/playback/flyby-wave-player.md) renders the whizz and optional crack from your supplied recordings.
+# Projectile flybys from a path segment
 
-## Understand the path calculation
+A useful projectile near-miss sound should represent a projectile that actually passed near the listener, not every time any weapon fired. AudioPhysx's flyby helper accepts the start and end of a projectile path segment, its speed, and an audible radius. It can calculate the point of closest approach and an approximate arrival time. The audio renderer then uses that result to play a whizz and, where appropriate, a shock-like crack.
 
-Imagine a bullet travelling along a line that passes beside the listener. The nearest point on that line is its **closest approach**. If that point is inside the configured audible radius, the event may qualify as a flyby. The helper also estimates arrival time and whether the configured speed and geometry permit a shock-wave effect.
+The public Blueprint API exposes `AP: Calculate Flyby`, which returns an `FAPFlybyResult` with values such as `bAudible`, `bShockWave`, `ClosestPoint`, `DistanceMeters`, `SpeedMetersPerSecond`, `Intensity` and `ArrivalSeconds`. This is valuable for debugging because it lets you inspect the geometry and acoustic decision **without immediately scheduling audio**. `AP: Play Projectile Flyby` combines the calculation with world-level scheduling; a `true` return means the request was accepted for scheduling, not that the listener has already heard the resulting sound.
 
-`AP: Calculate Flyby` returns an `FAPFlybyResult` containing `bAudible`, `bShockWave`, `ClosestPoint`, `DistanceMeters`, `SpeedMetersPerSecond`, `Intensity` and `ArrivalSeconds`. This function is useful for debugging the geometry before requesting playback.
+## Connect the stereo MetaSound
 
-`AP: Play Projectile Flyby` performs the test and submits an accepted sound for scheduling. Its Boolean return means **accepted for scheduling**, not that the player has already heard the clip.
+Create a stereo MetaSound Source and add [AP: Flyby Wave Player](../metasound/nodes/playback/flyby-wave-player.md). Supply one or more `Whizz Waves` and optionally `Crack Waves`. Connect `Out Left` and `Out Right` to the Source's corresponding stereo outputs. Expose the following **Float** inputs with precisely these names, as used by the current flyby world subsystem:
 
-## Build the MetaSound once
+- `AP.Flyby.DistanceM` → `Distance (m)`
+- `AP.Flyby.SpeedMps` → `Speed (m/s)`
+- `AP.Flyby.Intensity` → `Intensity`
+- `AP.Flyby.SpeedOfSoundMps` → `Speed of Sound (m/s)`
+- `AP.Flyby.Shock` → `Shock`
 
->>> 1. Create a mono Source
-Make a MetaSound Source that will be used only for flyby playback. Add `AP: Flyby Wave Player` from the Playback category.
-
->>> 2. Supply your recordings
-Fill `Whizz Waves` with your licensed near-miss variations. Fill `Crack Waves` if you want a separate supersonic shock layer. Short, clearly edited samples make debugging easier.
-
->>> 3. Wire playback
-Connect the Source's `On Play` to the Flyby player's `Play`, its `Out Mono` to the Source output, and route completion appropriately.
-
->>> 4. Create five exposed Float inputs
-Use the **exact names** below. Connect them to the corresponding Flyby Wave Player controls; they are set by the world subsystem before the sound starts.
-
->>> 5. Audition and save
-Test the MetaSound manually with reasonable values first. Then use it as the asset supplied to the Blueprint helper.
->>>
+These are parameter-name contracts, not arbitrary labels. A name that looks nearly identical but differs in punctuation or capitalization should not be assumed to update the intended MetaSound input. The subsystem sets these controls before starting the sound.
 
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-flyby-metasound.png -->
 
-### The five runtime inputs
+## Send a path from gameplay
 
-- **`AP.Flyby.DistanceM`** → `Distance (m)`. Closest distance from the projectile path to the listener, **in metres**.
-- **`AP.Flyby.SpeedMps`** → `Speed (m/s)`. Projectile speed, in metres per second.
-- **`AP.Flyby.Intensity`** → `Intensity`. The computed strength control.
-- **`AP.Flyby.SpeedOfSoundMps`** → `Speed of Sound (m/s)`. Acoustic model speed in metres per second.
-- **`AP.Flyby.Shock`** → `Shock`. A Float gate, typically 1 for requested crack and 0 otherwise.
+For a hitscan weapon, use the muzzle or trace start as `PathStart`, and the hit location or maximum trace end as `PathEnd`. Pass the final MetaSound Source as `FlybyMetaSound`. Provide projectile speed in **metres per second** and the audible radius in **metres**. A newly submitted hitscan event normally has a path age of zero.
 
-The parameter names above come from the reviewed `APFlybyWorldSubsystem.cpp` development source. Keep them identical in the MetaSound graph.
-
-## Send a hitscan shot
-
->>> 1. Build the shot path
-Use the weapon muzzle world location for `PathStart` and the trace hit point (or maximum trace end) for `PathEnd`.
-
->>> 2. Set projectile speed
-Provide `ProjectileSpeedMps` in **metres per second**, even though Unreal's path vectors are world units in centimetres.
-
->>> 3. Supply the sound asset
-Pass your flyby MetaSound Source as `FlybyMetaSound` and choose an `AudibleRadiusM` appropriate to your test.
-
->>> 4. Request one evaluation
-Call `AP: Play Projectile Flyby` **once per hitscan shot**. `PathAgeSeconds` is zero for a fresh, instantaneous hitscan query.
-
->>> 5. Test a passing and a missing shot
-Shoot beside the listener, then farther away than the radius. Watch the Boolean acceptance result and listen for the corresponding audio behaviour.
->>>
+For moving projectiles, provide successive path segments from the projectile's actual movement. `ProjectileInstance` should represent one distinct projectile, not the weapon that fires many rounds, because the world subsystem may use it to suppress duplicate near misses. `PathAgeSeconds` describes when the submitted segment occurred relative to the query; incorrect values may change the apparent arrival timing.
 
 <!-- IMAGE SLOT: docs/static/images/blueprint/bp-flyby-hitscan.png -->
 
-## Moving projectile segments
+Start with an obviously close path and print the calculation result. Next submit a path outside the audible radius, then compare slower and faster projectiles. Only after the geometry makes sense should you tune the recordings and their stereo output. A close flyby may still be appropriate as a mono spatialized source in some projects; Stereo to Mono provides that option downstream.
 
-For a projectile that has already moved, send consecutive start/end positions rather than predicting its whole future path. The optional `ProjectileInstance` should uniquely identify **that specific projectile** so the system can suppress duplicate near-miss events. A shared weapon object is not a suitable substitute when it fires multiple independent bullets.
-
-`PathAgeSeconds` describes how old the reported movement segment is. The source comments recommend using segment length divided by projectile speed for a segment submitted after motion, so that scheduling can account for already elapsed travel time.
-
-!!!warning What is approximate?
-This first version assumes a simplified constant-speed path and approximate acoustic arrival. It positions playback near the closest approach; it does not perform a continuous 3D flyby simulation or exact shock-front tracing. Test very close passes, fast shots and different listener positions in your game before treating timings as final.
-!!!
-
-[Try the short flyby recipe](../examples/projectile-flyby.md) · [Flyby Wave Player reference](../metasound/nodes/playback/flyby-wave-player.md)
+The current acoustic model is deliberately approximate: it assumes simplified path and speed behaviour rather than a full shock-front or trajectory simulation. Measure the finished result by listening in your own game and check for duplicates, unrealistic near-miss thresholds and excessively loud cracks.

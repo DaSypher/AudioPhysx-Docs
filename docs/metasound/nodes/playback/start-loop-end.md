@@ -1,74 +1,56 @@
 ---
 label: "AP: Start Loop End Player"
-icon: repeat
-order: 90
+icon: file
+order: 95
 ---
+
 # AP: Start Loop End Player
 
-**MetaSound · AudioPhysx / Playback**
+**AudioPhysx / Playback** · Unreal Engine 5.8.4 development source
 
-Play an opening sound, sustain a repeatable middle section, and finish with a proper release when the action ends.
+One sound can have a meaningful start, a repeating body, and a release that only plays when the action ends.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-start-loop-end.png -->
 
-## What actually happens
+## Understanding the behaviour
 
-This node follows three phases: **Start**, **Middle**, and **End**. Each phase chooses a recording from its respective Wave Asset Array. It works for automatic weapons, powered tools, long energy effects, and other actions that start, continue, then stop.
+Start Loop End is built around the lifecycle of a sustained action. Its three Wave Asset Arrays provide possible *start*, *middle*, and *end* recordings. A start trigger first plays an introductory variation when one is available, then enters the middle phase. When `Stop Firing` arrives, the node stops scheduling new middle events and transitions into a final recording. This separation is essential for weapons, continuous tools and machines that should not abruptly stop when a button is released.
 
-The important distinction is **RPM**. At `RPM = 0`, middle recordings play consecutively when each recording finishes. At a positive RPM, the node schedules fresh middle recordings at a fixed number of starts per minute, so the recordings can overlap. The implementation maintains a bounded pool of twelve middle voices instead of dynamically creating a new audio player for every shot.
+The **RPM** input changes how the middle phase behaves. With `RPM = 0`, the next middle recording starts after the last one has finished—the older sequential mode. With positive RPM, new middle recordings are scheduled according to rounds per minute, even if older middle recordings are still audible. The current code uses a bounded pool of twelve middle voices for overlap. Both channels of each chosen recording are mixed to `Out Left` and `Out Right`.
 
-## Hear it in a game
+For automatic gunfire, try a brief attack recording, several main shot variations, and one or more release recordings. At 600 RPM, the intended interval between middle-shot starts is 100 milliseconds. A recording that lasts 250 milliseconds can therefore overlap subsequent shots. That is fundamentally different from cutting each clip to 100 milliseconds or speeding it up to fit the firing cadence.
 
-For a rifle, put an initial bolt/attack in `Start Waves`, several shot bodies in `Loop Waves`, and mechanical release recordings in `End Waves`. Set `RPM` to 600: a new middle shot is scheduled approximately every 100 milliseconds once the intro finishes. Then send `Stop Firing` and listen to the ending.
+The same system can also describe a held industrial tool. Set RPM to zero for a completion-based repeating middle, and use an authentic winding-down recording when the player releases the control.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Choose attack, middle and end sounds
-Fill the three arrays. `Start Waves` is optional; if it has no playable recording, playback proceeds to the middle.
->>>
+Add the node to a stereo Source, provide `Start Waves`, `Loop Waves` and `End Waves`, and connect the weapon's pressed event to `Start Firing`. Connect the release event to `Stop Firing`; sending only the start event leaves the player in its sustained state. Connect the left and right outputs to the stereo Source, or downmix deliberately for a mono spatialized Source. Begin with 600 RPM and test how recorded clip duration changes the overlap.
 
->>> 2. Wire press and release
-Connect the weapon pressed signal to `Start Firing` and release signal to `Stop Firing`. Connect `Out Mono` and `On Finished` according to your Source lifecycle.
->>>
+Toggle `Immediate Release` while holding and releasing the action. With it enabled, currently active waves fade quickly and the end begins promptly. With it disabled, active recordings finish before the ending starts. `On Finished` is intended to signal completion of the released sequence, not to fire after each middle shot.
 
->>> 3. Set RPM and release behaviour
-Choose `RPM = 0` for completion-driven machinery loops, or a positive RPM for timed overlapping shots. Test both `Immediate Release` settings with your actual recordings.
->>>
+`RPM = 0` preserves sequential middle playback. A positive value is bounded by the implementation's supported range of 60–2400 RPM. This controls the start intervals, **not** the source playback speed. The code maintains a maximum of twelve middle voices; when every voice is occupied, a new scheduled shot is skipped instead of abruptly cutting another. `Immediate Release` changes release semantics but does not make existing recordings disappear retroactively unless the fade path is selected.
 
-## The controls that matter
+**Practical limitations.** Test starting and stopping in the middle of the introduction, releasing while several middle shots overlap, and retriggering while the ending is audible. Also test empty arrays and a long middle recording at high RPM to expose voice saturation. This is a playback scheduler, not a ballistic or weapons-logic system: gameplay still decides exactly when shots happen and when to send the release trigger.
 
-`Immediate Release = true` fades currently active audio and begins the end recording promptly. When false, the player waits for active shots or intro audio to finish before entering the end phase. `RPM` is a **firing interval**, not a playback speed control: raising it should increase the number of shot starts without shortening individual recordings. The source clamps positive rates to its supported range.
 
-## Outputs and completion
+==- Exact input and output pins
 
-- **`Out Mono`** · Audio (mono) — Mixed mono audio output.
-- **`On Finished`** · Trigger — Fires when ending audio and any remaining shots have finished.
+**Inputs from the current C++ node definition**
 
-!!!tip About finishing sounds
-A trigger that indicates a source has finished is not always the end of **everything audible**. If you add propagation, early reflections or another tail-generating processor downstream, route completion through that final processor before ending your MetaSound Source.
-!!!
+- **`Start Firing`** — *Trigger*. Play a random intro, then begin firing middle waves.
+- **`Stop Firing`** — *Trigger*. Stop scheduling shots and enter the ending.
+- **`Immediate Release`** — *Boolean*. True: fade active waves and play ending immediately. False: let all active waves finish before ending.
+- **`RPM`** — *Float*. 0 = legacy sequential middle waves. 60-2400 = middle shots per minute, with overlap. Updated at shot boundaries.
+- **`Start Waves`** — *Wave Asset Array*. Random intro wave array. If empty, start middle sounds immediately.
+- **`Loop Waves`** — *Wave Asset Array*. Random middle wave array; RPM sets the interval between starts, not between completions.
+- **`End Waves`** — *Wave Asset Array*. Random ending wave array.
 
-## Things to watch for
+**Outputs from the current C++ node definition**
 
-- At high RPM with long recordings, all twelve middle voices can be occupied. The newest scheduled shot is then skipped rather than cutting an existing voice.
-- `On Finished` follows the release sequence; it is not expected during a continuously held firing action. Missing middle waves can prevent audible firing even if the state remains active.
-- The node is not a ballistic simulation; it controls recording playback. Keep muzzle, mechanical and environmental content appropriately designed.
+- **`Out Left`** — *Audio buffer*. Stereo mix output.
+- **`Out Right`** — *Audio buffer*. Right channel of the stereo playback mix.
+- **`On Finished`** — *Trigger*. Fires when ending audio and any remaining shots have finished.
 
-==- Full input reference
-- **`Start Firing`** · *Trigger* — Play a random intro, then begin firing middle waves.
-- **`Stop Firing`** · *Trigger* — Stop scheduling shots and enter the ending.
-- **`Immediate Release`** · *Boolean* — True: fade active waves and play ending immediately. False: let all active waves finish before ending.
-- **`RPM`** · *Float* — 0 = legacy sequential middle waves. 60-2400 = middle shots per minute, with overlap. Updated at shot boundaries.
-- **`Start Waves`** · *Wave Asset Array* — Random intro wave array. If empty, start middle sounds immediately.
-- **`Loop Waves`** · *Wave Asset Array* — Random middle wave array; RPM sets the interval between starts, not between completions.
-- **`End Waves`** · *Wave Asset Array* — Random ending wave array.
 ===
 
-==- Full output reference
-- **`Out Mono`** · Audio (mono) — Mixed mono audio output.
-- **`On Finished`** · Trigger — Fires when ending audio and any remaining shots have finished.
-===
-
-## Continue learning
-
-[Automatic weapon recipe](../../../examples/automatic-weapon.md) walks through practical recording choices and Stop Firing behaviour. Also see the [Playback overview](../../playback.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Automatic weapon walkthrough](../../../examples/automatic-weapon.md) for a practical setup.

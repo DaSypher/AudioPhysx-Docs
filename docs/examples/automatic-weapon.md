@@ -1,44 +1,29 @@
 ---
-label: Automatic weapon with RPM
+label: "Automatic weapon with RPM"
 icon: play
-order: 88
+order: 94
 ---
-# Automatic weapon sound with RPM
 
-**Goal:** Start a weapon with an attack recording, repeat variable shot bodies at an actual firing rate, and play a proper release tail when the player lets go of the trigger.
+# Automatic weapon with RPM
 
-The important improvement over a simple sequential player is that a shot recording might last longer than the interval between rounds. **RPM controls when the next shot begins**, not how quickly the current recording must finish.
+**Primary AudioPhysx tools:** AP: Start Loop End Player
 
-## Prepare three kinds of recording
+A good example is a listening experiment, not just a screenshot of connected pins. This exercise explains what content to prepare, which signals the graph needs, and what result you should listen for before increasing complexity.
 
-**Start Waves** should contain the distinctive attack or mechanism sound when the weapon first fires. **Loop Waves** holds your repeatable middle gunshot variations. **End Waves** contains the release, stopping mechanism or tail used after firing stops.
+## Prepare the recording and context
 
-## Connect it
+Collect a short introductory attack or weapon mechanism, several main gunshot variations and one or more release/tail recordings. Keep the main recordings in a consistent tonal family. A gunshot that rings for 250 ms does **not** need to be cut to 100 ms just because the weapon fires at 600 rounds per minute; the scheduler is designed to let the recordings overlap.
 
->>> 1. Add Start Loop End Player
-Create a mono MetaSound Source and add [AP: Start Loop End Player](../metasound/nodes/playback/start-loop-end.md).
+## Assemble the MetaSound and test it
 
->>> 2. Assign the wave arrays
-Fill `Start Waves`, `Loop Waves` and `End Waves`. Use multiple middle takes to prevent the same shot being selected endlessly.
-
->>> 3. Set a firing rate
-Set `RPM` to 600 for a nominal **100 ms interval** between middle-shot starts. Positive RPM values are distinct from the `RPM = 0` completion-driven mode.
-
->>> 4. Wire the controls
-Send the weapon pressed event to `Start Firing` and the released event to `Stop Firing`. Connect `Out Mono` to the graph output and completion as appropriate.
-
->>> 5. Test both release options
-With `Immediate Release` enabled, active shots fade and the end begins promptly. With it disabled, active audio gets time to complete first.
->>>
+Create a stereo Source and add Start Loop End Player. Fill `Start Waves`, `Loop Waves` and `End Waves`. Route gameplay press to `Start Firing` and release to `Stop Firing`, then connect Left/Right audio and final completion. Set `RPM` to 600 and audition a sustained hold: once the introductory recording finishes, middle shots should be scheduled roughly every 100 ms. Test `Immediate Release` both on and off to hear whether active shots fade quickly or finish before the ending begins.
 
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-automatic-weapon.png -->
 
-## What to listen for
+## Judge the result in a game
 
-At 600 RPM, a new middle recording should start approximately every tenth of a second once the intro has finished, even when an individual recording is longer. Releasing the weapon should prevent new middle shots and lead into an ending. Because the node has a **twelve-voice middle pool**, very long samples at high RPM can exhaust the available voices; new shot starts may then be skipped rather than cutting earlier recordings off.
+A convincing automatic weapon should communicate a stable firing rhythm while allowing individual shot bodies and tails to overlap. The source has a bounded twelve-voice middle pool, so extremely high RPM plus long clips can saturate it and cause new scheduled shots to be skipped. If the event never finishes, check that `Stop Firing` actually arrives; a missing release event is not an audio-decoder problem.
 
-!!!warning Held audio needs a release event
-If your gameplay only sends `Start Firing` and never sends `Stop Firing`, the source may remain in the active middle state. This is a gameplay trigger contract, not a playback bug.
-!!!
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
 
-[Detailed player reference](../metasound/nodes/playback/start-loop-end.md)
+[Browse the full node reference](../metasound/README.md) for exact control types and limitations.

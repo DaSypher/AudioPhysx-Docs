@@ -1,65 +1,54 @@
 ---
 label: "AP: Atmosphere Absorption"
 icon: file
-order: 70
+order: 82
 ---
+
 # AP: Atmosphere Absorption
 
-**MetaSound · AudioPhysx / Propagation**
+**AudioPhysx / Propagation** · Unreal Engine 5.8.4 development source
 
-Make distant sound lose some of its brightness as it travels through air.
+Make distant audio gradually lose some of its high-frequency definition as it travels through air.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-atmosphere-absorption.png -->
 
-## What actually happens
+## Understanding the behaviour
 
-Air tends to reduce high-frequency content over distance, and the amount depends on conditions such as temperature, humidity and pressure. This node applies an approximate distance-and-atmosphere-dependent spectral loss to the mono signal.
+Air transmission can change the character of a sound even when no wall or other obstacle exists between source and listener. Atmosphere Absorption uses travelled distance together with temperature, humidity and pressure to estimate frequency-dependent losses. The audible goal is a controlled reduction in brightness as the path grows longer, rather than simply moving the volume slider down.
 
-Unlike standard distance attenuation, the goal is not just to reduce overall volume but to change the tonal balance. A distant sharp recording can become less brittle and more subdued.
+The stereo version accepts `In Left` and `In Right` and produces `Out Left` and `Out Right`. Each channel is processed using its own audio history while the environmental controls remain shared. That means stereo ambience or an authored wide sound can retain its left/right differences through the frequency shaping.
 
-## Hear it in a game
+Try a short crisp impact or a mechanical sound with noticeable high-frequency content. Compare a near distance with a much larger one, leaving the Wave Asset unchanged. At a longer path, you should expect the very bright content to be less pronounced. You can then adjust the atmospheric conditions and hear how the approximate absorption model responds.
 
-Play a short crisp impact while increasing `Distance (cm)` from near to far. Then change humidity and temperature to hear how the approximate frequency response changes. Compare against a reference recording rather than relying only on extreme parameter settings.
+In a game, this effect can complement distance-recording choices. A distant weapon tail is not just a close gunshot made quieter, so use appropriate source material as well as DSP when the perspective change matters.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Feed mono audio
-Route mono audio into `Audio`.
->>>
+Connect stereo audio to the two input buffers and provide `Distance (cm)` from gameplay or the AudioPhysx world system. Use the environment values you intend for the scene, beginning with standard conditions rather than extreme laboratory inputs. Feed the two outputs to a stereo Source or a later stereo processor. The node is an audio processor and does not produce a completion trigger on its own.
 
->>> 2. Provide atmospheric conditions
-Provide `Distance (cm)`; use the project’s current environmental values when available.
->>>
+Audition the source first without absorption, then with a moderate distance and eventually a very long distance. If the result becomes unnaturally muffled early, inspect whether Unreal's own air-absorption attenuation is also enabled.
 
->>> 3. Compare near and far tone
-Tune the result while comparing direct sound against already-enabled Unreal air absorption.
->>>
+`Temperature (C)` uses degrees Celsius; `Humidity (%)` is relative humidity; `Pressure (kPa)` is kilopascals. `Distance (cm)` is the travelled path length in Unreal centimetres. These units are not interchangeable with the flyby system's metre-based closest approach, and a wrong distance conversion can make any physically inspired model appear dramatically incorrect.
 
-## The controls that matter
+**Practical limitations.** The model is an approximation for believable game-audio behaviour, not a laboratory-calibrated prediction for every atmospheric condition. It also does not simulate rain, terrain, wind scattering or barrier transmission. Tune it in context, using a real output device and a varied set of recordings, rather than choosing a very dark result solely because it sounds dramatic on one sharp test sample.
 
-`Temperature (C)` is degrees Celsius, `Humidity (%)` is relative humidity, and `Pressure (kPa)` is kilopascals. `Distance (cm)` is in Unreal centimetres and drives how much the atmospheric model affects the sound.
 
-## What the node outputs
+==- Exact input and output pins
 
-- **`Audio`** · Audio (mono) — Audio after atmospheric absorption.
+**Inputs from the current C++ node definition**
 
-## Things to watch for
+- **`In Left`** — *Audio buffer*. Left channel of the stereo audio input.
+- **`In Right`** — *Audio buffer*. Right audio channel to process.
+- **`Distance (cm)`** — *Float*. Distance travelled by sound in centimetres.
+- **`Temperature (C)`** — *Float*. Air temperature in degrees Celsius; default 20.
+- **`Humidity (%)`** — *Float*. Relative humidity from 0 to 100; default 50.
+- **`Pressure (kPa)`** — *Float*. Atmospheric pressure in kilopascals; default 101.325.
 
-- This is an approximate game-audio model, not a laboratory-calibrated propagation solver.
-- If Unreal attenuation settings already perform air absorption, the two effects may make the source unnecessarily dark.
+**Outputs from the current C++ node definition**
 
-==- Full input reference
-- **`Audio`** · *Audio (mono)* — Mono input audio.
-- **`Distance (cm)`** · *Float* — Distance travelled by sound in centimetres.
-- **`Temperature (C)`** · *Float* — Air temperature in degrees Celsius; default 20.
-- **`Humidity (%)`** · *Float* — Relative humidity from 0 to 100; default 50.
-- **`Pressure (kPa)`** · *Float* — Atmospheric pressure in kilopascals; default 101.325.
+- **`Out Left`** — *Audio buffer*. Audio after atmospheric absorption.
+- **`Out Right`** — *Audio buffer*. Right audio channel after processing.
+
 ===
 
-==- Full output reference
-- **`Audio`** · Audio (mono) — Audio after atmospheric absorption.
-===
-
-## Continue learning
-
-[Material Transmission](../acoustics/material-transmission.md) changes spectral content because of barriers instead of air. Also see the [Propagation overview](../../propagation.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Material Transmission](../acoustics/material-transmission.md) when a wall or barrier, rather than air, is the main source of spectral loss.

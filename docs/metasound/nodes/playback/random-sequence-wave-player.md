@@ -1,66 +1,53 @@
 ---
 label: "AP: Random Sequence Wave Player"
-icon: list-ordered
-order: 90
+icon: file
+order: 97
 ---
+
 # AP: Random Sequence Wave Player
 
-**MetaSound · AudioPhysx / Playback**
+**AudioPhysx / Playback** · Unreal Engine 5.8.4 development source
 
-Keep the stages of an action in order, but randomly vary the recording played at each stage.
+A predictable beginning, middle and end—but with fresh recording choices inside every stage.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-random-sequence-wave-player.png -->
 
-## What actually happens
+## Understanding the behaviour
 
-Each expandable **Sequence Steps** input is a **Wave Asset Array**, not a single file. On reaching a step, the player chooses one valid member of that array and plays it to completion. It then moves on to the next step and selects again there.
+Random Sequence combines two ideas: ordered playback and random variation. Each expandable step receives a **Wave Asset Array**, not one Wave Asset. When the player reaches a step, it selects a playable member of that array, plays it to completion, and then advances to the next step. The number of stages and the recordings inside each stage are two separate design decisions.
 
-The step order stays predictable, but the details change each time: a lock might always click, turn, and release, without sounding like the exact same three recordings on every use. Previous selections are tracked per step to reduce immediate repetition when alternatives are available.
+This lets you build recognizably structured events without every repetition sounding identical. Because the outputs are now `Out Left` and `Out Right`, both the chosen recording and the change from one stage to another can retain genuine stereo content. The selection is made when a stage begins; it is not a continuous shuffle of a playing recording.
 
-## Hear it in a game
+Consider opening a sci-fi container. You always want an authorization beep, a motor action and a seal release, but you recorded several different beeps, motor passes and sealing noises. Three ordered arrays give you the same functional sequence every time while avoiding the exact same combination of sounds on every interaction.
 
-Create three arrays: `Open` clicks, `Mechanism` rotations, and `Close` clunks. Put at least two variations in each. The three stages should always happen in the same order, but the chosen recordings should change over repeated plays.
+This works particularly well for repeated gameplay interactions where the timing depends on the actual recordings. You do not need to enter the motor duration anywhere in the graph: the next phase follows playback completion.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Add the sequence stages
-Add the node to a mono MetaSound Source and expand `Sequence Steps` to the number of stages.
->>>
+Add the player to a stereo MetaSound Source. Expand the sequence-step group to three steps and give each `Waves` input an array appropriate to that stage. Connect the starting trigger to `Play` and the stereo channels to the Source output. Keep `Loop Sequence` disabled for a one-shot action, then check that `On Finished` occurs after the last chosen clip completes.
 
->>> 2. Fill each stage with variations
-For each `Waves` slot, create an array containing recordings for *that stage only*. Do not mix opening and closing recordings in the same array.
->>>
+For a useful test, create arrays with distinct recordings of different lengths. Trigger the action several times and check that it always visits all available stages in the intended order. Empty or unplayable step entries are handled by the player's fallback/skip logic, so missing content can shorten the audible result.
 
->>> 3. Connect and test the complete action
-Connect `Play`, `Out Mono`, and optionally `On Finished`. Enable `Loop Sequence` only if the entire multi-stage action should repeat.
->>>
+`Loop Sequence` repeats the whole collection of stages, not just the last recording. `Stop` immediately stops the action without emitting the natural-completion trigger. The node's previous-selection tracking can reduce obvious immediate repetition when there are multiple valid members; it is not intended as a guaranteed shuffle-bag cycle.
 
-## The controls that matter
+**Practical limitations.** Make sure each array contains recordings belonging to the same functional stage. A long release sample accidentally placed in the middle-stage array will delay the final stage by its full length. Likewise, the node cannot automatically synchronize a mechanically meaningful animation; it schedules **audio** by audio completion, so gameplay effects that must coincide with particular subevents may still require event markers or explicit triggers.
 
-`Loop Sequence` starts again at step one after the last valid step. `Stop` cancels the current pass. The contents of the arrays determine the durations; there is no manual per-step delay or global RPM.
 
-## Outputs and completion
+==- Exact input and output pins
 
-- **`Out Mono`** · Audio (mono) — Audio from the current step.
-- **`On Finished`** · Trigger — Fires after all playable steps finish.
+**Inputs from the current C++ node definition**
 
-## Things to watch for
+- **`Play`** — *Trigger*. Start the sequence. Play again to restart.
+- **`Stop`** — *Trigger*. Stop immediately without On Finished.
+- **`Loop Sequence`** — *Boolean*. Restart after the final recording.
+- **`Waves`** — *Wave Asset Array*. A Wave Asset Array for this expandable step.
 
-- A step with no valid assets is skipped, which can make the audible sequence shorter than the number of configured steps.
-- Random selection is not the same as shuffle-bag exhaustion. Use Shuffle-Bag when you want to hear every variation before a cycle repeats.
+**Outputs from the current C++ node definition**
 
-==- Full input reference
-- **`Play`** · *Trigger* — Start the sequence. Play again to restart.
-- **`Stop`** · *Trigger* — Stop immediately without On Finished.
-- **`Loop Sequence`** · *Boolean* — Restart after the final recording.
-- **`Waves`** · *Wave Asset Array* — A Wave Asset Array for this expandable step.
+- **`Out Left`** — *Audio buffer*. Audio from the current step.
+- **`Out Right`** — *Audio buffer*. Right channel of the stereo playback mix.
+- **`On Finished`** — *Trigger*. Fires after all playable steps finish.
+
 ===
 
-==- Full output reference
-- **`Out Mono`** · Audio (mono) — Audio from the current step.
-- **`On Finished`** · Trigger — Fires after all playable steps finish.
-===
-
-## Continue learning
-
-[Sequence Wave Player](sequence-wave-player.md) is the simpler fixed-recording alternative. Also see the [Playback overview](../../playback.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Sequence Wave Player](sequence-wave-player.md) for a fixed sequence without per-stage randomness.

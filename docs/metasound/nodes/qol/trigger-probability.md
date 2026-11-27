@@ -1,68 +1,53 @@
 ---
 label: "AP: Trigger Probability"
-icon: shuffle
-order: 60
+icon: file
+order: 79
 ---
+
 # AP: Trigger Probability
 
-**MetaSound · AudioPhysx / Qol**
+**AudioPhysx / QoL** · Unreal Engine 5.8.4 development source
 
-Let an incoming trigger through only some of the time.
+Make optional sound details happen occasionally rather than on every gameplay event.
 
 <!-- IMAGE SLOT: docs/static/images/nodes/node-trigger-probability.png -->
 
-## What actually happens
+## Understanding the behaviour
 
-Not every event needs an audible consequence. A subtle rattle might happen on some movements, a cloth rustle on occasional animation cycles, or a debris tick on only a fraction of impacts.
+A probability gate makes one decision for each trigger presented to `In`. A `Probability` of 0 rejects everything; a value of 1 allows everything; values between represent a chance for each event. `On Passed` and `On Rejected` preserve the event as a trigger rather than converting it into audio. The `Last Roll` Float lets you see the most recent random value used by the decision process.
 
-Trigger Probability evaluates a random decision for each incoming `In` event. Unlike an audio player’s variation picker, it decides **whether the event happens at all**.
+This control-only design is deliberate. It is independent of whether your eventual Wave Player produces stereo or mono output. You can place Trigger Probability before a complex stereo layered effect just as easily as before a simple one-shot player.
 
-## Hear it in a game
+Consider adding occasional fabric rustling to a character's movement. A rustle on every single footstep may feel artificial, but a chance-based trigger creates texture without requiring a complicated animation state machine. Likewise, a working motor can produce an occasional metallic rattle rather than a rattle at every update.
 
-Add a faint gear-rattle layer to a running machine, but send its trigger through this node first. A probability of 0 should never pass; 1 should always pass; values between those extremes should create occasional events.
+Randomness is not the same as a guaranteed schedule. A 25% chance does not mean exactly one event every four triggers, and long runs without a pass are possible.
 
-## Build a working graph
+## Building and controlling the sound
 
->>> 1. Connect the event
-Send an event trigger to `In`.
->>>
+Insert the node between the gameplay trigger and the optional sound. Supply `Probability`, then route `On Passed` to the target player's Play input. Use `On Rejected` only if the graph needs to react or if you want to debug how often the optional detail is being suppressed. A fixed `Seed` is helpful for reproducible test sessions, while `ReSeed` restarts the random sequence.
 
->>> 2. Choose probability and seed
-Set `Probability` from 0 to 1 and wire `On Passed` to the optional sound effect.
->>>
+Test the extremes first: zero probability should never pass a trigger, and one should always pass. Only then choose an intermediate value appropriate to the desired density.
 
->>> 3. Route occasional sounds
-Use `Seed` and `ReSeed` when a repeatable sequence is useful for debugging.
->>>
+`Probability` is sampled once per audio block and lies between 0 and 1. The source accepts a nonnegative deterministic `Seed`; `-1` requests a new random seed. `Last Roll` is a block-rate Float that reports the latest draw and begins at a sentinel value before any event arrives. That makes it useful for debugging selection without confusing a numeric value with an audio output.
 
-## The controls that matter
+**Practical limitations.** If a specific recording must be heard at least once during a finite gameplay cycle, a simple probability gate is the wrong tool. Use a deterministic schedule or a bag-style selection instead. Also avoid hiding a key gameplay cue behind an optional probability gate unless the player has another reliable way to understand the event.
 
-`Probability` is a fraction: 0.25 means an intended 25% chance per evaluated trigger, **not** one event every four triggers. `Seed` and `ReSeed` control the random stream; this node does not alter a sample’s gain or playback pitch.
 
-## What the node outputs
+==- Exact input and output pins
 
-- **`On Passed`** · Trigger — Passed trigger at its original sample frame.
-- **`On Rejected`** · Trigger — Rejected trigger at its original sample frame.
-- **`Last Roll`** · Float — Last random value in [0,1); -1 until first In. Block-rate Float.
+**Inputs from the current C++ node definition**
 
-## Things to watch for
+- **`In`** — *Trigger*. Evaluate this trigger against the current probability.
+- **`ReSeed`** — *Trigger*. Restart the random sequence using Seed; same-frame In uses the restarted sequence.
+- **`Probability`** — *Float*. Probability from 0 (never) to 1 (always), sampled once per audio block.
+- **`Seed`** — *Integer*. Nonnegative: deterministic. -1: use a new random seed.
 
-- Chance is statistical, not a guaranteed distribution. Long runs of passes or rejections can happen.
-- If a sound must play at least once during a finite cycle, prefer a selection strategy with explicit history.
+**Outputs from the current C++ node definition**
 
-==- Full input reference
-- **`In`** · *Trigger* — Evaluate this trigger against the current probability.
-- **`ReSeed`** · *Trigger* — Restart the random sequence using Seed; same-frame In uses the restarted sequence.
-- **`Probability`** · *Float* — Probability from 0 (never) to 1 (always), sampled once per audio block.
-- **`Seed`** · *Integer* — Nonnegative: deterministic. -1: use a new random seed.
+- **`On Passed`** — *Trigger*. Passed trigger at its original sample frame.
+- **`On Rejected`** — *Trigger*. Rejected trigger at its original sample frame.
+- **`Last Roll`** — *Float*. Last random value in [0,1); -1 until first In. Block-rate Float.
+
 ===
 
-==- Full output reference
-- **`On Passed`** · Trigger — Passed trigger at its original sample frame.
-- **`On Rejected`** · Trigger — Rejected trigger at its original sample frame.
-- **`Last Roll`** · Float — Last random value in [0,1); -1 until first In. Block-rate Float.
-===
-
-## Continue learning
-
-[Shuffle-Bag Wave Player](../playback/shuffle-bag-wave-player.md) distributes sound *choices* rather than rejecting whole events. Also see the [Qol overview](../../qol.md) and [signal & completion concepts](../../../getting-started/signals-and-completion.md).
+**Related:** [Shuffle-Bag Wave Player](../playback/shuffle-bag-wave-player.md) for distributing sound choices across an entire variation pool.

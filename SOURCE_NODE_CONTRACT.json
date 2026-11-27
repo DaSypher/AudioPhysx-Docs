@@ -1,0 +1,1382 @@
+[
+  {
+    "category": "playback",
+    "slug": "random-wave-player",
+    "name": "AP: Random Wave Player",
+    "file": "APRandomWavePlayerNode.cpp",
+    "inputs": [
+      [
+        "Play",
+        "Trigger",
+        "Select one random valid Wave Asset and play it."
+      ],
+      [
+        "Stop",
+        "Trigger",
+        "Stop all active wave playback."
+      ],
+      [
+        "Waves",
+        "Wave Asset Array",
+        "Array of Wave Assets to randomly select from."
+      ],
+      [
+        "No Immediate Repeat",
+        "Boolean",
+        "Prevent consecutive selections of the same  wave when alternatives are available."
+      ],
+      [
+        "Pitch Shift (st)",
+        "Float",
+        "Playback pitch adjustment in semitones.  Also changes playback duration."
+      ],
+      [
+        "Max Voices",
+        "Integer",
+        "Maximum number of overlapping recordings,  from 1 to 16."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Left channel of the active-voice stereo mix."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right channel of the stereo playback mix."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Triggered when the final active voice  finishes naturally."
+      ],
+      [
+        "On Rejected",
+        "Trigger",
+        "Triggered when playback cannot start."
+      ],
+      [
+        "Selected Index",
+        "Integer",
+        "Index of the most recently accepted wave,  or -1 for a rejected selection."
+      ]
+    ]
+  },
+  {
+    "category": "playback",
+    "slug": "shuffle-bag-wave-player",
+    "name": "AP: Shuffle-Bag Wave Player",
+    "file": "APShuffleBagWavePlayerNode.cpp",
+    "inputs": [
+      [
+        "Play",
+        "Trigger",
+        "Draw and play one unused eligible wave."
+      ],
+      [
+        "Stop",
+        "Trigger",
+        "Stop all current voices without firing On Finished."
+      ],
+      [
+        "Reset Bag",
+        "Trigger",
+        "Discard the remaining bag; keep playing voices."
+      ],
+      [
+        "Waves",
+        "Wave Asset Array",
+        "Wave Asset Array. Maximum 128 entries."
+      ],
+      [
+        "Weights",
+        "FFloatArray",
+        "Optional non-negative weights aligned with Waves. Missing entries use 1; zero excludes an entry."
+      ],
+      [
+        "Pitch Shift (st)",
+        "Float",
+        "Playback-rate pitch in semitones, -24 to 24."
+      ],
+      [
+        "Gain (dB)",
+        "Float",
+        "Gain for newly started voices, -96 to +12 dB."
+      ],
+      [
+        "Max Voices",
+        "Integer",
+        "Maximum overlapping voices (1 to 16)."
+      ],
+      [
+        "Seed",
+        "Integer",
+        "Nonzero seed is deterministic. Zero selects a random seed."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Mixed playback audio."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right channel of the stereo playback mix."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Final active voice finished naturally."
+      ],
+      [
+        "On Rejected",
+        "Trigger",
+        "No eligible wave, free voice or playable proxy."
+      ],
+      [
+        "Selected Index",
+        "Integer",
+        "Most recent selected index; -1 on rejection/Stop."
+      ],
+      [
+        "Bag Remaining",
+        "Integer",
+        "Number of unplayed entries left in the current bag."
+      ]
+    ]
+  },
+  {
+    "category": "playback",
+    "slug": "sequence-wave-player",
+    "name": "AP: Sequence Wave Player",
+    "file": "APSequenceWavePlayerNode.cpp",
+    "inputs": [
+      [
+        "Play",
+        "Trigger",
+        "Play the wave sequence from the beginning. Retriggering restarts it."
+      ],
+      [
+        "Stop",
+        "Trigger",
+        "Stop playback immediately, without firing On Finished."
+      ],
+      [
+        "Loop Sequence",
+        "Boolean",
+        "Restart from the first valid wave after the last finishes."
+      ],
+      [
+        "Wave",
+        "Wave Asset",
+        "Wave Asset to play in sequence. Add or remove Wave slots on the node."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Stereo audio output from the currently playing wave."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right channel of the stereo playback mix."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Fires once after the last wave finishes naturally (when not looping)."
+      ]
+    ]
+  },
+  {
+    "category": "playback",
+    "slug": "random-sequence-wave-player",
+    "name": "AP: Random Sequence Wave Player",
+    "file": "APRandomSequenceWavePlayerNode.cpp",
+    "inputs": [
+      [
+        "Play",
+        "Trigger",
+        "Start the sequence. Play again to restart."
+      ],
+      [
+        "Stop",
+        "Trigger",
+        "Stop immediately without On Finished."
+      ],
+      [
+        "Loop Sequence",
+        "Boolean",
+        "Restart after the final recording."
+      ],
+      [
+        "Waves",
+        "Wave Asset Array",
+        "A Wave Asset Array for this expandable step."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Audio from the current step."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right channel of the stereo playback mix."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Fires after all playable steps finish."
+      ]
+    ]
+  },
+  {
+    "category": "playback",
+    "slug": "layered-wave-player",
+    "name": "AP: Layered Wave Player",
+    "file": "APLayeredWavePlayerNode.cpp",
+    "inputs": [
+      [
+        "Play",
+        "Trigger",
+        "Start the valid layers as one atomic stack."
+      ],
+      [
+        "Stop",
+        "Trigger",
+        "Stop all stacks. Does not fire On Finished."
+      ],
+      [
+        "Layer Waves",
+        "Wave Asset Array",
+        "Wave Asset array: indices 0 to 7, one sound per layer."
+      ],
+      [
+        "Layer Gains (dB)",
+        "FFloatArray",
+        "Optional per-layer gains, aligned with Layer Waves. Missing values = 0 dB."
+      ],
+      [
+        "Layer Pitch (st)",
+        "FFloatArray",
+        "Optional per-layer playback-rate pitch offsets in semitones. Missing = 0."
+      ],
+      [
+        "Layer Delays (ms)",
+        "FFloatArray",
+        "Optional per-layer onset delay, 0 to 2000 ms. Missing = 0."
+      ],
+      [
+        "Max Voices",
+        "Integer",
+        "Maximum simultaneous individual layers across all stacks, 1 to 32."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Left-channel mix of all active layers."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right channel of the stereo playback mix."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Last layer of all active stacks finished naturally."
+      ],
+      [
+        "On Rejected",
+        "Trigger",
+        "No playable layers or insufficient free voices for the entire stack."
+      ],
+      [
+        "Active Layers",
+        "Integer",
+        "Number of active or pending layers."
+      ]
+    ]
+  },
+  {
+    "category": "playback",
+    "slug": "start-loop-end",
+    "name": "AP: Start Loop End Player",
+    "file": "APStartLoopEndWavePlayerNode.cpp",
+    "inputs": [
+      [
+        "Start Firing",
+        "Trigger",
+        "Play a random intro, then begin firing middle waves."
+      ],
+      [
+        "Stop Firing",
+        "Trigger",
+        "Stop scheduling shots and enter the ending."
+      ],
+      [
+        "Immediate Release",
+        "Boolean",
+        "True: fade active waves and play ending immediately. False: let all active waves finish before ending."
+      ],
+      [
+        "RPM",
+        "Float",
+        "0 = legacy sequential middle waves. 60-2400 = middle shots per minute, with overlap. Updated at shot boundaries."
+      ],
+      [
+        "Start Waves",
+        "Wave Asset Array",
+        "Random intro wave array. If empty, start middle sounds immediately."
+      ],
+      [
+        "Loop Waves",
+        "Wave Asset Array",
+        "Random middle wave array; RPM sets the interval between starts, not between completions."
+      ],
+      [
+        "End Waves",
+        "Wave Asset Array",
+        "Random ending wave array."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Stereo mix output."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right channel of the stereo playback mix."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Fires when ending audio and any remaining shots have finished."
+      ]
+    ]
+  },
+  {
+    "category": "playback",
+    "slug": "distance-wave-player",
+    "name": "AP: Distance Wave Player",
+    "file": "APDistanceWavePlayerNode.cpp",
+    "inputs": [
+      [
+        "Play",
+        "Trigger",
+        "Select one sample from the current distance range."
+      ],
+      [
+        "Stop",
+        "Trigger",
+        "Stop every active voice."
+      ],
+      [
+        "Distance (cm)",
+        "Float",
+        "Source-to-listener distance in centimetres."
+      ],
+      [
+        "Max Distance (cm)",
+        "Float",
+        "Hard playback cutoff evaluated only on Play."
+      ],
+      [
+        "Max Voices",
+        "Integer",
+        "Maximum simultaneous samples (1 to 16)."
+      ],
+      [
+        "No Immediate Repeat",
+        "Boolean",
+        "Avoid selecting the same sample consecutively  within the selected distance range."
+      ],
+      [
+        "Start Distance (cm)",
+        "Float",
+        "Distance at which this range becomes active."
+      ],
+      [
+        "Waves",
+        "Wave Asset Array",
+        "Array of samples for this range."
+      ],
+      [
+        "Volume",
+        "Float",
+        "Linear gain latched when a sample begins."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Stereo mix of all active voices."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right channel of the stereo playback mix."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it."
+      ]
+    ]
+  },
+  {
+    "category": "playback",
+    "slug": "physmat-wave-player",
+    "name": "AP: PhysMat Wave Player",
+    "file": "APPhysMatWavePlayerNode.cpp",
+    "inputs": [
+      [
+        "Play",
+        "Trigger",
+        "Choose and play one recording."
+      ],
+      [
+        "Stop",
+        "Trigger",
+        "Stop all active voices."
+      ],
+      [
+        "Hit PhysMat Path",
+        "String",
+        "Exact Physical Material asset path."
+      ],
+      [
+        "Default Waves",
+        "Wave Asset Array",
+        "Wave Asset array used when no route matches."
+      ],
+      [
+        "Default Volume",
+        "Float",
+        "Linear gain of fallback recordings."
+      ],
+      [
+        "No Immediate Repeat",
+        "Boolean",
+        "Avoid repeating the previous recording  when alternatives are available."
+      ],
+      [
+        "Max Voices",
+        "Integer",
+        "Maximum overlapping recordings."
+      ],
+      [
+        "Waves",
+        "Wave Asset Array",
+        "Wave Asset array for this material."
+      ],
+      [
+        "Volume",
+        "Float",
+        "Linear volume for this material."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Stereo mix output."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right channel of the stereo playback mix."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Fires when the final voice ends naturally."
+      ],
+      [
+        "On Rejected",
+        "Trigger",
+        "Fires when a requested voice cannot start."
+      ]
+    ]
+  },
+  {
+    "category": "playback",
+    "slug": "surface-wave-player",
+    "name": "AP: Surface Wave Player",
+    "file": "APSurfaceWavePlayerNode.cpp",
+    "inputs": [
+      [
+        "Play",
+        "Trigger",
+        "Select one valid wave from the hit surface."
+      ],
+      [
+        "Stop",
+        "Trigger",
+        "Stop all playing samples."
+      ],
+      [
+        "Hit Surface Type",
+        "Integer",
+        "Unreal EPhysicalSurface integer value  of the impacted physical material."
+      ],
+      [
+        "Max Voices",
+        "Integer",
+        "Maximum overlapping samples (1 to 16)."
+      ],
+      [
+        "No Immediate Repeat",
+        "Boolean",
+        "Avoid selecting the previous sample  when alternatives exist."
+      ],
+      [
+        "Default Waves",
+        "Wave Asset Array",
+        "Fallback array for unmatched surfaces  or empty surface arrays."
+      ],
+      [
+        "Default Volume",
+        "Float",
+        "Linear volume for fallback samples."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Stereo mix from active samples."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right channel of the stereo playback mix."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Fires when the last playing voice ends naturally.  Stop or rejected Play events do not trigger it."
+      ]
+    ]
+  },
+  {
+    "category": "playback",
+    "slug": "flyby-wave-player",
+    "name": "AP: Flyby Wave Player",
+    "file": "APFlybyWavePlayerNode.cpp",
+    "inputs": [
+      [
+        "Play",
+        "Trigger",
+        "Start one flyby, restarting this player if already active."
+      ],
+      [
+        "Stop",
+        "Trigger",
+        "Stop immediately; does not emit On Finished."
+      ],
+      [
+        "Whizz Waves",
+        "Wave Asset Array",
+        "Randomly chosen rush/whizz Wave Asset Array."
+      ],
+      [
+        "Crack Waves",
+        "Wave Asset Array",
+        "Randomly chosen supersonic crack Wave Asset Array."
+      ],
+      [
+        "Distance (m)",
+        "Float",
+        "Closest approach in metres. Optional: for custom graph controls."
+      ],
+      [
+        "Speed (m/s)",
+        "Float",
+        "Projectile speed in metres/second."
+      ],
+      [
+        "Intensity",
+        "Float",
+        "Normalized near-miss strength, 0 to 1."
+      ],
+      [
+        "Speed of Sound (m/s)",
+        "Float",
+        "Local speed of sound; used to validate shock playback."
+      ],
+      [
+        "Shock",
+        "Float",
+        "1 = Mach cone reaches listener (0 = ordinary whizz)."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Left-channel whizz and crack mix. Spatialize in the MetaSound Source."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right channel of the stereo playback mix."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "All started variations have finished naturally."
+      ],
+      [
+        "On Rejected",
+        "Trigger",
+        "No playable wave was selected."
+      ]
+    ]
+  },
+  {
+    "category": "acoustics",
+    "slug": "acoustic-paths",
+    "name": "AP: Acoustic Paths",
+    "file": "APAcousticPathsNode.cpp",
+    "inputs": [
+      [
+        "In Left",
+        "Audio buffer",
+        "Left channel of the stereo audio to propagate."
+      ],
+      [
+        "In Right",
+        "Audio buffer",
+        "Right audio channel to process."
+      ],
+      [
+        "Source Finished",
+        "Trigger",
+        "Wave Player On Finished; passed through after the path tails."
+      ],
+      [
+        "Selected Route",
+        "Float Array",
+        "Float Array from AP.AcousticRoute.Selected: delay ms, low/mid/high loss dB. Route selection occurs on the game thread."
+      ],
+      [
+        "Smoothing (ms)",
+        "Float",
+        "Smooth path loss and delay changes."
+      ],
+      [
+        "Delay Capacity (ms)",
+        "Float",
+        "Delay buffer capacity allocated ONCE at graph creation. Default 128 ms; raise to 1500 ms only if long cinematic propagation is required. Changes during playback cannot grow the buffer."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Only the selected, delayed and filtered acoustic path."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right audio channel after processing."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Triggered after the longest queued acoustic path tail."
+      ]
+    ]
+  },
+  {
+    "category": "acoustics",
+    "slug": "material-transmission",
+    "name": "AP: Material Transmission",
+    "file": "APMaterialTransmissionNode.cpp",
+    "inputs": [
+      [
+        "In Left",
+        "Audio buffer",
+        "Left channel of the stereo source audio."
+      ],
+      [
+        "In Right",
+        "Audio buffer",
+        "Right audio channel to process."
+      ],
+      [
+        "Obstructed",
+        "Boolean",
+        "True when the sound path is obstructed."
+      ],
+      [
+        "Thickness (cm)",
+        "Float",
+        "Assigned obstacle thickness in centimetres."
+      ],
+      [
+        "Reference Thickness (cm)",
+        "Float",
+        "Thickness at which the specified losses apply."
+      ],
+      [
+        "Low Loss (dB)",
+        "Float",
+        "Low-band transmission loss at reference thickness."
+      ],
+      [
+        "High Loss (dB)",
+        "Float",
+        "High-band transmission loss at reference thickness."
+      ],
+      [
+        "Crossover (Hz)",
+        "Float",
+        "Approximate low/high frequency division."
+      ],
+      [
+        "Leakage (%)",
+        "Float",
+        "Fraction of unobstructed audio mixed back in."
+      ],
+      [
+        "Smoothing (ms)",
+        "Float",
+        "Smoothing time for changing transmission gains."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Stereo audio after transmission filtering."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right audio channel after processing."
+      ]
+    ]
+  },
+  {
+    "category": "acoustics",
+    "slug": "source-directivity",
+    "name": "AP: Source Directivity",
+    "file": "APSourceDirectivityNode.cpp",
+    "inputs": [
+      [
+        "In Left",
+        "Audio buffer",
+        "Left channel of the stereo audio input."
+      ],
+      [
+        "In Right",
+        "Audio buffer",
+        "Right audio channel to process."
+      ],
+      [
+        "Angle (deg)",
+        "Float",
+        "Angle from the source forward direction  to the listener. 0 is front, 180 is rear."
+      ],
+      [
+        "Directivity (%)",
+        "Float",
+        "Directivity strength, 0 to 100 percent."
+      ],
+      [
+        "Rear Attenuation (dB)",
+        "Float",
+        "Maximum high-frequency attenuation at 180 degrees."
+      ],
+      [
+        "Low Frequency Directivity (%)",
+        "Float",
+        "Fraction of high-frequency attenuation  applied to the lower frequencies."
+      ],
+      [
+        "Crossover (Hz)",
+        "Float",
+        "Approximate low/high frequency division."
+      ],
+      [
+        "Smoothing (ms)",
+        "Float",
+        "Smooth changes in directional attenuation."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Stereo audio after directional filtering."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right audio channel after processing."
+      ]
+    ]
+  },
+  {
+    "category": "acoustics",
+    "slug": "impact-dynamics",
+    "name": "AP: Impact Dynamics",
+    "file": "APImpactAndEarlyReflectionsNodes.cpp",
+    "inputs": [
+      [
+        "In Left",
+        "Audio buffer",
+        "Stereo audio from the impact Wave Player."
+      ],
+      [
+        "In Right",
+        "Audio buffer",
+        "Right audio channel to process."
+      ],
+      [
+        "Impact",
+        "Trigger",
+        "Restart the transient when playback starts."
+      ],
+      [
+        "Impact Strength",
+        "Float",
+        "Normalized impact strength, 0 to 1."
+      ],
+      [
+        "Soft Gain",
+        "Float",
+        "Linear gain at impact strength 0."
+      ],
+      [
+        "Hard Gain",
+        "Float",
+        "Linear gain at impact strength 1."
+      ],
+      [
+        "Soft Cutoff (Hz)",
+        "Float",
+        "Low-pass cutoff for gentle impacts."
+      ],
+      [
+        "Hard Cutoff (Hz)",
+        "Float",
+        "Low-pass cutoff for strong impacts."
+      ],
+      [
+        "Transient Boost",
+        "Float",
+        "Extra attack gain applied to harder hits."
+      ],
+      [
+        "Transient Time (ms)",
+        "Float",
+        "Duration of the attack enhancement."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Impact-shaped stereo audio."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right audio channel after processing."
+      ],
+      [
+        "Applied Strength",
+        "Float",
+        "Clamped strength used by this operator."
+      ]
+    ]
+  },
+  {
+    "category": "acoustics",
+    "slug": "early-reflections",
+    "name": "AP: Early Reflections",
+    "file": "APImpactAndEarlyReflectionsNodes.cpp",
+    "inputs": [
+      [
+        "In Left",
+        "Audio buffer",
+        "Stereo signal to reflect."
+      ],
+      [
+        "In Right",
+        "Audio buffer",
+        "Right audio channel to process."
+      ],
+      [
+        "Source Finished",
+        "Trigger",
+        "Connect the Wave Player's On Finished output."
+      ],
+      [
+        "Room Size (m)",
+        "Float",
+        "Controls four synthetic extra reflection  path lengths. Does not trace geometry."
+      ],
+      [
+        "Speed of Sound (m/s)",
+        "Float",
+        "Propagation speed for reflection delays."
+      ],
+      [
+        "Dry Level",
+        "Float",
+        "Level of the original sound."
+      ],
+      [
+        "Wet Level",
+        "Float",
+        "Level of the reflection taps."
+      ],
+      [
+        "HF Damping",
+        "Float",
+        "Higher values remove more high frequencies  from reflections."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Original sound plus early reflections."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right audio channel after processing."
+      ],
+      [
+        "On Finished",
+        "Trigger",
+        "Fires after the last reflection tail."
+      ]
+    ]
+  },
+  {
+    "category": "propagation",
+    "slug": "distance-delay",
+    "name": "AP: Distance Delay",
+    "file": "APDistanceDelayNode.cpp",
+    "inputs": [
+      [
+        "In Left",
+        "Audio buffer",
+        "Stereo audio input."
+      ],
+      [
+        "In Right",
+        "Audio buffer",
+        "Right audio channel to process."
+      ],
+      [
+        "Distance (cm)",
+        "Float",
+        "Distance travelled by sound in Unreal centimetres. Sampled only when latched."
+      ],
+      [
+        "Speed of Sound (m/s)",
+        "Float",
+        "Propagation speed in metres per second.  Default 343 m/s. Converted internally to cm/s.  Sampled only when latched."
+      ],
+      [
+        "Max Delay (s)",
+        "Float",
+        "Maximum delay capacity in seconds (0.01-10). Allocated when the operator is constructed."
+      ],
+      [
+        "Relatch",
+        "Trigger",
+        "Recalculate propagation delay and discard the previous pending audio tail."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Delayed stereo audio."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right audio channel after processing."
+      ]
+    ]
+  },
+  {
+    "category": "propagation",
+    "slug": "dynamic-propagation",
+    "name": "AP: Dynamic Propagation",
+    "file": "APPropagationNodes.cpp",
+    "inputs": [
+      [
+        "In Left",
+        "Audio buffer",
+        "Stereo signal to propagate."
+      ],
+      [
+        "In Right",
+        "Audio buffer",
+        "Right audio channel to process."
+      ],
+      [
+        "Distance (cm)",
+        "Float",
+        "Source-listener distance in centimetres."
+      ],
+      [
+        "Speed of Sound (m/s)",
+        "Float",
+        "Sound speed in metres per second; default 343."
+      ],
+      [
+        "Max Delay (s)",
+        "Float",
+        "Maximum travel time, fixed at voice creation."
+      ],
+      [
+        "Smoothing (ms)",
+        "Float",
+        "Smooths small distance changes; default 25 ms."
+      ],
+      [
+        "Max Doppler (%)",
+        "Float",
+        "Maximum pitch deviation; default 20 percent."
+      ],
+      [
+        "Jump Threshold (cm)",
+        "Float",
+        "Large distance changes crossfade instead of scrubbing."
+      ],
+      [
+        "Jump Crossfade (ms)",
+        "Float",
+        "Crossfade duration; default 40 ms."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Stereo audio after travel-time delay."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right audio channel after processing."
+      ],
+      [
+        "Doppler Ratio",
+        "Float",
+        "Diagnostic pitch ratio. Do not apply again."
+      ]
+    ]
+  },
+  {
+    "category": "propagation",
+    "slug": "doppler-ratio",
+    "name": "AP: Doppler Ratio",
+    "file": "APPropagationNodes.cpp",
+    "inputs": [
+      [
+        "Source Toward Listener (m/s)",
+        "Float",
+        "Positive means source approaches listener."
+      ],
+      [
+        "Listener Toward Source (m/s)",
+        "Float",
+        "Positive means listener approaches source."
+      ],
+      [
+        "Speed of Sound (m/s)",
+        "Float",
+        "Default 343 m/s."
+      ]
+    ],
+    "outputs": [
+      [
+        "Pitch Ratio",
+        "Float",
+        "Pitch multiplier for playback WITHOUT Dynamic Propagation."
+      ]
+    ]
+  },
+  {
+    "category": "propagation",
+    "slug": "atmosphere-absorption",
+    "name": "AP: Atmosphere Absorption",
+    "file": "APAtmosphereAbsorptionNode.cpp",
+    "inputs": [
+      [
+        "In Left",
+        "Audio buffer",
+        "Left channel of the stereo audio input."
+      ],
+      [
+        "In Right",
+        "Audio buffer",
+        "Right audio channel to process."
+      ],
+      [
+        "Distance (cm)",
+        "Float",
+        "Distance travelled by sound in centimetres."
+      ],
+      [
+        "Temperature (C)",
+        "Float",
+        "Air temperature in degrees Celsius; default 20."
+      ],
+      [
+        "Humidity (%)",
+        "Float",
+        "Relative humidity from 0 to 100; default 50."
+      ],
+      [
+        "Pressure (kPa)",
+        "Float",
+        "Atmospheric pressure in kilopascals; default 101.325."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Left",
+        "Audio buffer",
+        "Audio after atmospheric absorption."
+      ],
+      [
+        "Out Right",
+        "Audio buffer",
+        "Right audio channel after processing."
+      ]
+    ]
+  },
+  {
+    "category": "qol",
+    "slug": "float-smoother",
+    "name": "AP: Float Smoother",
+    "file": "APFloatSmootherNode.cpp",
+    "inputs": [
+      [
+        "Target",
+        "Float",
+        "Float value to smooth. Sampled once per audio block."
+      ],
+      [
+        "Rise (ms)",
+        "Float",
+        "Exponential time constant for increasing values. Zero snaps immediately."
+      ],
+      [
+        "Fall (ms)",
+        "Float",
+        "Exponential time constant for decreasing values. Zero snaps immediately."
+      ],
+      [
+        "Snap",
+        "Trigger",
+        "Immediately set the output to Target in this block (block-rate behaviour)."
+      ]
+    ],
+    "outputs": [
+      [
+        "Smoothed",
+        "Float",
+        "Rise/fall smoothed Float control signal (block-rate)."
+      ]
+    ]
+  },
+  {
+    "category": "qol",
+    "slug": "trigger-cooldown",
+    "name": "AP: Trigger Cooldown",
+    "file": "APTriggerCooldownNode.cpp",
+    "inputs": [
+      [
+        "In",
+        "Trigger",
+        "Triggers to rate-limit."
+      ],
+      [
+        "Reset",
+        "Trigger",
+        "Clear the cooldown; simultaneous In triggers may pass."
+      ],
+      [
+        "Cooldown (ms)",
+        "Float",
+        "Minimum time between accepted triggers. Zero passes all triggers."
+      ]
+    ],
+    "outputs": [
+      [
+        "On Passed",
+        "Trigger",
+        "Triggers allowed through at the original sample frame."
+      ],
+      [
+        "On Rejected",
+        "Trigger",
+        "Triggers blocked by the cooldown at the original sample frame."
+      ],
+      [
+        "Remaining (ms)",
+        "Float",
+        "Cooldown remaining at the end of this audio block. Block-rate Float."
+      ]
+    ]
+  },
+  {
+    "category": "qol",
+    "slug": "trigger-probability",
+    "name": "AP: Trigger Probability",
+    "file": "APTriggerProbabilityNode.cpp",
+    "inputs": [
+      [
+        "In",
+        "Trigger",
+        "Evaluate this trigger against the current probability."
+      ],
+      [
+        "ReSeed",
+        "Trigger",
+        "Restart the random sequence using Seed; same-frame In uses the restarted sequence."
+      ],
+      [
+        "Probability",
+        "Float",
+        "Probability from 0 (never) to 1 (always), sampled once per audio block."
+      ],
+      [
+        "Seed",
+        "Integer",
+        "Nonnegative: deterministic. -1: use a new random seed."
+      ]
+    ],
+    "outputs": [
+      [
+        "On Passed",
+        "Trigger",
+        "Passed trigger at its original sample frame."
+      ],
+      [
+        "On Rejected",
+        "Trigger",
+        "Rejected trigger at its original sample frame."
+      ],
+      [
+        "Last Roll",
+        "Float",
+        "Last random value in [0,1); -1 until first In. Block-rate Float."
+      ]
+    ]
+  },
+  {
+    "category": "qol",
+    "slug": "distance-switch",
+    "name": "AP: Distance Switch (Dynamic)",
+    "file": "APDynamicDistanceSwitchNode.cpp",
+    "inputs": [
+      [
+        "Play",
+        "Trigger",
+        "Evaluate distance and trigger one range."
+      ],
+      [
+        "Distance (cm)",
+        "Float",
+        "Source-to-listener distance in centimetres."
+      ],
+      [
+        "Max Distance (cm)",
+        "Float",
+        "Maximum distance at which sound can start."
+      ],
+      [
+        "Start Distance (cm)",
+        "Float",
+        "Distance at which this range becomes active."
+      ],
+      [
+        "Volume",
+        "Float",
+        "Volume multiplier for this range."
+      ]
+    ],
+    "outputs": [
+      [
+        "Play",
+        "Trigger",
+        "Triggers when this range is selected."
+      ],
+      [
+        "Gain",
+        "Float",
+        "Volume multiplier for the selected branch."
+      ],
+      [
+        "Out of Range",
+        "Trigger",
+        "Triggered when distance exceeds Max Distance."
+      ],
+      [
+        "Invalid Ranges",
+        "Trigger",
+        "Triggered when range configuration is invalid."
+      ],
+      [
+        "Selected Index",
+        "Integer",
+        "Selected range index, or -1 if rejected."
+      ]
+    ]
+  },
+  {
+    "category": "qol",
+    "slug": "stereo-to-mono",
+    "name": "AP: Stereo to Mono",
+    "file": "APStereoToMonoNode.cpp",
+    "inputs": [
+      [
+        "In Left",
+        "Audio buffer",
+        "Left channel of the stereo source."
+      ],
+      [
+        "In Right",
+        "Audio buffer",
+        "Right channel of the stereo source."
+      ]
+    ],
+    "outputs": [
+      [
+        "Out Mono",
+        "Audio buffer",
+        "Mono result: 0.5 * (Left + Right). Opposite-polarity content may cancel."
+      ]
+    ]
+  }
+]

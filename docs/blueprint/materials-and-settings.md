@@ -1,30 +1,24 @@
 ---
-label: Materials and settings
-icon: gear
+label: "Materials and settings"
+icon: settings
 order: 70
 ---
-# Acoustic Physical Materials
 
-An acoustic material describes how an authored surface should affect sound. It is not a recording and is not automatically measured from your level geometry. The values express a **model** that AudioPhysx can use when estimating transmission and other acoustic behaviour.
 
-`UAPAcousticPhysicalMaterial` extends Unreal's Physical Material with acoustic properties. It can include material density and longitudinal sound speed, damping, a thickness context and low/mid/high authored transmission losses. There are also absorption and scattering controls for acoustic models that use them.
+# Acoustic materials, thickness and performance settings
 
-## Think in terms of listening results
+An Acoustic Physical Material describes the model you want AudioPhysx to use for a surface's sound-transmission behaviour. The current `UAPAcousticPhysicalMaterial` derives from Unreal's Physical Material and adds acoustic parameters such as density, longitudinal sound speed, internal damping, transmission loss, reference thickness, absorption and scattering. It is an authorable model, **not a laboratory measurement automatically extracted from your mesh**.
 
-A heavy, sealed barrier may need much larger transmission loss than a thin partition. That loss can differ across frequency bands; the goal is to make obstructed audio believable, not to pretend every wall is accurately described by one physical constant.
-
-You can use an authored three-band loss curve or the available approximate mass-law model. Authored values are useful when you want repeatable, designer-controlled outcomes. The mass-law option is a simplified estimate, not a measurement of a specific finished structure.
+When enabled, the material can use an authored low/mid/high transmission-loss description or an approximate mass-law approach. Authored losses are useful when a sound designer knows the listening result they want and wants reproducible control. The alternative model uses material-related values to derive an estimate. Either approach must be judged by what the gameplay geometry and audio routing actually supply; a heavy-looking object with the wrong collision or missing material assignment may contribute no meaningful acoustic data.
 
 <!-- IMAGE SLOT: docs/static/images/settings/acoustic-material-inspector.png -->
 
-## Project-wide acoustic settings
+## Set up the model in stages
 
-`UAPAudioSettings` contains environment and workload controls, including world update scheduling, obstruction-ray limits, maximum path detail and optional alternate-route processing. These matter when the scene contains many emitters: a convincing effect that performs poorly with twenty active sources is not ready for shipping.
+First make sure a trace identifies the intended primitive or Physical Material. Then assign an Acoustic Barrier component or supported acoustic material configuration. Start with an easily heard contrast between a clear and blocked source, using reasonable thickness and a clear three-band loss difference. Once the result works, refine density, damping, reference thickness and any optional scattering or absorption data that the chosen processing path actually uses.
+
+**`UAPAudioSettings`** contains environment values, surface routes and performance limits. The current source exposes emitter updates per tick, obstruction traces per tick, scheduled acoustic-ray budgets, query refresh intervals, maximum barrier layers, thickness measurement controls and optional around-obstacle paths. These settings exist because acoustic world queries must remain predictable as the number of active emitters increases.
 
 <!-- IMAGE SLOT: docs/static/images/settings/project-settings-audiophysx.png -->
 
-## Important: surface-specific node pins
-
-[AP: Surface Wave Player](../metasound/nodes/playback/surface-wave-player.md) can generate pins based on enabled surface routes in AudioPhysx settings. If you change that list, **restart the editor and review existing MetaSound graphs**. Unlike a runtime float value, a changed pin layout can affect authored graph connections.
-
-[Acoustic components](components.md) · [Material Transmission](../metasound/nodes/acoustics/material-transmission.md)
+A final important setting concerns **Surface Audio routes**. `AP: Surface Wave Player` can generate input pins from the configured enabled surfaces. Changes to that list can affect existing graph interfaces, so back up and review affected MetaSound assets before assuming a new surface configuration will be harmless. The stereo upgrade is another independent interface change: reconnect both channel outputs in migrated graphs, and verify saved graphs before publishing the plugin to customers.

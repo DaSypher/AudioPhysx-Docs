@@ -1,36 +1,20 @@
 ---
-label: Playback
+label: "Playback"
 icon: play
 order: 95
 ---
-# Playback — choose the right player
 
-Playback nodes select, schedule and combine recordings. Use them when a sound needs a behaviour more involved than simply playing one Wave Asset when it receives a trigger.
 
-## One event, several possible takes
+# Playback: what should play, and when?
 
-**[Random Wave Player](nodes/playback/random-wave-player.md)** chooses a recording when an event occurs, with optional no-immediate-repeat and overlap settings. **[Shuffle-Bag Wave Player](nodes/playback/shuffle-bag-wave-player.md)** is preferable when repeated events should gradually cover the available takes rather than picking freely every time.
+A convincing sound library needs more than a folder of recordings. It needs a clear decision about when an event begins, whether recordings overlap, how a variation is chosen, and when the audible result should actually end. AudioPhysx provides several players because these are genuinely different problems: an explosion can use a single variation, a machine may have a fixed mechanical sequence, and an automatic rifle needs a repeatable event cadence independent of individual recording duration.
 
-A footstep or repeated impact often starts here.
+**For one-shot variation**, start with [Random Wave Player](nodes/playback/random-wave-player.md). It can choose a take whenever the game sends an event and allow limited overlap. If repeated events reveal the same recordings too often, [Shuffle-Bag Wave Player](nodes/playback/shuffle-bag-wave-player.md) adds selection history. Both produce stereo audio but do not decide the gameplay timing of the input trigger.
 
-## An action made of stages
+**For structured actions**, use [Sequence Wave Player](nodes/playback/sequence-wave-player.md) when every stage should play one specific recording, or [Random Sequence Wave Player](nodes/playback/random-sequence-wave-player.md) when each stage can select one of several variations. These wait for the current recording to finish. [Layered Wave Player](nodes/playback/layered-wave-player.md) instead combines several recordings at once, with optional per-layer delays, gain and pitch. That difference between sequential and simultaneous audio is fundamental to how the sound will feel.
 
-**[Sequence Wave Player](nodes/playback/sequence-wave-player.md)** plays fixed recordings consecutively. **[Random Sequence Wave Player](nodes/playback/random-sequence-wave-player.md)** does the same but chooses a variation from an array at each step.
+**For held or context-dependent actions**, [Start Loop End Player](nodes/playback/start-loop-end.md) manages an introduction, repeated middle and released ending. It now supports RPM-timed overlapping middle shots. [Distance Wave Player](nodes/playback/distance-wave-player.md) chooses a recorded perspective using distance. [PhysMat Wave Player](nodes/playback/physmat-wave-player.md) and [Surface Wave Player](nodes/playback/surface-wave-player.md) choose content from material identity, while [Flyby Wave Player](nodes/playback/flyby-wave-player.md) plays near-miss whizzes and optional cracks using data supplied by the flyby subsystem.
 
-**[Layered Wave Player](nodes/playback/layered-wave-player.md)** is different: it combines several layers within one event, optionally with small offsets. Choose sequence for *one after another* and layers for *sounds together*.
+All ten Wave Players now expose **`Out Left` and `Out Right`**. That is a capability, not an instruction to make every source a wide stereo emitter. A localized footstep or weapon report may be better downmixed before 3D positioning, whereas a designed ambience or layered interface effect might benefit from keeping stereo intact. The [stereo routing guide](../getting-started/stereo-routing.md) covers both cases.
 
-## An action that stays active
-
-**[Start Loop End Player](nodes/playback/start-loop-end.md)** handles attack, held middle and release. At `RPM = 0`, middle recordings follow one another; with a positive RPM, overlapping shots start at a designed rate. See the [automatic weapon walkthrough](../examples/automatic-weapon.md).
-
-## The world selects the sound
-
-Use **[Distance Wave Player](nodes/playback/distance-wave-player.md)** when near and far recordings differ, **[Surface Wave Player](nodes/playback/surface-wave-player.md)** when Unreal surface types determine the material sound, and **[PhysMat Wave Player](nodes/playback/physmat-wave-player.md)** when exact Physical Material paths matter.
-
-For near-miss projectiles, **[Flyby Wave Player](nodes/playback/flyby-wave-player.md)** is driven by a separate game-side calculation; it is not a generic Wave Player for every distant shot.
-
-!!!tip Choosing by intent
-If the sound needs to be *selected*, choose a variation player. If it needs to *happen in stages*, choose a sequence. If it needs to *continue while held*, choose Start Loop End. If it needs to *change with the game world*, choose a distance or material-aware player.
-!!!
-
-[Browse the complete Playback node index](nodes/playback/README.md)
+[Explore the individual Playback references](nodes/playback/README.md)

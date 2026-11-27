@@ -1,11 +1,10 @@
 ---
-visibility: hidden
-label: "Random Sequence Wave Player"
+label: "Random Sequence"
 icon: arrow-right
 order: 10
+visibility: hidden
 ---
-# Random Sequence Wave Player
 
-Each expandable stage contains an array. One variation plays fully before the next stage begins.
+# Random Sequence
 
-[Open the full reference](nodes/playback/random-sequence-wave-player.md)
+The detailed reference is now available at **[Random Sequence](nodes/playback/random-sequence-wave-player.md)**, including full behaviour, stereo wiring, practical examples and exact source-derived inputs and outputs.

@@ -1,11 +1,10 @@
 ---
-visibility: hidden
-label: "Flyby player"
+label: "Flyby Wave Player"
 icon: arrow-right
 order: 10
+visibility: hidden
 ---
-# Flyby player
 
-The Wave Player reference covers whizz/crack playback; the Blueprint guide covers path evaluation and scheduling.
+# Flyby Wave Player
 
-[Open the full reference](nodes/playback/flyby-wave-player.md)
+The detailed reference is now available at **[Flyby Wave Player](nodes/playback/flyby-wave-player.md)**, including full behaviour, stereo wiring, practical examples and exact source-derived inputs and outputs.

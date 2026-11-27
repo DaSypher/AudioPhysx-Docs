@@ -1,39 +1,29 @@
 ---
-label: Projectile near miss
+label: "Projectile near-miss audio"
 icon: play
-order: 85
+order: 91
 ---
-# A projectile passing close to the listener
 
-**Goal:** Hear an appropriate flyby when a projectile passes nearby, without playing a near-miss sound for every shot in the level.
+# Projectile near-miss audio
 
-The trick is to test the projectile's **path**, not merely its firing event. AudioPhysx can estimate closest approach from a submitted segment and, for accepted near misses, schedule playback near that point.
+**Primary AudioPhysx tools:** AP: Flyby Wave Player + Blueprint helper
 
-## What you need
+A good example is a listening experiment, not just a screenshot of connected pins. This exercise explains what content to prepare, which signals the graph needs, and what result you should listen for before increasing complexity.
 
-A mono MetaSound Source containing [AP: Flyby Wave Player](../metasound/nodes/playback/flyby-wave-player.md), whizz and optional crack Wave Asset Arrays, and a Blueprint that knows the projectile's path start, path end and nominal speed.
+## Prepare the recording and context
 
-## Test it in three passes
+A near miss should be driven by a projectile path rather than by the fact that a gun was fired. Start with a straight hitscan segment that passes deliberately beside the listener and a second segment that clearly misses the audible radius. Choose a couple of whizz recordings and optionally separate crack recordings. Their editing and apparent source distance will strongly influence the perceived quality of the result.
 
->>> 1. Configure the MetaSound
-Wire the five runtime Float parameters described in the [flyby Blueprint guide](../blueprint/flyby.md). Confirm the player auditions with manual values first.
+## Assemble the MetaSound and test it
 
->>> 2. Submit a close path
-Call `AP: Play Projectile Flyby` with a path that passes near the listener, within `AudibleRadiusM`.
-
->>> 3. Submit a distant path
-Keep the speed and recording the same, but move the path outside the audible radius. This should not be accepted as a near miss.
-
->>> 4. Compare subsonic and supersonic cases
-Change the supplied speed while keeping the geometry comparable. The crack layer depends on the calculated shock condition, not simply the presence of a bullet recording.
->>>
+Set up a stereo Source with Flyby Wave Player and the five exact `AP.Flyby.*` Float inputs described in the [Blueprint flyby guide](../blueprint/flyby.md). Call `AP: Calculate Flyby` first and print `bAudible`, closest distance and shock state. When those values match the geometry, use `AP: Play Projectile Flyby` to schedule the Source for an accepted path. Feed the actual shot start, end and metres-per-second speed to the helper.
 
 <!-- IMAGE SLOT: docs/static/images/graphs/graph-projectile-flyby.png -->
 
-## Common mistake
+## Judge the result in a game
 
-Positions are in Unreal world units (normally **centimetres**), but `ProjectileSpeedMps` and `AudibleRadiusM` are in **metres per second** and **metres**. Mixing units can make a believable path look thousands of times too far away or too fast.
+Compare close, distant, slower and faster passes. The crack layer should follow the computed shock request rather than playing on every whizz. If a moving projectile produces duplicate flybys, review the `ProjectileInstance` you supply for duplicate suppression. Remember that the helper uses a simplified constant-speed acoustic model, not an exact physical shock-front simulation.
 
-!!!info Model scope
-This is a useful game-audio approximation, not a complete aerodynamic shock-wave simulation. Test timing and source placement in your actual gameplay level.
-!!!
+A repeatable test in a small scene is more valuable than adding several processors at once. Check the Source's channel layout and all completion events before moving the same graph into a large level. If the audio will ultimately be positioned as a mono point source, audition the [Stereo to Mono](../metasound/nodes/qol/stereo-to-mono.md) version as well as the full stereo path.
+
+[Browse the full node reference](../metasound/README.md) for exact control types and limitations.

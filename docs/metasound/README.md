@@ -1,38 +1,28 @@
 ---
-label: MetaSound nodes
+label: "MetaSound nodes"
 icon: pulse
 order: 90
 ---
-# MetaSound node library
 
-AudioPhysx extends MetaSounds with native C++ nodes for **playing**, **processing** and **controlling** sound. Choosing the right category is easier when you begin with the question you want your audio to answer.
 
-## I want to play recordings more intelligently
+# The AudioPhysx MetaSound library
 
-Do you need a random variation? A guaranteed order? Multiple simultaneous layers? A start/hold/end action? Explore [Playback](playback.md), which contains the integrated Wave Players.
+The current native source contains **24 nodes**. They are divided by the job they perform rather than the feature that first inspired them: ten Wave Players for selecting recordings and scheduling playback, five acoustic processors for changing the character of audio, four propagation-related tools (one of which emits only a control value), and five QoL utilities including the new stereo-to-mono converter.
 
-[!card layout="compact" title="Playback" text="Variations, sequences, layers, distance bands, physical materials, gunfire and flybys."](playback.md)
+Understanding the difference between these groups is important. A playback node needs an event and usually some Wave Assets. A DSP processor needs an existing audio stream and physical or authored parameters. A control utility may have no audio pins at all because it decides which event passes or what number to use elsewhere. The pages are written to make those responsibilities clear before listing pin names.
 
-## I want the room or material to change the sound
+## Navigate by what you are building
 
-You may need a filter, transmission model, directivity effect or reflection taps rather than another recording. Those tools are under [Acoustics](acoustics.md).
+[!card layout="compact" title="Playback" text="Random, shuffle-bag, layered, sequenced, distance- and material-based players, held RPM effects, and flybys."](playback.md)
 
-[!card layout="compact" title="Acoustics" text="Obstruction, selected routes, impact shaping, reflections and orientation."](acoustics.md)
+[!card layout="compact" title="Acoustics" text="Selected acoustic routes, transmission through materials, directionality, impacts and early reflections."](acoustics.md)
 
-## I want motion and travel time to matter
+[!card layout="compact" title="Propagation" text="Travel-time delay, dynamic motion, Doppler ratio and atmospheric absorption."](propagation.md)
 
-When a source moves or becomes more distant, sound arrival and spectral balance can change. [Propagation](propagation.md) contains distance delay, Doppler-style control and atmospheric absorption.
+[!card layout="compact" title="QoL" text="Smooth values, limit and randomize triggers, switch distance branches, and fold stereo to mono."](qol.md)
 
-[!card layout="compact" title="Propagation" text="Timing, Doppler ratios, moving-source delay and air absorption."](propagation.md)
+## How to read the reference pages
 
-## I want simpler trigger and control logic
+Each node begins with a practical explanation of the problem it solves. You will then find a more detailed discussion of what the node does to the sound or to the event flow, a real game-audio example, setup guidance and the risks worth testing. The complete pin descriptions are still present in an expandable **Exact input and output pins** section. They are extracted from the current C++ declarations, so you do not have to trust an older screenshot for the correct pin names.
 
-Use [QoL](qol.md) for routing triggers, smoothing values and managing trigger repetition. These nodes generally do not decode Wave Assets.
-
-[!card layout="compact" title="QoL" text="Distance branching, float smoothing, probability and cooldowns."](qol.md)
-
-!!!tip How to read a node page
-Every reference starts with **what happens**, then shows a **game-audio use case** and **wiring steps**. The exact pin list is folded away under **Full input reference** / **Full output reference** so you can still look up types without interrupting the explanation.
-!!!
-
-[Understanding completion](../getting-started/signals-and-completion.md) · [Blueprint integration](../blueprint/README.md)
+The stereo convention is consistent across the audio processors: the input is typically `In Left` and `In Right`, and the output is `Out Left` and `Out Right`. Wave Players generally supply `Out Left` and `Out Right`. Control-only nodes are not artificially given audio channels. `AP: Stereo to Mono` deliberately outputs `Out Mono` because that is the point of the converter. If you are migrating an older MetaSound, see [stereo routing and migration](../getting-started/stereo-routing.md) before saving the revised graph.

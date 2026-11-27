@@ -1,27 +1,16 @@
 ---
-label: QoL
+label: "QoL"
 icon: tools
 order: 65
 ---
-# QoL — small controls that clean up large graphs
 
-These nodes deal mainly with **events and numbers**, not audio samples. Their purpose is to replace common branches, random checks and smoothing networks that would otherwise appear in every MetaSound.
 
-**[Trigger Cooldown](nodes/qol/trigger-cooldown.md)** prevents rapid bursts from turning into dozens of audible events. **[Trigger Probability](nodes/qol/trigger-probability.md)** lets an event through at a configurable chance. Use them on optional rattles, contact ticks and other sounds that should not happen every time.
+# QoL: fewer repeated control graphs
 
-**[Float Smoother](nodes/qol/float-smoother.md)** prevents block-rate control values from stepping abruptly. This is useful for engine load, filtering and environmental controls.
+Not everything in AudioPhysx needs to process audio samples. Many MetaSounds become difficult to maintain because the same housekeeping logic is rebuilt repeatedly: a trigger should only pass every few hundred milliseconds, an occasional detail should only fire sometimes, or a filter parameter should move smoothly instead of jumping between values. The QoL nodes solve those narrow problems and can be connected to any suitable playback or processing chain.
 
-**[Distance Switch (Dynamic)](nodes/qol/distance-switch.md)** routes a trigger to one distance band. It is a branching tool, whereas Distance Wave Player actually decodes recordings selected by distance.
+[Trigger Cooldown](nodes/qol/trigger-cooldown.md) limits how often an event can pass. [Trigger Probability](nodes/qol/trigger-probability.md) accepts some events at a specified chance. [Float Smoother](nodes/qol/float-smoother.md) conditions a block-rate numeric value using rise and fall response. [Distance Switch](nodes/qol/distance-switch.md) routes a trigger into the appropriate distance band instead of embedding several nested branch nodes in every MetaSound. All four are intentionally control-only; they do not need stereo outputs.
 
-## A useful pattern
+The new [Stereo to Mono](nodes/qol/stereo-to-mono.md) is the exception. It accepts `In Left` and `In Right` and emits `Out Mono` using a conservative average. This is useful because the other AudioPhysx audio nodes are stereo by default. If the end of a graph needs a mono audio buffer, you can explicitly place the converter there rather than giving up stereo content in the first Wave Player.
 
-```mermaid
-flowchart LR
-    A[Gameplay event] --> B[Trigger Cooldown]
-    B --> C[Trigger Probability]
-    C --> D[Optional Foley player]
-```
-
-The cooldown controls *frequency*, the probability controls *whether the optional detail happens*, and the player handles the recording. You can remove either control if it adds no value to the result.
-
-[Browse the QoL reference](nodes/qol/README.md)
+A good QoL graph should remain easy to read. For example, a gameplay event might pass through a short cooldown and then a probability gate before triggering an optional mechanical rattle. Each control has one job. Overusing them can conceal a gameplay bug just as easily as it can clean up an audio graph, so test the underlying events before adding complicated gating logic.

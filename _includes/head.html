@@ -1,0 +1,18 @@
+<style>
+  /* AudioPhysx: modest editorial theme, designed for Retype Free and dark/light mode. */
+  :root { --ap-blue: #5e9ef8; --ap-teal: #39c4b8; --ap-border: rgba(118,163,216,.28); }
+  :is(main, article, .content, .docs-content) h1 { font-size: clamp(1.7rem, 2.5vw, 2.1rem) !important; font-weight: 690; letter-spacing: -.035em; line-height: 1.18; margin-bottom: 1.1rem; }
+  :is(main, article, .content, .docs-content) h2 { font-size: clamp(1.2rem, 1.7vw, 1.43rem) !important; font-weight: 665; letter-spacing: -.018em; margin-top: 2.1rem; margin-bottom: .85rem; padding-left: .82rem; border-left: 3px solid var(--ap-teal); }
+  :is(main, article, .content, .docs-content) h3 { font-size: 1.08rem !important; font-weight: 650; margin-top: 1.5rem; }
+  :is(main, article, .content, .docs-content) p { line-height: 1.78; margin-bottom: 1.12rem; }
+  :is(main, article, .content, .docs-content) li { line-height: 1.7; }
+  :is(main, article, .content, .docs-content) a { text-underline-offset: .14em; }
+  :is(main, article, .content, .docs-content) blockquote { border-left: 3px solid var(--ap-blue); padding: .75rem 1.1rem; border-radius: 0 .5rem .5rem 0; background: rgba(94,158,248,.075); }
+  :is(main, article, .content, .docs-content) hr { margin: 2rem 0; border-color: var(--ap-border); opacity: .65; }
+  :is(main, article, .content, .docs-content) pre { border: 1px solid var(--ap-border); border-radius: .7rem; }
+  :is(main, article, .content, .docs-content) code { border-radius: .25rem; }
+  :is(main, article, .content, .docs-content) strong { font-weight: 660; }
+  :is(main, article, .content, .docs-content) img { border-radius: .65rem; border: 1px solid var(--ap-border); }
+  :is(main, article, .content, .docs-content) h1::after { content: ""; display: block; width: 2.6rem; height: 3px; border-radius: 5px; background: linear-gradient(90deg, var(--ap-blue), var(--ap-teal)); margin-top: .85rem; opacity: .9; }
+  @media (prefers-reduced-motion: no-preference) { :is(main, article, .content, .docs-content) a { transition: color .16s ease; } }
+</style>
