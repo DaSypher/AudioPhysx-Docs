@@ -13,6 +13,9 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/getting-started/stereo-routing/</loc>
   </url>
   <url>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/getting-started/first-metasound/</loc>
+  </url>
+  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/playback-nodes/</loc>
   </url>
   <url>
@@ -20,9 +23,6 @@
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/getting-started/installation/</loc>
-  </url>
-  <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/getting-started/first-metasound/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/blueprint/</loc>
@@ -121,6 +121,9 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/acoustic-paths/</loc>
   </url>
   <url>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/material-transmission/</loc>
+  </url>
+  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/randomized-one-shot/</loc>
   </url>
   <url>
@@ -128,9 +131,6 @@
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/examples/projectile-flyby/</loc>
-  </url>
-  <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/material-transmission/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/acoustics-nodes/source-directivity/</loc>
@@ -151,6 +151,9 @@
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/support/compatibility/</loc>
   </url>
   <url>
+    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/distance-delay/</loc>
+  </url>
+  <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/dynamic-propagation/</loc>
   </url>
   <url>
@@ -161,9 +164,6 @@
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/support/faq/</loc>
-  </url>
-  <url>
-    <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/distance-delay/</loc>
   </url>
   <url>
     <loc>https://DaSypher.github.io/AudioPhysx-Docs/metasound/propagation-nodes/atmosphere-absorption/</loc>
